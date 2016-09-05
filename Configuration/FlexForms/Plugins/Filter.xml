@@ -1,0 +1,243 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+
+        <general_settings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.general_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+
+                    <settings.logo>
+                        <TCEforms>
+                            <label></label>
+                            <config>
+                                <type>user</type>
+                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Logo->displayLogoText</userFunc>
+                            </config>
+                        </TCEforms>
+                    </settings.logo>
+
+                    <settings.target_plugin>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.target_plugin</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>tt_content</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.target_plugin>
+
+
+                    <settings.field_filter>
+                        <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fields_filter</title>
+                        <section>1</section>
+                        <type>array</type>
+                        <el>
+                            <fields>
+                                <type>array</type>
+                                <el>
+                                    <field_id>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_filter</label>
+                                            <config>
+                                                <type>select</type>
+                                                <multiple>0</multiple>
+                                                <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                                <items type="array"></items>
+                                                <maxitems>1</maxitems>
+                                                <minitems>1</minitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </field_id>
+                                    <filter_type>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type</label>
+                                            <config>
+                                                <type>select</type>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_dropdown</numIndex>
+                                                        <numIndex index="1">dropdown</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_multiselect</numIndex>
+                                                        <numIndex index="1">multiselect</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="2" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_radio</numIndex>
+                                                        <numIndex index="1">radio</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="4" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_checkbox</numIndex>
+                                                        <numIndex index="1">checkbox</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="5" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_text</numIndex>
+                                                        <numIndex index="1">text</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="6" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_input</numIndex>
+                                                        <numIndex index="1">input</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="7" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_from_to</numIndex>
+                                                        <numIndex index="1">from_to</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <minitems>0</minitems>
+                                                <maxitems>1</maxitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </filter_type>
+                                </el>
+                            </fields>
+                        </el>
+                    </settings.field_filter>
+                    <settings.filter_options>
+                        <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_options</title>
+                        <section>1</section>
+                        <type>array</type>
+                        <el>
+                            <fields>
+                                <type>array</type>
+                                <el>
+                                    <filter_combination>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_combination</label>
+                                            <config>
+                                                <type>select</type>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">AND</numIndex>
+                                                        <numIndex index="1">AND</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">OR</numIndex>
+                                                        <numIndex index="1">OR</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <minitems>0</minitems>
+                                                <maxitems>1</maxitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </filter_combination>
+                                    <field_id>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.according_filter_field</label>
+                                            <config>
+                                                <type>select</type>
+                                                <multiple>0</multiple>
+                                                <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                                <items type="array"></items>
+                                                <maxitems>1</maxitems>
+                                                <minitems>1</minitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </field_id>
+                                    <option_name>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_option_name</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>40</size>
+                                            </config>
+                                        </TCEforms>
+                                    </option_name>
+                                    <filter_condition>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_option_condition</label>
+                                            <config>
+                                                <type>select</type>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0"></numIndex>
+                                                        <numIndex index="1"></numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.eq</numIndex>
+                                                        <numIndex index="1">eq</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="2" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.neq</numIndex>
+                                                        <numIndex index="1">neq</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="3" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.like</numIndex>
+                                                        <numIndex index="1">like</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="4" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.nlike</numIndex>
+                                                        <numIndex index="1">nlike</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="5" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.in</numIndex>
+                                                        <numIndex index="1">in</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="6" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.nin</numIndex>
+                                                        <numIndex index="1">nin</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="7" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.gt</numIndex>
+                                                        <numIndex index="1">gt</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="8" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.lt</numIndex>
+                                                        <numIndex index="1">lt</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="9" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.gteq</numIndex>
+                                                        <numIndex index="1">gte</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="10" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.lteq</numIndex>
+                                                        <numIndex index="1">lte</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <minitems>0</minitems>
+                                                <maxitems>1</maxitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </filter_condition>
+                                    <field_value>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_option_value</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>40</size>
+                                            </config>
+                                        </TCEforms>
+                                    </field_value>
+                                </el>
+                            </fields>
+                        </el>
+                    </settings.filter_options>
+                </el>
+            </ROOT>
+        </general_settings>
+    </sheets>
+</T3DataStructure> 
+
+
+

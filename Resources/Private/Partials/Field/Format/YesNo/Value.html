@@ -1,0 +1,27 @@
+<f:if condition="{formValue.field.showImages}">
+    <div class="dataviewer-yesno-img">
+        <f:if condition="{value.selected}">
+            <f:then>
+                <f:image src="EXT:dataviewer/Resources/Public/Images/value_yes.png" height="18" />
+            </f:then>
+            <f:else>
+                <f:image src="EXT:dataviewer/Resources/Public/Images/value_no.png" height="18" />
+            </f:else>
+        </f:if>
+    </div>
+</f:if>
+<f:if condition="{formValue.field.showValueText}">
+    <span class="dataviewer-yesno-value"><f:if condition="{formValue.field.htmlEnabled}"><f:then><f:format.html parseFuncTSPath="">{value.content}{formValue.field.unit}</f:format.html></f:then><f:else>{value.content}{formValue.field.unit}</f:else></f:if></span>
+</f:if>
+<f:if condition="{formValue.field.showImages} == 0">
+    <f:if condition="{formValue.field.showValueText} == 0">
+        <f:if condition="{value.selected}">
+            <f:then>
+                <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:format.yesno_yes">Yes</f:translate>
+            </f:then>
+            <f:else>
+                <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:format.yesno_no">No</f:translate>
+            </f:else>
+        </f:if>
+    </f:if>
+</f:if>

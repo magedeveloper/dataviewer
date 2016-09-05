@@ -1,0 +1,5 @@
+<f:for each="{formValue.values}" as="value">
+    <f:if condition="{value.content}">
+        <f:link.page pageUid="{value.content.uid}">{value.content.title}</f:link.page><br />
+    </f:if>
+</f:for>

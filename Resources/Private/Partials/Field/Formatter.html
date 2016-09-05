@@ -1,0 +1,83 @@
+{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+
+<div class="dataviewer-field-value">
+
+    <f:comment>-- UNFORMATTED -----------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'unformatted'">
+        <div class="dataviewer-field-newline dataviewer-field-values-{formValue.field.uid}">
+            <f:render partial="Field/Format/Unformatted" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+
+    <f:comment>-- NEWLINE -----------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'newline'">
+        <div class="dataviewer-field-newline dataviewer-field-values-{formValue.field.uid}">
+            <f:render partial="Field/Format/Newline" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+    
+    
+    <f:comment>-- SEPARATED ---------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'separated'">
+        <div class="dataviewer-field-separated dataviewer-field-values-{formValue.field.uid}">
+            <f:render partial="Field/Format/Separated" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+    
+    
+    <f:comment>-- YESNO -------------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'yesno'">
+        <div class="dataviewer-field-yesno dataviewer-field-values-{formValue.field.uid}">
+            <f:render partial="Field/Format/YesNo" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+    
+    
+    <f:comment>-- IMAGE -------------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'image'">
+        <div class="dataviewer-field-image">
+            <f:render partial="Field/Format/Image" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+
+
+    <f:comment>-- LINK --------------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'link'">
+        <div class="dataviewer-field-link">
+            <f:render partial="Field/Format/Link" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+
+
+    <f:comment>-- FILE --------------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'file'">
+        <div class="dataviewer-field-file">
+            <f:render partial="Field/Format/File" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+
+
+    <f:comment>-- DATE/DATETIME -----------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'datetime'">
+        <div class="dataviewer-field-datetime">
+            <f:render partial="Field/Format/Datetime" arguments="{formValue:formValue,type:formValue.field.type}" />
+        </div>
+    </f:if>
+
+
+    <f:comment>-- CUSTOM -------------------------------------------------------------</f:comment>
+    <f:if condition="{formValue.field.format} == 'custom'">
+        <div class="dataviewer-field-custom">
+            <f:if condition="{formValue.field.customTemplate} == ''">
+                <f:then>
+                    <dv:render.template template="EXT:dataviewer/Resources/Private/Partials/Field/Format/Debug.html" arguments="{formValue:formValue,type:formValue.field.type}" />
+                </f:then>
+                <f:else>
+                    <dv:render.template template="{formValue.field.customTemplate}" arguments="{formValue:formValue,type:formValue.field.type}" />
+                </f:else>
+            </f:if>
+        </div>
+    </f:if>
+    
+    
+</div>

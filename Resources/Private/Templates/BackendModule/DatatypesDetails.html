@@ -1,0 +1,27 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+<f:section name="Buttons">
+	<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons" style="height:auto;">
+		<a href="{dv:backend.newLink(pid:currentPageId,table:'tx_dataviewer_domain_model_datatype',datatype:datatype.uid)}" title="{f:translate(key:'module.new_datatype')}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-datatype" size="small" /><core:icon identifier="actions-add" size="small" />{f:translate(key:'module.new_datatype')}</a>
+		<a href="{dv:backend.newLink(pid:currentPageId,table:'tx_dataviewer_domain_model_field')}" title="{f:translate(key:'module.new_field')}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-field" size="small" /><core:icon identifier="actions-add" size="small" />{f:translate(key:'module.new_field')}</a>
+	</div>
+</f:section>
+
+<f:section name="content">
+	<h1><f:translate key="module.datatypes_information" /></h1>
+	<p><f:translate key="module.click_on_entry_to_open_details" /></p>
+
+	<f:flashMessages/>
+	
+	<f:if condition="{datatypes}">
+		<f:then>
+			<f:render partial="BackendModule/ListDatatypesDetails" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:translate key="module.no_datatypes_found" />
+		</f:else>
+	</f:if>
+</f:section>

@@ -1,0 +1,165 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <eval>
+                <TCEforms>
+                    <label>eval</label>
+                    <onChange>reload</onChange>
+                    <config>
+                        <type>select</type>
+                        <multiple>1</multiple>
+                        <autosizemax>5</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">alpha</numIndex>
+                                <numIndex index="1">alpha</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">alphanum</numIndex>
+                                <numIndex index="1">alphanum</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">alphanum_x</numIndex>
+                                <numIndex index="1">alphanum_x</numIndex>
+                            </numIndex>
+                            <numIndex index="3" type="array">
+                                <numIndex index="0">domainname</numIndex>
+                                <numIndex index="1">domainname</numIndex>
+                            </numIndex>
+                            <numIndex index="4" type="array">
+                                <numIndex index="0">double2</numIndex>
+                                <numIndex index="1">double2</numIndex>
+                            </numIndex>
+                            <numIndex index="5" type="array">
+                                <numIndex index="0">email</numIndex>
+                                <numIndex index="1">email</numIndex>
+                            </numIndex>
+                            <numIndex index="6" type="array">
+                                <numIndex index="0">int</numIndex>
+                                <numIndex index="1">int</numIndex>
+                            </numIndex>
+                            <numIndex index="7" type="array">
+                                <numIndex index="0">is_in</numIndex>
+                                <numIndex index="1">is_in</numIndex>
+                            </numIndex>
+                            <numIndex index="8" type="array">
+                                <numIndex index="0">lower</numIndex>
+                                <numIndex index="1">lower</numIndex>
+                            </numIndex>
+                            <numIndex index="9" type="array">
+                                <numIndex index="0">md5</numIndex>
+                                <numIndex index="1">md5</numIndex>
+                            </numIndex>
+                            <numIndex index="10" type="array">
+                                <numIndex index="0">nospace</numIndex>
+                                <numIndex index="1">nospace</numIndex>
+                            </numIndex>
+                            <numIndex index="11" type="array">
+                                <numIndex index="0">null</numIndex>
+                                <numIndex index="1">null</numIndex>
+                            </numIndex>
+                            <numIndex index="12" type="array">
+                                <numIndex index="0">num</numIndex>
+                                <numIndex index="1">num</numIndex>
+                            </numIndex>
+                            <numIndex index="13" type="array">
+                                <numIndex index="0">password</numIndex>
+                                <numIndex index="1">password</numIndex>
+                            </numIndex>
+                            <numIndex index="14" type="array">
+                                <numIndex index="0">required</numIndex>
+                                <numIndex index="1">required</numIndex>
+                            </numIndex>
+                            <numIndex index="15" type="array">
+                                <numIndex index="0">time</numIndex>
+                                <numIndex index="1">time</numIndex>
+                            </numIndex>
+                            <numIndex index="16" type="array">
+                                <numIndex index="0">timesec</numIndex>
+                                <numIndex index="1">timesec</numIndex>
+                            </numIndex>
+                            <numIndex index="17" type="array">
+                                <numIndex index="0">trim</numIndex>
+                                <numIndex index="1">trim</numIndex>
+                            </numIndex>
+                            <numIndex index="18" type="array">
+                                <numIndex index="0">upper</numIndex>
+                                <numIndex index="1">upper</numIndex>
+                            </numIndex>
+                            <numIndex index="19" type="array">
+                                <numIndex index="0">year</numIndex>
+                                <numIndex index="1">year</numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>9999</maxitems>
+                        <minitems>0</minitems>
+                        <size>5</size>
+                    </config>
+                </TCEforms>
+            </eval>
+            <placeholder>
+                <TCEforms>
+                    <label>placeholder</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </placeholder>
+            <max>
+                <TCEforms>
+                    <label>max</label>
+                    <config>
+                        <type>input</type>
+                        <size>5</size>
+                        <eval>int</eval>
+                        <default>255</default>
+                    </config>
+                </TCEforms>
+            </max>
+            <is_in>
+                <TCEforms>
+                    <label>is_in</label>
+                    <displayCond>FIELD:eval:IN:is_in</displayCond>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </is_in>
+            <range_lower>
+                <TCEforms>
+                    <label>range -> lower</label>
+                    <displayCond>FIELD:eval:IN:int</displayCond>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </range_lower>
+            <range_upper>
+                <TCEforms>
+                    <label>range -> upper</label>
+                    <displayCond>FIELD:eval:IN:int</displayCond>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </range_upper>
+        </el>
+    </ROOT>
+</T3DataStructure>

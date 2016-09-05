@@ -1,0 +1,5 @@
+<f:for each="{formValue.values}" as="value">
+    <f:if condition="{value.content}">
+        <f:link.external uri="{dv:request.baseUrl()}{value.content.publicUrl}">{value.content.publicUrl}</f:link.external>
+    </f:if>
+</f:for>

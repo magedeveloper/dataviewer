@@ -1,0 +1,23 @@
+<div class="dataviewer-detail-item">
+    <div class="dataviewer-detail-item-title">
+        <h1>{record.title}</h1>
+    </div>
+    <ul class="dataviewer-detail-item-fields">
+        <f:for each="{record.formValues.visible}" as="formValue" iteration="iterator">
+            <li class="dataviewer-detail-item-field dataviewer-detail-item-field-{formValue.field.uid}{f:if(condition: iterator.isLast, then: ' last')}{formValue.field.cssClass}">
+                <span class="dataviewer-detail-field-label">
+                    {formValue.field.frontendLabel}
+                    <f:if condition="{formValue.field.showFeDescription}">
+                        <p class="dataviewer-field-description"><f:format.html parseFuncTSPath="">{formValue.field.feDescription}</f:format.html></p>
+                    </f:if>
+                </span>
+                <div class="dataviewer-detail-field-values">
+                    <f:if condition="{formValue.values -> f:count()} > 0">
+                        <f:render partial="Field/Formatter" arguments="{formValue:formValue}" />
+                    </f:if>
+                    <div class="clear"></div>
+                </div>
+            </li>
+        </f:for>
+    </ul> 
+</div>

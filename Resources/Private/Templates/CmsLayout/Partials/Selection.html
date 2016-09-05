@@ -1,0 +1,58 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<f:switch expression="{flexform.settings.record_selection_type}">
+	<f:case value="">
+		<f:comment>============ NOTHING SELECTED ============</f:comment>
+		---
+	</f:case>
+	<f:case value="SELECTION_DATATYPE">
+		<f:comment>============ DATATYPE ============</f:comment>
+		<strong><f:translate key="flexform.selection_by_datatype" /></strong>:<br />
+		<f:alias map="{datatype:'{dv:datatype.get(id:flexform.settings.datatype_selection,includeHidden:1)}'}">
+			<f:if condition="{datatype.uid}">
+				<a href="{dv:backend.editLink(id:flexform.settings.datatype_selection,table:'tx_dataviewer_domain_model_datatype')}" target="_self"><core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;[{datatype.uid}]&nbsp;{datatype.name}</a>
+			</f:if>
+		</f:alias>
+	</f:case>
+	<f:case value="SELECTION_RECORDS">
+		<f:comment>============ SINGLE RECORDS ============</f:comment>
+		<strong><f:translate key="flexform.selection_by_single_records" /></strong>:<br />
+		<f:for each="{dv:string.explode(delimeter:',',string:flexform.settings.record_selection)}" as="recordId" iteration="i">
+			<f:alias map="{record:'{dv:record.get(id:recordId,includeHidden:1)}'}">
+				<f:if condition="{record.uid}">
+					<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+					<f:if condition="{i.isLast} != 1"><br /></f:if>
+				</f:if>
+			</f:alias>
+		</f:for>
+	</f:case>
+	<f:case value="SELECTION_PLUGIN">
+		<f:comment>============ SELECTION PLUGIN ============</f:comment>
+		<f:translate key="flexform.selection_by_plugin" />
+	</f:case>
+	<f:case value="SELECTION_CREATION_DATE">
+		<f:comment>============ CREATION DATE ============</f:comment>
+		<strong><f:translate key="flexform.selection_by_creation_date" /></strong>:<br />
+		<f:format.date format="Y-m-d H:i">{flexform.settings.date_from_selection}</f:format.date> - <f:format.date format="Y-m-d H:i">{flexform.settings.date_to_selection}</f:format.date>
+	</f:case>
+	<f:case value="SELECTION_CHANGE_DATE">
+		<f:comment>============ CHANGE DATE ============</f:comment>
+		<strong><f:translate key="flexform.selection_by_change_date" /></strong>:<br />
+		<f:format.date format="Y-m-d H:i">{flexform.settings.date_from_selection}</f:format.date> - <f:format.date format="Y-m-d H:i">{flexform.settings.date_to_selection}</f:format.date>
+	</f:case>
+	<f:case value="SELECTION_ALL">
+		<f:comment>============ ALL FROM SELECTED FOLDERS ============</f:comment>
+		<strong><f:translate key="flexform.selection_by_all" /></strong>:<br />
+		<f:for each="{dv:string.explode(delimeter:',',string:row.pages)}" as="pageId" iteration="i">
+			<f:alias map="{page:'{dv:page.get(id:pageId)}'}">
+				<a href="{dv:backend.editLink(id:pageId,table:'pages')}" target="_self"><f:render partial="DoktypeIcon" arguments="{doktype:page.doktype}" />&nbsp;[{page.uid}]&nbsp;{page.title}</a>
+				<f:if condition="{i.isLast} != 1"><br /></f:if>
+			</f:alias>
+		</f:for>
+	</f:case>
+	<f:case default="TRUE">
+		
+	</f:case>
+</f:switch>

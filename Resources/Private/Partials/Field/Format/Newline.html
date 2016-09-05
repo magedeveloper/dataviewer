@@ -1,0 +1,32 @@
+<ul>
+<f:switch expression="{type}">
+    <f:case value="CATEGORY">
+        <f:comment>============ CATEGORY RESOURCE ============</f:comment>
+        <f:for each="{formValue.values}" as="value">
+            <f:if condition="{value.content} != ''">
+                <f:then>
+                    <f:for each="{value.content}" as="category">
+                        <f:if condition="{category}">
+                            <f:render partial="Field/Format/Newline/ValueCategory" arguments="{formValue:formValue,category:category}" />
+                        </f:if>
+                    </f:for>
+                </f:then>
+            </f:if>
+        </f:for>
+    </f:case>
+    <f:case default="TRUE">
+        <f:for each="{formValue.values}" as="value">
+            <f:if condition="{value.content} != ''">
+                <f:then>
+                    <f:render partial="Field/Format/Newline/Value" arguments="{formValue:formValue,value:value}" />
+                </f:then>
+                <f:else>
+                    <f:if condition="{formValue.field.showEmpty}">
+                        <f:render partial="Field/Format/Newline/Value" arguments="{formValue:formValue,value:value}" />
+                    </f:if>
+                </f:else>
+            </f:if>
+        </f:for>
+    </f:case>
+</f:switch>
+</ul>

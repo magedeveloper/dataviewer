@@ -1,0 +1,8 @@
+<li>
+    <f:if condition="{formValue.field.htmlEnabled}">
+        <f:then>
+            <f:format.html parseFuncTSPath="">{value.content}{formValue.field.unit}</f:format.html>
+        </f:then>
+        <f:else>{value.content}{formValue.field.unit}</f:else>
+    </f:if>
+</li>

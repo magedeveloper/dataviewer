@@ -1,0 +1,46 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<div class="panel" style="padding:0 10px 0 10px; margin-bottom:0;">
+
+	<h4><f:translate key="tx_dataviewer_domain_model_datatype.fields" /></h4>
+	<a href="{dv:backend.newLink(pid:currentPageId,table:'tx_dataviewer_domain_model_field')}" title="{f:translate(key:'module.new_field')}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-field" size="small" /><core:icon identifier="actions-add" size="small" />{f:translate(key:'module.new_field')}</a>
+
+	<table class="table-condensed table-hover" style="width: 100%; margin-top:20px;">
+		<thead>
+		<tr>
+			<th nowrap="nowrap" class="col-icon col-sm-1"></th>
+			<th nowrap="nowrap" class="col-sm-1">Uid</th>
+			<th nowrap="nowrap" class="col-sm-4"><f:translate key="tx_dataviewer_domain_model_field.frontend_label" /></th>
+			<th nowrap="nowrap" class="col-sm-4"><f:translate key="tx_dataviewer_domain_model_field.variable_name" /></th>
+			<th nowrap="nowrap" class="col-sm-1"></th>
+		</tr>
+		</thead>
+		<tbody>
+		<f:for each="{fields}" as="field" iteration="iteration">
+			<f:comment>-- General Information --</f:comment>
+			<tr class="{f:if(condition:'{iteration.isFirst}',then:' firstcol')}{f:if(condition:'{iteration.isLast}',then:' lastcol')}">
+				<td nowrap="nowrap" class="col-icon nowrap">
+					<span title="{f:translate(key:'type.{field.type}')}">
+						<core:icon identifier="extensions-dataviewer-{field.type}" size="small" />
+					</span>
+				</td>
+				<td nowrap="nowrap" class="nowrap">
+					{field.uid}
+				</td>
+				<td nowrap="nowrap">
+					{field.frontendLabel}
+				</td>
+				<td nowrap="nowrap">
+					&#123;record.{field.code}&#125;
+				</td>
+				<td nowrap="nowrap">
+					<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" class=""><core:icon identifier="actions-open" size="small" /></a>
+				</td>
+			</tr>
+		</f:for>
+		</tbody>
+	</table>
+</div>
+
+

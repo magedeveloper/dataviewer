@@ -1,0 +1,63 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <eval>
+                <TCEforms>
+                    <label>eval</label>
+                    <config>
+                        <type>select</type>
+                        <multiple>1</multiple>
+                        <autosizemax>5</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">domainname</numIndex>
+                                <numIndex index="1">domainname</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">int</numIndex>
+                                <numIndex index="1">int</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">num</numIndex>
+                                <numIndex index="1">num</numIndex>
+                            </numIndex>
+                            <numIndex index="3" type="array">
+                                <numIndex index="0">password</numIndex>
+                                <numIndex index="1">password</numIndex>
+                            </numIndex>
+                            <numIndex index="4" type="array">
+                                <numIndex index="0">required</numIndex>
+                                <numIndex index="1">required</numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>9999</maxitems>
+                        <minitems>0</minitems>
+                        <size>5</size>
+                    </config>
+                </TCEforms>
+            </eval>
+            <placeholder>
+                <TCEforms>
+                    <label>placeholder</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </placeholder>
+        </el>
+    </ROOT>
+</T3DataStructure>

@@ -1,0 +1,1438 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2013-05-17T16:06:12Z" product-name="dataviewer">
+        <header/>
+        <body>
+
+            <trans-unit id="tx_dataviewer">
+                <source>DataViewer</source>
+                <target>DataViewer</target>
+            </trans-unit>
+
+            <!-- Flexform -->
+            <trans-unit id="flexform.please_select">
+                <source>-- Please select --</source>
+                <target>-- Bitte auswählen --</target>
+            </trans-unit>
+            <trans-unit id="flexform.general_settings">
+                <source>DataViewer Settings</source>
+                <target>DataViewer Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.developer_settings">
+                <source>Developer Settings</source>
+                <target>Entwickler</target>
+            </trans-unit>
+            <trans-unit id="flexform.debug">
+                <source>Debug</source>
+                <target>Debug</target>
+            </trans-unit>
+            <trans-unit id="flexform.display_settings">
+                <source>Display Settings</source>
+                <target>Anzeigeeinstellungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.template_settings">
+                <source>Template Settings</source>
+                <target>Template Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.plugin_type">
+                <source>Plugin Type</source>
+                <target>Plugintyp</target>
+            </trans-unit>
+            <trans-unit id="flexform.no_plugin_type_selected">
+                <source>No Plugin Type selected</source>
+                <target>Kein Plugintyp ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="flexform.available_markers">
+                <source>Available Markers</source>
+                <target>Verfügbare Marker</target>
+            </trans-unit>
+            <trans-unit id="flexform.record_selection_type">
+                <source>Record Selection Type / Allow or Show records by selection type</source>
+                <target>Datensatz Auswahltyp / Erlauben oder Anzeigen von Datensätzen nach Auswahltyp</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_type">
+                <source>Selection Type</source>
+                <target>Auswahltyp</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_datatype">
+                <source>Selection by Datatype</source>
+                <target>Auswahl nach Datentyp</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_single_records">
+                <source>Selection by Records</source>
+                <target>Auswahl nach Datensätzen</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_plugin">
+                <source>Selection by Selection-Plugin</source>
+                <target>Auswahl von Auswahl-Plugin</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_creation_date">
+                <source>Selection by Creation Date</source>
+                <target>Auswahl nach Erstellungsdatum der Datensätze</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_change_date">
+                <source>Selection by Change Date</source>
+                <target>Auswahl nach Änderungsdatum der Datensätze</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_all">
+                <source>All Records on selected Storage Page(s)</source>
+                <target>Alle Einträge aus ausgewählten Datenordnern</target>
+            </trans-unit>
+            <trans-unit id="flexform.datatype_selection">
+                <source>Datatype</source>
+                <target>Datentyp</target>
+            </trans-unit>
+            <trans-unit id="flexform.record_selection">
+                <source>Record</source>
+                <target>Datensatz</target>
+            </trans-unit>
+            <trans-unit id="flexform.records_selection">
+                <source>Records</source>
+                <target>Datensätze</target>
+            </trans-unit>
+            <trans-unit id="flexform.datetime_selection">
+                <source>Records by creation date</source>
+                <target>Datensätze nach Erstellungsdatum</target>
+            </trans-unit>
+            <trans-unit id="flexform.date_from_selection">
+                <source>Date from</source>
+                <target>Datum von</target>
+            </trans-unit>
+            <trans-unit id="flexform.date_to_selection">
+                <source>Date to</source>
+                <target>Datum bis</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_by_field_value_filter">
+                <source>Records by field/value filter</source>
+                <target>Datensätze nach Feld/Wert Filter</target>
+            </trans-unit>
+            <trans-unit id="flexform.target_plugin">
+                <source>Target record display plugin, which will follow this plugin</source>
+                <target>Zielplugin der Datensatz-Anzeige, welches diesem Plugin folgt</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_value_filter_setting">
+                <source>Field/Value Filter Settings</source>
+                <target>Feld/Wert Filtereinstellungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_value_filter_information_note">
+                <source>Information about the Field/Value Filter Settings</source>
+                <target>Informationen zu Feld/Wert Filtereinstellungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_search_setting">
+                <source>Field Search Settings</source>
+                <target>Feld-Suche Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_search_information_note">
+                <source>Field Search Information</source>
+                <target>Feld-Suche Informationen</target>
+            </trans-unit>
+            <trans-unit id="flexform.search_fields">
+                <source>Fields for search</source>
+                <target>Felder für Suche</target>
+            </trans-unit>
+            <trans-unit id="flexform.minimum_chars">
+                <source>Minimum chars for search</source>
+                <target>Mindestlänge für die Suche</target>
+            </trans-unit>
+            <trans-unit id="flexform.clear_on_page_load">
+                <source>Clear on Page Load</source>
+                <target>Suchfelder leeren bei Reload</target>
+            </trans-unit>
+            <trans-unit id="flexform.variable_injection">
+                <source>Variable Injection</source>
+                <target>Variablen hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="flexform.selection_limit">
+                <source>Selection Limit</source>
+                <target>Auswahllimitierung</target>
+            </trans-unit>
+            <trans-unit id="flexform.label_field">
+                <source>Field for Option Label</source>
+                <target>Feld für Option Label</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_filter">
+                <source>Field for filtering</source>
+                <target>Feld für Filtern</target>
+            </trans-unit>
+            <trans-unit id="flexform.fields_filter">
+                <source>Fields for filtering</source>
+                <target>Felder für Filtern</target>
+            </trans-unit>
+            <trans-unit id="flexform.according_filter_field">
+                <source>According filter field</source>
+                <target>Zugehöriges Filter-Feld</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_options">
+                <source>Options for filters</source>
+                <target>Optionen für Filter</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_option_name">
+                <source>Option Name</source>
+                <target>Name der Option</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_option_value">
+                <source>Option Value</source>
+                <target>Wert der Option</target>
+            </trans-unit>
+            <trans-unit id="flexform.field_option_condition">
+                <source>Option Condition</source>
+                <target>Option Bedingung</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_combination">
+                <source>Filter Combination</source>
+                <target>Filter Kombination</target>
+            </trans-unit>
+            <trans-unit id="flexform.label">
+                <source>Label</source>
+                <target>Label</target>
+            </trans-unit>
+            <trans-unit id="flexform.value">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+            <trans-unit id="flexform.condition">
+                <source>Cond.</source>
+                <target>Bed.</target>
+            </trans-unit>
+
+            <trans-unit id="flexform.filter_type">
+                <source>Filter Frontend Type</source>
+                <target>Filter Frontendtyp</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_dropdown">
+                <source>Dropdown</source>
+                <target>Dropdown</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_multiselect">
+                <source>Multiselect</source>
+                <target>Multiselect</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_radio">
+                <source>Radio Buttons</source>
+                <target>Radio-Buttons</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_checkbox">
+                <source>Checkbox</source>
+                <target>Checkbox</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_from_to">
+                <source>From - To</source>
+                <target>Von - Bis</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_text">
+                <source>Text</source>
+                <target>Text</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_type_input">
+                <source>Input Field</source>
+                <target>Eingabefeld</target>
+            </trans-unit>
+            <trans-unit id="flexform.search_type">
+                <source>Search type configuration</source>
+                <target>Suchtyp Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="flexform.search_type.title">
+                <source>Search through record title</source>
+                <target>Suche anhand Datensatztitel</target>
+            </trans-unit>
+            <trans-unit id="flexform.search_type.fields">
+                <source>Search through fields</source>
+                <target>Suche anhand Feldwerten</target>
+            </trans-unit>
+            <trans-unit id="flexform.search_type.title_fields">
+                <source>Search through record title and fields</source>
+                <target>Suche anhand Datensatztitel und Feldwerten</target>
+            </trans-unit>
+            <trans-unit id="flexform.preselected_letter">
+                <source>Preselected letter</source>
+                <target>Vorausgewählter Anfangsbuchstabe</target>
+            </trans-unit>
+            <trans-unit id="flexform.preselected_records">
+                <source>Preselected records</source>
+                <target>Vorausgewählte Datensätze</target>
+            </trans-unit>
+            <trans-unit id="flexform.show_images">
+                <source>Show according images</source>
+                <target>Zugehörige Bilder anzeigen</target>
+            </trans-unit>
+            <trans-unit id="flexform.show_value_text">
+                <source>Show value text</source>
+                <target>Text anzeigen</target>
+            </trans-unit>
+            <trans-unit id="flexform.show_empty_values">
+                <source>Show empty values</source>
+                <target>Leere Werte anzeigen</target>
+            </trans-unit>
+            <trans-unit id="flexform.is_image_link">
+                <source>Show Image Options</source>
+                <target>Bildoptionen anzeigen</target>
+            </trans-unit>
+            <trans-unit id="flexform.display_cond">
+                <source>Display Conditions</source>
+                <target>Anzeigebedingungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.auto_submit">
+                <source>Auto-Submit</source>
+                <target>Auto-Submit</target>
+            </trans-unit>
+            <trans-unit id="flexform.direct_render_part">
+                <source>Directly Render the Selected Part</source>
+                <target>Direktes Rendern des ausgewählten Teils</target>
+            </trans-unit>
+            <trans-unit id="flexform.force_sorting">
+                <source>Force these sorting settings</source>
+                <target>Diese Sortierungseinstellungen erzwingen</target>
+            </trans-unit>
+
+
+            <trans-unit id="allowed_table">
+                <source>Allowed record table</source>
+                <target>Erlaubte Datensatz-Tabelle</target>
+            </trans-unit>
+            <trans-unit id="model_class">
+                <source>Class Name of the according model</source>
+                <target>Klassenname des zugehörigen Domain-Models</target>
+            </trans-unit>
+
+
+            <trans-unit id="flexform.number_of_initial_records">
+                <source>Initial Number of records to show</source>
+                <target>Standard-Anzahl von anzuzeigenden Datensätzen</target>
+            </trans-unit>
+            <trans-unit id="flexform.number_of_records">
+                <source>Number of records</source>
+                <target>Anzahl von Datensätzen</target>
+            </trans-unit>
+            <trans-unit id="flexform.default_sort_order">
+                <source>Default Sort Order</source>
+                <target>Standard-Sortierun</target>
+            </trans-unit>
+            <trans-unit id="flexform.sort_order_ascending">
+                <source>Ascending</source>
+                <target>Aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="flexform.sort_order_descending">
+                <source>Descending</source>
+                <target>Absteigend</target>
+            </trans-unit>
+            <trans-unit id="flexform.sort_fields">
+                <source>Fields for sorting</source>
+                <target>Felder für Sortierung</target>
+            </trans-unit>
+            <trans-unit id="flexform.per_page_entries">
+                <source>List of entries for 'Per Page'-Field. (Comma separated)</source>
+                <target>Einträge im 'pro Seite' Feld. (Kommasepariert)</target>
+            </trans-unit>
+            <trans-unit id="flexform.selected_per_page">
+                <source>Default Selected 'Items per Page'-Value</source>
+                <target>Standardauswahl für 'pro Seite'</target>
+            </trans-unit>
+
+
+            <trans-unit id="flexform.template_override">
+                <source>Fluid Template</source>
+                <target>Fluid Template</target>
+            </trans-unit>
+            <trans-unit id="flexform.divide_records">
+                <source>Divide records</source>
+                <target>Datensätze trennen</target>
+            </trans-unit>
+            <trans-unit id="flexform.divide_by_datatypes">
+                <source>Divide records by datatypes</source>
+                <target>Datensätze nach Datentypen trennen</target>
+            </trans-unit>
+            <trans-unit id="flexform.divide_by_fields">
+                <source>Divide records by fields</source>
+                <target>Datensätze nach Feldern trennen</target>
+            </trans-unit>
+            <trans-unit id="flexform.fluent_display">
+                <source>Fluent display of all records</source>
+                <target>Fortführende Anzeige aller Datensätze</target>
+            </trans-unit>
+            <trans-unit id="flexform.show_paginator">
+                <source>Show pagination</source>
+                <target>Seiten umbrechen</target>
+            </trans-unit>
+            <trans-unit id="flexform.default_sort_field">
+                <source>Default sort field</source>
+                <target>Standardsortierung</target>
+            </trans-unit>
+            <trans-unit id="flexform.crdate">
+                <source>Creation Date</source>
+                <target>Erstellungsdatum</target>
+            </trans-unit>
+            <trans-unit id="flexform.sorting">
+                <source>Sorting</source>
+                <target>Sortierung</target>
+            </trans-unit>
+            <trans-unit id="flexform.detail_page_id">
+                <source>Page for Detail View</source>
+                <target>Seite für Detailansicht</target>
+            </trans-unit>
+            <trans-unit id="flexform.list_page_id">
+                <source>Page for List View</source>
+                <target>Seite für Listenansicht</target>
+            </trans-unit>
+            <trans-unit id="flexform.record_save_datatype">
+                <source>Record-Datatype for the Storage</source>
+                <target>Datensatz-Datentyp für die Speicherung</target>
+            </trans-unit>
+            
+            
+            <!-- Plugin Types -->
+            <trans-unit id="plugin_types.display">
+                <source>Display Record Plugins</source>
+                <target>Plugins um Datensätze anzuzeigen</target>
+            </trans-unit>
+            <trans-unit id="plugin_types.manipulation">
+                <source>Record Manipulation Plugins</source>
+                <target>Plugins um die Datensatzanzeige zu ändern</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.list">
+                <source>List</source>
+                <target>Liste</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.detail">
+                <source>Detail</source>
+                <target>Einzelansicht</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.part">
+                <source>Part from a record</source>
+                <target>Teil eines Datensatzes</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.dynamic_detail">
+                <source>Dynamic Detail</source>
+                <target>Dynamische Einzelansicht</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.search">
+                <source>Search Form</source>
+                <target>Suchformular</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.letterselect">
+                <source>Letter Selection</source>
+                <target>Anfangsbuchstabenauswahl</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.sort">
+                <source>Sort Form</source>
+                <target>Sortierungsformular</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.please_select">
+                <source>-- Please select a plugin type --</source>
+                <target>-- Bitte wählen Sie einen Plugintyp --</target>
+            </trans-unit>
+
+            <!-- Plugins -->
+            <trans-unit id="plugin.wizard_tab">
+                <source>DataViewer Plugins</source>
+                <target>DataViewer Plugins</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi1">
+                <source>Display Records</source>
+                <target>Datensätze anzeigen</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi2">
+                <source>Insert Searchform</source>
+                <target>Suchformular einfügen</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi3">
+                <source>Insert Letter Selection</source>
+                <target>Buchstabenauswahl einfügen</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi4">
+                <source>Insert Sorting Form</source>
+                <target>Sortierungsformular einfügen</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi5">
+                <source>Insert Filtering Form</source>
+                <target>Filter-Formular einfügen</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi6">
+                <source>Insert Record Selection</source>
+                <target>Datensatzauswahl anzeigen</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi7">
+                <source>Record Save Form</source>
+                <target>Datensatz-Speichern Formular</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi1_description">
+                <source>Add records to your site. This plugin offers different possibilities to integrate records.</source>
+                <target>Fügen Sie Datensätze Ihrer Seite hinzu. Dieses Plugin ermöglicht unterschiedliche Anzeigearten von Datensätzen.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi2_description">
+                <source>Adds a search form to your site to search record contents.</source>
+                <target>Fügt ein Suchformular der Seite hinzu um in Datensätzen zu suchen.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi3_description">
+                <source>Add a letter selection (A,B,C etc.) to your site to filter records by the selected letter.</source>
+                <target>Fügt eine Buchstabenauswahl hinzu um Datensätze nach Anfangsbuchstaben eines Feldes zu filtern.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi4_description">
+                <source>Add a form for sorting records to your site.</source>
+                <target>Fügt ein Sortierungsformular der Seite hinzu um Datensätze nach Feldern zu sortieren.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi5_description">
+                <source>Adds an filter form to your site to show only records that are valid for the selected filters.</source>
+                <target>Fügt ein Filterformular der Seite hinzu um Datensätze nach Feldern zu filtern.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi6_description">
+                <source>Adds an record selection form to your site where records can be selected and used in the record plugin.</source>
+                <target>Fügt ein Auswahlformular für Datensätze ein, welche im 'Datensätze anzeigen'-Plugin verwendet werden können.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi7_description">
+                <source>Adds an Form to the site for saving and validating form data which is passed from a template.</source>
+                <target>Fügt ein Formular der Seite hinzu, zum Speichern und Auswerten von Formulardaten, welche über ein Template übergeben werden.</target>
+            </trans-unit>
+
+            <!-- Messages -->
+            <trans-unit id="message.no_plugin_type_selected">
+                <source>No plugin type selected</source>
+                <target>Kein Plugintyp ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="message.please_select_a_plugin_type">
+                <source>Please select a plugin type in the plugin settings</source>
+                <target>Bitte wählen Sie einen Plugintyp in den Einstellungen aus</target>
+            </trans-unit>
+            <trans-unit id="message.this_field_has_no_configuration">
+                <source>This field has no configuration.</source>
+                <target>Dieses Feld besitzt keine Konfiguration.</target>
+            </trans-unit>
+            <trans-unit id="no_configuration">
+                <source>No configuration.</source>
+                <target>Keine Konfiguration.</target>
+            </trans-unit>
+            <trans-unit id="appearance">
+                <source>Appearance</source>
+                <target>Anzeige</target>
+            </trans-unit>
+            <trans-unit id="see_tca_reference">
+                <source>See TCA Reference for more information.</source>
+                <target>Bitte beachten Sie die TCA-Referenz Dokumentation für weitere Informationen.</target>
+            </trans-unit>
+            
+
+            <!-- Domain/Model/Datatype -->
+            <trans-unit id="tx_dataviewer_domain_model_datatype">
+                <source>Datatype</source>
+                <target>Datentyp</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.name">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.description">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.icon">
+                <source>Icon</source>
+                <target>Icon</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.templatefile">
+                <source>Template File for Rendering (PartViewHelper)</source>
+                <target>Templatedatei für Rendering (PartViewHelper)</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.fields">
+                <source>Fields</source>
+                <target>Felder</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.color">
+                <source>Color</source>
+                <target>Farbe</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
+                <source>Hide Records of this type in lists</source>
+                <target>Datensätze dieses Typs in Listen verstecken</target>
+            </trans-unit>
+
+            <!-- Domain/Model/Field -->
+            <trans-unit id="tx_dataviewer_domain_model_field">
+                <source>Field</source>
+                <target>Feld</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.is_active">
+                <source>Show in Record</source>
+                <target>In Datensätzen anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.id">
+                <source>Id</source>
+                <target>Id</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.type">
+                <source>Type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.frontend_label">
+                <source>Frontend Label</source>
+                <target>Frontend Label</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.variable_name">
+                <source>Custom Variable Name</source>
+                <target>Eigener Variablenname</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.description">
+                <source>Backend Description</source>
+                <target>Backend Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.css_class">
+                <source>Backend Css Class</source>
+                <target>Backend CSS Klasse</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.unit">
+                <source>Unit / Additional Text</source>
+                <target>Einheit / Angehängter Text</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.column_width">
+                <source>Backend Column Width</source>
+                <target>Spaltenbreite</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.tab_name">
+                <source>Name of the Tab to add to</source>
+                <target>Name des Tabs zu dem dieser Eintrag hinzugefügt werden soll</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.show_title">
+                <source>Show Title</source>
+                <target>Titel anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.is_record_title">
+                <source>Use as record title</source>
+                <target>Als Datensatz-Titel benutzen</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.validation">
+                <source>Field Validation</source>
+                <target>Feldvalidierung</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.field_configuration">
+                <source>Field Configuration</source>
+                <target>Feldkonfiguration</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.display_cond">
+                <source>Display Conditions</source>
+                <target>Anzeigebedingungen (Display Conditions)</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.request_update">
+                <source>Request Update (onChange)</source>
+                <target>Bei Ändern neuladen</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.field_values">
+                <source>Field Values</source>
+                <target>Feldwerte</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.templatefile">
+                <source>Template File for Part-Rendering (PartViewHelper)</source>
+                <target>Templatedatei für Teil-Rendering (PartViewHelper)</target>
+            </trans-unit>
+
+            <!-- Domain/Model/Fieldvalue -->
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue">
+                <source>Field Value</source>
+                <target>Feldwert</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.type">
+                <source>Type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.value_content">
+                <source>Value Content</source>
+                <target>Wertinhalt</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.field_content">
+                <source>Field Content</source>
+                <target>Feldinhalt</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.table_content">
+                <source>Table Content</source>
+                <target>Tabellenname</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.column_name">
+                <source>Column Name</source>
+                <target>Spaltenname</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.where_clause">
+                <source>Where Clause</source>
+                <target>WHERE-Bedingung</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.pass_to_fe">
+                <source>Pass Value to Frontend</source>
+                <target>Wert ans Frontend weitergeben</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.is_readonly">
+                <source>Is Readonly</source>
+                <target>Nur lesen</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.is_default">
+                <source>Is Default</source>
+                <target>Standardwert</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.pretends_empty">
+                <source>Pretends to be an empty value</source>
+                <target>Als leeren Wert darstellen</target>
+            </trans-unit>
+
+            <!-- Domain/Model/Record -->
+            <trans-unit id="tx_dataviewer_domain_model_record">
+                <source>Record</source>
+                <target>Datensatz</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_record.uid">
+                <source>Record Uid</source>
+                <target>Uid</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_record.datatype">
+                <source>Datatype</source>
+                <target>Datentyp</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_record.record_values">
+                <source>Record Values</source>
+                <target>Datensatz-Werte</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_record.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+
+            <trans-unit id="tx_dataviewer_domain_model_recordvalue">
+                <source>Record Value</source>
+                <target>Datensatz Wert</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_recordvalue.value_content">
+                <source>Value Content</source>
+                <target>Wertinhalt</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_recordvalue.record">
+                <source>Record</source>
+                <target>Datensatz</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_recordvalue.field">
+                <source>Field</source>
+                <target>Feld</target>
+            </trans-unit>
+
+            <!-- Domain/Model/Variable -->
+            <trans-unit id="tx_dataviewer_domain_model_variable">
+                <source>Template Variable</source>
+                <target>Template Variable</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type">
+                <source>Type</source>
+                <target>Typ</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.variable_name">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.record">
+                <source>Record</source>
+                <target>Datensatz</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.field">
+                <source>Field</source>
+                <target>Feld</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.table_content">
+                <source>Table</source>
+                <target>Tabelle</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.column_name">
+                <source>Column</source>
+                <target>Spalte</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.where_clause">
+                <source>Where Clause</source>
+                <target>WHERE-Bedingung</target>
+            </trans-unit>
+
+
+            <!-- Messages -->
+            <trans-unit id="please_select_datatype">
+                <source>-- Please select a datatype --</source>
+                <target>-- Bitte wählen Sie einen Datentyp --</target>
+            </trans-unit>
+            <trans-unit id="please_select_datatype_to_continue">
+                <source>Please select a datatype to continue</source>
+                <target>Bitte wählen Sie einen Datentyp um fortzufahren</target>
+            </trans-unit>
+            <trans-unit id="datatype_not_found">
+                <source>Datatype not found</source>
+                <target>Datentyp nicht gefunden</target>
+            </trans-unit>
+            <trans-unit id="field_not_found">
+                <source>Field not found</source>
+                <target>Feld nicht gefunden</target>
+            </trans-unit>
+            <trans-unit id="datatype_not_selected">
+                <source>No Datatype selected</source>
+                <target>Kein Datentyp ausgewählt</target>
+            </trans-unit>
+            <trans-unit id="no_support_for_different_fieldvalues">
+                <source>This field doesn't support different field value types. Please add a fixed value!</source>
+                <target>Dieses Feld unterstützt nur feste Werte!</target>
+            </trans-unit>
+            <trans-unit id="no_support_for_dynamic_database_values">
+                <source>This fieldtype doesn't support dynamic database values.</source>
+                <target>Dieser Feldtyp unterstützt keine dynamischen Datenbankwerte.</target>
+            </trans-unit>
+            <trans-unit id="no_support_for_dynamic_database_or_database_values">
+                <source>This fieldtype doesn't support database and dynamic database values.</source>
+                <target>Dieser Feldtyp unterstützt keine (dynamischen) Datenbankwerte.</target>
+            </trans-unit>
+            <trans-unit id="field_has_no_field_values">
+                <source>The field '%s' has no field values. Please add at least one field value!</source>
+                <target>>Dieses Feld besitzt keine Feldwerte. Bitte fügen Sie mindestens einen Feldwert hinzu!</target>
+            </trans-unit>
+            <trans-unit id="no_inline_configuration_for_field_type_available">
+                <source>There is currently no inline configuration available for this field type!</source>
+                <target>Es gibt zur Zeit noch keine Inline-Konfiguration für diesen Feldtyp!</target>
+            </trans-unit>
+            <trans-unit id="datatype_has_no_fields">
+                <source>Datatype does not contain fields. Please add fields to this datatype.</source>
+                <target>Dieser Datentyp hat noch keine Felder. Bitte fügen Sie Felder hinzu!</target>
+            </trans-unit>
+            <trans-unit id="record_not_found">
+                <source>Record with Id '%s' not found.</source>
+                <target>Datensatz mit Id '%s' wurde nicht gefunden.</target>
+            </trans-unit>
+            <trans-unit id="no_record_content_given">
+                <source>No record content given.</source>
+                <target>Kein Datensatzinhalt gefunden.</target>
+            </trans-unit>
+            <trans-unit id="no_flexform_content_given">
+                <source>No flexform default content given.</source>
+                <target>Kein FlexForm Standardinhalt gefunden.</target>
+            </trans-unit>
+            <trans-unit id="no_records_found">
+                <source>No records found.</source>
+                <target>Keine Datensätze gefunden.</target>
+            </trans-unit>
+            <trans-unit id="record_was_successfully_deleted">
+                <source>Record with Id '%s' was successfully deleted.</source>
+                <target>Datensatz mit Id '%s' wurde erfolgreich gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="could_not_delete_record">
+                <source>Could not delete Record with Id '%s'.</source>
+                <target>Datensatz mit Id '%s' konnte nicht gelöscht werden.</target>
+            </trans-unit>
+            <trans-unit id="record_was_successfully_saved">
+                <source>Record with Id '%s' was successfully saved.</source>
+                <target>Datensatz mit Id '%s' wurde erfolgreich gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="field_was_successfully_saved">
+                <source>Field with Id '%s' was successfully saved.</source>
+                <target>Feld mit Id '%s' wurde erfolgreich gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="field_was_successfully_deleted">
+                <source>Field with Id '%s' and according record values were successfully deleted.</source>
+                <target>Das Feld mit Id '%s' sowie zugehörige Feldwerte wurden erfolgreich gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="fieldvalue_was_successfully_deleted">
+                <source>FieldValue with Id '%s' and according record values were successfully deleted.</source>
+                <target>Der Feldwert mit Id '%s' sowie zugehörige Datensatzwerte wurden erfolgreich gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="datatype_was_successfully_saved">
+                <source>Datatype with Id '%s' was successfully saved.</source>
+                <target>Datentyp mit Id '%s' wurde erfolgreich gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="field_is_required">
+                <source>The field '%s' is required. Please fill out all values.</source>
+                <target>Feld '%s' ist ein Pflichtfeld. Bitte füllen Sie das Feld aus.</target>
+            </trans-unit>
+            <trans-unit id="database_value_is_required_for_inline_element">
+                <source>The inline element only works with database field values.</source>
+                <target>Dieses Inline-Element funktioniert nur mit Datenbankwerten.</target>
+            </trans-unit>
+            <trans-unit id="database_value_is_required_for_database_element">
+                <source>The database element only works with database field values.</source>
+                <target>Dieses Datenbank-Element funktioniert nur mit Datenbankwerten.</target>
+            </trans-unit>
+            <trans-unit id="not_configured">
+                <source>This plugin is not yet configured.</source>
+                <target>Plugin wurde noch nicht konfiguriert.</target>
+            </trans-unit>
+            <trans-unit id="datatype_not_saved">
+                <source>Unable to save datatype.</source>
+                <target>Datentyp konnte nicht gespeichert werden.</target>
+            </trans-unit>
+            <trans-unit id="record_not_saved">
+                <source>Unable to save record.</source>
+                <target>Datensatz konnte nicht gespeichert werden.</target>
+            </trans-unit>
+            <trans-unit id="record_invalid">
+                <source>Record is now hidden. Please fix the displayed errors first and then remove the 'Hide'-Check.</source>
+                <target>Datensatz ist nun verborgen. Bitte beheben Sie die angezeigten Fehler zuerst und entfernen Sie dann das 'Verbergen'-Häkchen.</target>
+            </trans-unit>
+
+
+            <!-- Stuff -->
+            <trans-unit id="items">
+                <source>Found Items (%s):</source>
+                <target>Gefundene Einträge (%s):</target>
+            </trans-unit>
+            <trans-unit id="number_records_found">
+                <source>%s Records found</source>
+                <target>%s Einträge gefunden</target>
+            </trans-unit>
+
+            <trans-unit id="empty">
+                <source>(Empty)</source>
+                <target>(leer)</target>
+            </trans-unit>
+            <trans-unit id="page">
+                <source>Page</source>
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="entry">
+                <source>Entry Id %s</source>
+                <target>Eintrag Id %s</target>
+            </trans-unit>
+            <trans-unit id="dynamic_value">
+                <source>Attach Values from Database for Frontend</source>
+                <target>Werte aus Datenbank dem Frontend hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="required">
+                <source>Required</source>
+                <target>Pflichtfeld</target>
+            </trans-unit>
+            <trans-unit id="formvalue_access_to_hidden_field">
+                <source>The Form-Value is accessible in frontend with the following fluid code:</source>
+                <target>Dieser Formularwert ist im Frontend über den folgenden Fluid-Code erreichbar:</target>
+            </trans-unit>
+            <trans-unit id="available_field_ids">
+                <source>Available Field Ids:</source>
+                <target>Verfügbare Feld-Ids:</target>
+            </trans-unit>
+            <trans-unit id="back_to_record_list">
+                <source>Back to record list</source>
+                <target>Zurück zur Datensatzliste</target>
+            </trans-unit>
+            <trans-unit id="search_requires_characters">
+                <source>The search requires minimum of %s characters.</source>
+                <target>Die Mindestlänge für die Suche beträgt %s Zeichen.</target>
+            </trans-unit>
+            <trans-unit id="field_class_does_not_exist">
+                <source>A field class '%s' does not exist!</source>
+                <target>Ein Feld mit der Klasse '%s' existiert nicht!</target>
+            </trans-unit>
+
+            <!-- Flexform Conditions -->
+            <trans-unit id="flexform.eq">
+                <source>Equal (eq)</source>
+                <target>Gleich (eq)</target>
+            </trans-unit>
+            <trans-unit id="flexform.neq">
+                <source>Not Equal (neq)</source>
+                <target>Nicht gleich (neq)</target>
+            </trans-unit>
+            <trans-unit id="flexform.like">
+                <source>Like (like)</source>
+                <target>Ähnlich (like)</target>
+            </trans-unit>
+            <trans-unit id="flexform.nlike">
+                <source>Not Like (nlike)</source>
+                <target>Nicht ähnlich (nlike)</target>
+            </trans-unit>
+            <trans-unit id="flexform.in">
+                <source>In (in)</source>
+                <target>In (in)</target>
+            </trans-unit>
+            <trans-unit id="flexform.nin">
+                <source>Not In (nin)</source>
+                <target>Nicht in (nin)</target>
+            </trans-unit>
+            <trans-unit id="flexform.gt">
+                <source>Greater Than (gt)</source>
+                <target>Größer als (gt)</target>
+            </trans-unit>
+            <trans-unit id="flexform.lt">
+                <source>Lower Than (lt)</source>
+                <target>Kleiner als (lt)</target>
+            </trans-unit>
+            <trans-unit id="flexform.gteq">
+                <source>Greater Than or Equal (gteq)</source>
+                <target>Größer als oder gleich (gteq)</target>
+            </trans-unit>
+            <trans-unit id="flexform.lteq">
+                <source>Lower Than or Equal (lteq)</source>
+                <target>Kleiner als oder gleich (lteq)</target>
+            </trans-unit>
+            <trans-unit id="flexform.null">
+                <source>Is Null (null)</source>
+                <target>Ist Null (null)</target>
+            </trans-unit>
+            <trans-unit id="flexform.notnull">
+                <source>Is Not Null (notnull)</source>
+                <target>Ist nicht Null (notnull)</target>
+            </trans-unit>
+
+            <trans-unit id="showing_records_per_page">
+                <source>Showing %s Records per Page</source>
+                <target>Zeige %s Datensätze pro Seite</target>
+            </trans-unit>
+            <trans-unit id="searching_for">
+                <source>Searching for '%s'</source>
+                <target>Suche nach '%s'</target>
+            </trans-unit>
+            <trans-unit id="record_title">
+                <source>Record Title</source>
+                <target>Datensatztitel</target>
+            </trans-unit>
+            <trans-unit id="no_preselection">
+                <source>No preselection</source>
+                <target>Keine Vorauswahl</target>
+            </trans-unit>
+            <trans-unit id="backend_settings">
+                <source>Backend Settings</source>
+                <target>Backend Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="frontend_settings">
+                <source>Frontend Settings</source>
+                <target>Frontend Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="selected_datatype">
+                <source>Selected Datatype</source>
+                <target>Ausgewählter Datentyp</target>
+            </trans-unit>
+            <trans-unit id="selected_record">
+                <source>Selected Record</source>
+                <target>Ausgewählter Datensatz</target>
+            </trans-unit>
+            <trans-unit id="selected_field">
+                <source>Selected Field</source>
+                <target>Ausgewähltes Feld</target>
+            </trans-unit>
+            <trans-unit id="on_this_page">
+                <source>On this page</source>
+                <target>Auf dieser Seite</target>
+            </trans-unit>
+            <trans-unit id="on_other_pages">
+                <source>On other pages</source>
+                <target>Auf anderen Seiten</target>
+            </trans-unit>
+            <trans-unit id="selection_invalid">
+                <source>Selection invalid</source>
+                <target>Auswahl ungültig</target>
+            </trans-unit>
+            <trans-unit id="please_regard_selection_limit">
+                <source>Please regard the selection limit of %s entries.</source>
+                <target>Bitte beachten Sie die Auswahllimitierung auf max. %s Einträge.</target>
+            </trans-unit>
+
+            <!-- Sorting -->
+            <trans-unit id="sort.asc">
+                <source>Ascending</source>
+                <target>Aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="sort.desc">
+                <source>Descending</source>
+                <target>Absteigend</target>
+            </trans-unit>
+            <trans-unit id="sort.sort_by">
+                <source>Sort by</source>
+                <target>Sortieren nach</target>
+            </trans-unit>
+            <trans-unit id="sort.sort_order">
+                <source>Sort Order</source>
+                <target>Sortierung</target>
+            </trans-unit>
+            <trans-unit id="sort.per_page">
+                <source>Items per Page</source>
+                <target>Einträge pro Seite</target>
+            </trans-unit>
+            <trans-unit id="sort.record_title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="sort.record_uid">
+                <source>Uid</source>
+                <target>Uid</target>
+            </trans-unit>
+            <trans-unit id="sort.record_sorting">
+                <source>Sorting</source>
+                <target>Sortierung</target>
+            </trans-unit>
+            <trans-unit id="sort.record_datatype">
+                <source>Type of the record</source>
+                <target>Datensatztyp</target>
+            </trans-unit>
+            <trans-unit id="sort.record_tstamp">
+                <source>Last changed</source>
+                <target>Änderungsdatum</target>
+            </trans-unit>
+            <trans-unit id="sort.record_crdate">
+                <source>Creation Date</source>
+                <target>Erstellungsdatum</target>
+            </trans-unit>
+            <trans-unit id="sort.record_starttime">
+                <source>Access Starttime</source>
+                <target>Zugriff Start</target>
+            </trans-unit>
+            <trans-unit id="sort.record_endtime">
+                <source>Access Endtime</source>
+                <target>Zugriff Ende</target>
+            </trans-unit>
+            <trans-unit id="sort.random">
+                <source>Random</source>
+                <target>Zufällig</target>
+            </trans-unit>
+
+            <trans-unit id="tab.general">
+                <source>General</source>
+                <target>Allgemein</target>
+            </trans-unit>
+
+
+            <!-- Field Types -->
+            <trans-unit id="type.datatype">
+                <source>Inline Relation Datatype</source>
+                <target>Inline Beziehung zu Datentyp</target>
+            </trans-unit>
+            <trans-unit id="type.select">
+                <source>Select Field</source>
+                <target>Auswahlfeld</target>
+            </trans-unit>
+            <trans-unit id="type.multiselect">
+                <source>Multiselect Field</source>
+                <target>Mehrfachauswahlfeld</target>
+            </trans-unit>
+            <trans-unit id="type.group">
+                <source>Group Field</source>
+                <target>Gruppenfeld</target>
+            </trans-unit>
+            <trans-unit id="type.radio">
+                <source>Radio Buttons</source>
+                <target>Radio Buttons</target>
+            </trans-unit>
+            <trans-unit id="type.checkbox">
+                <source>Checkboxes</source>
+                <target>Checkboxen</target>
+            </trans-unit>
+            <trans-unit id="type.textarea">
+                <source>Textarea</source>
+                <target>Textbereich</target>
+            </trans-unit>
+            <trans-unit id="type.input">
+                <source>Input Field</source>
+                <target>Eingabefeld</target>
+            </trans-unit>
+            <trans-unit id="type.database">
+                <source>Database Records</source>
+                <target>Datenbank-Einträge</target>
+            </trans-unit>
+            <trans-unit id="type.dynamic_input">
+                <source>Dynamic Input Fields</source>
+                <target>Dynamische Eingabefelder</target>
+            </trans-unit>
+            <trans-unit id="type.date">
+                <source>Date Field</source>
+                <target>Datum</target>
+            </trans-unit>
+            <trans-unit id="type.flex">
+                <source>Flexform Field</source>
+                <target>Flexform</target>
+            </trans-unit>
+            <trans-unit id="type.typoscript">
+                <source>TypoScript</source>
+                <target>TypoScript</target>
+            </trans-unit>
+            <trans-unit id="type.tca">
+                <source>TCA XML</source>
+                <target>TCA XML</target>
+            </trans-unit>
+            <trans-unit id="type.datetime">
+                <source>Date and Time Field</source>
+                <target>Datum und Zeit</target>
+            </trans-unit>
+            <trans-unit id="type.image">
+                <source>Image</source>
+                <target>Bild</target>
+            </trans-unit>
+            <trans-unit id="type.inline">
+                <source>Inline Elements</source>
+                <target>Inline Elemente</target>
+            </trans-unit>
+            <trans-unit id="type.file_relation">
+                <source>File Relations</source>
+                <target>Dateirelationen</target>
+            </trans-unit>
+            <trans-unit id="type.file">
+                <source>File</source>
+                <target>Datei</target>
+            </trans-unit>
+            <trans-unit id="type.page">
+                <source>Page</source>
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="type.link">
+                <source>Link</source>
+                <target>Link</target>
+            </trans-unit>
+            <trans-unit id="type.category">
+                <source>Category Selection</source>
+                <target>Kategorieauswahl</target>
+            </trans-unit>
+            <trans-unit id="type.rte">
+                <source>Rich-Text Editor (RTE)</source>
+                <target>Rich-Text HTML Editor (RTE)</target>
+            </trans-unit>
+            <trans-unit id="type.fluid">
+                <source>Fluid Code</source>
+                <target>Fluid Code</target>
+            </trans-unit>
+            <trans-unit id="type.hidden">
+                <source>Hidden, passed Frontend</source>
+                <target>Versteckt, Weitergabe zum Frontend</target>
+            </trans-unit>
+
+            <!-- Variable Types -->
+            <trans-unit id="variable_type.0">
+                <source>Fixed Value</source>
+                <target>Fester Wert</target>
+            </trans-unit>
+            <trans-unit id="variable_type.1">
+                <source>TypoScript Value</source>
+                <target>TypoScript Wert</target>
+            </trans-unit>
+            <trans-unit id="variable_type.2">
+                <source>TypoScript Variable</source>
+                <target>TypoScript Variable</target>
+            </trans-unit>
+            <trans-unit id="variable_type.3">
+                <source>GET Variable</source>
+                <target>GET Variable</target>
+            </trans-unit>
+            <trans-unit id="variable_type.4">
+                <source>POST Variable</source>
+                <target>POST Variable</target>
+            </trans-unit>
+            <trans-unit id="variable_type.5">
+                <source>Record</source>
+                <target>Datensatz</target>
+            </trans-unit>
+            <trans-unit id="variable_type.6">
+                <source>Record Field Value</source>
+                <target>Feldwert aus Datensatz</target>
+            </trans-unit>
+            <trans-unit id="variable_type.7">
+                <source>Database Value</source>
+                <target>Datenbankwert</target>
+            </trans-unit>
+            <trans-unit id="variable_type.8">
+                <source>Frontend User</source>
+                <target>Frontend Benutzer</target>
+            </trans-unit>
+
+
+            <!-- FieldValue Types -->
+            <trans-unit id="type.0">
+                <source>Fixed Value</source>
+                <target>Fester Wert</target>
+            </trans-unit>
+            <trans-unit id="type.1">
+                <source>Database Value</source>
+                <target>Datenbankwert</target>
+            </trans-unit>
+            <trans-unit id="type.2">
+                <source>TypoScript</source>
+                <target>TypoScript</target>
+            </trans-unit>
+            <trans-unit id="type.3">
+                <source>All Values of a Field</source>
+                <target>Alle Werte eines Feldes</target>
+            </trans-unit>
+
+            <trans-unit id="value_content">
+                <source>Value Content</source>
+                <target>Wertinhalt</target>
+            </trans-unit>
+            <trans-unit id="default">
+                <source>Default</source>
+                <target>Standard</target>
+            </trans-unit>
+            <trans-unit id="filter">
+                <source>Filter</source>
+                <target>Filtern</target>
+            </trans-unit>
+            <trans-unit id="reset">
+                <source>Reset</source>
+                <target>Zurücksetzen</target>
+            </trans-unit>
+            <trans-unit id="select">
+                <source>Select</source>
+                <target>Auswählen</target>
+            </trans-unit>
+
+            <trans-unit id="flexform.validation">
+                <source>Validation</source>
+                <target>Validierung</target>
+            </trans-unit>
+            <trans-unit id="flexform.validator">
+                <source>Validator</source>
+                <target>Validator</target>
+            </trans-unit>
+            <trans-unit id="flexform.validation_configuration">
+                <source>Validator Configuation</source>
+                <target>Validator Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="flexform.category_sources">
+                <source>Category Sources</source>
+                <target>Kategorie Quellen</target>
+            </trans-unit>
+
+            <trans-unit id="validator.alphanumeric">
+                <source>AlphaNumeric</source>
+                <target>Alphanummerisch</target>
+            </trans-unit>
+            <trans-unit id="validator.boolean">
+                <source>Boolean Expression</source>
+                <target>Boolscher Ausdruck</target>
+            </trans-unit>
+            <trans-unit id="validator.datetime">
+                <source>DateTime</source>
+                <target>Datum und Zeit</target>
+            </trans-unit>
+            <trans-unit id="validator.email">
+                <source>E-Mail Address</source>
+                <target>E-Mail Adresse</target>
+            </trans-unit>
+            <trans-unit id="validator.float">
+                <source>Float Value</source>
+                <target>Kommazahlenwert (Float)</target>
+            </trans-unit>
+            <trans-unit id="validator.integer">
+                <source>Integer Value</source>
+                <target>Zahlenwert (Integer)</target>
+            </trans-unit>
+            <trans-unit id="validator.not_empty">
+                <source>Not Empty Value</source>
+                <target>Nicht leer</target>
+            </trans-unit>
+            <trans-unit id="validator.number_range">
+                <source>Number Range</source>
+                <target>Nummernbereich</target>
+            </trans-unit>
+            <trans-unit id="validator.number">
+                <source>Numeric</source>
+                <target>Nummerisch</target>
+            </trans-unit>
+            <trans-unit id="validator.reg_ex">
+                <source>Regular Expression (RegEx)</source>
+                <target>Regulärer Ausdruck (RegEx)</target>
+            </trans-unit>
+            <trans-unit id="validator.strlen">
+                <source>String Length</source>
+                <target>Zeichenlänge</target>
+            </trans-unit>
+            <trans-unit id="validator.string">
+                <source>String</source>
+                <target>Textwert</target>
+            </trans-unit>
+            <trans-unit id="validator.text">
+                <source>Text</source>
+                <target>Text</target>
+            </trans-unit>
+
+            <trans-unit id="validation.is">
+                <source>is</source>
+                <target>ist</target>
+            </trans-unit>
+            <trans-unit id="validation.true">
+                <source>true (1)</source>
+                <target>wahr (1)</target>
+            </trans-unit>
+            <trans-unit id="validation.false">
+                <source>false (0)</source>
+                <target>unwahr (0)</target>
+            </trans-unit>
+            <trans-unit id="validation.minimum">
+                <source>Minimum</source>
+                <target>Minimum</target>
+            </trans-unit>
+            <trans-unit id="validation.maximum">
+                <source>Maximum</source>
+                <target>Maximum</target>
+            </trans-unit>
+
+            <trans-unit id="mlang_tabs_tab">
+                <source>DataViewer</source>
+                <target>DataViewer</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tablabel">
+                <source>DataViewer Record management</source>
+                <target>DataViewer Datensatz-Management</target>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr">
+                <source>This module manages records of different type. You can easily manage or add records to the selected page.</source>
+                <target>Dieses Modul dient zur Verwaltung von allen DataViewer Komponenten. Die können neue Datensätze oder Datentypen auf der ausgewählten Seite anlegen oder verwalten.</target>
+            </trans-unit>
+
+
+            <trans-unit id="module.name">
+                <source>DataViewer</source>
+                <target>DataViewer</target>
+            </trans-unit>
+            <trans-unit id="module.records">
+                <source>Manage Records</source>
+                <target>Datensätze verwalten</target>
+            </trans-unit>
+            <trans-unit id="module.datatypes">
+                <source>Manage Datatypes</source>
+                <target>Datentypen verwalten</target>
+            </trans-unit>
+            <trans-unit id="module.datatypes_information">
+                <source>Datatypes Information</source>
+                <target>Informationen zu Datentypen</target>
+            </trans-unit>
+            <trans-unit id="module.records_on_this_page">
+                <source>Records on this page</source>
+                <target>Datensätze auf dieser Seite</target>
+            </trans-unit>
+            <trans-unit id="module.datatypes_on_this_page">
+                <source>Datatypes on this page</source>
+                <target>Datentypen auf dieser Seite</target>
+            </trans-unit>
+            <trans-unit id="module.number_of_records">
+                <source>There are %s records on this page</source>
+                <target>Es befinden sich %s Datensätze auf dieser Seite</target>
+            </trans-unit>
+            <trans-unit id="module.number_of_datatypes">
+                <source>There are %s datatypes on this page</source>
+                <target>Es befinden sich %s Datentypen auf dieser Seite</target>
+            </trans-unit>
+            <trans-unit id="module.search_placeholder">
+                <source>Searchstring</source>
+                <target>Suchwort</target>
+            </trans-unit>
+            <trans-unit id="module.create_a_new_record_on_this_page">
+                <source>Create a new record on this page</source>
+                <target>Neuen Datensatz auf dieser Seite erstellen</target>
+            </trans-unit>
+            <trans-unit id="module.create_record_by_datatype">
+                <source>Create new '%s'-Record</source>
+                <target>Neuen '%s'-Datensatz erstellen</target>
+            </trans-unit>
+            <trans-unit id="module.no_records_found">
+                <source>No records were found on this page.</source>
+                <target>Es befinden sich keine Datensätze auf dieser Seite.</target>
+            </trans-unit>
+            <trans-unit id="module.no_datatypes_found">
+                <source>No datatypes were found on this page.</source>
+                <target>Es befinden sich keine Datentypen auf dieser Seite.</target>
+            </trans-unit>
+            <trans-unit id="module.new_datatype">
+                <source>Create new datatype</source>
+                <target>Neuen Datentyp erstellen</target>
+            </trans-unit>
+            <trans-unit id="module.new_field">
+                <source>Create new field</source>
+                <target>Neues Feld erstellen</target>
+            </trans-unit>
+            <trans-unit id="module.click_on_entry_to_open_details">
+                <source>Please click on an entry in the following table to open details for the selected entry.</source>
+                <target>Bitte klicken Sie auf einen Eintrag um Details zu öffnen.</target>
+            </trans-unit>
+            
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,16 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:no_configuration</label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayNoConfigurationMessage</userFunc>
+                    </config>
+                </TCEforms>
+            </info>
+        </el>
+    </ROOT>
+</T3DataStructure>

@@ -1,0 +1,5 @@
+<f:for each="{formValue.values}" as="value">
+    <f:if condition="{value.content}">
+        <f:render partial="Field/Format/Datetime/Value" arguments="{formValue:formValue,value:value}" />
+    </f:if>
+</f:for>

@@ -1,0 +1,337 @@
+plugin.tx_dataviewer {
+
+	settings {
+		recordsVariableName = {$plugin.tx_dataviewer.developer.recordsVariableName}
+		singleRecordVariableName = {$plugin.tx_dataviewer.developer.singleRecordVariableName}
+		partVariableName = {$plugin.tx_dataviewer.developer.partVariableName}
+	}
+	
+	view {
+		templateRootPaths {
+			100 = {$plugin.tx_dataviewer.view.templateRootPath}
+		}
+		partialRootPaths {
+			100 = {$plugin.tx_dataviewer.view.partialRootPath}
+		}
+		layoutRootPaths {
+			100 = {$plugin.tx_dataviewer.view.layoutRootPath}
+		}
+	}
+}
+
+plugin.tx_dataviewer.fieldtypes {
+     
+    ## Default Configuration for DataViewer FieldTypes ##
+   	## You can manually add more fieldtypes if you want, if
+   	## you follow these rules:
+    ## ---------------------------------------------------------------------------
+    ## For your custom FieldType
+    ## CustomFieldtype extends AbstractFieldtype implements FieldtypeInterface
+    ## ---------------------------------------------------------------------------
+    ## For your custom FieldValue
+    ## CustomFieldvalue extends AbstractFieldvalue implements FieldvalueInterface
+    ## ---------------------------------------------------------------------------
+     
+    # Fieldtype Declaration for Inline Datatype #
+    # customfieldtype {
+    #	fieldClass = Vendor\Extension\Fieldtype\CustomFieldtype
+    #	valueClass = Vendor\Extension\Fieldvalue\CustomFieldtype
+    #	icon = EXT:extension/Resources/Public/Icons/Fieldtype/customfieldtype.gif
+    #	label = LLL:EXT:extension/Resources/Private/Language/locallang.xlf:type.customfieldtype
+    # }
+
+	# Fieldtype Declaration for Input Field #
+	input {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Input
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\General
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/input.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.input
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Input.xml
+	}
+
+	# Fieldtype Declaration for Textarea #
+	textarea {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Textarea
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\General
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/textarea.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.textarea
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Text.xml
+	}
+    
+    # Fieldtype Declaration for Single Select Field #
+  	select {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Select
+  		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Select
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/select.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.select
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Select.xml
+   	}
+     
+   	# Fieldtype Declaration for Multiselect Field #
+   	multiselect {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\MultiSelect
+	    valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\MultiSelect
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/multiselect.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.multiselect
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Multiselect.xml
+   	}
+
+	# Fieldtype Declaration for Group Field #
+	group {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Group
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Group
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/group.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.group
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Group.xml
+	}
+
+	# Fieldtype Declaration for Radio Buttons #
+   	radio {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Radio
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Radio
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/radio.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.radio
+   	}
+     
+   	# Fieldtype Declaration for Checkboxes #
+   	checkbox {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Checkbox
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Checkbox
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/checkbox.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.checkbox
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Checkbox.xml
+   	}
+
+	# Fieldtype Declaration for a date field #
+	date {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Date
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Date
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/date.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.date
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Date.xml
+	}
+
+	# Fieldtype Declaration for a Date and Time field #
+	datetime {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\DateTime
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\DateTime
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/datetime.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.datetime
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Date.xml
+	}
+
+	# Fieldtype Declaration for the Rich Text Editor #
+	rte {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Rte
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Rte
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/rte.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.rte
+	}
+
+	# Fieldtype Declaration for a Link Input Field #
+	link {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Link
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Link
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/link.gif
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.link
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Link.xml
+	}
+    
+   	# Fieldtype Declaration for Input Field #
+   	dyninput {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\DynamicInput
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\DynamicInput
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/dynamic_input.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.dynamic_input
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/DynamicInput.xml
+   	}
+     
+   	# Fieldtype Declaration for Images #
+   	image {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Image
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\File
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/image.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.image
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Image.xml
+   	}
+     
+   	# Fieldtype Declaration for File Selection #
+   	file {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\File
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\File
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/file.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.file
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/File.xml
+   	}
+     
+   	# Fieldtype Declaration for Page Selection #
+   	page {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Page
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Page
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/page.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.page
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Page.xml
+   	}
+     
+   	# Fieldtype Declaration for a category selection #
+   	category {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Category
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Category
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/category.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.category
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Category.xml
+   	}
+     
+   	# Fieldtype Declaration for a flexform field #
+   	flex {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Flex
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Flex
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/flexform.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.flex
+   	}
+     	
+   	# Fieldtype Declaration for a typoscript field #
+    typoscript {
+      	fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\TypoScript
+      	valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\TypoScript
+       	icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/typoscript.gif
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/TypoScript.xml
+       	label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.typoscript
+    }
+
+	# Fieldtype Declaration for inline elements #
+	inline {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Inline
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Inline
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/inline.gif
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Inline.xml
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.inline
+	}
+
+	# Fieldtype Declaration for inline elements #
+	datatype {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Datatype
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Datatype
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/datatype.gif
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Datatype.xml
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.datatype
+	}
+     
+   	# Fieldtype Declaration for database elements #
+   	database {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Database
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Database
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/database.gif
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.database
+   	}
+     
+   	# Fieldtype Declaration for database elements #
+   	relation {
+   		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\FileRelation
+   		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\FileRelation
+   		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/file_relation.gif
+	    flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/FileRelation.xml
+   		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.file_relation
+   	}
+
+	# Fieldtype Declaration for a flexform field #
+	fluid {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Fluid
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Fluid
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/fluid.gif
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Fluid.xml
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.fluid
+	}
+
+	# Fieldtype Declaration for a tca field #
+	tca {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Tca
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Tca
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/tca.gif
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Tca.xml
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.tca
+	}
+     
+   	# Fieldtype Declaration for a hidden value field #
+   	#hidden {
+   	#	fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\Hidden
+   	#	valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Hidden
+   	#	icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/hidden.gif
+   	#	label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.hidden
+   	#}
+
+}
+
+plugin.tx_dataviewer.validators {
+
+	alphanumeric {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\AlphanumericValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.alphanumeric
+	}
+	
+	boolean {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\BooleanValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.boolean
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Validation/Boolean.xml
+	}
+	
+	datetime {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\DateTimeValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.datetime
+	}
+	
+	email {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\EmailAddressValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.email
+	}
+	
+	float {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\FloatValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.float
+	}
+
+	integer {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\IntegerValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.integer
+	}
+	
+	notEmpty {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\NotEmptyValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.not_empty
+	}
+	
+	numberRange {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\NumberRangeValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.number_range
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Validation/NumberRange.xml
+	}
+	
+	number {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\NumberValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.number
+	}
+	
+	regEx {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\RegularExpressionValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.reg_ex
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Validation/RegEx.xml
+	}
+	
+	strlen {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\StringLengthValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.strlen
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Validation/StringLength.xml
+	}
+	
+	string {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\StringValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.string
+	}
+	
+	text {
+		validatorClass = TYPO3\CMS\Extbase\Validation\Validator\TextValidator
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:validator.text
+	}
+	
+	
+}

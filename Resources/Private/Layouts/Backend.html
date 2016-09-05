@@ -1,0 +1,53 @@
+<f:be.container>
+
+	{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+	<f:be.pageRenderer includeCssFiles="{
+		1: '../typo3/sysext/t3skin/Resources/Public/Css/backend.css',
+		2: '{f:uri.resource(path:\'Css/dataviewer-backend.css\')}'
+	}" 
+	loadJQuery="true"
+	loadExtJs="true"
+	jQueryNamespace="none"
+	includeRequireJsModules="{
+		0:'TYPO3/CMS/Viewpage/Main',
+		1:'TYPO3/CMS/Recordlist/FieldSelectBox',
+		2:'TYPO3/CMS/Recordlist/Recordlist',
+		3:'TYPO3/CMS/Backend/AjaxDataHandler',
+		4:'TYPO3/CMS/Recordlist/Tooltip',
+		5:'TYPO3/CMS/Backend/ToggleSearchToolbox'
+	}"
+	/>
+	<div class="module-docheader t3js-module-docheader">
+		<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
+			<div class="module-docheader-bar-column-left">
+				<f:be.buttons.csh />
+				<dv:backend.actionMenu>
+					<f:be.menus.actionMenuItem label="{f:translate(key:'module.records')}" controller="BackendModule" action="records" />
+					<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes')}" controller="BackendModule" action="datatypes" />
+					<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes_information')}" controller="BackendModule" action="datatypesDetails" />
+				</dv:backend.actionMenu>
+			</div>
+			<div class="module-docheader-bar-column-right">
+				<f:be.pagePath />
+				<f:be.pageInfo />
+			</div>
+		</div>
+
+		<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons">
+			<div class="module-docheader-bar-column-left">
+				<f:render section="Buttons" optional="true"/>
+			</div>
+			<div class="module-docheader-bar-column-right">
+				<div class="buttongroup">
+					<f:be.buttons.shortcut />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="module-body t3js-module-body">
+		<div class="dataviewer-backend">
+			<f:render section="content" />
+		</div>
+	</div>
+</f:be.container>

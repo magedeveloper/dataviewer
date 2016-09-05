@@ -1,0 +1,73 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <foreign>
+                <TCEforms>
+                    <label>foreign</label>
+                    <onChange>reload</onChange>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </foreign>
+            <foreign_table>
+                <TCEforms>
+                    <label>foreign_table</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>select</type>
+                        <multiple>1</multiple>
+                        <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Database->populateTablesAction</itemsProcFunc>
+                        <autosizemax>2</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </foreign_table>
+            <modelClass>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:model_class</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder><![CDATA[VendorName\ExtensionName\Domain\Model\Class]]></placeholder>
+                        <eval>trim,nospace</eval>
+                    </config>
+                </TCEforms>
+            </modelClass>
+            <foreign_table_where>
+                <TCEforms>
+                    <label>foreign_table_where</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </foreign_table_where>
+        </el>
+    </ROOT>
+</T3DataStructure>

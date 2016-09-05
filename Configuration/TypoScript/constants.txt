@@ -1,0 +1,31 @@
+# customsubcategory=developer=LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:constants.developer
+
+plugin.tx_dataviewer {
+
+	developer {
+		# cat=plugin.tx_dataviewer/developer/100; type=user[EXT:dataviewer/Classes/Hooks/Constants.php:MageDeveloper\Dataviewer\Hooks\Constants->displayExtensionInformation]; label=Extension Information
+		html = SHOW / HIDE
+
+		# cat=plugin.tx_dataviewer/developer/200; type=string; label=Global Variable Name for injected records
+		recordsVariableName = records
+
+		# cat=plugin.tx_dataviewer/developer/300; type=string; label=Global Variable Name for injected single record
+		singleRecordVariableName = record
+
+		# cat=plugin.tx_dataviewer/developer/400; type=string; label=Global Variable Name for injected record part
+		partVariableName = part
+	}	
+
+	view {
+		# cat=plugin.tx_dataviewer/file/1; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:dataviewer/Resources/Private/Templates/
+		
+		# cat=plugin.tx_dataviewer/file/2; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:dataviewer/Resources/Private/Partials/
+		
+		# cat=plugin.tx_dataviewer/file/3; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:dataviewer/Resources/Private/Layouts/
+	}
+	
+	
+}

@@ -1,0 +1,34 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <cols>
+                <TCEforms>
+                    <label>cols</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>1</default>
+                        <range>
+                            <lower>1</lower>
+                            <upper>31</upper>
+                        </range>
+                    </config>
+                </TCEforms>
+            </cols>
+        </el>
+    </ROOT>
+</T3DataStructure>

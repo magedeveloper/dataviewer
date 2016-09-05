@@ -1,0 +1,35 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:type.input</label>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <form>
+                        <section>1</section>
+                        <type>array</type>
+                        <title></title>
+                        <el>
+                            <field>
+                                <type>array</type>
+                                <el>
+                                    <input>
+                                        <config>
+                                            <type>input</type>
+                                        </config>
+                                    </input>
+                                </el>
+                            </field>
+                        </el>
+                    </form>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>
+

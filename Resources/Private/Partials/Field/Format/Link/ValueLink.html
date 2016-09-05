@@ -1,0 +1,5 @@
+<f:for each="{formValue.values}" as="value">
+    <f:if condition="{value.content}">
+        <f:format.html parseFuncTSPath="">{value.content}</f:format.html>
+    </f:if>
+</f:for>

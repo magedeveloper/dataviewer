@@ -1,0 +1,70 @@
+{namespace dataviewer = MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:layout name="Default" />
+<f:section name="main">
+
+	<f:if condition="{settings.debug} == 1">
+
+		<style type="text/css">
+			hr { color:#c0c0c0; background-color:#c0c0c0; height:1px; border:0; }
+			.extbase-debugger { margin:20px 0 !important; font-weight: normal !important; }
+			.extbase-debugger em { color:greenyellow; }
+			.extbase-debugger strong { font-weight:600 !important; }
+			.dv-logo { margin-top:20px; }
+		</style>
+
+		<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text.png" alt="MageDeveloper DataViewer" class="dv-logo" />
+		
+		<div class="extbase-debugger extbase-debugger-inline">
+			<div class="extbase-debugger-top">Template Settings</div>
+			<div class="extbase-debugger-center">
+			
+				This template has the following variables:
+				<br />
+				<br />
+				<strong>Main Usage:</strong>
+				<hr />
+				<span class="extbase-debug-type">&#123;part&#125;</span> to access the selected part of a record.<br />
+				
+				<br />
+				
+				<strong>Part Context:</strong>
+				<hr />
+				<span class="extbase-debug-type">&#123;part&#125;</span> to get the part of the selected record and field.<br />
+				<br />
+				The part consists of three main elements:<br />
+				<span class="extbase-debug-type">&#123;part.<em>field</em>&#125;</span> to get the field instance.<br />
+				<span class="extbase-debug-type">&#123;part.<em>recordValue</em>&#125;</span> to get the recordValue instance.<br />
+				<span class="extbase-debug-type">&#123;part.<em>fieldvalue</em>&#125;</span> to get the fieldvalue.<br />
+				<br />
+				To obtain the final value, use <span class="extbase-debug-type">&#123;part.<em>value</em>&#125;</span><br />
+	
+				<br />
+	
+				<strong>Other Variables:</strong>
+				<hr />
+				<span class="extbase-debug-type">&#123;cObj&#125;</span> to get information about the current content object.<br />
+	
+	
+			</div>
+		</div>
+	
+		<f:debug inline="1" title="Variable 'part'">{part}</f:debug>
+		<f:debug inline="1" title="Variable 'part.value'">{part.value}</f:debug>
+
+		<div class="extbase-debugger extbase-debugger-inline">
+			<div class="extbase-debugger-top">SQL Statement</div>
+			<div class="extbase-debugger-center">
+				<pre>{statement}</pre>
+			</div>
+		</div>
+		
+		<f:debug inline="1" title="All Variables">{_all}</f:debug>
+
+	</f:if>
+	
+	<f:if condition="{settings.direct_render}">
+		<dataviewer:render.part part="{part}" />
+	</f:if>
+
+</f:section>

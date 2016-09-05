@@ -1,0 +1,122 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+
+        <general_settings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.general_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+
+                    <settings.logo>
+                        <TCEforms>
+                            <label></label>
+                            <config>
+                                <type>user</type>
+                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Logo->displayLogoText</userFunc>
+                            </config>
+                        </TCEforms>
+                    </settings.logo>
+
+                    <settings.target_plugin>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.target_plugin</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>tt_content</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.target_plugin>
+
+                    <settings.field_ids>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_fields</label>
+                            <config>
+                                <type>select</type>
+                                <multiple>1</multiple>
+                                <allowNonIdValues>1</allowNonIdValues>
+                                <default></default>
+                                <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_title</numIndex>
+                                        <numIndex index="1">RECORD.title</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_uid</numIndex>
+                                        <numIndex index="1">RECORD.uid</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_sorting</numIndex>
+                                        <numIndex index="1">RECORD.sorting</numIndex>
+                                    </numIndex>
+                                    <numIndex index="3" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_datatype</numIndex>
+                                        <numIndex index="1">RECORD.datatype</numIndex>
+                                    </numIndex>
+                                    <numIndex index="4" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_tstamp</numIndex>
+                                        <numIndex index="1">RECORD.tstamp</numIndex>
+                                    </numIndex>
+                                    <numIndex index="5" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_crdate</numIndex>
+                                        <numIndex index="1">RECORD.crdate</numIndex>
+                                    </numIndex>
+                                    <numIndex index="6" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_starttime</numIndex>
+                                        <numIndex index="1">RECORD.starttime</numIndex>
+                                    </numIndex>
+                                    <numIndex index="7" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.record_endtime</numIndex>
+                                        <numIndex index="1">RECORD.endtime</numIndex>
+                                    </numIndex>
+                                    <numIndex index="7" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.random</numIndex>
+                                        <numIndex index="1">RAND()</numIndex>
+                                    </numIndex>
+                                </items>
+                                <maxitems>9999</maxitems>
+                                <minitems>0</minitems>
+                                <size>5</size>
+                            </config>
+                        </TCEforms>
+                    </settings.field_ids>
+
+                    <settings.per_page>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.per_page_entries</label>
+                            <config>
+                                <type>input</type>
+                                <size>20</size>
+                                <default>8,16,32,40</default>
+                                <placeholder>8,16,32,40</placeholder>
+                                <eval>trim</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.per_page>
+
+                </el>
+            </ROOT>
+        </general_settings>
+
+
+    </sheets>
+</T3DataStructure> 
+
+
+

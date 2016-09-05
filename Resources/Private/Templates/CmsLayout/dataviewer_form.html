@@ -1,0 +1,35 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<img src="{imageUrl}" border="0" style="float:left;margin-right: 5px;"/>
+<strong><f:translate key="tx_dataviewer" /></strong>
+<br />
+<div style="font-size: smaller;">
+	[Uid {row.uid}] <f:translate key="plugin.wizarditem_pi7" />
+	<hr size="1" style="color:#c0c0c0; background-color: #c0c0c0; height: 1px; padding:0; margin: 5px 0;" />
+</div>
+
+<div style="font-size: smaller;">
+	<strong><f:translate key="selected_datatype" /></strong>:<br />
+	<f:alias map="{datatype:'{dv:datatype.get(id:flexform.settings.datatype_selection,includeHidden:1)}'}">
+		<f:if condition="{datatype.uid}">
+			<a href="{dv:backend.editLink(id:flexform.settings.datatype_selection,table:'tx_dataviewer_domain_model_datatype')}" target="_self"><core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;[{datatype.uid}]&nbsp;{datatype.name}</a>
+		</f:if>
+	</f:alias>
+</div>
+
+<div style="font-size: smaller; margin-top:5px;">
+	<strong><f:translate key="flexform.template_override" />:</strong><br />
+	<f:if condition="{flexform.settings.template_override}">
+		<f:then>{flexform.settings.template_override}</f:then>
+		<f:else>-</f:else>
+	</f:if>
+</div>
+
+<f:if condition="{flexform.settings.debug} == 1">
+	<div style="font-size: smaller; border:1px solid #45D5F9; background: repeating-linear-gradient(45deg, #DAF7FE, #DAF7FE 2px, #A2EAFC 4px, #A2EAFC 4px); padding:5px; display: block;text-align: center;">
+		<strong><f:translate key="flexform.debug" /></strong>
+	</div>
+</f:if>
+

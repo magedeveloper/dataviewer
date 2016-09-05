@@ -1,0 +1,16 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+<span class="doktype-icon" title="Doktype {doktype}">
+<f:switch expression="{doktype}">
+	<f:case value="1"><core:icon identifier="apps-pagetree-page-default" size="small" /></f:case>
+	<f:case value="3"><core:icon identifier="apps-pagetree-page-shortcut-external" size="small" /></f:case>
+	<f:case value="4"><core:icon identifier="apps-pagetree-page-shortcut" size="small" /></f:case>
+	<f:case value="6"><core:icon identifier="apps-pagetree-page-backend-users" size="small" /></f:case>
+	<f:case value="7"><core:icon identifier="apps-pagetree-page-mountpoint" size="small" /></f:case>
+	<f:case value="199"><core:icon identifier="apps-pagetree-spacer" size="small" /></f:case>
+	<f:case value="254"><core:icon identifier="apps-pagetree-folder-default" size="small" /></f:case>
+	<f:case value="255"><core:icon identifier="apps-pagetree-page-recycler" size="small" /></f:case>
+	<f:case default="TRUE"></f:case>
+</f:switch>
+</span>

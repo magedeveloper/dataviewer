@@ -1,0 +1,24 @@
+<f:layout name="Default" />
+<f:section name="main">
+
+	<f:form action="select">
+		<f:if condition="{records -> f:count()} > 0">
+			<ul>
+			<f:for each="{records}" as="record" iteration="i">
+				<li>
+					<f:if condition="{autoSubmit}">
+						<f:then><f:form.checkbox id="selection_{i.cycle}" value="{record.record.uid}" name="selection[]" checked="{record.selected}" onclick="this.form.submit()" /></f:then>
+						<f:else><f:form.checkbox id="selection_{i.cycle}" value="{record.record.uid}" name="selection[]" checked="{record.selected}" /></f:else>
+					</f:if>
+					<label for="selection_{i.cycle}">{record.label}</label>
+				</li>
+			</f:for>
+			</ul>
+			<f:if condition="{autoSubmit}">
+				<f:then></f:then>
+				<f:else><f:form.submit name="submit" value="{f:translate(key:'select')}" /></f:else>
+			</f:if>
+		</f:if>
+	</f:form>
+
+</f:section>

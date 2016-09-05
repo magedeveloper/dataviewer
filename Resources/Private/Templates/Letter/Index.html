@@ -1,0 +1,11 @@
+<f:layout name="Default" />
+<f:section name="main">
+    <div class="dataviewer-letter-selection">
+        <ul>
+            <f:for each="{letters}" as="i" iteration="iterator">
+                <li class="{f:if(condition: iterator.isLast, then: 'last ')}{f:if(condition: iterator.isFirst, then: 'first ')}{f:if(condition: '{active}=={i}', then: 'letter active', else: 'letter')}"><f:link.action action="letter" arguments="{letter:i,targetUid:targetUid}">{i}</f:link.action></li>
+            </f:for>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</f:section>

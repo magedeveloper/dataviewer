@@ -1,0 +1,38 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <tca>
+                <TCEforms>
+                    <label>tca xml</label>
+                    <config>
+                        <type>text</type>
+                        <size>15</size>
+                        <cols>50</cols>
+                        <rows>20</rows>
+                        <renderType>t3editor</renderType>
+                        <format>xml</format>
+                        <default><![CDATA[<config>
+  <type>input</type>
+  <size>30</size>
+  <eval>trim</eval>
+  <placeholder>placeholder</placeholder>
+</config>]]></default>
+                    </config>
+                </TCEforms>			
+            </tca>
+        </el>
+    </ROOT>
+</T3DataStructure>

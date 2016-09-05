@@ -1,0 +1,63 @@
+{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:if condition="{filter}">
+	<f:form action="add">
+		<div class="tx-dataviewer-filter tx-dataviewer-filter-{filter.field_id}">
+			<label for="filter_{filter.field_id}">{filter.field.frontendLabel}</label>
+			<f:switch expression="{filter.filter_type}">
+				<f:case value="radio">
+					<f:for each="{filter.options}" as="option" iteration="i">
+						<input type="radio" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}_{option.id}" value="{option.id}" {f:if(condition:'{option.selected}',then:'checked')} onClick="this.form.submit()" />
+						<label for="filter_{filter.field_id}_{option.id}">{option.option_name}</label>
+					</f:for>
+				</f:case>
+				<f:case value="checkbox">
+					<f:for each="{filter.options}" as="option" iteration="i">
+						<input type="checkbox" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}_{option.id}" value="{option.id}" {f:if(condition:'{option.selected}',then:'checked')} onClick="this.form.submit()" />
+						<label for="filter_{filter.field_id}_{option.id}">{option.option_name}</label>
+					</f:for>
+				</f:case>
+				<f:case value="multiselect">
+					<select name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}" class="select" size="5" multiple>
+						<f:for each="{filter.options}" as="option" iteration="i">
+							<option value="{option.id}" {f:if(condition:'{option.selected}',then:'selected')}>{option.option_name}</option>
+						</f:for>
+					</select>
+					<input type="submit" name="multi_submit" value="{f:translate(key:'filter')}" />
+				</f:case>
+				<f:case value="text">
+					<ul>
+						<f:for each="{filter.options}" as="option" iteration="i">
+							<li class="filter_item filter_item_{i.cycle}"><f:link.action action="add" arguments="{filters:'{dv:variable.arrayKeyValue(key:filter.field_id,value:{0:option.id})}',targetUid:targetUid}">{option.option_name}</f:link.action></li>
+						</f:for>
+					</ul>
+				</f:case>
+				<f:case value="input">
+						<f:for each="{filter.options}" as="option" iteration="i">
+							<input type="text" name="tx_dataviewer_filter[filters][{filter.field_id}][{option.id}]" id="filter_{filter.field_id}_{option.id}" value="{option.field_value}" />
+						</f:for>
+						<input type="submit" name="input_submit" value="{f:translate(key:'filter')}" />
+				</f:case>
+				<f:case value="from_to">
+					<br />
+					<f:for each="{filter.options}" as="option" iteration="i">
+						<label for="tx_dataviewer_filter[filters][{filter.field_id}][{option.id}]">{option.option_name}</label>
+						<input type="text" size="3" name="tx_dataviewer_filter[filters][{filter.field_id}][{option.id}]" id="filter_{filter.field_id}_{option.id}" value="" />
+					</f:for>
+					<input type="submit" name="from_to_submit" value="{f:translate(key:'filter')}" />
+				</f:case>
+				<f:case default="TRUE">
+					<f:comment>DEFAULT = dropdown</f:comment>
+					<div class="filter_{filter.field_id}">
+						<select name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}" class="select" onChange="this.form.submit()">
+							<f:for each="{filter.options}" as="option" iteration="i">
+								<option value="{option.id}" {f:if(condition:'{option.selected}',then:'selected')}>{option.option_name}</option>
+							</f:for>
+						</select>
+					</div>
+				</f:case>
+			</f:switch>
+		</div>
+		<f:form.hidden name="targetUid" value="{targetUid}" />
+	</f:form>
+</f:if>

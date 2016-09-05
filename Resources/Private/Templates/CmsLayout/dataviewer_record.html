@@ -1,0 +1,80 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<img src="{imageUrl}" border="0" style="float:left;margin-right: 5px;"/>
+<strong><f:translate key="tx_dataviewer" /></strong>
+<br />
+<div style="font-size: smaller;">
+	[Uid {row.uid}] <f:translate key="plugin.wizarditem_pi1" />
+	<hr size="1" style="color:#c0c0c0; background-color: #c0c0c0; height: 1px; padding:0; margin: 5px 0;" />
+</div>
+
+
+<div style="margin:5px 0;">
+	<f:switch expression="{flexform.switchableControllerActions}">
+		<f:case value="Record->list;Record->detail;">
+			<f:comment>============ LIST ============</f:comment>
+			<strong><f:translate key="plugin_type.list" /></strong><br />
+			<div style="font-size:smaller;">
+				<f:render partial="Selection" arguments="{_all}" />
+			</div>
+		</f:case>
+		<f:case value="Record->detail;Record->list;">
+			<f:comment>============ DETAIL ============</f:comment>
+			<strong><f:translate key="plugin_type.detail" /></strong><br />
+			<div style="font-size:smaller;">
+				<f:alias map="{record:'{dv:record.get(id:flexform.settings.single_record_selection,includeHidden:1)}'}">
+					<f:if condition="{record.uid}">
+						<a href="{dv:backend.editLink(id:flexform.settings.single_record_selection,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+					</f:if>
+				</f:alias>
+			</div>
+		</f:case>
+		<f:case value="Record->dynamicDetail">
+			<f:comment>============ DYNAMIC ============</f:comment>
+			<strong><f:translate key="plugin_type.dynamic_detail" /></strong><br />
+			<div style="font-size:smaller;">
+				<f:render partial="Selection" arguments="{_all}" />
+			</div>
+		</f:case>
+		<f:case value="Record->part">
+			<f:comment>============ PART ============</f:comment>
+			<strong><f:translate key="plugin_type.part" /></strong><br />
+			<div style="font-size:smaller;">
+				<f:alias map="{record:'{dv:record.get(id:flexform.settings.single_record_selection,includeHidden:1)}'}">
+					<f:if condition="{record.uid}">
+						<div style="margin-top:5px;">
+							<f:translate key="tx_dataviewer_domain_model_record" />:&nbsp;<a href="{dv:backend.editLink(id:flexform.settings.single_record_selection,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+						</div>
+					</f:if>
+				</f:alias>
+				<f:alias map="{field:'{dv:field.get(id:flexform.settings.field_selection,includeHidden:1)}'}">
+					<f:if condition="{field.uid}">
+						<div style="margin-top:5px;">
+							<f:translate key="tx_dataviewer_domain_model_field" />:&nbsp;<a href="{dv:backend.editLink(id:flexform.settings.field_selection,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}]&nbsp;{field.frontendLabel}</a>
+						</div>
+					</f:if>
+				</f:alias>
+			</div>
+		</f:case>
+		<f:case default="TRUE">
+			<em><f:translate key="not_configured" /></em>
+		</f:case>
+	</f:switch>
+</div>
+
+<div style="font-size: smaller;">
+	<strong><f:translate key="flexform.template_override" />:</strong><br />
+	<f:if condition="{flexform.settings.template_override}">
+		<f:then>{flexform.settings.template_override}</f:then>
+		<f:else>-</f:else>
+	</f:if>
+</div>
+
+<f:if condition="{flexform.settings.debug} == 1">
+	<div style="font-size: smaller; border:1px solid #45D5F9; background: repeating-linear-gradient(45deg, #DAF7FE, #DAF7FE 2px, #A2EAFC 4px, #A2EAFC 4px); padding:5px; display: block;text-align: center;">
+		<strong><f:translate key="flexform.debug" /></strong>
+	</div>
+</f:if>
+

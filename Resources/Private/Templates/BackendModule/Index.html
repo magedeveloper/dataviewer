@@ -1,0 +1,57 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+<f:section name="Buttons">
+	<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons" style="height:auto;">
+		<f:if condition="{datatypes -> f:count()} > 0">
+			<f:for each="{datatypes}" as="datatype">
+				<f:if condition="{datatype.icon}">
+					<f:then>
+						<a href="{dv:backend.newLink(pid:'{currentPageId}',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" /><core:icon identifier="actions-add" size="small" /><small>{datatype.name}</small></a>
+					</f:then>
+					<f:else>
+						<a href="{dv:backend.newLink(pid:'{currentPageId}',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-default" size="small" /><core:icon identifier="actions-add" size="small" /></a>
+					</f:else>
+				</f:if>
+			</f:for>
+		</f:if>	
+	</div>
+</f:section>
+
+<f:section name="content">
+	<h1><f:translate key="module.records_on_this_page" /></h1>
+
+	<f:flashMessages/>
+
+	<f:if condition="{records}">
+		<f:then>
+
+			<f:form action="index">
+				<div id="typo3-dblist-search">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="form-inline form-inline-spaced">
+								<div class="form-group">
+									<f:form.textfield class="form-control" name="searchString" placeholder="{f:translate(key:'module.search_placeholder')}" value="{searchString}" />
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-default" name="search">
+										<core:icon identifier="actions-search" size="small" />&nbsp;<f:translate key="LLL:EXT:lang/locallang_core.xlf:labels.search" />
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</f:form>
+
+			<f:render partial="BackendModule/ListRecords" arguments="{_all}" />
+
+		</f:then>
+		<f:else>
+			<f:translate key="module.no_records_found" />
+		</f:else>
+	</f:if>
+</f:section>

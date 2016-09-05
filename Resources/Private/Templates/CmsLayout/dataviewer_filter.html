@@ -1,0 +1,51 @@
+{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+
+<img src="{imageUrl}" border="0" style="float:left;margin-right: 5px;"/>
+<strong><f:translate key="tx_dataviewer" /></strong>
+<br />
+<div style="font-size: smaller;">
+	[Uid {row.uid}] <f:translate key="plugin.wizarditem_pi5" />
+	<hr size="1" style="color:#c0c0c0; background-color: #c0c0c0; height: 1px; padding:0; margin: 5px 0;" />
+</div>
+
+<div style="font-size: smaller; margin:5px 0;">
+	<strong><f:translate key="flexform.fields_filter" />:</strong><br />
+	<f:if condition="{flexform.settings.field_filter}">
+		<f:for each="{flexform.settings.field_filter}" as="fieldFilter" iteration="i">
+			<f:alias map="{field:'{dv:field.get(id:fieldFilter.fields.field_id)}'}">
+				[{field.uid}] {field.frontendLabel} => {fieldFilter.fields.filter_type}
+			</f:alias>
+			<f:if condition="{i.isLast} != 1">
+				<br />
+			</f:if>
+		</f:for>	
+	</f:if>
+</div>
+
+<div style="font-size: smaller; margin:5px 0;">
+	<strong><f:translate key="flexform.filter_options" />:</strong><br />
+	<table style="margin-top:10px;">
+		<thead>
+			<tr style="border-bottom:1px solid #c0c0c0;">
+				<td width="35%"><strong><f:translate key="tx_dataviewer_domain_model_field" /></strong></td>
+				<td width="35%"><strong><f:translate key="flexform.label" /></strong></td>
+				<td width="25%;"><strong><f:translate key="flexform.value" /></strong></td>
+				<td width="5%"><strong><f:translate key="flexform.condition" /></strong></td>
+			</tr>
+		</thead>
+		<tbody>
+		<f:if condition="{flexform.settings.filter_options}">
+			<f:for each="{flexform.settings.filter_options}" as="option" iteration="i">
+				<f:alias map="{field:'{dv:field.get(id:option.fields.field_id)}'}">
+					<tr>
+						<td>[{field.uid}] {field.frontendLabel}</td>
+						<td>{option.fields.option_name}</td>
+						<td>{option.fields.field_value}</td>
+						<td>{option.fields.filter_condition}</td>
+					</tr>
+				</f:alias>
+			</f:for>
+		</f:if>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,17 @@
+{namespace dataviewer = MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:layout name="Default" />
+<f:section name="main">
+
+	<f:if condition="{datatype}">
+		<f:then>
+			<f:form action="post" object="{record}" objectName="record">
+				<dataviewer:render.template template="{template}" arguments="{_all}" />
+			</f:form>
+		</f:then>
+		<f:else>
+			<f:translate key="datatype_not_found" />
+		</f:else>
+	</f:if>
+
+</f:section>

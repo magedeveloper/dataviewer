@@ -1,0 +1,38 @@
+<f:layout name="Default" />
+<f:section name="main">
+    <div class="dataviewer-sorting">
+
+        <f:form action="sort">
+			<div class="dataviewer-sortby">
+				<label for="sortBy"><f:translate key="sort.sort_by" /></label>
+				<f:form.select name="sortBy" id="sort_by" options="{sortByOptions}" additionalAttributes="{onChange:'this.form.submit()'}" value="{sortBy}" />
+			</div>
+
+            <div class="dataviewer-sortorder">
+                <label for="sortOrder"><f:translate key="sort.sort_order" /></label>
+                <f:form.select name="sortOrder" id="sort_order" options="{
+                    ASC:'{f:translate(key:\'sort.asc\')}',
+                    DESC:'{f:translate(key:\'sort.desc\')}'
+                }" additionalAttributes="{onChange:'this.form.submit()'}" value="{sortOrder}" />
+            </div>
+
+			<f:if condition="{perPageOptions->f:count()} > 0">
+				<f:then>
+					<div class="dataviewer-perpage">
+						<label for="perPage"><f:translate key="sort.per_page" /></label>
+						<f:form.select name="perPage" id="per_page" options="{perPageOptions}" additionalAttributes="{onChange:'this.form.submit()'}" value="{perPage}" />
+					</div>
+				</f:then>
+				<f:else>
+					<f:form.hidden name="perPage" value="{perPage}" />
+				</f:else>
+			</f:if>
+
+			<f:form.hidden name="targetUid" value="{targetUid}" />
+
+        </f:form>
+
+
+        <div class="clear"></div>
+    </div>
+</f:section>

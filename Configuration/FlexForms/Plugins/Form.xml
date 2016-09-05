@@ -1,0 +1,119 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+
+        <general_settings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.general_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+
+                    <settings.logo>
+                        <TCEforms>
+                            <label></label>
+                            <config>
+                                <type>user</type>
+                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Logo->displayLogoText</userFunc>
+                            </config>
+                        </TCEforms>
+                    </settings.logo>
+
+                    <settings.datatype_selection>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.record_save_datatype</label>
+                            <config>
+                                <type>select</type>
+                                <multiple>0</multiple>
+                                <items type="array"></items>
+                                <foreign_table>tx_dataviewer_domain_model_datatype</foreign_table>
+                                <foreign_table_where><![CDATA[AND 0 < FIND_IN_SET(tx_dataviewer_domain_model_datatype.pid, (SELECT pages FROM tt_content WHERE uid=###THIS_UID###))]]></foreign_table_where>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <size>1</size>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.datatype_selection>
+                    
+                </el>
+            </ROOT>
+        </general_settings>
+
+        <template_settings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.template_override>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_override</label>
+                            <config type="array">
+                                <type>group</type>
+                                <internal_type>file</internal_type>
+                                <allowed>html</allowed>
+                                <max_size>2000</max_size>
+                                <show_thumbs>0</show_thumbs>
+                                <size>1</size>
+                                <minitems>0</minitems>
+                                <maxitems>1</maxitems>
+                                <eval></eval>
+                            </config>
+                        </TCEforms>
+                    </settings.template_override>
+                    <settings.variable_injection>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.variable_injection</label>
+                            <config>
+                                <type>select</type>
+                                <multiple>1</multiple>
+                                <autosizemax>10</autosizemax>
+                                <items type="array"></items>
+                                <foreign_table>tx_dataviewer_domain_model_variable</foreign_table>
+                                <foreign_table_where><![CDATA[AND 0 < FIND_IN_SET(tx_dataviewer_domain_model_variable.pid, (SELECT pages FROM tt_content WHERE uid=###THIS_UID###))]]></foreign_table_where>
+                                <maxitems>99999</maxitems>
+                                <minitems>0</minitems>
+                                <size>5</size>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.variable_injection>
+                </el>
+            </ROOT>
+        </template_settings>
+
+        <developer_settings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.developer_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.debug>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.debug</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.debug>
+                </el>
+            </ROOT>
+        </developer_settings>
+
+    </sheets>
+</T3DataStructure> 

@@ -1,0 +1,147 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <size>
+                <TCEforms>
+                    <label>size</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>1</default>
+                    </config>
+                </TCEforms>
+            </size>
+            <allowed>
+                <TCEforms>
+                    <label>allowed</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </allowed>
+            <disallowed>
+                <TCEforms>
+                    <label>disallowed</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                        <default>php,php5</default>
+                    </config>
+                </TCEforms>
+            </disallowed>
+            <max_size>
+                <TCEforms>
+                    <label>max_size</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </max_size>
+            <show_thumbs>
+                <TCEforms>
+                    <label>show_thumbs</label>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </show_thumbs>
+            <selectedListStyle>
+                <TCEforms>
+                    <label>selectedListStyle</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </selectedListStyle>
+            <multiple>
+                <TCEforms>
+                    <label>multiple</label>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </multiple>
+            <hideMoveIcons>
+                <TCEforms>
+                    <label>hideMoveIcons</label>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </hideMoveIcons>
+            <minitems>
+                <TCEforms>
+                    <label>minitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>0</default>
+                    </config>
+                </TCEforms>
+            </minitems>
+            <maxitems>
+                <TCEforms>
+                    <label>maxitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>999</default>
+                    </config>
+                </TCEforms>
+            </maxitems>
+            <disable_controls>
+                <TCEforms>
+                    <label>disable_controls</label>
+                    <config>
+                        <type>select</type>
+                        <multiple>1</multiple>
+                        <autosizemax>5</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">browser</numIndex>
+                                <numIndex index="1">browser</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">list</numIndex>
+                                <numIndex index="1">list</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">upload</numIndex>
+                                <numIndex index="1">upload</numIndex>
+                            </numIndex>
+                            <numIndex index="3" type="array">
+                                <numIndex index="0">delete</numIndex>
+                                <numIndex index="1">delete</numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>9999</maxitems>
+                        <minitems>0</minitems>
+                        <size>5</size>
+                    </config>
+                </TCEforms>
+            </disable_controls>
+        </el>
+    </ROOT>
+</T3DataStructure>

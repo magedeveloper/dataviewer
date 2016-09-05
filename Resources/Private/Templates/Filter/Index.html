@@ -1,0 +1,30 @@
+<f:layout name="Default" />
+<f:section name="main">
+	<f:if condition="{activeFilters}">
+		<div class="tx-dataviewer-active-filters">
+			<ul>
+			<f:for each="{activeFilters}" as="fieldGroup">
+				<li class="filter-title">{fieldGroup.field.frontendLabel}</li>
+				<ul>
+					<f:for each="{fieldGroup.filters}" as="activeFilter">
+						<li><f:render partial="Filter/ActiveFilterRenderer" arguments="{filter:activeFilter,targetUid:targetUid}" /></li>
+					</f:for>
+				</ul>
+			</f:for>
+			</ul>
+			<div class="tx-dataviewer-filters-reset">
+				<f:link.action action="reset" arguments="{targetUid:targetUid}"><f:translate key="reset" /></f:link.action>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{filters}">
+		<div class="tx-dataviewer-filters">
+			<f:for each="{filters}" as="filter">
+				<f:if condition="{filter.options -> f:count()} > 0">
+					<f:render partial="Filter/FilterRenderer" arguments="{filter:filter,targetUid:targetUid}" />
+				</f:if>
+			</f:for>
+			<div class="clear"></div>
+		</div>
+	</f:if>
+</f:section>

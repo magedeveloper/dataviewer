@@ -1,0 +1,56 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<f:translate key="module.datatypes_information" />
+		(<f:count subject="{datatypes}" />)
+	</div>
+	<div class="table-fit">
+		<table class="table table-hover table-powermail">
+			<thead>
+			<tr>
+				<th nowrap="nowrap" class="col-icon col-sm-1"></th>
+				<th nowrap="nowrap" class="col-sm-1">Uid</th>
+				<th nowrap="nowrap" class="col-sm-8"><f:translate key="tx_dataviewer_domain_model_datatype.name" /></th>
+				<th nowrap="nowrap" class="col-sm-1"><f:translate key="tx_dataviewer_domain_model_datatype.fields" /></th>
+				<th nowrap="nowrap" class="col-sm-1"></th>
+			</tr>
+			</thead>
+			<tbody>
+			<f:for each="{datatypes}" as="datatype" iteration="iteration">
+				<f:comment>-- General Information --</f:comment>
+				<tr class="{f:if(condition:'{iteration.isFirst}',then:' firstcol')}{f:if(condition:'{iteration.isLast}',then:' lastcol')}" data-toggle="collapse" data-target="#info{datatype.uid}" class="accordion-toggle">
+					<td nowrap="nowrap" class="col-icon nowrap">
+							<span class="fa fa-caret-right icon-collapsed"></span>
+							<span class="fa fa-caret-down icon-expanded"></span>
+							<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
+					</td>
+					<td nowrap="nowrap" class="nowrap">
+						{datatype.uid}
+					</td>
+					<td nowrap="nowrap">
+						<strong>{datatype.name}</strong>
+					</td>
+					<td nowrap="nowrap">
+						<f:count subject="{datatype.fields}" />
+					</td>
+					<td nowrap="nowrap">
+						<a href="{dv:backend.editLink(id:datatype.uid,table:'tx_dataviewer_domain_model_datatype')}" target="_self"><core:icon identifier="actions-open" size="small" /></a>
+					</td>
+				</tr>
+				<f:comment>-- Additional details --</f:comment>
+				<tr>
+					<td colspan="5" style="padding:0 !important;">
+						<div class="accordian-body collapse" id="info{datatype.uid}">
+							<f:render partial="BackendModule/ListFields" arguments="{fields:datatype.fields}" />
+						</div>
+					</td>
+				</tr>
+			</f:for>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+

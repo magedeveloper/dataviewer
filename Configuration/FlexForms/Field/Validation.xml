@@ -1,0 +1,57 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validation</label>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <field>
+                        <section>1</section>
+                        <type>array</type>
+                        <title></title>
+                        <el>
+                            <validation>
+                                <type>array</type>
+                                <el>
+                                    <validator>
+                                        <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validator</label>
+                                        <onChange>reload</onChange>
+                                        <config>
+                                            <type>select</type>
+                                            <multiple>1</multiple>
+                                            <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Validation->populateValidators</itemsProcFunc>
+                                            <autosizemax>2</autosizemax>
+                                            <items type="array">
+                                                <numIndex index="0" type="array">
+                                                    <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.please_select</numIndex>
+                                                    <numIndex index="1"></numIndex>
+                                                </numIndex>
+                                            </items>
+                                            <maxitems>1</maxitems>
+                                            <minitems>1</minitems>
+                                            <size>1</size>
+                                        </config>
+                                    </validator>
+                                    <validation_configuration>
+                                        <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validation_configuration</label>
+                                        <config>
+                                            <type>input</type>
+                                            <size>50</size>
+                                            <placeholder>option=value,option2=value2</placeholder>
+                                        </config>
+                                    </validation_configuration>
+                                </el>
+                            </validation>
+                        </el>
+                    </field>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>
+

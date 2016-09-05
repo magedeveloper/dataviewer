@@ -1,0 +1,9 @@
+<f:if condition="{markers}">
+	<span style="font-family: Courier, Courier new, monospace; font-size:13px; float:left; width:100%;" class="callout callout-info">
+	<f:for each="{markers}" as="marker" iteration="i">
+		{marker.type} '<strong>&#123;{marker.name}&#125;</strong>'
+		<f:if condition="{i.isLast} != 1"><br /></f:if>
+	</f:for>
+	</span>
+	<div style="clear:both;"></div>
+</f:if>

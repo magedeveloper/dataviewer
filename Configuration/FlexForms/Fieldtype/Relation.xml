@@ -1,0 +1,86 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <customTemplate>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:format.custom</label>
+                    <config>
+                        <type>group</type>
+                        <internal_type>file</internal_type>
+                        <allowed>html</allowed>
+                        <size>1</size>
+                        <minitems>0</minitems>
+                        <maxitems>1</maxitems>
+                    </config>
+                </TCEforms>
+            </customTemplate>
+            <enabledControls>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:format.enabled_controls</label>
+                    <config>
+                        <type>select</type>
+                        <multiple>1</multiple>
+                        <autosizemax>5</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.info</numIndex>
+                                <numIndex index="1">info</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.new</numIndex>
+                                <numIndex index="1">new</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.dragdrop</numIndex>
+                                <numIndex index="1">dragdrop</numIndex>
+                            </numIndex>
+                            <numIndex index="3" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.sort</numIndex>
+                                <numIndex index="1">sort</numIndex>
+                            </numIndex>
+                            <numIndex index="4" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.hide</numIndex>
+                                <numIndex index="1">hide</numIndex>
+                            </numIndex>
+                            <numIndex index="5" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.delete</numIndex>
+                                <numIndex index="1">delete</numIndex>
+                            </numIndex>
+                            <numIndex index="6" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:control.localize</numIndex>
+                                <numIndex index="1">localize</numIndex>
+                            </numIndex>
+                        </items>
+                        <default>info,new,dragdrop,hide,delete</default>
+                        <maxitems>9999</maxitems>
+                        <minitems>0</minitems>
+                        <size>5</size>
+                    </config>
+                </TCEforms>
+            </enabledControls>
+            <allowedFileExtensions>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf:format.allowed_file_extensions</label>
+                    <config>
+                        <type>input</type>
+                        <size>30</size>
+                        <default>gif,jpg,png</default>
+                    </config>
+                </TCEforms>
+            </allowedFileExtensions>
+        </el>
+    </ROOT>
+</T3DataStructure>

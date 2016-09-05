@@ -1,0 +1,13 @@
+<f:layout name="Default" />
+<f:section name="main">
+    <div class="dataviewer-search">
+        <f:form action="search">
+            <f:form.textfield name="searchString" value="{searchString}" />
+            <f:form.submit name="submitSearch" value="{f:translate(key:'LLL:EXT:lang/locallang_common.xlf:search')}" />
+            <f:link.action class="button button-primary button-reset" action="reset" arguments="{targetUid:targetUid}">{f:translate(key:'LLL:EXT:lang/locallang_wizards.xlf:imwizard.reset')}</f:link.action>
+        	<f:form.hidden name="targetUid" value="{targetUid}" />
+        </f:form>
+        <f:if condition="{message}"><div class="dataviewer-searchstring">{message}</div></f:if>
+        <f:if condition="{searchString}"><div class="dataviewer-searchstring"><f:translate key="searching_for" arguments="{0:searchString}" /></div></f:if>
+    </div>
+</f:section>

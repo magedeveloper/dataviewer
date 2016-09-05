@@ -1,0 +1,30 @@
+{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+
+<img src="{imageUrl}" border="0" style="float:left;margin-right: 5px;"/>
+<strong><f:translate key="tx_dataviewer" /></strong>
+<br />
+
+<div style="font-size: smaller;">
+	[Uid {row.uid}] <f:translate key="plugin.wizarditem_pi3" />
+	<hr size="1" style="color:#c0c0c0; background-color: #c0c0c0; height: 1px; padding:0; margin: 5px 0;" />
+</div>
+
+<div style="font-size: smaller; margin:5px 0;">
+	<strong><f:translate key="selected_field" />:</strong><br />
+	<f:if condition="{flexform.settings.field_id}">
+		<f:then>
+			<f:alias map="{field:'{dv:field.get(id:flexform.settings.field_id)}'}">
+				[{field.uid}] {field.frontendLabel}
+			</f:alias>
+		</f:then>
+		<f:else><f:translate key="record_title" /></f:else>
+	</f:if>
+</div>
+
+<div style="font-size: smaller; margin-top:5px;">
+	<strong><f:translate key="flexform.preselected_letter" />:</strong><br />
+	<f:if condition="{flexform.settings.preselected_letter}">
+		<f:then>{flexform.settings.preselected_letter}</f:then>
+		<f:else><f:translate key="no_preselection" /></f:else>
+	</f:if>
+</div>

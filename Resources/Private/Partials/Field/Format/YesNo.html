@@ -1,0 +1,16 @@
+<f:for each="{formValue.values}" as="value">
+    <div class="dataviewer-formvalue-value">
+        <f:if condition="{value.content} != ''">
+            <f:then>
+                <f:render partial="Field/Format/Yesno/Value" arguments="{formValue:formValue,value:value}" />
+            </f:then>
+            <f:else>
+                <f:if condition="{formValue.field.showEmpty}">
+                    <f:render partial="Field/Format/Yesno/Value" arguments="{formValue:formValue,value:value}" />
+                </f:if>
+            </f:else>
+        </f:if>
+    </div>
+</f:for>
+
+

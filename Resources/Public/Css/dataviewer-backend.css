@@ -1,0 +1,81 @@
+div.clear                                               { clear:both; }
+
+img.dataviewer-logo										{ height:26px; margin-top:-20px; margin-bottom:-10px; }
+div.dataviewer-record                                   { margin-top:-20px; margin-bottom:-5px; background-color: #fff; padding: 20px; border: 1px solid #c0c0c0; -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); }
+div.dataviewer-record h1								{ margin-bottom:0; font-size:22px; }
+div.dataviewer-header                                   { padding:0; }
+div.dataviewer-record-title                             { margin-bottom:15px; }
+div.dataviewer-record-title input                       { padding:8px; font-size: 16px; width:100%; font-family: Share,Verdana,Arial,Helvetica,sans-serif; background-color:#fefefe; border: 1px solid #bbbbbb;   border-radius: 2px; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }
+div.dataviewer-field                                    { padding: 0px 10px 0px; border-right:4px solid transparent; margin-top:10px; }
+div.dataviewer-field:hover                              { border-right:4px solid #c0c0c0; }
+div.dataviewer-field h4                                 { padding-bottom:5px; margin:0 0 5px 0; }
+div.dataviewer-field-required                           { }
+div.dataviewer-field-required input,
+div.dataviewer-field-required select,
+div.dataviewer-field-required textarea                  { /* border:1px solid #F9D245; */ }
+div.dataviewer-field-text-required                      { color: #CABA06; float: right; font-style: italic; margin-top: 15px; font-size: smaller; }
+div.dataviewer-field input                              { margin-bottom:3px; }
+div.dataviewer-field img.dataviewer-field-icon          { float:left; margin-right: 5px; margin-top:10px; }
+div.dataviewer-field .dataviewer-field-icon-required    { float:left; margin-right: 5px; margin-top:8px; }
+div.dataviewer-field-hidden                             { margin:10px; border:1px dashed #c0c0c0 !important; padding:10px; background-color: #FAFAFA; -moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.14) inset; -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.14) inset; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.14) inset; }
+div.dataviewer-field-hidden input                       { border: 1px dotted #777; }
+div.dataviewer-dynamic-value                            { margin: 0px 0px 4px;  color: #999; border: 1px dashed; padding: 2px; background-color: #f2f2f2; font-style: italic; }
+div.dataviewer-field-flex strong                        { display:none; }
+div.dataviewer-record div.tab-content div.callout		{ padding:5px !important; margin:0 !important; }
+div.dataviewer-record div.tab-content div.callout.callout-notice { background-color:#ffffff !important; border:2px solid #eaeaea !important; }
+div.dataviewer-record .callout							{ padding:10px !important; }
+
+div.dataviewer-record .tab-content                      { border:1px solid #cccccc; background-color:#fafafa; border-top:0; padding: 10px;  }
+div.dataviewer-record .nav-tabs                         { background-color: #f2f2f2 !important; }
+div.dataviewer-record .nav-tabs li.tab                  { }
+div.dataviewer-record .nav-tabs>li.tab>a                { border:1px solid #cecece; background-color: #f2f2f2; }
+
+div.dataviewer-record span.label                        { background-color: transparent; font-size: x-small !important; padding:0; font-weight:normal !important; }
+div.dataviewer-record span.label-primary                { color:#0078e6; }
+div.dataviewer-record span.label-default                { color:#c0c0c0; }
+div.dataviewer-record span.label-info                   { color:#41b4dc; }
+div.dataviewer-record span.label-warning                { color:#c4600d; }
+div.dataviewer-record span.label-success                { color:#1eb941; }
+div.dataviewer-record span.label-danger                 { color:#c83c3c; }
+div.dataviewer-record .field-error						{ float:left; margin:10px 0; }
+
+div.dataviewer-record div.tab-content                   { border: 1px solid #c0c0c0 !important; border-top: 0 !important; padding: 15px !important; }
+
+div.dataviewer-record .editorIframe						{ height:300px; }
+
+/* Flexform Beauty Overrides */
+div.dataviewer-record .t3-form-field-container                                                     	{ padding-left:0px !important; }
+div.dataviewer-record .t3-form-flex,
+div.dataviewer-record .t3-form-field-container-flexsections,
+div.dataviewer-record .t3-flex-section-content,
+div.dataviewer-record .t3-form-field-record-flexsection                                            	{ background-color:transparent !important; }
+div.dataviewer-record .t3-form-field-toggle-flexsection                                            	{ display:none !important; }
+div.dataviewer-record .t3-flex-section-header,
+div.dataviewer-record .t3-form-field-container-flexsection                                         	{ padding-left: 0px !important; }
+div.dataviewer-record .t3-flex-control-toggle-button,
+div.dataviewer-record .t3-form-field-label-flex                                                    	{ display: none !important; }
+div.dataviewer-record .t3-form-flex,
+div.dataviewer-record .t3-form-field-container-flexsections,
+div.dataviewer-record .t3-flex-section                                                             	{ margin:0 !important; }
+div.dataviewer-record .t3-flex-section-header                                                      	{ float:right; }
+div.dataviewer-record .t3-form-field-header-flexsection                                            	{ width:auto !important; height:auto !important; }
+div.dataviewer-record .t3-flex-section-content > div,
+div.dataviewer-record .t3-form-field-record-flexsection > div                                      	{ margin:0 !important; }
+div.dataviewer-record .t3-flex-section-content,
+div.dataviewer-record .t3-form-field-record-flexsection                                            	{ padding: 0 !important; }
+div.dataviewer-record .t3-form-field-flex                                                          	{ padding: 0 !important; }
+div.dataviewer-record .t3-form-field-add-flexsection                                               	{ border: 0px !important; padding:5px 0 0 0 !important; }
+div.dataviewer-record .t3-form-field-label-flexsection                                             	{ border: 0px !important; padding:0 !important; }
+div.dataviewer-record .t3-form-field-record-flexsection .form-group label                          	{ display: none; }
+div.dataviewer-record .t3-flex-section-content > div, .t3-form-field-record-flexsection > div      	{ margin-bottom:2px !important; }
+div.dataviewer-record .form-control-wrap                                                           	{ margin:0 !important; max-width:100% !important; }
+div.dataviewer-record .t3-icon                                                                    	{ position: initial; float: right; margin-top: 13px; margin-left: 5px; }
+
+div.dataviewer-backend .icon-expanded,
+div.dataviewer-backend .icon-collapsed																{ width:20px; }
+div.dataviewer-backend .icon-expanded 															   	{ display:none; }
+div.dataviewer-backend tr[aria-expanded="true"] .icon-collapsed										{ display:none; }
+div.dataviewer-backend tr[aria-expanded="true"] .icon-expanded									   	{ display:inline-block; }
+
+div.dataviewer-backend tr[aria-expanded="false"] .icon-collapsed									{ display:inline-block; }
+div.dataviewer-backend tr[aria-expanded="false"] .icon-expanded									   	{ display:none; }
