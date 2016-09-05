@@ -1,7 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
 .. include:: ../../Includes.txt
 
@@ -17,16 +13,17 @@ This field adds an file selection field to the form which opens the file-browser
 
 Screenshot
 ~~~~~~~~~~
+
 .. image:: ../../Images/fieldtype_file.jpg
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **size**
-Height of the selector box
+size
+   Height of the selector box
 
-* **allowed**
-Comma-separated list of allowed file types
+allowed
+   Comma-separated list of allowed file types
 
 * **disallowed**
 Comma-separated list of disallowed file types
