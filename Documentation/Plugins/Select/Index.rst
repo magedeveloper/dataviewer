@@ -1,9 +1,5 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
-.. include:: ../Includes.txt
+.. include:: ../../Includes.txt
 
 
 .. _select:
@@ -40,9 +36,9 @@ This gives you the possibility to create dynamic filters for getting your record
 * **Records by field/value filter**
 You can add filters to get only records injected to the template that will fit the filters.
 Each filter is converted to a SQL WHERE which can be showed up in the Debug Mode.
-   
+
 Display Settings
-################   
+################
 
 * **Selection Limit**
 The amount of records that can be selected.

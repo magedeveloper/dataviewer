@@ -1,9 +1,5 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
-.. include:: ../Includes.txt
+.. include:: ../../Includes.txt
 
 
 .. _search:
@@ -16,24 +12,24 @@ Search Plugin
 This plugin is used to insert a searchform to your page for searching through a record list.
 
 .. image:: ../../Images/plugin_search.jpg
-   
-   
+
+
 DataViewer Settings
 ###################
 
 * **Target record display plugin, which will follow this plugin**
 Please select the target record plugin. The plugin will then follow this plugin.
 
-* **Search type configuration**
-The type of the search for selecting what values are valid for the entered search-term.
+Search type configuration
+   The type of the search for selecting what values are valid for the entered search-term.
 
-+------------------------------------------------+--------------------------------------------------------------+
-| **Search through record title**                | Searches only through each record title for matching results |
-+------------------------------------------------+--------------------------------------------------------------+
-| **Search through fields**                      | Searches through selected fields for matching results        |
-+------------------------------------------------+--------------------------------------------------------------+
-| **Search through record title and fields**     | Searches through both record title and selected fields       |
-+------------------------------------------------+--------------------------------------------------------------+
+   +------------------------------------------------+--------------------------------------------------------------+
+   | **Search through record title**                | Searches only through each record title for matching results |
+   +------------------------------------------------+--------------------------------------------------------------+
+   | **Search through fields**                      | Searches through selected fields for matching results        |
+   +------------------------------------------------+--------------------------------------------------------------+
+   | **Search through record title and fields**     | Searches through both record title and selected fields       |
+   +------------------------------------------------+--------------------------------------------------------------+
 
 * **Minimum chars for search**
 The minimum amount of chars that is needed to run the search

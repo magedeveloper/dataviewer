@@ -1,10 +1,5 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
-.. include:: ../Includes.txt
-
+.. include:: ../../Includes.txt
 
 .. _form:
 
@@ -13,7 +8,7 @@
 Form Plugin
 -----------
 
-With this plugin you can create new records or edit existing records by creating a fluid templates with fields, that 
+With this plugin you can create new records or edit existing records by creating a fluid templates with fields, that
 are equal to the records fields. The record will be automatically validated during form post.
 
 .. image:: ../../Images/plugin_form.jpg

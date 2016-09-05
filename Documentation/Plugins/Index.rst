@@ -1,7 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
 .. include:: ../Includes.txt
 
@@ -35,7 +31,7 @@ Detailed Information about the plugins:
    :maxdepth: 1
    :titlesonly:
    :glob:
-   
+
    Record/Index
    Search/Index
    Letter/Index
