@@ -118,7 +118,8 @@ class FieldtypeConfigurationUtility
 			$icon = $_ftC->getIcon();
 			$icon = GeneralUtility::getFileAbsFileName($icon);
 			$icon = PathUtility::getRelativePath(PATH_site, $icon);
-			$icon = trim($icon, DIRECTORY_SEPARATOR);
+			$icon = trim($icon, "\\");      // Remove backslashes
+			$icon = trim($icon, "/");		// Remove slashes
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Fieldtype $_ftC */
 			$icons[$_ftC->getIdentifier()] = "../".$icon;
 		}
