@@ -1,7 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
 .. include:: Includes.txt
 
@@ -16,50 +12,33 @@ DataViewer Documentation
 
 .. only:: html
 
-	:Language:
-		  en
+   :Language: en
+   :Version:  |release|
+   :Description:
+        All-in-One solution to render records with TCA confiuguration without the need of creating new extensions.
+        You can create new record-types in a lightning fast way with every advantage of TCA.
 
-	:Version:
-		|release|
+   :Keywords:  dataviewer, tca, records
+   :Copyright: 2016, MageDeveloper
+   :Author:    Bastian Zagar
+   :Email:     kontakt@magedeveloper.de
+   :License:
+      This document is published under the Open Content License
+      available from http://www.opencontent.org/opl.shtml
 
-	:Description:
-		  All-in-One solution to render records with TCA confiuguration without the need of creating new extensions.
-		  You can create new record-types in a lightning fast way with every advantage of TCA.
-
-	:Keywords:
-		  dataviewer, tca, records
-
-	:Copyright:
-		2016, MageDeveloper
-
-	:Author:
-		  Bastian Zagar
-
-	:Email:
-		  kontakt@magedeveloper.de
-
-	:License:
-		This document is published under the Open Content License
-		available from http://www.opencontent.org/opl.shtml
-
-	:Rendered:
-		|today|
+   :Rendered:  |today|
 
 
-Table of contents:
-------------------
+**Contents:**
 
 .. toctree::
 
-	:titlesonly:
-
-	Introduction/Index
-	Screenshots/Index
-	GetStarted/Index
-	Fieldtypes/Index
-	Plugins/Index
-	Changelog/Index
-
-
-
+   Introduction/Index
+   Screenshots/Index
+   GetStarted/Index
+   Fieldtypes/Index
+   Plugins/Index
+   Validation/Index
+   Examples/Index
+   Changelog/Index
 

@@ -1,9 +1,5 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
-.. include:: ../../Includes.txt
+.. include:: ../Includes.txt
 
 .. _screenshots:
 
@@ -15,11 +11,11 @@ These are some screenshots. Because you can create all types of record, this is 
 Address Record
 ~~~~~~~~~~~~~~~
 .. image:: ../Images/sample_record_address.jpg
- 
+
 Job Record
-~~~~~~~~~~ 
+~~~~~~~~~~
 .. image:: ../Images/sample_record_job.jpg
- 
+
 Movie Record
 ~~~~~~~~~~~~
 .. image:: ../Images/sample_record_movie.jpg
@@ -28,7 +24,7 @@ News Record
 ~~~~~~~~~~~
 .. image:: ../Images/sample_record_news.jpg
 
- 
+
 Filtering in Job List
 ~~~~~~~~~~~~~~~~~~~~~
 .. image:: ../Images/frontend_job_filter.jpg

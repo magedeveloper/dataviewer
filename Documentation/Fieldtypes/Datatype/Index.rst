@@ -1,7 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
 
 .. include:: ../../Includes.txt
 
@@ -22,25 +18,16 @@ Screenshot
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **Datatype**
-The selected Datatype will be used when creating new inline elements
+Datatype
+   The selected Datatype will be used when creating new inline elements
 
-* **size**
-Height of the selector box
+size
+   Height of the selector box
 
-* **minitems**
-Minimum of items that can be selected
+minitems
+   Minimum of items that can be selected
 
-* **maxitems**
-Maximum number of items that can be selected
-
-
+maxitems
+   Maximum number of items that can be selected
 
 
-
-
-
-
-
-
- 
