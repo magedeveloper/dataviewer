@@ -34,11 +34,11 @@ DataViewer Documentation
 .. toctree::
 
    Introduction/Index
+   Installation/Index
    Screenshots/Index
    GetStarted/Index
    Fieldtypes/Index
    Plugins/Index
-   Validation/Index
    Examples/Index
    Changelog/Index
 

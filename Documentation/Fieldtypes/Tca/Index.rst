@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _select:
@@ -15,17 +10,17 @@ TCA
 
 Creates an field by TCA Configuration. The TCA Configuration is made by XML Nodes.
 
-
 Screenshot
 ~~~~~~~~~~
+
 .. image:: ../../Images/tca_configuration.jpg
 
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **tca xml**
-The XML TCA Configuration for the field
+tca xml
+   The XML TCA Configuration for the field
 
 
 

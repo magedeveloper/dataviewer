@@ -1,4 +1,3 @@
-
 .. include:: ../../Includes.txt
 
 .. _group:
@@ -15,7 +14,6 @@ Screenshot
 ~~~~~~~~~~
 
 .. image:: ../../Images/fieldtype_group.jpg
-
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

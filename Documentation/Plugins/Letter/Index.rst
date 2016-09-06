@@ -1,8 +1,6 @@
-
 .. include:: ../../Includes.txt
 
-
-.. _letter:
+.. _letterplugin:
 
 .. image:: ../../Images/logo_dataviewer.png
 
@@ -13,7 +11,6 @@ This plugin generates a list with all letters. If a letter is clicked, it adds a
 that are valid for the beginning letter, that was selected.
 
 .. image:: ../../Images/plugin_letter.jpg
-
 
 Configuration
 ~~~~~~~~~~~~~

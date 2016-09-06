@@ -6,8 +6,8 @@
 conf.py:
   copyright: 2016
   project: Dataviewer
-  version: 1.0.1
-  release: 1.0.1
+  version: 1.0.2
+  release: 1.0.2
   latex_elements:
     papersize: a4paper
     pointsize: 10pt
@@ -21,5 +21,4 @@ conf.py:
     - t3sphinx.ext.t3extras
     - t3sphinx.ext.t3tablerows
     - t3sphinx.ext.targets
-    - sphinxcontrib.youtube
 ...

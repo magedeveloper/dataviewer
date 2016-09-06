@@ -1,12 +1,6 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
-
-.. _variable:
+.. _variable_gs:
 
 .. image:: ../../Images/logo_dataviewer.png
 
@@ -20,9 +14,13 @@ Template Variables are injected to the fluid templates. You can select them in t
 Configuration
 ~~~~~~~~~~~~~   
 
-* **Type**
+Type
+   Determines the type of the value. It can be dynamic or fixed.
+   Please see the following options with their description.
 
 +-----------------------+------------------------------------------------------------+
+| Option Name           | Description                                                |
++=======================+============================================================+
 | Fixed Value           | A fixed text value                                         |
 +-----------------------+------------------------------------------------------------+
 | TypoScript Value      | Parsed TypoScript value                                    |
@@ -40,5 +38,5 @@ Configuration
 | Frontend User         | The current frontend user                                  |
 +-----------------------+------------------------------------------------------------+
 
-* **Name**
-The variable name that can be used in the fluid template.
+Name
+   The variable name that can be used in the fluid template.

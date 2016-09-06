@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _page:
@@ -17,31 +12,32 @@ Creates a group field for page selection.
 
 Screenshot
 ~~~~~~~~~~
-.. image:: ../../Images/fieldtype_page.jpg
 
+.. image:: ../../Images/fieldtype_page.jpg
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* **size**
-Height of the selector box
 
-* **selectedListStyle**
-Overrides the style of the element
+size
+   Height of the selector box
 
-* **multiple**
-Same item more than once can be selected
+selectedListStyle
+   Overrides the style of the element
 
-* **hideMoveIcons**
-Hides the move icons
+multiple
+   Same item more than once can be selected
 
-* **minitems**
-Minimum of items that can be selected
+hideMoveIcons
+   Hides the move icons
 
-* **maxitems**
-Maximum number of items that can be selected
+minitems
+   Minimum of items that can be selected
 
-* **disable_controls**
-Disables selected controls
+maxitems
+   Maximum number of items that can be selected
+
+disable_controls
+   Disables selected controls
 
 
 

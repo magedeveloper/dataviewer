@@ -1,11 +1,6 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
-.. _field:
+.. _field_gs:
 
 .. image:: ../../Images/logo_dataviewer.png
 
@@ -22,66 +17,73 @@ Configuration
 Tab "General"
 #############
 
+-------------------------------
 
-* **Type**
-This selection determines the type of the field.
+Type
+   This selection determines the type of the field.
 
 .. image:: ../../Images/field_type_selection.jpg
 
-* **Field Configuration**
-The field configuration depends on the type, that is selected above. 
-Please refer to the Fieldtypes-Section, to learn about each configuration.
+Field Configuration
+   The field configuration depends on the type, that is selected above. 
+   Please refer to the Fieldtypes-Section, to learn about each configuration.
 
 .. image:: ../../Images/field_configuration.jpg
 
-* **Use as record title**
-If checked, the value of the field will be used in the backend as the title of the record.
+Use as record title
+   If checked, the value of the field will be used in the backend as the title of the record.
 
 Tab "Frontend Settings"
 #######################
 
-* **Frontend Label**
-The Label of the field. This will also be converted to the variable name.
-You can see the accessible variable name below.
+-------------------------------
 
-* **Custom Variable Name**
-Unique custom variable name to override the automatically generated variable name.
+Frontend Label
+   The Label of the field. This will also be converted to the variable name.
+   You can see the accessible variable name below.
 
-* **Template File for Part-Rendering (PartViewHelper)**
-This Field can have a separate rendering template. When used the PartViewHelper,
-it can render the whole Field as a finalized html result.
+Custom Variable Name
+   Unique custom variable name to override the automatically generated variable name.
+
+Template File for Part-Rendering (PartViewHelper)
+   This Field can have a separate rendering template. When used the PartViewHelper,
+   it can render the whole Field as a finalized html result.
 
 Tab "Backend Settings"
 ######################
 
-* **Name of the Tab to add to**
-Each field can be assigned to a tab. If you leave this setting empty, the field will be assigned to "General".
+-------------------------------
 
-*Sorting*
-It is possible to sort tabs if you enter a name like 1-General, 2-Media.
-The sorting will then made by the number that is prefixed.
+Name of the Tab to add to
+   Each field can be assigned to a tab. If you leave this setting empty, the field will be assigned to "General".
 
-* **Show Title**
-Disabling this will hide the title in the backend so that only the field is displayed.
+.. note:: *Sorting:* It is possible to sort tabs if you enter a name like 1-General, 2-Media. The sorting will then made by the number that is prefixed.
 
-* **Backend Description**
-If this is filled with text, the text is displayed in the record form next to the field.
+Show Title
+   Disabling this will hide the title in the backend so that only the field is displayed.
+
+Backend Description
+   If this is filled with text, the text is displayed in the record form next to the field.
 
 .. image:: ../../Images/field_backend_description.jpg
 
-* **Backend Column Width**
-You can change the column width with this setting.
+Backend Column Width
+   You can change the column width with this setting.
 
-* **Backend Css Class**
-You can add a custom css class to the field with this setting.
+Backend Css Class
+   You can add a custom css class to the field with this setting.
 
 Tab "Field Values"
 ##################
+
+-------------------------------
 
 This is the place where you can create the values of a field.
 Values can be of different types:
 
 +----------------------------+-------------------------------------------------------------------------------------------------+
+| Field Value Type           | Description                                                                                     |
++============================+=================================================================================================+
 | **Fixed Value**            | This creates a fixed value where the content is just a text value                               |
 +----------------------------+-------------------------------------------------------------------------------------------------+
 | **Database Value**         | This can create a value that comes from the database with the given query                       |
@@ -98,30 +100,32 @@ with no value.
 Tab "Validation"
 ################
 
+-------------------------------
+
 Fields can be validated during the save procedure. All available validators can be selected in
 the field tab ``Validation`` as showed in the screenshot.
 
 .. image:: ../../Images/validation.jpg
 
-*Add custom validator*
+.. note:: *Add custom validator*: 
+          Adding a custom validator is made within the Plugin TypoScript.
+          The following lines show you how to add a new custom validator.
 
-Adding a custom validator is made within the Plugin TypoScript.
-The following lines show you how to add a new custom validator.
+          The validator itself has to implement :php:`\TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface`
 
-The validator itself has to implement :php:`\TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface`
+          .. code-block:: typoscript
 
-.. code-block:: typoscript
-
-	plugin.tx_dataviewer.validators {
-		custom {
-			validatorClass = Vendor\Extension\Validation\Validator\CustomValidator
-			label = LLL:EXT:extension/Resources/Private/Language/locallang.xlf:validator.custom
-		}
-	}
-
+	         plugin.tx_dataviewer.validators {
+		        custom {
+			       validatorClass = Vendor\Extension\Validation\Validator\CustomValidator
+			       label = LLL:EXT:extension/Resources/Private/Language/locallang.xlf:validator.custom
+		        }
+	         }
 
 Tab "Display Conditions"
 ########################
+
+-------------------------------
 
 The field can be showed or hidden matching Display Conditions.
 Available field ids will be displayed above.

@@ -1,8 +1,6 @@
-
 .. include:: ../../Includes.txt
 
-
-.. _record:
+.. _recordplugin:
 
 .. image:: ../../Images/logo_dataviewer.png
 
@@ -20,6 +18,8 @@ Configuration
 
 DataViewer Settings
 ###################
+
+-------------------------------
 
 Plugin Type
    This selects the type of which data is injected to the fluid template.
@@ -43,10 +43,10 @@ Page for Detail View
    Records can be linked to a detail page which has a  "Dynamic Detail" Plugin.
    To link a record, you can use a ViewHelper:
 
-::
+   ::
 
-	{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
-	<dv:record.link record="{record}" pid="{settings.detail_page_id}" additionalParams="{backPageId:'32'}">{record.title}</dv:record.link>
+	   {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+	   <dv:record.link record="{record}" pid="{settings.detail_page_id}" additionalParams="{backPageId:'32'}">{record.title}</dv:record.link>
 
 
 Record Storage Page
@@ -54,6 +54,8 @@ Record Storage Page
 
 Field/Value Filter Settings
 ###########################
+
+-------------------------------
 
 Available Markers
    If you created Template Variables on the storage pages, these will be available as markers in the Filter-Field Value Input Field.
@@ -66,6 +68,8 @@ Records by field/value filter
 
 Display Settings
 ################
+
+-------------------------------
 
 Number of records
    This sets the number of records that will be injected to the template. If you leave this setting to ``0``, all
@@ -86,6 +90,8 @@ Force these sorting settings
 Template Settings
 #################
 
+-------------------------------
+
 Fluid Template
    The template where the record(s) are injected.
 
@@ -94,6 +100,8 @@ Variable Injection
 
 Developer Settings
 ##################
+
+-------------------------------
 
 Debug
    Enable this setting to get an debug output when the form is posted.

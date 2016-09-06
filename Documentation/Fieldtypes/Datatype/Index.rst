@@ -1,4 +1,3 @@
-
 .. include:: ../../Includes.txt
 
 .. _datatype:
@@ -13,6 +12,7 @@ This field can contain inline elements by the selected datatype.
 
 Screenshot
 ~~~~~~~~~~
+
 .. image:: ../../Images/fieldtype_datatype.jpg
 
 Additional Configuration Options

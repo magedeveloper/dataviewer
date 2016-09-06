@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _fluid:
@@ -17,14 +12,14 @@ This field can contain fluid and/or html code that will be displayed in the back
 
 Screenshot
 ~~~~~~~~~~
-.. image:: ../../Images/fieldtype_fluid.jpg
 
+.. image:: ../../Images/fieldtype_fluid.jpg
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **Show in Backend**
-Shows the rendered output in the backend
+Show in Backend
+   Shows the rendered output in the backend
 
 
 

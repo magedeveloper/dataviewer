@@ -1,4 +1,3 @@
-
 .. include:: ../../Includes.txt
 
 .. _file:
@@ -25,32 +24,32 @@ size
 allowed
    Comma-separated list of allowed file types
 
-* **disallowed**
-Comma-separated list of disallowed file types
+disallowed
+   Comma-separated list of disallowed file types
 
-* **max_size**
-Maximum file size allowed in KB
+max_size
+   Maximum file size allowed in KB
 
-* **show_thumbs**
-Show Thumbnails of the files
+show_thumbs
+   Show Thumbnails of the files
 
-* **selectedListStyle**
-Overrides the style of the element
+selectedListStyle
+   Overrides the style of the element
 
-* **multiple**
-Same item more than once can be selected
+multiple
+   Same item more than once can be selected
 
-* **hideMoveIcons**
-Removes the move icons near the selector box
+hideMoveIcons
+   Removes the move icons near the selector box
 
-* **minitems**
-Minimum of items that can be selected
+minitems
+   Minimum of items that can be selected
 
-* **maxitems**
-Maximum number of items that can be selected
+maxitems
+   Maximum number of items that can be selected
 
-* **disable_controls**
-Disables selected controls
+disable_controls
+   Disables selected controls
 
 
 

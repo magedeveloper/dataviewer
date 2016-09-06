@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _flexform:
@@ -19,6 +14,7 @@ than a textfield.
 
 Screenshot
 ~~~~~~~~~~
+
 .. image:: ../../Images/fieldtype_flexform.jpg
 
 

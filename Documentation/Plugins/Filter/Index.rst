@@ -1,7 +1,6 @@
-
 .. include:: ../../Includes.txt
 
-.. _filter:
+.. _filterplugin:
 
 .. image:: ../../Images/logo_dataviewer.png
 
@@ -30,4 +29,4 @@ Options for filters
    These options are converted to a SQL Query which can be showed up in the Debug Mode in
    the record plugin.
 
-*Each option needs to be assigned to a field that is used for the filtering above.*
+.. note:: *Each option needs to be assigned to a field that is used for the filtering above.*
