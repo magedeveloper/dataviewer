@@ -2,7 +2,7 @@
 
 .. _group:
 
-.. image:: ../../Images/Fieldtype/group.gif
+.. image:: ../../Images/Fieldtype/group.png
    :align: left
 
 Group

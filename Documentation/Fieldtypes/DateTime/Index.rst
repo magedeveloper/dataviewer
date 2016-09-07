@@ -2,7 +2,7 @@
 
 .. _datetime:
 
-.. image:: ../../Images/Fieldtype/datetime.gif
+.. image:: ../../Images/Fieldtype/datetime.png
    :align: left
 
 DateTime

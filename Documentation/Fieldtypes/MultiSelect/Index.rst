@@ -2,7 +2,7 @@
 
 .. _multiselect:
 
-.. image:: ../../Images/Fieldtype/multiselect.gif
+.. image:: ../../Images/Fieldtype/multiselect.png
    :align: left
 
 MultiSelect
@@ -39,4 +39,4 @@ foreign_table_where
 
 
 
- 
+

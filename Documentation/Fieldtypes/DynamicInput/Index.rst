@@ -2,7 +2,7 @@
 
 .. _dynamicinput:
 
-.. image:: ../../Images/Fieldtype/dynamic_input.gif
+.. image:: ../../Images/Fieldtype/dynamic_input.png
    :align: left
 
 Dynamic Input
@@ -31,4 +31,4 @@ Type
 
 
 
- 
+

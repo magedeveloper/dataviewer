@@ -2,7 +2,7 @@
 
 .. _input:
 
-.. image:: ../../Images/Fieldtype/input.gif
+.. image:: ../../Images/Fieldtype/input.png
    :align: left
 
 Input
@@ -33,4 +33,4 @@ max
 
 
 
- 
+

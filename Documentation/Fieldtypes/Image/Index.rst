@@ -2,7 +2,7 @@
 
 .. _image:
 
-.. image:: ../../Images/Fieldtype/image.gif
+.. image:: ../../Images/Fieldtype/image.png
    :align: left
 
 Image
@@ -56,4 +56,4 @@ disable_controls
 
 
 
- 
+

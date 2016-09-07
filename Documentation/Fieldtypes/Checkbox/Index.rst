@@ -2,7 +2,7 @@
 
 .. _checkbox:
 
-.. image:: ../../Images/Fieldtype/checkbox.gif
+.. image:: ../../Images/Fieldtype/checkbox.png
    :align: left
 
 Checkbox

@@ -2,7 +2,7 @@
 
 .. _select:
 
-.. image:: ../../Images/Fieldtype/typoscript.gif
+.. image:: ../../Images/Fieldtype/typoscript.png
    :align: left
 
 TypoScript
@@ -25,4 +25,4 @@ Show in Backend
 
 
 
- 
+

@@ -2,7 +2,7 @@
 
 .. _datatype:
 
-.. image:: ../../Images/Fieldtype/datatype.gif
+.. image:: ../../Images/Fieldtype/datatype.png
    :align: left
 
 Datatype

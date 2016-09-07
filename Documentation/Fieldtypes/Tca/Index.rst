@@ -2,7 +2,7 @@
 
 .. _select:
 
-.. image:: ../../Images/Fieldtype/tca.gif
+.. image:: ../../Images/Fieldtype/tca.png
    :align: left
 
 TCA
@@ -27,4 +27,4 @@ tca xml
 
 
 
- 
+

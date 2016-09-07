@@ -2,7 +2,7 @@
 
 .. _select:
 
-.. image:: ../../Images/Fieldtype/textarea.gif
+.. image:: ../../Images/Fieldtype/textarea.png
    :align: left
 
 Textarea
@@ -43,4 +43,4 @@ wrap
 
 
 
- 
+

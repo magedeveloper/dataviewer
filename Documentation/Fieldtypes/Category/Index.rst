@@ -2,7 +2,7 @@
 
 .. _category:
 
-.. image:: ../../Images/Fieldtype/category.gif
+.. image:: ../../Images/Fieldtype/category.png
    :align: left
 
 Category
