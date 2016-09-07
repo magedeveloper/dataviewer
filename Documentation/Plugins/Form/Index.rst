@@ -18,8 +18,6 @@ Configuration
 DataViewer Settings
 ###################
 
--------------------------------
-
 Record-Datatype for the Storage
    Please select the record type which will be stored when the form is posted.
 
@@ -29,8 +27,6 @@ Record Storage Page
 Template Settings
 #################
 
--------------------------------
-
 Fluid-Template
    The template that displays the form.
 
@@ -39,8 +35,6 @@ Variable Injection
 
 Developer Settings
 ##################
-
--------------------------------
 
 Debug
    Enable this setting to get an debug output when the form is posted.

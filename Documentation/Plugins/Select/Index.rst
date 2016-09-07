@@ -18,8 +18,6 @@ Configuration
 DataViewer Settings
 ###################
 
--------------------------------
-
 Target record display plugin, which will follow this plugin
    Please select the target record plugin. The plugin will then follow this plugin.
 
@@ -32,8 +30,6 @@ Record Storage Page
 Field/Value Filter Settings
 ###########################
 
--------------------------------
-
 Available Markers
    If you created Template Variables on the storage pages, these will be available as markers in the Filter-Field Value Input Field.
    This gives you the possibility to create dynamic filters for getting your record(s) injected to the template.
@@ -44,8 +40,6 @@ Records by field/value filter
 
 Display Settings
 ################
-
--------------------------------
 
 Selection Limit
    The amount of records that can be selected.
