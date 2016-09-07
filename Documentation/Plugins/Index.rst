@@ -1,10 +1,4 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../Includes.txt
-
 
 .. _plugins:
 
@@ -23,19 +17,17 @@ This extension delivers out-of-the-box a various amount of Frontend-Plugins for 
 * Select Plugin to select records from a list and to compute the selection
 * Form Plugin to generate frontend forms for editing or creating new records
 
-
 *You can choose the plugins in the New content element-Wizard:*
 
 .. image:: ../Images/new_plugin_tab.jpg
 
 Detailed Information about the plugins:
 
-
 .. toctree::
    :maxdepth: 1
    :titlesonly:
    :glob:
-   
+
    Record/Index
    Search/Index
    Letter/Index

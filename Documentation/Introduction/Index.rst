@@ -31,7 +31,7 @@ It is dynamically in every way, even to include records to another extension is 
 
 Highlights
 ==========
-- Create records on the fly
+- Create customized records on the fly
 - Plugins for List, Detail, Sort, Filter, Selection and Search
 - Dynamic Configuration of the Plugins to get nearly every solution
 - Inject records to other extensions with a InjectViewHelper
@@ -40,7 +40,26 @@ Highlights
 
 Please see the Screenshots-Section for more information about the possibilities.
  
-
 Workflow
 ========
+
 .. image:: ../Images/workflow.jpg
+
++-----+-------------------------------------------------------------+
+| 1.  | Create Fields for your Datatypes                            |
++-----+-------------------------------------------------------------+
+| 2.  | Create a Datatype and assign the Fields created in '1.'     |
++-----+-------------------------------------------------------------+
+| 3.  | Create Records of a Datatype                                |
+|     +-------------------------------------------------------------+
+|     | *This step is also relevant for your editors and            |
+|     | could also take place after you've done the                 |
+|     | templating.*                                                |
++-----+-------------------------------------------------------------+
+| 4.  | Create Fluid Templates for the records (e.g. List, Detail)  |
++-----+-------------------------------------------------------------+
+| 5.  | Insert Record-Plugin to your site to display record(s)      |
++-----+-------------------------------------------------------------+
+| 6.  | Add the other plugins like Filter or Search to your site    |
+|     | And target them to the Record-Plugin added in '5.'          |
++-----+-------------------------------------------------------------+

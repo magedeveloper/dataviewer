@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _category:
@@ -18,32 +13,28 @@ in the Category Sources Configuration.
 
 Screenshot
 ~~~~~~~~~~
+
 .. image:: ../../Images/fieldtype_category.jpg
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **Category Sources**
-Please select the sites, where the Category-Records are stored. All Categories from the selected pages
-will appear in the Category-Field
+Category Sources
+   Please select the sites, where the Category-Records are stored. All Categories from the selected pages
+   will appear in the Category-Field
 
-* **showHeader**
-Shows the header of the tree element
+showHeader
+   Shows the header of the tree element
 
-* **expandAll**
-Expands the tree when the form is loaded
+expandAll
+   Expands the tree when the form is loaded
 
-* **minitems**
-Minimum of items that can be selected
+minitems
+   Minimum of items that can be selected
 
-* **maxitems**
-Maximum number of items that can be selected
+maxitems
+   Maximum number of items that can be selected
 
-* **multiple**
-Same item more than once can be selected
+multiple
+   Same item more than once can be selected
 
-
-
-
-
- 

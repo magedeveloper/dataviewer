@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _rte:
@@ -17,5 +12,6 @@ Creates an Rich-Text HTML Editor to the form for creating html text.
 
 Screenshot
 ~~~~~~~~~~
+
 .. image:: ../../Images/fieldtype_rte.jpg
 

@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _multiselect:
@@ -18,26 +13,26 @@ Adds an multiselect box to the form for selecting entries.
 
 Screenshot
 ~~~~~~~~~~
-.. image:: ../../Images/fieldtype_multiselect.jpg
 
+.. image:: ../../Images/fieldtype_multiselect.jpg
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **minitems**
-Minimum of items that can be selected
+minitems
+   Minimum of items that can be selected
 
-* **maxitems**
-Maximum number of items that can be selected
+maxitems
+   Maximum number of items that can be selected
 
-* **foreign**
-Opens the foreign_table Settings
+foreign
+   Opens the foreign_table Settings
 
-* **Class Name of the according model**
-The class name of the according model that will be delivered in the frontend value
+Class Name of the according model
+   The class name of the according model that will be delivered in the frontend value
 
-* **foreign_table_where**
-The WHERE Clause for the foreign table
+foreign_table_where
+   The WHERE Clause for the foreign table
 
 
 

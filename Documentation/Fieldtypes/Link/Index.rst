@@ -1,8 +1,3 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 .. _link:
@@ -17,17 +12,17 @@ Creates an input element with a wizard for link creation.
 
 Screenshot
 ~~~~~~~~~~
-.. image:: ../../Images/fieldtype_link.jpg
 
+.. image:: ../../Images/fieldtype_link.jpg
 
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* **eval**
-Adds evaluation conditions to the field
+eval
+   Adds evaluation conditions to the field
 
-* **placeholder**
-The placeholder value for the field
+placeholder
+   The placeholder value for the field
 
 
 

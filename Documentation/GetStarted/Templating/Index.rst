@@ -1,12 +1,7 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: ../../Includes.txt
 
 
-.. _templating:
+.. _templating_gs:
 
 .. image:: ../../Images/logo_dataviewer.png
 
@@ -16,6 +11,8 @@ Templating
 Here is a quick overview of information about templating with the DataViewer-Extension:
 
 +-----------------------------------------------+-------------------------------------------------------------------------------------------------+
+| Condition                                     | Templating                                                                                      |
++===============================================+=================================================================================================+
 | Include Namespace to the fluid template       | ``{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}``                                       |
 +-----------------------------------------------+-------------------------------------------------------------------------------------------------+
 | Part Rendering                                | Part Rendering is possible for ``{record}``, ``{record.fieldname}``, ``{part}``.                |
@@ -34,5 +31,4 @@ Here is a quick overview of information about templating with the DataViewer-Ext
 | Getting all items from a select box           | Use ``{record.fieldname.fieldtype.items}`` to get all items of a field                          |
 +-----------------------------------------------+-------------------------------------------------------------------------------------------------+
 
-
-
+.. note:: Of course you can use ``<f:debug>{_all}</f:debug>`` to find out which variables are available!
