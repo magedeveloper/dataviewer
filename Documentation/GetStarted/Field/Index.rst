@@ -17,15 +17,13 @@ Configuration
 Tab "General"
 #############
 
--------------------------------
-
 Type
    This selection determines the type of the field.
 
 .. image:: ../../Images/field_type_selection.jpg
 
 Field Configuration
-   The field configuration depends on the type, that is selected above. 
+   The field configuration depends on the type, that is selected above.
    Please refer to the Fieldtypes-Section, to learn about each configuration.
 
 .. image:: ../../Images/field_configuration.jpg
@@ -35,8 +33,6 @@ Use as record title
 
 Tab "Frontend Settings"
 #######################
-
--------------------------------
 
 Frontend Label
    The Label of the field. This will also be converted to the variable name.
@@ -51,8 +47,6 @@ Template File for Part-Rendering (PartViewHelper)
 
 Tab "Backend Settings"
 ######################
-
--------------------------------
 
 Name of the Tab to add to
    Each field can be assigned to a tab. If you leave this setting empty, the field will be assigned to "General".
@@ -76,8 +70,6 @@ Backend Css Class
 Tab "Field Values"
 ##################
 
--------------------------------
-
 This is the place where you can create the values of a field.
 Values can be of different types:
 
@@ -93,6 +85,21 @@ Values can be of different types:
 | **All values of a field**  | This gets all values of a field that exist and will return them                                 |
 +----------------------------+-------------------------------------------------------------------------------------------------+
 
+
+.. This is comment. Just to help you.
+.. You can write "simple tables" like this easier in this way.
+.. see: http://docutils.sourceforge.net/docs/user/rst/quickref.html#tables
+..
+.. ==========================  ===========================
+..  Field Value Type            Description
+.. --------------------------  ---------------------------
+.. **Fixed Value**             This creates a fixed value where the content is just a text value
+.. **Database Value**          This can create a value that comes from the database with the given query
+.. **TypoScript**              This creates a TypoScript Value with the TypoScript Code being executed in the Value Content
+.. **All values of a field**   This gets all values of a field that exist and will return them
+.. ==========================  ============================
+
+
 A value can be set as ``Is Default`` when a select box needs a default value or a input field has to be prefilled.
 If you set ``Pretends to be an empty value``, the value that is returned is empty. This can create a select box option
 with no value.
@@ -100,14 +107,12 @@ with no value.
 Tab "Validation"
 ################
 
--------------------------------
-
 Fields can be validated during the save procedure. All available validators can be selected in
 the field tab ``Validation`` as showed in the screenshot.
 
 .. image:: ../../Images/validation.jpg
 
-.. note:: *Add custom validator*: 
+.. note:: *Add custom validator*:
           Adding a custom validator is made within the Plugin TypoScript.
           The following lines show you how to add a new custom validator.
 
@@ -115,17 +120,15 @@ the field tab ``Validation`` as showed in the screenshot.
 
           .. code-block:: typoscript
 
-	         plugin.tx_dataviewer.validators {
-		        custom {
-			       validatorClass = Vendor\Extension\Validation\Validator\CustomValidator
-			       label = LLL:EXT:extension/Resources/Private/Language/locallang.xlf:validator.custom
-		        }
-	         }
+             plugin.tx_dataviewer.validators {
+                custom {
+                   validatorClass = Vendor\Extension\Validation\Validator\CustomValidator
+                   label = LLL:EXT:extension/Resources/Private/Language/locallang.xlf:validator.custom
+                }
+             }
 
 Tab "Display Conditions"
 ########################
-
--------------------------------
 
 The field can be showed or hidden matching Display Conditions.
 Available field ids will be displayed above.
