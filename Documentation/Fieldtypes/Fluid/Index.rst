@@ -2,7 +2,7 @@
 
 .. _fluid:
 
-.. image:: ../../Images/Fieldtype/fluid.gif
+.. image:: ../../Images/Fieldtype/fluid.png
    :align: left
 
 Fluid
@@ -27,4 +27,4 @@ Show in Backend
 
 
 
- 
+

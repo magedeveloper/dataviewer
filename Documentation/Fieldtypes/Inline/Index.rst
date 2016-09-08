@@ -2,7 +2,7 @@
 
 .. _inline:
 
-.. image:: ../../Images/Fieldtype/inline.gif
+.. image:: ../../Images/Fieldtype/inline.png
    :align: left
 
 Inline
@@ -39,4 +39,4 @@ maxitems
 
 
 
- 
+

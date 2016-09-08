@@ -2,7 +2,7 @@
 
 .. _file_relation:
 
-.. image:: ../../Images/Fieldtype/file_relation.gif
+.. image:: ../../Images/Fieldtype/file_relation.png
    :align: left
 
 File Relation
@@ -37,4 +37,4 @@ showUpload
 
 
 
- 
+

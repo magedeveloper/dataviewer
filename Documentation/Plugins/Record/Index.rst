@@ -19,8 +19,6 @@ Configuration
 DataViewer Settings
 ###################
 
--------------------------------
-
 Plugin Type
    This selects the type of which data is injected to the fluid template.
    It can be one of the following:
@@ -55,8 +53,6 @@ Record Storage Page
 Field/Value Filter Settings
 ###########################
 
--------------------------------
-
 Available Markers
    If you created Template Variables on the storage pages, these will be available as markers in the Filter-Field Value Input Field.
    This gives you the possibility to create dynamic filters for getting your record(s) injected to the template.
@@ -68,8 +64,6 @@ Records by field/value filter
 
 Display Settings
 ################
-
--------------------------------
 
 Number of records
    This sets the number of records that will be injected to the template. If you leave this setting to ``0``, all
@@ -90,8 +84,6 @@ Force these sorting settings
 Template Settings
 #################
 
--------------------------------
-
 Fluid Template
    The template where the record(s) are injected.
 
@@ -100,8 +92,6 @@ Variable Injection
 
 Developer Settings
 ##################
-
--------------------------------
 
 Debug
    Enable this setting to get an debug output when the form is posted.

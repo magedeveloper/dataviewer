@@ -2,7 +2,7 @@
 
 .. _rte:
 
-.. image:: ../../Images/Fieldtype/rte.gif
+.. image:: ../../Images/Fieldtype/rte.png
    :align: left
 
 Rich-Text Editor

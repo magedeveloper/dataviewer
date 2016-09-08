@@ -2,7 +2,7 @@
 
 .. _flexform:
 
-.. image:: ../../Images/Fieldtype/flexform.gif
+.. image:: ../../Images/Fieldtype/flexform.png
    :align: left
 
 FlexForm
@@ -26,4 +26,4 @@ Screenshot
 
 
 
- 
+

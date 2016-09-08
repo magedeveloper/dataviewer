@@ -2,7 +2,7 @@
 
 .. _link:
 
-.. image:: ../../Images/Fieldtype/link.gif
+.. image:: ../../Images/Fieldtype/link.png
    :align: left
 
 Link
@@ -30,4 +30,4 @@ placeholder
 
 
 
- 
+

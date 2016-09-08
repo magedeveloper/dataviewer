@@ -2,7 +2,7 @@
 
 .. _select:
 
-.. image:: ../../Images/Fieldtype/select.gif
+.. image:: ../../Images/Fieldtype/select.png
    :align: left
 
 Select
@@ -32,4 +32,4 @@ foreign_table_where
 
 
 
- 
+

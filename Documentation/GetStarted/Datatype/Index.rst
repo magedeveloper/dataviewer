@@ -13,12 +13,10 @@ You need to have fields for assigning them to the Datatype. If you did not creat
 .. image:: ../../Images/new_datatype.jpg
 
 Configuration
-~~~~~~~~~~~~~   
+~~~~~~~~~~~~~
 
 Tab "General"
 #############
-
--------------------------------
 
 Name
    A name for your Datatype (e.g. Movie, News, Job, Address or any other you want!)
@@ -37,8 +35,6 @@ Fields
 
 Tab "Appearance"
 ################
-
--------------------------------
 
 Icon
    The icon of the Datatype that will be displayed in the backend.

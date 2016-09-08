@@ -2,7 +2,7 @@
 
 .. _date:
 
-.. image:: ../../Images/Fieldtype/date.gif
+.. image:: ../../Images/Fieldtype/date.png
    :align: left
 
 Date
@@ -39,4 +39,4 @@ range (upper)
 
 
 
- 
+

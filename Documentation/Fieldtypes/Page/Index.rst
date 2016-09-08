@@ -2,7 +2,7 @@
 
 .. _page:
 
-.. image:: ../../Images/Fieldtype/page.gif
+.. image:: ../../Images/Fieldtype/page.png
    :align: left
 
 Page
@@ -45,4 +45,4 @@ disable_controls
 
 
 
- 
+
