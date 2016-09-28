@@ -1,10 +1,10 @@
 <?php
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
 	"title" => "MageDeveloper DataViewer",
-	"description" => "Create easy and intuitive TCA-powered records with customizable backend forms on the fly without having to make a new extension. Records and Variables are dynamically injected to fluid templates for easy usage.",
+	"description" => "Create easy and intuitive TCA-records (e.g. News, Jobs, Events and more) on the fly without developing a new extension. Only templating is needed; includes plugins for Lists, Details, Search and more!",
 	"category" => "plugin",
 	"shy" => 0,
-	"version" => "1.0.2",
+	"version" => "1.1.1",
 	"dependencies" => "cms,extbase,fluid",
 	"conflicts" => "",
 	"priority" => "",
@@ -21,19 +21,19 @@ $EM_CONF[$_EXTKEY] = array(
 	"author_company" => "",
 	"CGLcompliance" => "",
 	"CGLcompliance_note" => "",
-	"constraints" => array(
-		"depends" => array(
-			"typo3" => "7.6.5-7.6.99",
+	"constraints" => [
+		"depends" => [
+			"typo3" => "7.6.5-8.3.99",
 			"cms" => "",
 			"extbase" => "",
 			"fluid" => "",
-		),
-		"conflicts" => array(
-		),
-		"suggests" => array(
-		),
-	),
+		],
+		"conflicts" => [
+		],
+		"suggests" => [
+		],
+	],
 	"_md5_values_when_last_written" => "a:0:{}",
-	"suggests" => array(
-	),
-);
+	"suggests" => [
+	],
+];
