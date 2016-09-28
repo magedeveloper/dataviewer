@@ -20,14 +20,4 @@ abstract class AbstractViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstr
 	 * @inject
 	 */
 	protected $pluginSettingsService;
-
-	/**
-	 * Render Method
-	 *
-	 * @return void
-	 */
-	public function render()
-	{
-		return;
-	}
 }
