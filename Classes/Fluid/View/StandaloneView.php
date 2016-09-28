@@ -21,6 +21,10 @@ class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 	 */
 	public function renderSource($source)
 	{
+		$this->setTemplateSource($source);
+		return $this->render();
+	
+	
 		$this->baseRenderingContext->setControllerContext($this->controllerContext);
 		$this->templateParser->setConfiguration($this->buildParserConfiguration());
 
