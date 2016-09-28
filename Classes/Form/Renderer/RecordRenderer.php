@@ -141,16 +141,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			$persistenceManager->persistAll();*/
 		}
 
-		// Add stylesheet file to the formResultCompiler
-		$css = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Css/dataviewer-backend.css";
-		$this->formResultCompiler->mergeResult(
-			array("stylesheetFiles" => array($css),
-				  "additionalJavaScriptPost" => array(),
-				  "additionalJavaScriptSubmit" => array(),
-				  "additionalHiddenFields" => array(),
-			)
-		);
-
 		///////////////////////////////////////////////////////////////////////
 		// Manipulate the field conf to get the record id in the record_content
 		///////////////////////////////////////////////////////////////////////
@@ -172,7 +162,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		///////////////////////////////////////////////////////////////////////
 		// FIELD RENDERING
 		///////////////////////////////////////////////////////////////////////
-		$menuItems = array(); $bottomParts = array(); $topParts = array();
+		$menuItems = []; $bottomParts = []; $topParts = [];
 		foreach($datatype->getFields() as $_field)
 		{
 			$this->fieldRenderer->setField($_field);
@@ -211,7 +201,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			
 			// Tab Information
 			$tabName = $_field->getTabName();
-			$matches = array();
+			$matches = [];
 			preg_match('/^((?P<id>[0-9]{1,5})[\:.\-_])?(?P<label>.*)$/', $tabName, $matches);
 			
 			$tabId 	 = $matches["id"];
@@ -246,7 +236,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$html =
 			"<div class=\"dataviewer-record dataviewer-record-{$record->getUid()}\" $backgroundColor>" .
 			$this->renderHeader($datatype)						.
-			//$this->formResultCompiler->JStop() 					.
+			$this->formResultCompiler->JStop() 					.
 			implode("\r\n", $topParts)							.
 			$contentHtml 										.
 			$this->renderTabMenu($menuItems, "dataviewer-tabs")	.
@@ -269,13 +259,24 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	public function renderHeader(Datatype $datatype)
 	{
+		// Add stylesheet file to the formResultCompiler
+		$css = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Css/dataviewer-backend.css";
+		$this->formResultCompiler->mergeResult(
+			["stylesheetFiles" => [$css],
+				  "additionalJavaScriptPost" => [],
+				  "additionalJavaScriptSubmit" => [],
+				  "additionalHiddenFields" => [],
+			]
+		);
+		
 		$header = "";
-		$header .= "<div class=\"dataviewer-header\">";
+		$header .= "<div class=\"dataviewer-header\" title=\"Datatype: {$datatype->getUid()}\">";
 
-		$iconUrl = \MageDeveloper\Dataviewer\Utility\IconUtility::getIconByHash($datatype->getIcon());
-
-		$uid = $datatype->getUid();
-		$header .= "<img src=\"../typo3/{$iconUrl}\" alt=\"Datatype: {$uid}\" title=\"Datatype: {$uid}\" border=\"0\" style=\"float:left; margin: 5px 5px 0 0; \"/>";
+		$iconIdentifier = "extensions-dataviewer-{$datatype->getIcon()}";
+		$icon = $this->iconFactory->getIcon($iconIdentifier);
+		$icon->setSize(Icon::SIZE_SMALL);
+		
+		$header .= $icon->render();
 		$header .= "<h1>{$datatype->getName()}</h1>";
 
 		// Information Message
@@ -329,13 +330,13 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$templatePathAndFileName = 'EXT:backend/Resources/Private/Templates/DocumentTemplate/Tabs.html';
 		$view = GeneralUtility::makeInstance(StandaloneView::class);
 		$view->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName($templatePathAndFileName));
-		$view->assignMultiple(array(
+		$view->assignMultiple([
 			'id' => $domId,
 			'items' => $menuItems,
 			'defaultTabIndex' => $defaultTabIndex,
 			'wrapContent' => false,
 			'storeLastActiveTab' => true,
-		));
+		]);
 		return $view->render();
 	}
 

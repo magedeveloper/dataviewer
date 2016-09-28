@@ -151,7 +151,15 @@ abstract class AbstractRenderer
 			/* @var \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper $infoboxViewHelper */
 			$infoboxViewHelper = $this->objectManager->get(\TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::class);
 			$infoboxViewHelper->setRenderingContext( new RenderingContext() );
-			$html = $infoboxViewHelper->render($title, $message, $severity);
+
+			$arguments = [
+				"title" => $title,
+				"message" => $message,
+				"state" => $severity,
+			];
+
+			$html = \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::renderStatic($arguments, function(){}, new RenderingContext());
+
 
 			return $html;
 		}
