@@ -6,217 +6,49 @@ if (!defined("TYPO3_MODE")) {
 $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
 
 /***********************************
+ * Register Icons
+ ***********************************/
+\MageDeveloper\Dataviewer\Utility\IconUtility::registerIcons();
+
+/***********************************
  * Static File Implementation
  ***********************************/
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, "Configuration/TypoScript", "DataViewer Extension");
-
-/***********************************
- * Register Icons
- ***********************************/
-$datatypeIcons = \MageDeveloper\Dataviewer\Utility\IconUtility::getIcons();
-$fieldtypeIcons = \MageDeveloper\Dataviewer\Utility\IconUtility::getFieldtypeIcons();
-$icons = array_merge($datatypeIcons, $fieldtypeIcons);
-\TYPO3\CMS\Backend\Sprite\SpriteManager::addSingleIcons($icons, $_EXTKEY);
 
 /***********************************
  * Table Configuration "Datatype"
  ***********************************/
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_datatype", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_datatype.xlf");
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages("tx_dataviewer_domain_model_datatype");
-$GLOBALS["TCA"]["tx_dataviewer_domain_model_datatype"] = array(
-	"ctrl" => array(
-		"title"	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_datatype",
-		"label" => "name",
-		"tstamp" => "tstamp",
-		"crdate" => "crdate",
-		"cruser_id" => "cruser_id",
-		"dividers2tabs" => TRUE,
-		"sortby" => "sorting",
-		"versioningWS" => 2,
-		"versioning_followPages" => TRUE,
-		"languageField" => "sys_language_uid",
-		"transOrigPointerField" => "l10n_parent",
-		"transOrigDiffSourceField" => "l10n_diffsource",
-		"delete" => "deleted",
-		"typeicon_column" => "icon",
-		"typeicon_classes" => \MageDeveloper\Dataviewer\Utility\IconUtility::getClasses(),
-		"enablecolumns" => array(
-			"disabled" => "hidden",
-			"starttime" => "starttime",
-			"endtime" => "endtime",
-		),
-		"searchFields" => "name,description,icon,templatefile,fields,",
-		"dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . "Configuration/TCA/Datatype.php",
-		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Datatype.gif"
-	),
-);
 
 /***********************************
  * Table Configuration "Field"
  ***********************************/
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_field", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_field.xlf");
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages("tx_dataviewer_domain_model_field");
-$GLOBALS["TCA"]["tx_dataviewer_domain_model_field"] = array(
-	"ctrl" => array(
-		"title"	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field",
-		"label" => "frontend_label",
-		"label_userFunc" => "MageDeveloper\\Dataviewer\\LabelUserFunc\\Field->displayLabel",
-		"tstamp" => "tstamp",
-		"crdate" => "crdate",
-		"cruser_id" => "cruser_id",
-		"dividers2tabs" => TRUE,
-		//"sortby" => "sorting",
-		"versioningWS" => 2,
-		"versioning_followPages" => TRUE,
-		"requestUpdate" => "type,frontend_label",
-		"typeicon_column" => "type",
-		"typeicon_classes" => \MageDeveloper\Dataviewer\Utility\IconUtility::getFieldtypeIconClasses(),
-		"languageField" => "sys_language_uid",
-		"transOrigPointerField" => "l10n_parent",
-		"transOrigDiffSourceField" => "l10n_diffsource",
-		"delete" => "deleted",
-		"enablecolumns" => array(
-			"disabled" => "hidden",
-			"starttime" => "starttime",
-			"endtime" => "endtime",
-		),
-		"searchFields" => "id,type,frontend_label,css_class,unit,is_required,show_description,field_values,",
-		"dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . "Configuration/TCA/Field.php",
-		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Field.gif",
-	),
-);
 
 /***********************************
  * Table Configuration "FieldValue"
  ***********************************/
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_fieldvalue", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_fieldvalue.xlf");
-$GLOBALS["TCA"]["tx_dataviewer_domain_model_fieldvalue"] = array(
-	"ctrl" => array(
-		"title"	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_fieldvalue",
-		"label" => "type",
-		"label_userFunc" => "MageDeveloper\\Dataviewer\\LabelUserFunc\\FieldValue->displayLabel",
-		"tstamp" => "tstamp",
-		"crdate" => "crdate",
-		"cruser_id" => "cruser_id",
-		"dividers2tabs" => TRUE,
-		"hideTable" => true,
-		"sortby" => "sorting",
-		"versioningWS" => 2,
-		"versioning_followPages" => TRUE,
-		"requestUpdate" => "type,table_content,column_name",
-		"languageField" => "sys_language_uid",
-		"transOrigPointerField" => "l10n_parent",
-		"transOrigDiffSourceField" => "l10n_diffsource",
-		"delete" => "deleted",
-		"enablecolumns" => array(
-			"disabled" => "hidden",
-			"starttime" => "starttime",
-			"endtime" => "endtime",
-		),
-		"searchFields" => "type,value_content,image_content,file_content,table_content,column_name,where_clause,is_readonly,is_default,",
-		"dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . "Configuration/TCA/FieldValue.php",
-		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/FieldValue.gif",
-	),
-);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages("tx_dataviewer_domain_model_fieldvalue");
 
 /***********************************
  * Table Configuration "Record"
  ***********************************/
 //\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_record", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_record.xlf");
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages("tx_dataviewer_domain_model_record");
-$GLOBALS["TCA"]["tx_dataviewer_domain_model_record"] = array(
-	"ctrl" => array(
-		"title"	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_record",
-		"label" => "title",
-		"label_userFunc" => "MageDeveloper\\Dataviewer\\LabelUserFunc\\Record->displayLabel",
-		"tstamp" => "tstamp",
-		"crdate" => "crdate",
-		"cruser_id" => "cruser_id",
-		"dividers2tabs" => TRUE,
-		"sortby" => "sorting",
-		"versioningWS" => false,
-		//"versioningWS" => 2,
-		"versioning_followPages" => TRUE,
-		"requestUpdate" => "datatype",
-		"languageField" => "sys_language_uid",
-		"transOrigPointerField" => "l10n_parent",
-		"transOrigDiffSourceField" => "l10n_diffsource",
-		"typeicon_column" => "icon",
-		"typeicon_classes" => \MageDeveloper\Dataviewer\Utility\IconUtility::getClasses(),
-		"delete" => "deleted",
-		"enablecolumns" => array(
-			"disabled" => "hidden",
-			"starttime" => "starttime",
-			"endtime" => "endtime",
-		),
-		"searchFields" => "title",
-		"dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . "Configuration/TCA/Record.php",
-		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Record.gif",
-	),
-);
 
 /***********************************
  * Table Configuration "RecordValue"
  ***********************************/
 //\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_recordvalue", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_recordvalue.xlf");
-$GLOBALS["TCA"]["tx_dataviewer_domain_model_recordvalue"] = array(
-	"ctrl" => array(
-		"title"	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_recordvalue",
-		"label" => "value_content",
-		"tstamp" => "tstamp",
-		"crdate" => "crdate",
-		"cruser_id" => "cruser_id",
-		"dividers2tabs" => TRUE,
-		"versioningWS" => 2,
-		"hideTable" => true,
-		"versioning_followPages" => TRUE,
-		"languageField" => "sys_language_uid",
-		"transOrigPointerField" => "l10n_parent",
-		"transOrigDiffSourceField" => "l10n_diffsource",
-		"delete" => "deleted",
-		"enablecolumns" => array(
-			"disabled" => "hidden",
-			"starttime" => "starttime",
-			"endtime" => "endtime",
-		),
-		"searchFields" => "value_content,record,field,",
-		"dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . "Configuration/TCA/RecordValue.php",
-		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/RecordValue.gif",
-	),
-);
 
 /***********************************
  * Table Configuration "Variable"
  ***********************************/
 //\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_variable", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_variable.xlf");
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages("tx_dataviewer_domain_model_variable");
-$GLOBALS["TCA"]["tx_dataviewer_domain_model_variable"] = array(
-	"ctrl" => array(
-		"title"	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable",
-		"label" => "variable_name",
-		"label_userFunc" => "MageDeveloper\\Dataviewer\\LabelUserFunc\\Variable->displayLabel",
-		"tstamp" => "tstamp",
-		"crdate" => "crdate",
-		"cruser_id" => "cruser_id",
-		"dividers2tabs" => TRUE,
-		"versioningWS" => 2,
-		"hideTable" => false,
-		"requestUpdate" => "type,table_content,column_name",
-		"versioning_followPages" => TRUE,
-		"languageField" => "sys_language_uid",
-		"transOrigPointerField" => "l10n_parent",
-		"transOrigDiffSourceField" => "l10n_diffsource",
-		"delete" => "deleted",
-		"enablecolumns" => array(
-			"disabled" => "hidden",
-			"starttime" => "starttime",
-			"endtime" => "endtime",
-		),
-		"searchFields" => "variable_name,type,",
-		"dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . "Configuration/TCA/Variable.php",
-		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif",
-	),
-);
 
 /***********************************
  * Plugin - Display Records
@@ -346,9 +178,16 @@ $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["typo3/class.db_list_extra.inc"]["getT
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["Backend\\Template\\Components\\ButtonBar"]["getButtonsHook"][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\DocHeaderButtons->getButtons";
 
 /**
- * We need to modify the inlineParentRecord Configuration in Order to get the INLINE Elements to work
+ * We need to modify the inlineParentRecord Configuration in order to get the INLINE Elements to work
  */
-$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["inlineParentRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareDataviewerTca"] = array();
+$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["inlineParentRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareInlineTca"] = [];
+
+/**
+ * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to get the Category Element correctly to work
+ */
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord']["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [];
+
+
 
 /***********************************
  * Backend Module
@@ -359,20 +198,20 @@ if (TYPO3_MODE === "BE") {
 		"web",          			// Main area
 		"dataviewer",         		// Name of the module
 		"",             			// Position of the module
-		array(          			// Allowed controller action combinations
-			"BackendModule" => "index, records, datatypes, datatypesDetails",
-		),
-		array(          			// Additional configuration
+		[   	        			// Allowed controller action combinations
+			"BackendModule" => "index, records, datatypes, datatypesDetails, recordsDetails",
+		],
+		[		          			// Additional configuration
 			"access"    => "user,group",
 			"icon"      => "EXT:dataviewer/Resources/Public/Images/module_icon.png",
 			"labels" 	=> "LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf"
-		)
+		]
 	);
 
-	$GLOBALS["TYPO3_CONF_VARS"]["EXTCONF"]["cms"]["db_layout"]["addTables"]["tx_dataviewer_domain_model_record"][] = array(
+	$GLOBALS["TYPO3_CONF_VARS"]["EXTCONF"]["cms"]["db_layout"]["addTables"]["tx_dataviewer_domain_model_record"][] = [
 		"MENU" => "",
 		"fList" => "title, datatype",
 		"icon" => true,
-	);
+	];
 	
 }
