@@ -18,13 +18,22 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 class RecordRepository extends AbstractRepository
 {
 	/**
+	 * Default Orderings
+	 * 
+	 * @var array
+	 */
+	protected $defaultOrderings = array(
+		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+	);
+
+	/**
 	 * Find records by given uids
 	 *
 	 * @param array $uids
 	 * @param array $storagePids
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByUids(array $uids, array $storagePids = array())
+	public function findByUids(array $uids, array $storagePids = [])
 	{
 		$query 			= $this->createQuery();
 		$querySettings 	= $query->getQuerySettings();
@@ -90,7 +99,7 @@ class RecordRepository extends AbstractRepository
 		$querySettings->setStoragePageIds($storagePids);
 		$querySettings->setRespectStoragePage(true);
 		
-		$orderings = array();
+		$orderings = [];
 		foreach ($recordIds as $_id)
 			$orderings["uid={$_id}"] = QueryInterface::ORDER_DESCENDING;
 		
@@ -103,7 +112,7 @@ class RecordRepository extends AbstractRepository
 
 	/**
 	 * Find records by a creation date range
-	 *
+	 *+
 	 * @param \Datetime $dateFrom
 	 * @param \Datetime $dateTo
 	 * @param array $storagePids
@@ -151,19 +160,30 @@ class RecordRepository extends AbstractRepository
 	 * Find all records on a set of storage pids
 	 * 
 	 * @param array $storagePids
+	 * @param bool $includeHidden
+	 * @param bool $respectHideRecordsSetting
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findAll($storagePids = array(), $includeHidden = false)
+	public function findAll($storagePids = [], $includeHidden = false, $respectHideRecordsSetting = false)
 	{
+		$query = $this->createQuery();
+		$querySettings = $query->getQuerySettings();
+		$querySettings->setRespectStoragePage(true);
+		$querySettings->setIgnoreEnableFields($includeHidden);
+
+		$this->setDefaultQuerySettings($querySettings);
+	
 		if (!empty($storagePids))
 		{
-			$query = $this->createQuery();
-			$querySettings = $query->getQuerySettings();
 			$querySettings->setStoragePageIds($storagePids);
-			$querySettings->setRespectStoragePage(true);
-			$querySettings->setIgnoreEnableFields(!$includeHidden);
 
-			$this->setDefaultQuerySettings($querySettings);
+			if($respectHideRecordsSetting)
+			{
+				return $query->matching(
+					$query->equals("datatype.hide_records", "0")
+				)->execute();
+			}
+			
 			
 			return $this->findAll();
 		}
@@ -182,7 +202,7 @@ class RecordRepository extends AbstractRepository
 	 * @param array $storagePids
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByAdvancedConditions(array $filters = array(), $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = array())
+	public function findByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [])
 	{	
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
@@ -207,7 +227,7 @@ class RecordRepository extends AbstractRepository
 	 * @param array $storagePids
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function getStatementByAdvancedConditions(array $filters = array(), $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = array())
+	public function getStatementByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [])
 	{
 		$subSelectOrdering = "";
 		if(is_numeric($sortField))
