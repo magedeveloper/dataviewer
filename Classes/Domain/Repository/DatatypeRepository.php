@@ -37,7 +37,7 @@ class DatatypeRepository extends AbstractRepository
 	 */
 	public function findAllOnPid($storagePid)
 	{
-		$query = $this->createQueryWithSettings(true, false, true, array($storagePid));
+		$query = $this->createQueryWithSettings(true, true, true, [$storagePid]);
 		$querySettings = $query->getQuerySettings();
 		
 		$this->setDefaultQuerySettings($querySettings);
@@ -53,10 +53,10 @@ class DatatypeRepository extends AbstractRepository
 	 */
 	public function getRecordHiddenIds()
 	{
-		$query = $this->createQueryWithSettings(true,false,false);
+		$query = $this->createQueryWithSettings(true,true,false);
 		$datatypes =  $query->matching(	$query->equals("hide_records", 1) )->execute();
 		
-		$ids = array();
+		$ids = [];
 		if($datatypes && $datatypes->count() > 0)
 			foreach($datatypes as $_datatype)
 				$ids[] = $_datatype->getUid();
