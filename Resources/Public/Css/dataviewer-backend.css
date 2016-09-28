@@ -4,6 +4,7 @@ img.dataviewer-logo										{ height:26px; margin-top:-20px; margin-bottom:-10p
 div.dataviewer-record                                   { margin-top:-20px; margin-bottom:-5px; background-color: #fff; padding: 20px; border: 1px solid #c0c0c0; -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); }
 div.dataviewer-record h1								{ margin-bottom:0; font-size:22px; }
 div.dataviewer-header                                   { padding:0; }
+div.dataviewer-header span.icon						    { float:left; margin: 5px 8px 0 0; }
 div.dataviewer-record-title                             { margin-bottom:15px; }
 div.dataviewer-record-title input                       { padding:8px; font-size: 16px; width:100%; font-family: Share,Verdana,Arial,Helvetica,sans-serif; background-color:#fefefe; border: 1px solid #bbbbbb;   border-radius: 2px; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }
 div.dataviewer-field                                    { padding: 0px 10px 0px; border-right:4px solid transparent; margin-top:10px; }
@@ -79,3 +80,6 @@ div.dataviewer-backend tr[aria-expanded="true"] .icon-expanded									   	{ dis
 
 div.dataviewer-backend tr[aria-expanded="false"] .icon-collapsed									{ display:inline-block; }
 div.dataviewer-backend tr[aria-expanded="false"] .icon-expanded									   	{ display:none; }
+
+div.dataviewer-backend table.table-record-values div.extbase-debugger								{ margin:5px 0 !important; width:94%; }
+div.dataviewer-backend table.table-record-values div.extbase-debugger-center						{ padding:0 0 0 10px; }
