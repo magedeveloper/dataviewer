@@ -59,7 +59,7 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 			return $item;
 		}
 		
-		return;
+		return $id;
 	}
 
 	/**
