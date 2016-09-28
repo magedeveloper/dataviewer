@@ -816,12 +816,12 @@
                 <target>Datensatz mit Id '%s' konnte nicht gelöscht werden.</target>
             </trans-unit>
             <trans-unit id="record_was_successfully_saved">
-                <source>Record with Id '%s' was successfully saved.</source>
-                <target>Datensatz mit Id '%s' wurde erfolgreich gespeichert.</target>
+                <source>Record '%s' (%s) was successfully saved.</source>
+                <target>Datensatz '%s' (%s) wurde erfolgreich gespeichert.</target>
             </trans-unit>
             <trans-unit id="field_was_successfully_saved">
-                <source>Field with Id '%s' was successfully saved.</source>
-                <target>Feld mit Id '%s' wurde erfolgreich gespeichert.</target>
+                <source>Field '%s' (%s) was successfully saved.</source>
+                <target>Feld '%s' (%s) wurde erfolgreich gespeichert.</target>
             </trans-unit>
             <trans-unit id="field_was_successfully_deleted">
                 <source>Field with Id '%s' and according record values were successfully deleted.</source>
@@ -832,8 +832,8 @@
                 <target>Der Feldwert mit Id '%s' sowie zugehörige Datensatzwerte wurden erfolgreich gelöscht.</target>
             </trans-unit>
             <trans-unit id="datatype_was_successfully_saved">
-                <source>Datatype with Id '%s' was successfully saved.</source>
-                <target>Datentyp mit Id '%s' wurde erfolgreich gespeichert.</target>
+                <source>Datatype '%s' (%s) was successfully saved.</source>
+                <target>Datentyp '%s' (%s) wurde erfolgreich gespeichert.</target>
             </trans-unit>
             <trans-unit id="field_is_required">
                 <source>The field '%s' is required. Please fill out all values.</source>
@@ -1383,6 +1383,10 @@
             <trans-unit id="module.datatypes_information">
                 <source>Datatypes Information</source>
                 <target>Informationen zu Datentypen</target>
+            </trans-unit>
+            <trans-unit id="module.records_information">
+                <source>Records Information</source>
+                <target>Informationen zu Datensätzen</target>
             </trans-unit>
             <trans-unit id="module.records_on_this_page">
                 <source>Records on this page</source>
