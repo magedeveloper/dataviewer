@@ -40,7 +40,6 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 		// Original
 		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaInline::class;
 
-
 		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexFetch::class;
 		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class;
 		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess::class;
@@ -57,64 +56,64 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 	{
 		$fieldName 					= $this->getField()->getUid();
 		$tableName 					= "tx_dataviewer_domain_model_record";
-		$value 						= $this->getValue();
+		$value 						= $this->getValue(false, true);
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 		
-		$tca = array(
+		$tca = [
 			"command" => "edit",
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"ctrl" => array(
+			"processedTca" => [
+				"ctrl" => [
 					"label" => $this->getField()->getFrontendLabel(),
-				),
-				"columns" => array(
-					$fieldName => array(
+				],
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "inline",
 							"foreign_table" => "sys_file_reference",
 							"foreign_field" => "uid_foreign",
 							"foreign_sortby" => "sorting_foreign",
 							"foreign_table_field" => "tablenames",
-							"foreign_match_fields" => array(
+							"foreign_match_fields" => [
 								"fieldname" => $fieldName
-							),
+							],
 							"foreign_label" => "uid_local",
 							"foreign_selector" => "uid_local",
-							"foreign_selector_fieldTcaOverride" => array(
-								"config" => array(
-									"appearance" => array(
+							"foreign_selector_fieldTcaOverride" => [
+								"config" => [
+									"appearance" => [
 										"elementBrowserType" => ($this->getField()->getConfig("showUpload") == "1")?"file":"",
 										"elementBrowserAllowed" => $this->getField()->getConfig("allowed"),
-									)
-								)
-							),
-							"filter" => array(
-								array(
+									]
+								]
+							],
+							"filter" => [
+								[
 									"userFunc" => "TYPO3\\CMS\\Core\\Resource\\Filter\\FileExtensionFilter->filterInlineChildren",
-									"parameters" => array(
+									"parameters" => [
 										"allowedFileExtensions" => $this->getField()->getConfig("allowed"),
 										"disallowedFileExtensions" => $this->getField()->getConfig("disallowed"),
-									)
-								)
-							),
-							"appearance" => array(
+									]
+								]
+							],
+							"appearance" => [
 								"useSortable" => TRUE,
-								"headerThumbnail" => array(
+								"headerThumbnail" => [
 									"field" => "uid_local",
 									"width" => "45",
 									"height" => "45c",
-								),
+								],
 								"showPossibleLocalizationRecords" => FALSE,
 								"showRemovedLocalizationRecords" => FALSE,
 								"showSynchronizationLink" => FALSE,
 								"showAllLocalizationLink" => FALSE,
 
-								"enabledControls" => array(
+								"enabledControls" => [
 									"info" => true,
 									"new" => true,
 									"dragdrop" => true,
@@ -122,23 +121,24 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 									"hide" => true,
 									"delete" => true,
 									"localize" => true,
-								),
-							),
-							"behaviour" => array(
+								],
+							],
+							"behaviour" => [
 								"localizationMode" => "select",
 								"localizeChildrenAtParentLocalization" => TRUE,
-							),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
+							],
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
 			"inlineFirstPid" => $this->getRecord()->getPid(),
 			"inlineResolveExistingChildren" => true,
 			"inlineCompileExistingChildren"=> true,
-		);
+		];
 		
 		$this->prepareTca($tca);
+		
 		$this->tca = $tca;
 		return $this->tca;
 	}
