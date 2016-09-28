@@ -115,11 +115,16 @@ class Field
 				$html .= "<br />";
 			
 			}
+
+			$html .= "<br />";
+			$html .= "Example: FIELD:2:=:Selected Value";
 		
 		}
+		else
+		{
+			$html .= "---<br />";
+		}
 
-		$html .= "<br />";
-		$html .= "Example: FIELD:2:=:Selected Value";
 		
 		$html .= "</span><br />";
 
@@ -135,7 +140,7 @@ class Field
 	 */
 	public function populateFields(array &$config, &$parentObject)
 	{
-		$options = array();
+		$options = [];
 
 		$fields = $this->fieldRepository->findAll(false);
 
@@ -143,7 +148,7 @@ class Field
 		{
 			$pid = $_field->getPid();
 			$label = "[{$pid}] " . $_field->getFrontendLabel();
-			$options[] = array($label, $_field->getUid());
+			$options[] = [$label, $_field->getUid()];
 		}
 
 		$config["items"] = array_merge($config["items"], $options);
@@ -158,7 +163,7 @@ class Field
 	 */
 	public function populateFieldsByRecord(array &$config, &$parentObject)
 	{
-		$options = array();
+		$options = [];
 
 		if (is_array($config["row"]) && isset($config["row"]["settings.single_record_selection"]))
 		{
@@ -174,7 +179,7 @@ class Field
 
 				foreach($types as $_type=>$_fields)
 				{
-					$options[] = array(strtoupper($_type), "--div--");
+					$options[] = [strtoupper($_type), "--div--"];
 
 					if(count($_fields)>0)
 					{
@@ -183,7 +188,7 @@ class Field
 							/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
 							$tabName 	= ($_field->getTabName())?$_field->getTabName() . ">":"";
 							$label	 	= "[{$_field->getUid()}] " . strtoupper($_field->getType()) . ": " . $tabName . $_field->getFrontendLabel();
-							$options[] 	= array($label, $_field->getUid());
+							$options[] 	= [$label, $_field->getUid()];
 						}
 					
 					
