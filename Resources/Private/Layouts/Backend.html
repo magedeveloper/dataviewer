@@ -15,7 +15,11 @@
 		2:'TYPO3/CMS/Recordlist/Recordlist',
 		3:'TYPO3/CMS/Backend/AjaxDataHandler',
 		4:'TYPO3/CMS/Recordlist/Tooltip',
-		5:'TYPO3/CMS/Backend/ToggleSearchToolbox'
+		5:'TYPO3/CMS/Backend/ContextHelp',
+		6:'TYPO3/CMS/Backend/ToggleSearchToolbox',
+		7:'TYPO3/CMS/Backend/DocumentHeader',
+		8:'TYPO3/CMS/Backend/SplitButtons',
+		9:'TYPO3/CMS/Lang/Lang'
 	}"
 	/>
 	<div class="module-docheader t3js-module-docheader">
@@ -26,6 +30,7 @@
 					<f:be.menus.actionMenuItem label="{f:translate(key:'module.records')}" controller="BackendModule" action="records" />
 					<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes')}" controller="BackendModule" action="datatypes" />
 					<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes_information')}" controller="BackendModule" action="datatypesDetails" />
+					<f:be.menus.actionMenuItem label="{f:translate(key:'module.records_information')}" controller="BackendModule" action="recordsDetails" />
 				</dv:backend.actionMenu>
 			</div>
 			<div class="module-docheader-bar-column-right">
