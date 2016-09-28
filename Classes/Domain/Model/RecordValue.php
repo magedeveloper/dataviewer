@@ -42,13 +42,6 @@ class RecordValue extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 	protected $fieldValue = NULL;
 
 	/**
-	 * Internal Position of the value
-	 *
-	 * @var integer
-	 */
-	protected $internalPosition = 0;
-
-	/**
 	 * Field is deleted
 	 *
 	 * @var boolean
