@@ -7,7 +7,7 @@
 		(<f:count subject="{datatypes}" />)
 	</div>
 	<div class="table-fit">
-		<table class="table table-hover table-powermail">
+		<table class="table table-hover">
 			<thead>
 			<tr>
 				<th nowrap="nowrap" class="col-icon col-sm-1"></th>
@@ -22,15 +22,27 @@
 				<f:comment>-- General Information --</f:comment>
 				<tr class="{f:if(condition:'{iteration.isFirst}',then:' firstcol')}{f:if(condition:'{iteration.isLast}',then:' lastcol')}" data-toggle="collapse" data-target="#info{datatype.uid}" class="accordion-toggle">
 					<td nowrap="nowrap" class="col-icon nowrap">
-							<span class="fa fa-caret-right icon-collapsed"></span>
-							<span class="fa fa-caret-down icon-expanded"></span>
-							<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
+						<span class="fa fa-caret-right icon-collapsed"></span>
+						<span class="fa fa-caret-down icon-expanded"></span>
+						<f:if condition="{datatype.hidden}">
+							<f:then>
+								<core:icon identifier="extensions-dataviewer-{datatype.icon}" overlay="overlay-hidden" size="small" />
+							</f:then>
+							<f:else>
+								<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
+							</f:else>
+						</f:if>
 					</td>
 					<td nowrap="nowrap" class="nowrap">
 						{datatype.uid}
 					</td>
 					<td nowrap="nowrap">
 						<strong>{datatype.name}</strong>
+						<f:if condition="{datatype.hideRecords}">
+							<span title="{f:translate(key:'tx_dataviewer_domain_model_datatype.hide_records')}">
+							<core:icon identifier="apps-pagetree-page-content-from-page-hideinmenu" size="small" />
+							</span>
+						</f:if>
 					</td>
 					<td nowrap="nowrap">
 						<f:count subject="{datatype.fields}" />
@@ -43,7 +55,7 @@
 				<tr>
 					<td colspan="5" style="padding:0 !important;">
 						<div class="accordian-body collapse" id="info{datatype.uid}">
-							<f:render partial="BackendModule/ListFields" arguments="{fields:datatype.fields}" />
+							<f:render partial="BackendModule/ListFields" arguments="{fields:datatype.fields,currentPageId:currentPageId}" />
 						</div>
 					</td>
 				</tr>
