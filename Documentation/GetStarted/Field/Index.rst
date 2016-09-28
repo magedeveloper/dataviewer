@@ -17,8 +17,6 @@ Configuration
 Tab "General"
 #############
 
--------------------------------
-
 Type
    This selection determines the type of the field.
 
@@ -36,8 +34,6 @@ Use as record title
 Tab "Frontend Settings"
 #######################
 
--------------------------------
-
 Frontend Label
    The Label of the field. This will also be converted to the variable name.
    You can see the accessible variable name below.
@@ -51,8 +47,6 @@ Template File for Part-Rendering (PartViewHelper)
 
 Tab "Backend Settings"
 ######################
-
--------------------------------
 
 Name of the Tab to add to
    Each field can be assigned to a tab. If you leave this setting empty, the field will be assigned to "General".
@@ -76,8 +70,6 @@ Backend Css Class
 Tab "Field Values"
 ##################
 
--------------------------------
-
 This is the place where you can create the values of a field.
 Values can be of different types:
 
@@ -99,8 +91,6 @@ with no value.
 
 Tab "Validation"
 ################
-
--------------------------------
 
 Fields can be validated during the save procedure. All available validators can be selected in
 the field tab ``Validation`` as showed in the screenshot.
@@ -124,8 +114,6 @@ the field tab ``Validation`` as showed in the screenshot.
 
 Tab "Display Conditions"
 ########################
-
--------------------------------
 
 The field can be showed or hidden matching Display Conditions.
 Available field ids will be displayed above.

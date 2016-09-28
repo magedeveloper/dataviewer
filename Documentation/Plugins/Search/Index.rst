@@ -17,8 +17,6 @@ Configuration
 DataViewer Settings
 ###################
 
--------------------------------
-
 Target record display plugin, which will follow this plugin
    Please select the target record plugin. The plugin will then follow this plugin.
 
@@ -41,8 +39,6 @@ Clear on Page Load
 
 Field Search Settings
 #####################
-
--------------------------------
 
 .. note:: This tab is only available if you set the search type to ``Search through fields`` or ``Search through record title and fields``.
 

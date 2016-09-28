@@ -40,6 +40,7 @@ to create a form as you need it.
    Link/Index
    MultiSelect/Index
    Page/Index
+   Radio/Index
    Rte/Index
    Select/Index
    Tca/Index
