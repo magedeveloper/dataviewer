@@ -83,6 +83,16 @@ class ValueRepository
 	}
 
 	/**
+	 * Gets all items
+	 *
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\Value[]
+	 */
+	public function getItems()
+	{
+		return $this->values;
+	}
+
+	/**
 	 * Converts field names for Setters and Getters
 	 * @param string $name
 	 * @return string
