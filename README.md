@@ -11,7 +11,7 @@ For [documentation have a look at the TYPO3 Docs Page](https://docs.typo3.org/ty
 to the [DataViewer Extension Page in the TER](https://typo3.org/extensions/repository/view/dataviewer)
 
 ##Compatibility
-+ TYPO3 CMS 7.6.5 - 7.6.X
++ TYPO3 CMS 7.6.5 - 8.3.X
 
 ## Highlights
 + Create customized records on the fly
