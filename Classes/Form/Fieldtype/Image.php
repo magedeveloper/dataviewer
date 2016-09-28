@@ -29,24 +29,24 @@ class Image extends Group
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "group",
 							"internal_type" => "file",
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

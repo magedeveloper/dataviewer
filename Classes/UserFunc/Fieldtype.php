@@ -49,13 +49,13 @@ class Fieldtype
 	public function populateFieldtypes(array &$config, &$parentObject)
 	{
 		$fieldtypesConfigurationRepository = $this->fieldtypeSettingsService->getFieldtypesConfiguration();
-		$options = array();
+		$options = [];
 		foreach($fieldtypesConfigurationRepository as $fieldtypeConfiguration)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Fieldtype $fieldtype */
-			$options[] = array($fieldtypeConfiguration->getLabel(),
-				               $fieldtypeConfiguration->getIdentifier(),
-				               $fieldtypeConfiguration->getIcon());
+			$options[] = [$fieldtypeConfiguration->getLabel(),
+				          $fieldtypeConfiguration->getIdentifier(),
+				          $fieldtypeConfiguration->getIcon()];
 		}
 
 		if (is_array($config["items"]))

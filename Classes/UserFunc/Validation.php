@@ -61,11 +61,11 @@ class Validation
 	public function populateValidators(array &$config, &$parentObject)
 	{
 		$validationConfigurationRepository = $this->validationSettingsService->getValidatorsConfiguration();
-		$options = array();
+		$options = [];
 		foreach($validationConfigurationRepository as $_vC)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\ValidatorConiguration $_vC */
-			$options[] = array($_vC->getLabel(),$_vC->getIdentifier());
+			$options[] = [$_vC->getLabel(),$_vC->getIdentifier()];
 		}
 
 		if (is_array($config["items"]))

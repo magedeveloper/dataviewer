@@ -387,7 +387,7 @@ class Record extends AbstractModel
 	 */
 	public function getRecordValueByField(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
 	{
-		$recordValues = array();
+		$recordValues = [];
 
 		if ($this->recordValues)
 		{

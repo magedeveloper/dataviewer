@@ -36,7 +36,7 @@ class BackendModuleController extends AbstractController
 	 * 
 	 * @var array
 	 */
-	protected $excludedArgments = array();
+	protected $excludedArgments = [];
 
 	/**
 	 * Datatype Repository
@@ -88,7 +88,7 @@ class BackendModuleController extends AbstractController
 		if($this->request->hasArgument("searchString"))
 			$searchString = $this->request->getArgument("searchString");
 	
-		$storagePids = array($this->currentPageId);
+		$storagePids = [$this->currentPageId];
 		$records = $this->recordRepository->findAll($storagePids, true);
 		
 		$datatypes = $this->datatypeRepository->findAllOnPid($this->currentPageId);
@@ -124,9 +124,23 @@ class BackendModuleController extends AbstractController
 	public function datatypesDetailsAction()
 	{
 		$this->_storeLastAction();
-
 		$datatypes = $this->datatypeRepository->findAllOnPid($this->currentPageId);
+		$this->view->assign("datatypes", $datatypes);
+	}
 
+	/**
+	 * Records Information Action for showing information
+	 * about records and their values on the selected page
+	 *
+	 * @return void
+	 */
+	public function recordsDetailsAction()
+	{
+		$this->_storeLastAction();
+		$records = $this->recordRepository->findAll([$this->currentPageId], true, true);
+		$datatypes = $this->datatypeRepository->findAllOnPid($this->currentPageId);
+		
+		$this->view->assign("records", $records);
 		$this->view->assign("datatypes", $datatypes);
 	}
 
@@ -178,8 +192,8 @@ class BackendModuleController extends AbstractController
 	protected function _storeLastAction()
 	{
 		BackendUtility::getModuleData(
-			array("action" => ""),
-			array("action" => $this->getActionName()),
+			["action" => ""],
+			["action" => $this->getActionName()],
 			"tx_dataviewer_web_dataviewerdataviewer"
 		);
 	}
@@ -187,8 +201,8 @@ class BackendModuleController extends AbstractController
 	protected function _getLastAction()
 	{
 		$moduleData = BackendUtility::getModuleData(
-			array("action" => ""),
-			array(),
+			["action" => ""],
+			[],
 			"tx_dataviewer_web_dataviewerdataviewer"
 		);
 		

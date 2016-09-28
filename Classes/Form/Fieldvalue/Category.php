@@ -32,7 +32,7 @@ class Category extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	protected function _getCategoriesByIds(array $ids)
 	{
-		$categories = array();
+		$categories = [];
 		
 		foreach($ids as $_catId)
 		{
@@ -102,7 +102,7 @@ class Category extends AbstractFieldvalue implements FieldvalueInterface
     public function getValueArray()
     {
         $categories = $this->getFrontendValue();
-        $stringArray = array();
+        $stringArray = [];
 
         foreach($categories as $_category)
         {

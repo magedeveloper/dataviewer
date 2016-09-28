@@ -32,15 +32,15 @@ class SearchSessionService extends SessionService
 
 	/**
 	 * Set the search fields
-	 * with array(
+	 * with [
 	 *   field_id
 	 * 	 field_condition
-	 * )
+	 * ]
 	 * 
 	 * @param array $searchFields
 	 * @return SearchSessionService
 	 */
-	public function setSearchFields(array $searchFields = array())
+	public function setSearchFields(array $searchFields = [])
 	{
 		return $this->writeToSession($searchFields, self::SESSION_KEY_SEARCH_FIELDS);
 	}
@@ -55,7 +55,7 @@ class SearchSessionService extends SessionService
 		if(is_array($this->restoreFromSession(self::SESSION_KEY_SEARCH_FIELDS)))
 			return $this->restoreFromSession(self::SESSION_KEY_SEARCH_FIELDS);
 			
-		return array();	
+		return [];	
 	}
 
 	/**
@@ -109,7 +109,7 @@ class SearchSessionService extends SessionService
 	 */
 	public function reset()
 	{
-		$this->setSearchFields(array());
+		$this->setSearchFields([]);
 		$this->setSearchType(null);
 		$this->setSearchString(null);
 		return $this;

@@ -54,18 +54,18 @@ class Datatype
 		$pageId = (int)$config["row"]["pid"];
 		$datatypesLocalPage = $this->datatypeRepository->findAllOnPid($pageId);
 
-		$options = array();
-		$usedIds = array();
+		$options = [];
+		$usedIds = [];
 
 		if ($datatypesLocalPage->count())
 		{
-			$options[] = array(Locale::translate("on_this_page"), "--div--");
+			$options[] = [Locale::translate("on_this_page"), "--div--"];
 
 			foreach($datatypesLocalPage as $_datatype)
 			{
 				/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
 				$icon = IconUtility::getIconByHash($_datatype->getIcon());
-				$options[] = array($_datatype->getInfo(), $_datatype->getUid(), $icon);
+				$options[] = [$_datatype->getInfo(), $_datatype->getUid(), $icon];
 				$usedIds[] = $_datatype->getUid();
 			}
 		}
@@ -81,13 +81,13 @@ class Datatype
 				{
 					if ($headerSet === false)
 					{
-						$options[] = array(Locale::translate("on_other_pages"), "--div--");
+						$options[] = [Locale::translate("on_other_pages"), "--div--"];
 						$headerSet = true;
 					}
 
 					/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
 					$icon = IconUtility::getIconByHash($_datatype->getIcon());
-					$options[] = array($_datatype->getInfo(), $_datatype->getUid(), $icon);
+					$options[] = [$_datatype->getInfo(), $_datatype->getUid(), $icon];
 				}
 
 			}

@@ -19,14 +19,14 @@ class StringUtility
 	 *
 	 * @var array
 	 */
-	protected static $dividers = array(
+	protected static $dividers = [
 		';',
 		'/',
 		'.',
 		"\\",
 		":",
 		"-"
-	);
+	];
 
 	/**
 	 * Gets exploded and trimmed values by
@@ -36,7 +36,7 @@ class StringUtility
 	 * @param array $allowedSeparators List of allowed separators
 	 * @return array
 	 */
-	public static function explodeSeparatedString($string, $allowedSeparators = array())
+	public static function explodeSeparatedString($string, $allowedSeparators = [])
 	{
 		if (strlen($string))
 		{
@@ -55,7 +55,7 @@ class StringUtility
 			return $exploded;
 		}
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -70,7 +70,7 @@ class StringUtility
 		$attrCode = strtolower($attrName);
 		$attrCode = str_replace(" ","", $attrCode);
 
-		$removable_values = array(
+		$removable_values = [
 			";" 	=> 	"",
 			":" 	=> 	"",
 			"/" 	=> 	"",
@@ -113,7 +113,7 @@ class StringUtility
 			"__" 	=> 	"",
 			"___" 	=> 	"",
 			"____" 	=> 	"",
-		);
+		];
 
 		//$attrCode = preg_replace('/[^a-zA-Z0-9_]/u', '_', $attrCode);
 		$attrCode = strtr($attrCode,$removable_values);
@@ -125,9 +125,7 @@ class StringUtility
 
 		$attrCode = str_replace('___', '_', $attrCode);
 		$attrCode = str_replace('__', '_', $attrCode);
-
 		$attrCode = substr($attrCode, 0, 250);
-
 		$attrCode = trim($attrCode, '_');
 
 		return $attrCode;

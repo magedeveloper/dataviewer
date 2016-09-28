@@ -50,10 +50,10 @@ class Letter
 	{
 		$letters = $this->letterSettingsService->getLetters();
 
-		$options = array();
+		$options = [];
 		foreach($letters as $_letter)
 		{
-			$options[] = array($_letter, $_letter);
+			$options[] = [$_letter, $_letter];
 		}
 
 		if (is_array($config["items"]))

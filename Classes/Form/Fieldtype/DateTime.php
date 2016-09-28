@@ -30,26 +30,26 @@ class DateTime extends Date
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "input",
 							"size" => 30,
 							"eval" => "datetime,".$this->getField()->getConfig("eval"),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

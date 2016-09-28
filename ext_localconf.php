@@ -13,12 +13,6 @@ if (!defined("TYPO3_MODE")) {
  ***********************************/
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig("mod.web_list.tableDisplayOrder.tx_dataviewer_domain_model_record.before = pages, fe_groups, fe_users, tx_dataviewer_domain_model_datatype");
 
-
-/***********************************
- * Register Icons
- ***********************************/
-\MageDeveloper\Dataviewer\Utility\IconUtility::registerIcons();
-
 /***********************************
  * Dataviewer Plugins
  * =================================
@@ -74,8 +68,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Record",
-	array( "Record" => "index, list, detail, dynamicDetail, part"), // Cached
-	array( "Record" => "index, list, detail, dynamicDetail, part"), // UnCached
+	["Record" => "index, list, detail, dynamicDetail, part"], // Cached
+	["Record" => "index, list, detail, dynamicDetail, part"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -83,8 +77,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Search",
-	array( "Search" => "index, search, reset"), // Cached
-	array( "Search" => "index, search, reset"), // UnCached
+	["Search" => "index, search, reset"], // Cached
+	["Search" => "index, search, reset"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -92,8 +86,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Letter",
-	array( "Letter" => "index, letter"), // Cached
-	array( "Letter" => "index, letter"), // UnCached
+	["Letter" => "index, letter"], // Cached
+	["Letter" => "index, letter"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -101,8 +95,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Sort",
-	array( "Sort" => "index, sort"), // Cached
-	array( "Sort" => "index, sort"), // UnCached
+	["Sort" => "index, sort"], // Cached
+	["Sort" => "index, sort"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -110,8 +104,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Filter",
-	array( "Filter" => "index, add, remove, reset"), // Cached
-	array( "Filter" => "index, add, remove, reset"), // UnCached
+	["Filter" => "index, add, remove, reset"], // Cached
+	["Filter" => "index, add, remove, reset"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -119,8 +113,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Select",
-	array( "Select" => "index, select"), // Cached
-	array( "Select" => "index, select"), // UnCached
+	["Select" => "index, select"], // Cached
+	["Select" => "index, select"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -128,7 +122,7 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Form",
-	array( "Form" => "index, post"), // Cached
-	array( "Form" => "index, post"), // UnCached
+	["Form" => "index, post"], // Cached
+	["Form" => "index, post"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );

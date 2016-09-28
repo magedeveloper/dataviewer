@@ -133,7 +133,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 		if(is_null($pluginTargetUid) || ($targetUid != $pluginTargetUid))
 			return false;
 			
-		return true;	
+		return true;
 	}
 
 	/**
@@ -146,13 +146,13 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	public function prepareVariables(array $ids)
 	{
 		// Denied Variable Names
-		$deniedVariableNames = array(
+		$deniedVariableNames = [
 			"record",
 			"records",
 			"part",
-		);
+		];
 
-		$variables = array();
+		$variables = [];
 		
 		foreach($ids as $_id)
 		{
@@ -217,9 +217,9 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 					case Variable::VARIABLE_TYPE_FRONTEND_USER:
 						$feUser = null;
 						if($this->authenticationService->isLoggedIn())
-							$feUser = $this->authenticationService->getFrontendUser();	
+							$feUser = $this->authenticationService->getFrontendUser();
 							
-						$variables[$name] = $feUser;	
+						$variables[$name] = $feUser;
 						break;
 					case Variable::VARIABLE_TYPE_FIXED:
 					default:
@@ -235,10 +235,10 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
 			"prepareVariables",
-			array(
+			[
 				&$variables,
 				&$this,
-			)
+			]
 		);
 
 		// Assign the rendered variables to the current view

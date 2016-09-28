@@ -77,7 +77,7 @@ class FileRelation extends AbstractFieldvalue implements FieldvalueInterface
 		if(is_array($uc))
 			return ArrayUtility::recursiveFindKey($fileId, $uc);
 			
-		return array();	
+		return [];	
 	}
 
 	/**
@@ -95,7 +95,7 @@ class FileRelation extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$value 		= $this->getValue();
 		$fileIds 	= GeneralUtility::trimExplode(",", $value, true);
-		$files 		= array();
+		$files 		= [];
 		
 		foreach($fileIds as $_fileId)
 		{
@@ -123,7 +123,7 @@ class FileRelation extends AbstractFieldvalue implements FieldvalueInterface
     public function getValueArray()
     {
         $files = $this->getFrontendValue();
-        $stringArray = array();
+        $stringArray = [];
 
         foreach($files as $_file)
         {

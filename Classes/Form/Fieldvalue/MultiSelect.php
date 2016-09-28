@@ -32,7 +32,7 @@ class MultiSelect extends Select
 		$value = $this->getValue();
 		$ids = GeneralUtility::trimExplode(",", $value, true);
 		
-		$items = array();
+		$items = [];
 	
 		foreach($ids as $_id)
 			$items[] = $this->getItemById($_id);

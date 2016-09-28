@@ -25,7 +25,7 @@ class FilterSettingsService extends PluginSettingsService
 	{
 		$filterRawArray 	= $this->getSettingByCode("field_filter");
 		$optionsRawArray 	= $this->getOptions();
-		$filterArray = array();
+		$filterArray = [];
 		
 		if(is_array($filterRawArray))
 		{
@@ -49,7 +49,7 @@ class FilterSettingsService extends PluginSettingsService
 	public function getOptions()
 	{
 		$optionsRawArray = $this->getSettingByCode("filter_options");
-		$optionsArray = array();
+		$optionsArray = [];
 
 		if(is_array($optionsRawArray))
 		{
@@ -74,7 +74,7 @@ class FilterSettingsService extends PluginSettingsService
 	public function getOptionsForField($fieldId)
 	{
 		$allOptions = $this->getOptions();
-		$options = array();
+		$options = [];
 		
 		foreach($allOptions as $_fOpt)
 		{

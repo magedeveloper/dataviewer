@@ -24,16 +24,16 @@ class Hidden extends AbstractFieldtype
 	 */
 	public function render()
 	{
-		return array(
-			'additionalJavaScriptPost' => array(),
-			'additionalJavaScriptSubmit' => array(),
-			'additionalHiddenFields' => array(),
-			'additionalInlineLanguageLabelFiles' => array(),
-			'stylesheetFiles' => array(),
-			'requireJsModules' => array(),
+		return [
+			'additionalJavaScriptPost' => [],
+			'additionalJavaScriptSubmit' => [],
+			'additionalHiddenFields' => [],
+			'additionalInlineLanguageLabelFiles' => [],
+			'stylesheetFiles' => [],
+			'requireJsModules' => [],
 			'extJSCODE' => '',
-			'inlineData' => array(),
+			'inlineData' => [],
 			'html' => "",
-		);
+		];
 	}
 }

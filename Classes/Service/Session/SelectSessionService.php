@@ -49,7 +49,7 @@ class SelectSessionService extends SessionService
 		$selectedRecords = $this->restoreFromSession(self::SESSION_KEY_SELECT_RECORDS);
 		
 		if(!is_array($selectedRecords))
-			$selectedRecords = array();
+			$selectedRecords = [];
 			
 		return $selectedRecords;	
 	}
@@ -61,7 +61,7 @@ class SelectSessionService extends SessionService
 	 */
 	public function reset()
 	{
-		$this->setSelectedRecords(array());
+		$this->setSelectedRecords([]);
 		return $this;
 	}
 

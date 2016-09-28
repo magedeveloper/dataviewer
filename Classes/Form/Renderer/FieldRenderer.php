@@ -44,14 +44,14 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 	 *
 	 * @var array
 	 */
-	protected $parameterArray = array();
+	protected $parameterArray = [];
 
 	/**
 	 * Rendered tca
 	 * 
 	 * @var array
 	 */
-	protected $tca = array();
+	protected $tca = [];
 
 	/**
 	 * Sets the record
@@ -111,7 +111,7 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 	 * @param array $parameterArray
 	 * @return void
 	 */
-	public function setParameterArray(array $parameterArray = array())
+	public function setParameterArray(array $parameterArray = [])
 	{
 		$this->parameterArray = $parameterArray;
 	}
@@ -172,14 +172,7 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	public function renderHeader()
 	{
-		$html 		= "";
-
-		if ($this->getField()->isRequired())
-		{
-			$html .= IconUtility::getSpriteIcon("status-dialog-warning", array("class" => "dataviewer-field-icon-required"));
-			$html .= "<div class=\"dataviewer-field-text-required\">".Locale::translate("required")."</div>";
-		}
-		
+		$html = "";
 		$html .= "<label for=\"data[tx_dataviewer_domain_model_record][{$this->getRecord()->getUid()}][{$this->getField()->getFieldName()}]\"><span class=\"t3-help-link\" data-description=\"{$this->getField()->getDescription()} <hr style='background-color:lightgrey;padding:0;margin:6px 0;' />Fluid: {$this->getField()->getIdentification()}<hr style='background-color:lightgrey;padding:0;margin:6px 0;' />Id: {$this->getField()->getUid()}\" data-title=\"{$this->getField()->getFrontendLabel()}\" href=\"#\"><abbr class=\"t3-help-teaser\"><strong>{$this->getField()->getFrontendLabel()}</strong></abbr></span></label>";
 
 		if (strlen($this->getField()->getDescription()) > 0)
@@ -205,7 +198,7 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 		/* @var $fieldObj \MageDeveloper\Dataviewer\Form\Fieldtype\AbstractFieldtype */
 		if ($fieldClass == "" || !$this->objectManager->isRegistered($fieldClass))
 		{
-			$message = Locale::translate("field_class_does_not_exist", array($fieldClass));
+			$message = Locale::translate("field_class_does_not_exist", [$fieldClass]);
 			$this->addBackendFlashMessage($message, null, FlashMessage::ERROR);
 			return false;
 		}

@@ -62,10 +62,10 @@ class Database
 	 */
 	public function populateTablesAction(array &$config, &$parentObject)
 	{
-		$options = array();
+		$options = [];
 
 		$label = Locale::translate("flexform.please_select", \MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration::EXTENSION_KEY);
-		$options[] = array("label" => $label, 0 => $label, 1 => "");
+		$options[] = ["label" => $label, 0 => $label, 1 => ""];
 
 		$res = $GLOBALS['TYPO3_DB']->sql_query("SHOW TABLES");
 
@@ -74,7 +74,9 @@ class Database
 			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
 			{
 				$tablename = end($row);
-				$options[] = array("label" => $tablename, 0 => $tablename, 1 => $tablename);
+				$options[] = ["label" => $tablename, 
+							  0 => $tablename, 
+							  1 => $tablename];
 			}
 		}
 
@@ -94,7 +96,7 @@ class Database
 	{
 		$tablename = reset($config["row"]["table_content"]);
 
-		$options = array();
+		$options = [];
 
 		if ($tablename)
 		{
@@ -105,7 +107,9 @@ class Database
 				while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
 				{
 					$field = $row["Field"];
-					$options[] = array("label" => $field, 0 => $field, 1 => $field);
+					$options[] = ["label" => $field, 
+								  0 => $field, 
+								  1 => $field];
 				}
 			}
 
@@ -130,7 +134,7 @@ class Database
 
 		$html = "";
 
-		$options = array();
+		$options = [];
 
 		if (isset($config["row"]))
 		{
@@ -148,18 +152,19 @@ class Database
 					try {
 						$result = $this->fieldRepository->findEntriesForFieldValue($fieldValue);
 
-						$html .= "<h4>".Locale::translate("items", array(count($result)))."</h4>";
+						$html .= "<h4>".Locale::translate("items", [count($result)])."</h4>";
 						$html .= DebugUtility::debugVariable($result);
-					} catch ( \Exception $e) {
+						
+					} catch (\Exception $e) {
 						$statement = "SELECT * FROM {$fieldValue->getTableContent()} {$fieldValue->getWhereClause()}";
-						$html = "<div class=\"alert alert-danger\" role=\"alert\">{$e->getMessage()}<br />Statement: {$statement}</div>";
+						$html = "<div class=\"alert alert-danger\">{$e->getMessage()}<br />Statement: {$statement}</div>";
 					}
 
 				}
 			}
 
 		}
-
+		
 		return $html;
 	}
 }

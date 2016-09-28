@@ -29,7 +29,7 @@ class DataHandler extends \TYPO3\CMS\Core\DataHandling\DataHandler
 	 */
 	public function getFlexformValue($value, Record $record, Field $field)
 	{
-		if (!is_array($value)) return array();
+		if (!is_array($value)) return [];
 
 		$actionCMDs = GeneralUtility::_GP('_ACTION_FLEX_FORMdata');
 		if (is_array($actionCMDs))
@@ -57,7 +57,7 @@ class DataHandler extends \TYPO3\CMS\Core\DataHandling\DataHandler
 					// First, check if there are "commands":
 					if (current($actionCMDs[$key]) !== '') {
 						asort($actionCMDs[$key]);
-						$newValueArray = array();
+						$newValueArray = [];
 
 						foreach ($actionCMDs[$key] as $idx => $order) {
 

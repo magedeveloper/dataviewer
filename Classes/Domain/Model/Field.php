@@ -560,7 +560,7 @@ class Field extends AbstractModel
 	 */
 	public function getDefaultValues()
 	{
-		$defaultValues = array();
+		$defaultValues = [];
 		$fieldValues = clone $this->fieldValues;
 		
 		foreach($fieldValues as $_fieldValue)
@@ -789,7 +789,7 @@ class Field extends AbstractModel
 		if ($this->validation)
 			return GeneralUtility::xml2array($this->validation);
 			
-		return array();	
+		return [];	
 	}
 
 	/**
@@ -852,7 +852,7 @@ class Field extends AbstractModel
 		if (is_array($extracted))
 			return $extracted;
 
-		return array();
+		return [];
 	}
 
 	/**

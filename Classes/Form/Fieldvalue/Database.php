@@ -32,7 +32,7 @@ class Database extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getDatabaseItemsFromField(Field $field)
 	{
-		$values = array();
+		$values = [];
 		$fieldValues = $field->getFieldValues();
 
 		if($field->hasDatabaseValues())
@@ -99,7 +99,7 @@ class Database extends AbstractFieldvalue implements FieldvalueInterface
 	public function getValueArray()
 	{
 		$values = $this->getFrontendValue();
-		$valueArr = array();
+		$valueArr = [];
 		
 		foreach($values as $_value)
 			$valueArr[] = reset($_value);

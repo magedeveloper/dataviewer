@@ -44,27 +44,27 @@ class Text extends AbstractFieldtype implements FieldtypeInterface
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "input",
 							"size" => 30,
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
 							"wrap" => $this->getField()->getConfig("wrap"),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;
@@ -90,7 +90,8 @@ class Text extends AbstractFieldtype implements FieldtypeInterface
 
 		//range
 		if($rangeLower = $this->getField()->hasEval("range"))
-			$tca["processedTca"]["columns"][$fieldName]["config"]["range"] = array("lower"=>$this->getField()->getConfig("range_lower"),"upper"=>$this->getField()->getConfig("range_upper"));
+			$tca["processedTca"]["columns"][$fieldName]["config"]["range"] = ["lower" => $this->getField()->getConfig("range_lower"), 
+			                                                                  "upper" => $this->getField()->getConfig("range_upper")];
 
 		parent::prepareTca($tca);
 	}

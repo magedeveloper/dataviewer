@@ -138,7 +138,7 @@ class RecordValueSessionService
 	protected function writeToSession($object, $key)
 	{
 		$sessionData = $this->sessionObject->getSessionData( $this->prefixKey );
-		if(!is_array($sessionData))	$sessionData = array();
+		if(!is_array($sessionData))	$sessionData = [];
 		
 		$sessionData[$key] = serialize($object);
 		$this->sessionObject->setAndSaveSessionData($this->prefixKey, $sessionData);
@@ -153,7 +153,7 @@ class RecordValueSessionService
 	 */
 	protected function cleanUpSession($key)
 	{
-		$this->sessionObject->setAndSaveSessionData($this->prefixKey, array());
+		$this->sessionObject->setAndSaveSessionData($this->prefixKey, []);
 		return $this;;
 	}
 }

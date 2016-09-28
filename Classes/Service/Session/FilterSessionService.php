@@ -51,7 +51,7 @@ class FilterSessionService extends SessionService
 		if (is_array($selectedOptions))
 			return $selectedOptions;
 			
-		return array();	
+		return [];	
 	}
 
 	/**

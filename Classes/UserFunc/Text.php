@@ -98,8 +98,8 @@ class Text
 	{
 		$row = $config["row"];
 		$pages = GeneralUtility::trimExplode(",", $row["pages"]);
-		$pids = array();
-		$markers = array();
+		$pids = [];
+		$markers = [];
 		
 		foreach($pages as $_page) 
 		{
@@ -111,10 +111,10 @@ class Text
 
 		/* @var Variable $_variable */		
 		foreach($variables as $_variable)
-			$markers[] = array(
+			$markers[] = [
 				"name" => $_variable->getVariableName(),
 				"type" => LocalizationUtility::translate("variable_type.{$_variable->getType()}"),
-			);
+			];
 		
 		$config["parameters"]["markers"] = $markers;
 		return $this->displayTemplate($config, $parentObject);

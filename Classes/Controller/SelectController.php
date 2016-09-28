@@ -60,17 +60,17 @@ class SelectController extends RecordController
 			$this->_redirectToPid();
 		}
 		
-		$records = array();
+		$records = [];
 		foreach($selectedRecords as $_record)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Record $_record */
 			$label = $_record->getTitle();
 			
-			$records[] = array(
+			$records[] = [
 				"label" 	=> $label,	
 				"record"	=> $_record,
 				"selected"	=> (in_array($_record->getUid(), $selectedRecordIds)),
-			);
+			];
 		}
 		
 		$this->view->assign("records", $records);
@@ -89,7 +89,7 @@ class SelectController extends RecordController
 		$selection = $this->request->getArgument("selection");
 		
 		if(!is_array($selection))
-			$selection = array(0);
+			$selection = [0];
 		
 		$validationErrors = $this->_validateSelection($selection);
 		
@@ -115,12 +115,12 @@ class SelectController extends RecordController
 	 */
 	protected function _validateSelection($selection)
 	{
-		$errors = array();
+		$errors = [];
 	
 		$selectionLimit = $this->selectSettingsService->getSelectionLimit();
 		
 		if(is_array($selection) && (count($selection) > $selectionLimit))
-			$errors[] = LocalizationUtility::translate("please_regard_selection_limit", array($selectionLimit));
+			$errors[] = LocalizationUtility::translate("please_regard_selection_limit", [$selectionLimit]);
 		
 		return $errors;
 	}

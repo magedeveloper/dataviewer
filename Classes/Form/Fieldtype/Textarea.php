@@ -30,27 +30,27 @@ class Textarea extends AbstractFieldtype implements FieldtypeInterface
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "text",
 							"cols" => $this->getField()->getConfig("cols"),
 							"rows" => $this->getField()->getConfig("rows"),
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

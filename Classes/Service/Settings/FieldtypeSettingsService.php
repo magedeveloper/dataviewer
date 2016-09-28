@@ -25,7 +25,7 @@ class FieldtypeSettingsService extends PluginSettingsService
 	 */
 	public function getRegisteredFieldtypes()
 	{
-		$registeredFieldtypes = array();
+		$registeredFieldtypes = [];
 		$fieldtypesConfiguration = $this->getFieldtypesConfiguration();
 		
 		foreach($fieldtypesConfiguration as $_ftC)

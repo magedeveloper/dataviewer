@@ -22,11 +22,11 @@ class NewLinkViewHelper extends AbstractViewHelper implements CompilableInterfac
 	public function render($pid, $table, $datatype = null)
 	{
 		return static::renderStatic(
-			array(
+			[
 				'pid' => $pid,
 				'datatype' => $datatype,
 				'table' => $table,
-			),
+			],
 			$this->buildRenderChildrenClosure(),
 			$this->renderingContext
 		);
@@ -41,10 +41,10 @@ class NewLinkViewHelper extends AbstractViewHelper implements CompilableInterfac
 	 */
 	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
 	{
-		$urlParameters = array(
+		$urlParameters = [
 			'edit['.$arguments['table'].'][' . $arguments['pid'] . ']' => 'new',
 			'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
-		);
+		];
 		
 		if(isset($arguments["datatype"]) && !is_null($arguments["datatype"]) && is_numeric($arguments["datatype"]))
 			$urlParameters["datatype"] = $arguments["datatype"];

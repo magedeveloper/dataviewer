@@ -91,12 +91,12 @@ class SearchController extends AbstractController
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
 			"searchPostProcess",
-			array(
+			[
 				&$searchFields,
 				&$searchType,
 				&$searchString,
 				&$this,
-			)
+			]
 		);
 
 		$this->searchSessionService->setSearchFields($searchFields);
@@ -104,7 +104,7 @@ class SearchController extends AbstractController
 		$this->searchSessionService->setSearchType($searchType);
 		
 		if($this->searchSettingsService->getClearOnPageLoad())
-			$this->redirect("index", null, null, array("searchString" => $searchString));
+			$this->redirect("index", null, null, ["searchString" => $searchString]);
 		else
 			$this->redirect("index");
 			

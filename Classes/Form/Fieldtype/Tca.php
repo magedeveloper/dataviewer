@@ -35,21 +35,21 @@ class Tca extends AbstractFieldtype implements FieldtypeInterface
 		$xmlConfiguration			= $this->getField()->getConfig("tca");
 		$arrayConfiguration			= GeneralUtility::xml2array($xmlConfiguration);
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => $arrayConfiguration,
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

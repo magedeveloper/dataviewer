@@ -75,13 +75,13 @@ class DocHeaderButtons
 		$buttons 				= $params['buttons'];
 		$currentPageId 			= $this->_resolveCurrentPageId();
 
-		$allowedModules = array(
+		$allowedModules = [
 			"web_layout",
 			"web_list",
 			"web_info",
 			"web_func",
 			//"web_ViewpageView",
-		);
+		];
 
 		if (!in_array(GeneralUtility::_GET("M"), $allowedModules) || !$currentPageId || $currentPageId == 0)
 			return $buttons;
@@ -102,7 +102,7 @@ class DocHeaderButtons
 				$rendered = "";
 
 				$buttonHtmlRender = $html . $htmlButton;
-				$title = LocalizationUtility::translate("module.create_record_by_datatype", array($_datatype->getName()));
+				$title = LocalizationUtility::translate("module.create_record_by_datatype", [$_datatype->getName()]);
 
 				$view->assign("currentPageId", $currentPageId);
 				$view->assign("datatype", $_datatype);

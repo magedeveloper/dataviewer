@@ -29,8 +29,8 @@ class FormValueViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\Abstract
 
 		/* @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
 		$view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
-		$view->setLayoutRootPaths(array($this->pluginSettingsService->getLayoutPath()));
-		$view->setPartialRootPaths(array($this->pluginSettingsService->getPartialPath()));
+		$view->setLayoutRootPaths([$this->pluginSettingsService->getLayoutPath()]);
+		$view->setPartialRootPaths([$this->pluginSettingsService->getPartialPath()]);
 		$view->setTemplatePathAndFilename($templateFile);
 		$view->getRequest()->setControllerExtensionName( Configuration::EXTENSION_KEY );
 

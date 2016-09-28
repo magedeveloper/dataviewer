@@ -72,12 +72,12 @@ class Link extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$value = $this->getValue();
 		
-		$conf = array(
+		$conf = [
 			"parameter" 		=> $value,
 			"useCacheHash" 		=> true,
 			"returnLast" 		=> "url",
 			"forceAbsoluteUrl" 	=> true,
-		);
+		];
 
 		$parts = explode("- ", $value);
 		if (isset($parts[1]))
@@ -89,7 +89,10 @@ class Link extends AbstractFieldvalue implements FieldvalueInterface
 				$link = $parts[0]; // If we have a link url
 		}
 
-		$typolink = $this->contentObjectRenderer->typoLink($link, $conf);
+		$typolink = $link;
+		if(TYPO3_MODE == "FE")
+			$typolink = $this->contentObjectRenderer->typoLink($link, $conf);
+		
 		return $typolink;
 	}
 
@@ -102,6 +105,6 @@ class Link extends AbstractFieldvalue implements FieldvalueInterface
      */
     public function getValueArray()
     {
-        return array($this->getFrontendValue());
+        return [$this->getFrontendValue()];
     }
 }

@@ -50,7 +50,7 @@ class ArrayUtility
 	{
 		$iterator  = new \RecursiveArrayIterator($haystack);
 		$recursive = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
-		$found = array();
+		$found = [];
 		foreach ($recursive as $key => $value) {
 			if ($key === $needle) {
 				array_push($found, $value);

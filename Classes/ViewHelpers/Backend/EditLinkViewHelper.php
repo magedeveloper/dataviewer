@@ -21,10 +21,10 @@ class EditLinkViewHelper extends AbstractViewHelper implements CompilableInterfa
 	public function render($id, $table)
 	{
 		return static::renderStatic(
-			array(
+			[
 				'id' => $id,
 				'table' => $table,
-			),
+			],
 			$this->buildRenderChildrenClosure(),
 			$this->renderingContext
 		);
@@ -41,10 +41,10 @@ class EditLinkViewHelper extends AbstractViewHelper implements CompilableInterfa
 	{
 		return BackendUtility::getModuleUrl(
 			'record_edit',
-			array(
+			[
 				'edit['.$arguments['table'].'][' . $arguments['id'] . ']' => 'edit',
 				'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI')
-			)
+			]
 		);
 	}
 }

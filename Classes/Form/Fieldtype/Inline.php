@@ -62,41 +62,41 @@ class Inline extends AbstractFieldtype implements FieldtypeInterface
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"command" => "edit",
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"ctrl" => array(
+			"processedTca" => [
+				"ctrl" => [
 					"label" => $this->getField()->getFrontendLabel(),
-				),
-				"columns" => array(
-					$fieldName => array(
+				],
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "inline",
 							"foreign_table" => $this->getField()->getConfig("foreign_table"),
 							"foreign_record_defaults" => $this->getField()->getForeignRecordDefaults(),
 							"maxitems"      => 9999,
-							"appearance" => array(
+							"appearance" => [
 								"collapseAll" => 1,
 								"levelLinksPosition" => "top",
 								"showSynchronizationLink" => 1,
 								"showPossibleLocalizationRecords" => 1,
 								"useSortable" => 1,
 								"showAllLocalizationLink" => 1
-							),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
+							],
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
 			"inlineFirstPid" => $this->getRecord()->getPid(),
 			"inlineResolveExistingChildren" => true,
 			"inlineCompileExistingChildren"=> true,
-		);
+		];
 		$this->prepareTca($tca);
 		return $tca;
 	}

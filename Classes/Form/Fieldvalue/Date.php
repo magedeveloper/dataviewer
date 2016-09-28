@@ -93,9 +93,9 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
         $dateTime = $this->getFrontendValue();
         if($dateTime instanceof \DateTime)
         {
-            return array($dateTime->format( $this->getFormat() ));
+            return [$dateTime->format( $this->getFormat() )];
         }
 
-        return array($this->getValue());
+        return [$this->getValue()];
     }
 }

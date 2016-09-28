@@ -87,10 +87,9 @@ abstract class AbstractCmsLayout
 	 * @param array $additionalVariables
 	 * @return string
 	 */
-	public function getBackendLayout($listType, array $config, array $additionalVariables = array())
+	public function getBackendLayout($listType, array $config, array $additionalVariables = [])
 	{
 		$templatePaths 	= $this->pluginSettingsService->getTemplatePaths();
-		$templatePath 	= end($templatePaths);
 		sort($templatePaths);
 		
 		for($i = count($templatePaths) - 1; $i >= 0; $i--)
@@ -103,7 +102,7 @@ abstract class AbstractCmsLayout
 				break;
 		}
 		
-		$variables = array();
+		$variables = [];
 		if (file_exists($templateFile))
 		{
 			/* @var \TYPO3\CMS\Fluid\View\StandaloneView $view */

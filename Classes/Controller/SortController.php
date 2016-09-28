@@ -114,12 +114,12 @@ class SortController extends AbstractController
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
 			"searchPostProcess",
-			array(
+			[
 				&$sortBy,
 				&$sortOrder,
 				&$perPage,
 				&$this,
-			)
+			]
 		);	
 
 		$this->sortSessionService->setSortField($sortBy);
@@ -139,7 +139,7 @@ class SortController extends AbstractController
 	{
 		$sortFields = $this->sortSettingsService->getSortFields();
 
-		$sortByOptions = array();
+		$sortByOptions = [];
 		if (!empty($sortFields))
 		{
 			foreach($sortFields as $i=>$_sortField)

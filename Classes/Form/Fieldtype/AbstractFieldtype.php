@@ -115,7 +115,7 @@ abstract class AbstractFieldtype
 	 *
 	 * @var array
 	 */
-	protected $formDataProviders = array();
+	protected $formDataProviders = [];
 
 	/**
 	 * Constructor
@@ -288,7 +288,7 @@ abstract class AbstractFieldtype
 					break;
 				case FieldValueModel::TYPE_DATABASE:
 					$values = $this->fieldRepository->findEntriesForFieldValue($fieldValue);
-					$valueArr = array();
+					$valueArr = [];
 					foreach($values as $_value)
 						$valueArr[] = implode(", ", array_values($_value));
 
@@ -296,7 +296,7 @@ abstract class AbstractFieldtype
 
 					break;
 				default:
-					$defaultValue = array($fieldValue->getValueContent());
+					$defaultValue = [$fieldValue->getValueContent()];
 					break;
 			}
 		}
@@ -346,7 +346,7 @@ abstract class AbstractFieldtype
 	public function getFieldItems()
 	{
 		$fieldValues = $this->getField()->getFieldValues();
-		$items = array();
+		$items = [];
 		foreach($fieldValues as $_fieldValue)
 		{
 			$itemsFromFieldValue = $this->getFieldValueItems($_fieldValue);
@@ -366,7 +366,7 @@ abstract class AbstractFieldtype
 	public function getItems()
 	{
 		$fieldItemsArray = $this->getFieldItems();
-		$items = array();
+		$items = [];
 		foreach($fieldItemsArray as $_fi)
 		{
 			$label = reset($_fi);
@@ -384,7 +384,7 @@ abstract class AbstractFieldtype
 	 */
 	public function getFieldValueItems(FieldValueModel $fieldValueModel)
 	{
-		$items = array();
+		$items = [];
 
 		/* @var FieldValue $_fieldValue */
 		switch($fieldValueModel->getType())
@@ -397,7 +397,7 @@ abstract class AbstractFieldtype
 				if($fieldValueModel->getPretendsEmpty())
 					$value = null;
 
-				$items[] = array($label, $value);
+				$items[] = [$label, $value];
 				break;
 			case FieldValueModel::TYPE_FIXED_VALUE:
 				$translation = Locale::translate("value.{$fieldValueModel->getValueContent()}");
@@ -409,7 +409,7 @@ abstract class AbstractFieldtype
 				if($fieldValueModel->getPretendsEmpty())
 					$value = null;
 
-				$items[] = array($label, $value);
+				$items[] = [$label, $value];
 				break;
 			case FieldValueModel::TYPE_DATABASE:
 				$values = $this->fieldRepository->findEntriesForFieldValue($fieldValueModel);
@@ -422,7 +422,7 @@ abstract class AbstractFieldtype
 					if($fieldValueModel->getPretendsEmpty())
 						$value = null;
 
-					$items[] = array($translation, $value);
+					$items[] = [$translation, $value];
 				}
 			case FieldValueModel::TYPE_FIELDVALUES:
 				$field = $fieldValueModel->getFieldContent();
@@ -432,7 +432,7 @@ abstract class AbstractFieldtype
 					if(!empty($fieldItems))
 					{
 						foreach($fieldItems as $value)
-							$items[] = array($value, $value);
+							$items[] = [$value, $value];
 					}
 				}
 				break;
@@ -453,7 +453,7 @@ abstract class AbstractFieldtype
 	 */
 	public function getAllFieldItems(FieldModel $field)
 	{
-		$items = array();
+		$items = [];
 		
 		$fieldtypeConfiguration = FieldtypeConfigurationUtility::getFieldtypeConfiguration($field->getType());
 		$valueClass = $fieldtypeConfiguration->getValueClass();
@@ -536,7 +536,7 @@ abstract class AbstractFieldtype
 	 */
 	public function getDatabaseRow()
 	{
-		$databaseRow = array();
+		$databaseRow = [];
 
 		$databaseRow["uid"] = $this->getRecordId();
 		$databaseRow["pid"] = $this->getPid();
@@ -559,9 +559,9 @@ abstract class AbstractFieldtype
 	 * @param bool $default Return only default value
 	 * @return mixed
 	 */
-	public function getValue($default = false)
+	public function getValue($default = false, $noSessionValue = false)
 	{
-		if(!$default)
+		if(!$default && !$noSessionValue)
 		{
 			// We get a session value if it exists and if this method shall return the record value content
 			$sessionValue = $this->recordValueSessionService->getValueForRecordField($this->getRecord(), $this->getField());
@@ -584,7 +584,7 @@ abstract class AbstractFieldtype
 		{
 			// We need to retrieve the default value content for the field
 			$fieldValues = $this->getField()->getFieldValues();
-			$values = array();
+			$values = [];
 			foreach($fieldValues as $_fieldValue)
 			{
 				$default = $this->_getDefaultValue($_fieldValue, 0, true);
@@ -594,7 +594,7 @@ abstract class AbstractFieldtype
 					$values[] = $default;
 
 			}
-
+			
 			$value = implode(", ", $values);
 		}
 
@@ -626,7 +626,7 @@ abstract class AbstractFieldtype
 	 */
 	public function buildTca()
 	{
-		$this->tca = array();
+		$this->tca = [];
 		return $this->tca;
 	}
 
@@ -642,7 +642,7 @@ abstract class AbstractFieldtype
 		if(isset($tca["processedTca"]["columns"][$this->getField()->getUid()]["config"]))
 			return $tca["processedTca"]["columns"][$this->getField()->getUid()]["config"];
 
-		return array();
+		return [];
 	}
 
 	/**
@@ -657,24 +657,24 @@ abstract class AbstractFieldtype
 	public function getErrorTca($message)
 	{
 		$fieldName = $this->getField()->getUid();
-		return array(
+		return [
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "user",
 							"userFunc" => 'MageDeveloper\Dataviewer\UserFunc\Text->displayErrorText',
-							"parameters" => array(
+							"parameters" => [
 								"message" => $message,
-							),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+							],
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 	}
 }

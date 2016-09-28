@@ -34,11 +34,11 @@ class RecordViewHelper extends AbstractViewHelper
 	{
 		$cObj = $this->configurationManager->getContentObject();
 
-		$conf = array(
+		$conf = [
 			"tables"		=> "tt_content",
 			"source"		=> (int)$uid,
 			"dontCheckPid"	=> 1,
-		);
+		];
 		
 		return $cObj->cObjGetSingle('RECORDS', $conf);
 	}

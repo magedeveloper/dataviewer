@@ -135,7 +135,7 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 
 		if ($field)
 		{
-			$message  = Locale::translate("field_was_successfully_saved", array($id));
+			$message  = Locale::translate("field_was_successfully_saved", [$field->getFrontendLabel(), $id]);
 			$this->addBackendFlashMessage($message, '', FlashMessage::OK);
 		}
 

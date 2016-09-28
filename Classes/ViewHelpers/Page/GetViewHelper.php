@@ -33,7 +33,7 @@ class GetViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractViewHe
 		$GLOBALS["TYPO3_DB"]->sql_free_result($res);
 	
 		if(!is_array($row))	
-			$row = array();
+			$row = [];
 			
 		return $row;	
 	}

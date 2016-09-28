@@ -62,7 +62,7 @@ class File extends AbstractFieldvalue implements FieldvalueInterface
 		$value = $this->getValue();
 		$values = GeneralUtility::trimExplode(",", $value, true);
 		
-		$files = array();
+		$files = [];
 		foreach($values as $_file)
 		{
 			$fullFilePath = GeneralUtility::getFileAbsFileName($_file);
@@ -87,7 +87,7 @@ class File extends AbstractFieldvalue implements FieldvalueInterface
     public function getValueArray()
     {
         $files = $this->getFrontendValue();
-        $stringArray = array();
+        $stringArray = [];
 
         foreach ($files as $_file)
         {

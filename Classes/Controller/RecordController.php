@@ -36,7 +36,7 @@ class RecordController extends AbstractController
 	 * 
 	 * @var array
 	 */
-	protected $storagePids = array();
+	protected $storagePids = [];
 
 	/**
 	 * Record Repository
@@ -87,7 +87,7 @@ class RecordController extends AbstractController
 	{
 		$selectedRecords = $this->_getSelectedRecords();
 		
-		$selectedRecordIds = array();
+		$selectedRecordIds = [];
 		foreach($selectedRecords as $_sR)
 			$selectedRecordIds[] = $_sR->getUid();
 
@@ -116,9 +116,9 @@ class RecordController extends AbstractController
 
 		// We set this record as currently active
 		// We set this record as currently active
-		$activeRecordIds = array();
+		$activeRecordIds = [];
 		if(!is_null($record))
-			$activeRecordIds = array($record->getUid());
+			$activeRecordIds = [$record->getUid()];
 
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($activeRecordIds);
 
@@ -185,9 +185,9 @@ class RecordController extends AbstractController
 			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplateOverride());
 
 		// We set this record as currently active
-		$activeRecordIds = array();
+		$activeRecordIds = [];
 		if(!is_null($recordObj))
-			$activeRecordIds = array($recordObj->getUid());
+			$activeRecordIds = [$recordObj->getUid()];
 
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($activeRecordIds);
 
@@ -198,7 +198,7 @@ class RecordController extends AbstractController
 		// allowed for this dynamic detail action
 		////////////////////////////////////////////////////
 		$selectedRecords = $this->_getSelectedRecords();
-		$ids = array();
+		$ids = [];
 		foreach($selectedRecords as $_s)
 			$ids[] = $_s->getUid();
 
@@ -294,10 +294,10 @@ class RecordController extends AbstractController
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
 			"prepareFilters",
-			array(
+			[
 				&$filters,
 				&$this,
-			)
+			]
 		);
 
 		// Replace markers in the filters
@@ -341,7 +341,7 @@ class RecordController extends AbstractController
 			foreach($records as $_record)
 				$_record->initializeValues();
 		else
-			$records = array();
+			$records = [];
 
 		//////////////////////////////////////////////////////
 		// Signal-Slot for post-processing selected records //
@@ -349,10 +349,10 @@ class RecordController extends AbstractController
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
 			"postProcessSelectedRecords",
-			array(
+			[
 				&$records,
 				&$this,
-			)
+			]
 		);
 
 		return $records;
@@ -365,19 +365,19 @@ class RecordController extends AbstractController
 	 * @param array $recordSelection
 	 * @return array
 	 */
-	protected function _getAdditionalFiltersByRecordSelection(array $recordSelection = array())
+	protected function _getAdditionalFiltersByRecordSelection(array $recordSelection = [])
 	{
-		$additionalFilters = array();
+		$additionalFilters = [];
 
 		if(!empty($recordSelection))
 		{
 			$selectedRecordIds = implode(",", $recordSelection);
-			$additionalFilters[] = array(
+			$additionalFilters[] = [
 				"field_id" => "RECORD.uid",
 				"filter_condition" => "in",
 				"field_value" => $selectedRecordIds,
 				"filter_combination" => "AND",
-			);
+			];
 		}
 
 		return $additionalFilters;
@@ -393,19 +393,19 @@ class RecordController extends AbstractController
 	 */
 	protected function _getAdditionalFiltersByLetterSelection($letter, $letterField)
 	{
-		$additionalFilters = array();
+		$additionalFilters = [];
 		
 		if(strlen($letter) === 1)
 		{
 			if(!is_numeric($letterField))
 				$letterField = "RECORD.{$letterField}";
 		
-			$additionalFilters[] = array(
+			$additionalFilters[] = [
 				"field_id" => $letterField,
 				"filter_condition" => "like",
 				"field_value" => "{$letter}%",
 				"filter_combination" => "AND",
-			);
+			];
 		}
 		
 		return $additionalFilters;
@@ -422,7 +422,7 @@ class RecordController extends AbstractController
 	 */
 	protected function _getAdditionalFiltersBySearch($searchType, $searchString, array $searchFields)
 	{
-		$additionalFilters = array();
+		$additionalFilters = [];
 
 		foreach($searchFields as $i=>$_sF)
 			$searchFields[$i]["field_value"] = $searchString;
@@ -430,20 +430,20 @@ class RecordController extends AbstractController
 		switch($searchType)
 		{
 			case SearchSettingsService::SEARCH_RECORD_TITLE:
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.title",
 					"filter_condition" => "like",
 					"field_value" => "%{$searchString}%",
 					"filter_combination" => "AND",
-				);
+				];
 				break;
 			case SearchSettingsService::SEARCH_RECORD_TITLE_FIELDS:
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.title",
 					"filter_condition" => "like",
 					"field_value" => "%{$searchString}%",
 					"filter_combination" => "AND",
-				);
+				];
 				$additionalFilters = array_merge($additionalFilters, $searchFields);
 				break;
 			case SearchSettingsService::SEARCH_FIELDS:
@@ -463,28 +463,28 @@ class RecordController extends AbstractController
 	 */
 	protected function _getAdditionalFiltersBySelectionType($selectionType)
 	{
-		$additionalFilters = array();
+		$additionalFilters = [];
 	
 		switch($selectionType)
 		{
 			case ListSettingsService::SELECTION_TYPE_DATATYPES:
 				$selectedDatatypes = $this->listSettingsService->getSelectedDatatypeIds();
 			
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.datatype",
 					"filter_condition" => "in",
 					"field_value" => $selectedDatatypes,
 					"filter_combination" => "AND",
-				);
+				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_RECORDS:
 				$selectedRecordIds = $this->listSettingsService->getSelectedRecordIds();
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.uid",
 					"filter_condition" => "in",
 					"field_value" => $selectedRecordIds,
 					"filter_combination" => "AND",
-				);
+				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_CREATION_DATE:
 				// Date From
@@ -492,19 +492,19 @@ class RecordController extends AbstractController
 				// Date To
 				$dateTo = $this->listSettingsService->getDateTo();
 				
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.crdate",
 					"filter_condition" => "gte",
 					"field_value" => $dateFrom->getTimestamp(),
 					"filter_combination" => "AND",
-				);
+				];
 				
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.crdate",
 					"filter_condition" => "lte",
 					"field_value" => $dateTo->getTimestamp(),
 					"filter_combination" => "AND",
-				);
+				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_CHANGE_DATE:
 				// Date From
@@ -512,19 +512,19 @@ class RecordController extends AbstractController
 				// Date To
 				$dateTo = $this->listSettingsService->getDateTo();
 
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.tstamp",
 					"filter_condition" => "gte",
 					"field_value" => $dateFrom->getTimestamp(),
 					"filter_combination" => "AND",
-				);
+				];
 
-				$additionalFilters[] = array(
+				$additionalFilters[] = [
 					"field_id" => "RECORD.tstamp",
 					"filter_condition" => "lte",
 					"field_value" => $dateTo->getTimestamp(),
 					"filter_combination" => "AND",
-				);
+				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_FIELD_VALUE_FILTER:
 				break;
@@ -627,7 +627,7 @@ class RecordController extends AbstractController
 			$this->standaloneView = $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
 			
 			$variables = $this->variableRepository->findByStoragePids($this->storagePids);
-			$ids = array();
+			$ids = [];
 			
 			foreach($variables as $_v)
 				$ids[] = $_v->getUid();

@@ -67,7 +67,7 @@ abstract class AbstractRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
 	 *
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
 	 */
-	public function createQueryWithSettings($respectSysLanguage = true, $ignoreEnableFields = true, $respectStoragePage = false, array $storagePids = array())
+	public function createQueryWithSettings($respectSysLanguage = true, $ignoreEnableFields = true, $respectStoragePage = false, array $storagePids = [])
 	{
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectSysLanguage($respectSysLanguage);

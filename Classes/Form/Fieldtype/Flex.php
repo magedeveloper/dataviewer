@@ -56,26 +56,26 @@ class Flex extends AbstractFieldtype implements FieldtypeInterface
 		}
 		
 		
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "flex",
-							"ds" => array(
+							"ds" => [
 								"default" => $value,
-							),	
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+							],	
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

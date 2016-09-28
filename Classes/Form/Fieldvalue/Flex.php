@@ -75,6 +75,6 @@ class Flex extends AbstractFieldvalue implements FieldvalueInterface
     {
         // This is so much dynamic, that we can't convert any information to a string
         // for filling our arrays, so we give up here
-        return array();
+        return [];
     }
 }

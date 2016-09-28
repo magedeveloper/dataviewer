@@ -41,7 +41,7 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$value = $this->getValue();
 		$values = GeneralUtility::trimExplode(",", $value, true);
-		$solved = array();
+		$solved = [];
 
 		foreach($values as $_value)
 		{
@@ -52,20 +52,20 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 				$table = $match["table"];
 				$uid = $match["uid"];
 
-				$solved[] = array(
+				$solved[] = [
 					"table" => $table,
 					"uid" => $uid,
-				);
+				];
 			}
 			else
 			{
 				// Unique allowed with unique id
 				if(is_numeric($_value) && !strpos($this->getField()->getConfig("allowed"), ","))
 				{
-					$solved[] = array(
+					$solved[] = [
 						"table" => $this->getField()->getConfig("allowed"),
 						"uid" => $_value,
-					);
+					];
 				}
 			}
 		}
@@ -119,7 +119,7 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$solvedValues = $this->_getSolvedValues();
-		$valueArr = array();
+		$valueArr = [];
 
 		foreach($solvedValues as $_value) 
 		{
@@ -144,9 +144,9 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$value = $this->getValue();
 		$values = GeneralUtility::trimExplode(",", $value, true);
-		$valueArr = array();
+		$valueArr = [];
 
-		$match = array();
+		$match = [];
 		foreach($values as $_value)
 		{
 			preg_match('/(?<table>.*)_(?<id>[0-9]{0,11})/', $_value, $match);

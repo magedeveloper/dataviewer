@@ -25,7 +25,7 @@ class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 	 */
 	public function initializeArguments()
 	{
-		$this->registerArgument("arguments", "array", "The arguments for the template", false, array());
+		$this->registerArgument("arguments", "array", "The arguments for the template", false, []);
 		$this->registerArgument("template", "string", "The template file that has to be used", true, null);
 	
 		parent::initializeArguments();

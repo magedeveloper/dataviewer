@@ -30,38 +30,38 @@ class Link extends Text
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "input",
 							"size" => 30,
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
-							"wizards" => array(
-								"link" => array(
+							"wizards" => [
+								"link" => [
 									"type" => "popup",
 									"title" => "LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.link",
 									"icon" => "EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif",
-									"module" => array(
+									"module" => [
 										"name" => "wizard_link",
-									),
+									],
 									"JSopenParams" => "width=800,height=600,status=0,menubar=0,scrollbars=1"
-								),
-							),
+								],
+							],
 							"softref" => "typolink"
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

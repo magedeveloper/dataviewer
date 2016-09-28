@@ -204,7 +204,7 @@ class ListSettingsService extends PluginSettingsService
 	{
 		$settingId = "field_value_filter";
 		$setting = $this->getSettingByCode($settingId);
-		$filters = array();
+		$filters = [];
 		
 		if (is_array($setting))
 		{
@@ -224,9 +224,9 @@ class ListSettingsService extends PluginSettingsService
 	public function getDefaultOrderings()
 	{
 		$sortField = $this->getSortField();
-		return array(
-				$sortField => $this->getSortOrder(),
-		);
+		return [
+			$sortField => $this->getSortOrder(),
+		];
 	}
 
 	/**

@@ -30,26 +30,26 @@ class Rte extends Text
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "text",
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
-						),
+						],
 						'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

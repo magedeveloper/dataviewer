@@ -91,7 +91,7 @@ class FieldValidation
 	{
 		$validationFlex = $this->getField()->getValidation();
 		$config = $this->flexFormService->convertFlexFormContentToArray($validationFlex);
-		$validationConfiguration = array();
+		$validationConfiguration = [];
 
 		if (isset($config["field"]) && is_array($config["field"]))
 		{
@@ -119,7 +119,7 @@ class FieldValidation
 	 */
 	public function validate($value)
 	{
-		$validationErrors = array();
+		$validationErrors = [];
 		$validationConfiguration = $this->getValidationConfiguration();
 		
 		foreach($validationConfiguration as $_validate)

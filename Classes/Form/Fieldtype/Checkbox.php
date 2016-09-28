@@ -44,24 +44,24 @@ class Checkbox extends AbstractFieldtype implements FieldtypeInterface
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "check",
 							"items" => $this->getFieldItems($this->getField()),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;
@@ -98,7 +98,7 @@ class Checkbox extends AbstractFieldtype implements FieldtypeInterface
 		{
 			$fieldValues 	= $fieldValue->getField()->getFieldValues();
 
-			$arrForInt = array();
+			$arrForInt = [];
 			foreach($fieldValues as $_fieldValue)
 			{
 				/* @var FieldValue $_fieldValue */

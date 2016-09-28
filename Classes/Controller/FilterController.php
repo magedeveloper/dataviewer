@@ -62,7 +62,7 @@ class FilterController extends AbstractController
 		$this->_injectFields($filters);
 		$this->_injectFields($activeFilters);
 		
-		$activeFiltersGrouped = array();
+		$activeFiltersGrouped = [];
 		foreach($activeFilters as $_activeFilter)
 		{
 			$activeFiltersGrouped[$_activeFilter["field_id"]]["field"] = $_activeFilter["field"];
@@ -88,7 +88,7 @@ class FilterController extends AbstractController
 		{
 			// Prepare Filters
 			$filtersFromPost = $this->request->getArgument("filters");
-			$selected = array();
+			$selected = [];
 			
 			foreach($filtersFromPost as $_fieldId=>$_fArray)
 			{
@@ -119,10 +119,10 @@ class FilterController extends AbstractController
 			$this->signalSlotDispatcher->dispatch(
 				__CLASS__,
 				"postProcessSelectedOptions",
-				array(
+				[
 					&$selectedOptions,
 					&$this,
-				)
+				]
 			);
 			
 			$this->filterSessionService->setSelectedOptions($selectedOptions);
@@ -156,7 +156,7 @@ class FilterController extends AbstractController
 		if(!$this->_checkTargetUid())
 			$this->forward("index");
 	
-		$this->filterSessionService->setSelectedOptions(array());
+		$this->filterSessionService->setSelectedOptions([]);
 		$this->forward("index");
 	}
 
@@ -240,9 +240,9 @@ class FilterController extends AbstractController
 	 * @param array $currentSelectedOptions
 	 * @return array
 	 */
-	protected function _prepareSelectedOptionsArray(array $previousSelectedOptions = array(), array $currentSelectedOptions = array())
+	protected function _prepareSelectedOptionsArray(array $previousSelectedOptions = [], array $currentSelectedOptions = [])
 	{
-		$selectedOptions = array();
+		$selectedOptions = [];
 		
 		foreach($previousSelectedOptions as $i=>$_prvOpt)
 			foreach($currentSelectedOptions as $j=>$_curOpt)

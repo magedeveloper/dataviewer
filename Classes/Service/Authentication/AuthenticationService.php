@@ -34,12 +34,12 @@ implements 	\TYPO3\CMS\Core\SingletonInterface
 	{
 		//$this->tsfe = \TYPO3\CMS\Frontend\Utility\EidUtility::initFeUser();
 
-		$loginData = array(
+		$loginData = [
 			"uname" 		=> $username, //username
 			"uident"		=> $password, //password
 			"uident_text"	=> $password, //password
 			"status"		=> "login"
-		);
+		];
 
 		$GLOBALS["TSFE"]->fe_user->checkPid 	= 0;
 		$info 	= $GLOBALS["TSFE"]->fe_user->getAuthInfoArray();

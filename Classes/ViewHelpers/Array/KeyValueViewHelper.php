@@ -22,7 +22,7 @@ class KeyValueViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 	 */
 	public function render($key, $value = "")
 	{
-		return array($key=>$value);
+		return [$key=>$value];
 	}
 
 }

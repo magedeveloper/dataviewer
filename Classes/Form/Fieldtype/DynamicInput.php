@@ -31,29 +31,29 @@ class DynamicInput extends Flex
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "flex",
-							"ds" => array(
+							"ds" => [
 								"default" => $this->getField()->getConfig("type"),
-							),
-							'appearance' => array(
+							],
+							'appearance' => [
 								"collapseAll" => 1,
-							),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+							],
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+		];
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

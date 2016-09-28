@@ -31,7 +31,7 @@ class TypoScript extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	protected function _getRenderedTypoScript()
 	{
-		$parts = array();
+		$parts = [];
 		$items = $this->getFieldtype()->getFieldItems();
 		
 		foreach($items as $_item)
@@ -88,6 +88,6 @@ class TypoScript extends AbstractFieldvalue implements FieldvalueInterface
      */
     public function getValueArray()
     {
-        return array($this->getFrontendValue());
+        return [$this->getFrontendValue()];
     }
 }

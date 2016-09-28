@@ -51,7 +51,7 @@ class FlexFormService extends \TYPO3\CMS\Extbase\Service\FlexFormService
 	public function getSimpleArrayFromFlexForm($conf, $element, $field, $item)
 	{
 		$extractedConfigurationArray = $this->convertFlexFormContentToArray($conf);
-		$simpleArray = array();
+		$simpleArray = [];
 		
 		if (isset($extractedConfigurationArray[$element]))
 		{
@@ -80,7 +80,7 @@ class FlexFormService extends \TYPO3\CMS\Extbase\Service\FlexFormService
 	 */
 	public function extractFlexformIrre($flexArr, $sectionName)
 	{
-		$values = array();
+		$values = [];
 
 		if (is_array($flexArr))
 		{
@@ -114,9 +114,9 @@ class FlexFormService extends \TYPO3\CMS\Extbase\Service\FlexFormService
 	 */
 	public function extractConfiguration($sourceArray, $node, $keyField, $valueField)
 	{
-		$configuration = array();
+		$configuration = [];
 
-		if (!is_array($sourceArray)) return array();
+		if (!is_array($sourceArray)) return [];
 
 		foreach($sourceArray as $_data)
 		{

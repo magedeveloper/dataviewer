@@ -64,6 +64,6 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
      */
     public function getValueArray()
     {
-        return array($this->getSearch());
+        return [$this->getSearch()];
     }
 }

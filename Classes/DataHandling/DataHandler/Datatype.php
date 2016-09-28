@@ -121,7 +121,7 @@ class Datatype extends AbstractDataHandler implements DataHandlerInterface
 			// Update all according record icons with (new) datatype icon
             $this->_updateRecordIcons($datatype, $datatype->getIcon());
 
-			$message  = Locale::translate("datatype_was_successfully_saved", array($id));
+			$message  = Locale::translate("datatype_was_successfully_saved", [$datatype->getName(), $id]);
 			$this->addBackendFlashMessage($message, '', FlashMessage::OK);
 		}
 		else

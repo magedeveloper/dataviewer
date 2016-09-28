@@ -21,7 +21,7 @@ class MagicModel implements \ArrayAccess
 	 * internal data storage array
 	 * @var array
 	 */
-	protected $_data = array();
+	protected $_data = [];
 
 	/**
 	 * data changes flag (true after setData | unsetData call)
@@ -33,7 +33,7 @@ class MagicModel implements \ArrayAccess
 	 * cache for formated names
 	 * @var string array
 	 */
-	private $_formatNameCache = array();
+	private $_formatNameCache = [];
 
 	/**
 	 * Constructor
@@ -41,7 +41,7 @@ class MagicModel implements \ArrayAccess
 	 * @param array $data
 	 * @return \MageDeveloper\Dataviewer\Domain\Model\MagicModel
 	 */
-	public function __construct($data = array())
+	public function __construct($data = [])
 	{
 		if( !empty($data) )
 			$this->_data = $this->_lowerArrayKeys($data);
@@ -276,7 +276,7 @@ class MagicModel implements \ArrayAccess
 		$this->_hasChangedData = true;
 
 		if( is_null($key) )
-			$this->_data = array();
+			$this->_data = [];
 		else
 			unset($this->_data[$key]);
 
@@ -310,7 +310,7 @@ class MagicModel implements \ArrayAccess
 	 */
 	protected function _lowerArrayKeys($array)
 	{
-		$lowered = array();
+		$lowered = [];
 
 		foreach( $array as $key => $values )
 			if( is_array($values) )
@@ -349,7 +349,7 @@ class MagicModel implements \ArrayAccess
 	 */
 	private function callEvent($method, $param1 = NULL, $param2 = NULL)
 	{
-		if( is_callable(array($this, $method)) && method_exists($this, $method) )
+		if( is_callable([$this, $method]) && method_exists($this, $method) )
 			return $this->{$method}($param1, $param2);
 
 		return true;
@@ -360,12 +360,12 @@ class MagicModel implements \ArrayAccess
 	 * @param array $arrAttributes
 	 * @return array
 	 */
-	public function toArray(array $arrAttributes = array())
+	public function toArray(array $arrAttributes = [])
 	{
 		if( empty($arrAttributes) )
 			return $this->_data;
 
-		$arrRes = array();
+		$arrRes = [];
 
 		foreach( $arrAttributes as $attribute )
 			$arrRes[$attribute] = $this->getData($attribute);
@@ -378,7 +378,7 @@ class MagicModel implements \ArrayAccess
 	 * @param array $arrAttributes
 	 * @return string
 	 */
-	public function toJson(array $arrAttributes = array())
+	public function toJson(array $arrAttributes = [])
 	{
 		$arrData = $this->toArray($arrAttributes);
 		$json = json_encode($arrData);

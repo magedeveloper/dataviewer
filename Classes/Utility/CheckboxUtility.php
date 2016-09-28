@@ -24,7 +24,7 @@ class CheckboxUtility
 	 */
 	public static function getSelectedIds($resultInt, $max = 10)
 	{
-		$ret = array(); 
+		$ret = []; 
 		for($i=0; $i < $max; $i++) 
 		{   
 			// Die Bits durchgehen und für jedes Bit den Wert (0 oder 1) ermitteln

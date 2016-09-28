@@ -109,7 +109,7 @@ class Inline extends AbstractFieldvalue implements FieldvalueInterface
 		$ids			= GeneralUtility::trimExplode(",", $value, true);
 		$modelClass 	= $this->getModelClass();
 		$repoClassName 	= \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateModelNameToRepositoryName($modelClass);
-		$items 			= array();
+		$items 			= [];
 
 		if(!$this->objectManager->isRegistered($repoClassName))
 			throw new UnknownClassException("Class '{$repoClassName}' not found!");
@@ -161,7 +161,7 @@ class Inline extends AbstractFieldvalue implements FieldvalueInterface
 		if(is_array($postedData))
 			return array_intersect_key($postedData, array_flip($searchFieldsArr));
 			
-		return array();	
+		return [];	
 	}
 
     /**
@@ -174,7 +174,7 @@ class Inline extends AbstractFieldvalue implements FieldvalueInterface
     public function getValueArray()
     {
         $items = $this->getFrontendValue();
-        $stringArray = array();
+        $stringArray = [];
 
         foreach($items as $_item)
         {

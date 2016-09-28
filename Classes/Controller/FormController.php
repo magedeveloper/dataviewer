@@ -37,7 +37,7 @@ class FormController extends AbstractController
 	 *
 	 * @var array
 	 */
-	protected $storagePids = array();
+	protected $storagePids = [];
 
 	/**
 	 * Standalone View
@@ -136,14 +136,14 @@ class FormController extends AbstractController
 		/////////////////////////////////////////
 		// Signal-Slot 'postPrepareFieldArray' //
 		/////////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"postPrepareFieldArray",array(&$fieldArray, &$this));
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"postPrepareFieldArray",[&$fieldArray, &$this]);
 		
 		$validationErrors = $this->recordDataHandler->validateFieldArray($fieldArray);
 		
 		/////////////////////////////////////////////////
 		// Signal-Slot 'postAfterFieldArrayValidation' //
 		/////////////////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"postAfterFieldArrayValidation",array(&$fieldArray, &$validationErrors, &$this));
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"postAfterFieldArrayValidation",[&$fieldArray, &$validationErrors, &$this]);
 		
 		if(!empty($validationErrors))
 		{
@@ -151,13 +151,13 @@ class FormController extends AbstractController
 				foreach($_errors as $_error)
 					$this->addFlashMessage($_error->getMessage(), $_title, AbstractMessage::ERROR);
 		
-			$this->forward("index", null, null, array("record" => $record));
+			$this->forward("index", null, null, ["record" => $record]);
 		}
 		
 		////////////////////////////////////
 		// Signal-Slot 'preProcessRecord' //
 		////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"preProcessRecord",array(&$fieldArray, &$record, &$this));
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"preProcessRecord",[&$fieldArray, &$record, &$this]);
 
 		// We need to save the record to obtain a uid
 		if($record->getUid())
@@ -172,7 +172,7 @@ class FormController extends AbstractController
 		////////////////////////////////////
 		// Signal-Slot 'postProcessRecord' //
 		////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"postProcessRecord",array(&$record, &$this));
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"postProcessRecord", [&$record, &$this]);
 		
 		$this->persistenceManager->persistAll();
 		
@@ -180,17 +180,17 @@ class FormController extends AbstractController
 		$redirect = "index";
 		$controllerName = null;
 		$extensionName = null;
-		$arguments = array("record" => $record);
+		$arguments = ["record" => $record];
 		$pageUid = null;
 		/////////////////////////////////////
 		// Signal-Slot 'postFinalRedirect' //
 		/////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"postFinalRedirect",array(&$redirect, 
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"postFinalRedirect",[	  &$redirect, 
 																				  &$controllerName,
 																				  &$extensionName,
 																				  &$arguments, 
 																				  &$pageUid,
-																				  &$this));
+																				  &$this]);
 		
 		// Validation was passed, final redirect now
 		$this->redirect($redirect, $controllerName, $extensionName, $arguments, $pageUid);

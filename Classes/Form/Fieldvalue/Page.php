@@ -75,7 +75,7 @@ class Page extends AbstractFieldvalue implements FieldvalueInterface
 		$value 			= $this->getValue();
 		$values 		= GeneralUtility::trimExplode(",", $value, true);
 		
-		$pages = array();
+		$pages = [];
 		foreach($values as $_pageId)
 		{
 			$page = $this->pageRepository->getPage($_pageId, true);
@@ -95,7 +95,7 @@ class Page extends AbstractFieldvalue implements FieldvalueInterface
     public function getValueArray()
     {
         $values = $this->getFrontendValue();
-        $stringArray = array();
+        $stringArray = [];
 
         foreach($values as $_value)
         {

@@ -65,6 +65,6 @@ class General extends AbstractFieldvalue implements FieldvalueInterface
      */
     public function getValueArray()
     {
-        return array($this->getFrontendValue());
+        return [$this->getFrontendValue()];
     }
 }

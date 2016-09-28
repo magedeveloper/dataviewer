@@ -64,14 +64,14 @@ class AbstractDataHandler
 	 *
 	 * @var array
 	 */
-	protected $substNEWwithIDs = array();
+	protected $substNEWwithIDs = [];
 
 	/**
 	 * Save Data
 	 * 
 	 * @var array
 	 */
-	protected $saveData = array();
+	protected $saveData = [];
 
 	/**
 	 * Constructor
@@ -142,10 +142,10 @@ class AbstractDataHandler
 	{
 		$url = BackendUtility::getModuleUrl(
 			'record_edit',
-			array(
+			[
 				'edit[tx_dataviewer_domain_model_record][' . $id . ']' => 'edit',
 				'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI')
-			)
+			]
 		);
 	
 		\TYPO3\CMS\Core\Utility\HttpUtility::redirect($url);
@@ -170,11 +170,11 @@ class AbstractDataHandler
 	 * @param array $arrayToSubstitute
 	 * @return array
 	 */
-	protected function _substituteArrayNEWwithIds($arrayToSubstitute = array())
+	protected function _substituteArrayNEWwithIds($arrayToSubstitute = [])
 	{
-		if (!is_array($arrayToSubstitute)) return array();
+		if (!is_array($arrayToSubstitute)) return [];
 
-		$substituted = array();
+		$substituted = [];
 		foreach($arrayToSubstitute as $_key=>$_value)
 		{
 			$sKey = $this->_substituteStringNEWwithIds($_key);

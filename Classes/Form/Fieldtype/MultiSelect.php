@@ -29,30 +29,30 @@ class MultiSelect extends Select
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
 
-		$tca = array(
+		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"config" => [
 							"type" => "select",
 							"multiple" => 1,
 							"renderType" => "selectMultipleSideBySide",
 							"items" => $this->getFieldItems($this->getField()),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-			"rootline" => array(),
-		);
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+			"rootline" => [],
+		];
 		
 		if($this->getField()->getConfig("foreign"))
-			$tca["processedTca"]["columns"][$fieldName]["config"]["items"] = array();
+			$tca["processedTca"]["columns"][$fieldName]["config"]["items"] = [];
 		
 		$this->prepareTca($tca);
 		$this->tca = $tca;

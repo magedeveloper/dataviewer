@@ -63,11 +63,11 @@ class LetterController extends AbstractController
 		$this->signalSlotDispatcher->dispatch(
 			__CLASS__,
 			"prepareLetters",
-			array(
+			[
 				&$letters,
 				&$active,
 				&$this,
-			)
+			]
 		);
 		
 		$this->view->assign("active", $active);

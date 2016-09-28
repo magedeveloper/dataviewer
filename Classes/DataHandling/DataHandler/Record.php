@@ -159,7 +159,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			/* @var RecordModel $parentRecord */
 			/* @var RecordModel $newRecord */
 			$parentRecord = $this->getRecordById($id);
-			$newRecordId = $parentObj->copyRecord($table, $id, $value, false, array(), "record_values");
+			$newRecordId = $parentObj->copyRecord($table, $id, $value, false, [], "record_values");
 			$newRecord = $this->getRecordById($newRecordId);
 
 			// Original Record Values that need to be copied
@@ -169,7 +169,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			{
 				/* @var RecordValue $_recordValue */
 				/* @var RecordValue $newRecordValue */
-				$newRecordValueId = $parentObj->copyRecord("tx_dataviewer_domain_model_recordvalue", $_recordValue->getUid(), $value, false, array(), "field,field_value");
+				$newRecordValueId = $parentObj->copyRecord("tx_dataviewer_domain_model_recordvalue", $_recordValue->getUid(), $value, false, [], "field,field_value");
 				$newRecordValue = $this->getRecordValueById($newRecordValueId, false);
 
 				if ($newRecordValue)
@@ -267,9 +267,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		// Records save data is stored for later usage to
 		// correctly store NEW<hash>-Records
-		$this->saveData[$id] = array(
+		$this->saveData[$id] = [
 			$incomingFieldArray,
-		);
+		];
 	}
 
 	/**
@@ -284,7 +284,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		// Assign substNEWIds for later usage if the element is in our target
 		$this->substNEWwithIDs = array_merge($this->substNEWwithIDs, $parentObj->substNEWwithIDs);
 		$this->_substituteRecordValues();
-
+		
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
 		// Disable Versioning
@@ -319,7 +319,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				// Save processed data
 				$this->persistenceManager->persistAll();
 
-				$message  = Locale::translate("record_was_successfully_saved", $recordId);
+				$message  = Locale::translate("record_was_successfully_saved", [$record->getTitle(), $recordId]);
 				$severity = FlashMessage::OK;
 
 				// We clear the according session data
@@ -350,7 +350,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function validateFieldArray(array $fieldArray)
 	{
-		$fieldValidationErrors = array();
+		$fieldValidationErrors = [];
 
 		foreach($fieldArray as $_fieldId=>$_value)
 		{
@@ -442,9 +442,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		// Add icon
 		$record->setIcon($datatype->getIcon());
 
-		if ($record->hasTitleField())	// Clear title for new filling
-			$record->setTitle("");
-
 		//////////////////////
 		// RECORD SAVE DATA //
 		//////////////////////
@@ -464,7 +461,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 * @param array $recordSaveData
 	 * @return void
 	 */
-	protected function _processRecordSaveData(RecordModel $record, array $recordSaveData = array())
+	protected function _processRecordSaveData(RecordModel $record, array $recordSaveData = [])
 	{
 		$datatype = $record->getDatatype();
 
@@ -480,6 +477,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		// We go through all fields of the datatype
 		///////////////////////////////////////////
 		$overallResult = null;
+
 		foreach($recordSaveData as $_fieldId=>$_value)
 		{
 			//if($record->_hasProperty($_fieldId))
@@ -499,7 +497,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$_value = $this->dataHandler->getFlexformValue($_value, $record, $field);
 				$_value = $this->flexTools->flexArray2Xml($_value);
 			}
-
+			
 			// We need to check the field
 			// We get the tca from the fieldtype class
 			// We check agains checkValue_SW in the dataHandler
@@ -518,7 +516,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$fieldtypeModel->setRecord($record);
 
 				$tca = $fieldtypeModel->getFieldTca();
-				$res = array();
+				$res = [];
 
 				$val = $this->dataHandler->checkValue_SW(	$res,
 					$_value,
@@ -532,7 +530,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					$field->getUid(),
 					$_FILES,
 					$record->getPid(),
-					array()
+					[]
 				);
 
 				if(array_key_exists("value", $val) && $tca["type"] !== "select" && $tca["type"] !== "inline")
@@ -542,7 +540,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				{
 					// We divorce the values and set them back together
 					$values = GeneralUtility::trimExplode(",", $_value, true);
-					$_value = array();
+					$_value = [];
 					foreach($values as $v)
 						if ($v) $_value[] = $v;
 
@@ -551,7 +549,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				}
 
 			}
-
+			
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
@@ -665,9 +663,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 * @param array $inlineContents
 	 * @return array
 	 */
-	protected function _buildRecordContentsFromInlineContents(array $inlineContents = array())
+	protected function _buildRecordContentsFromInlineContents(array $inlineContents = [])
 	{
-		$recordContents = array();
+		$recordContents = [];
 
 		$parent = null;
 		foreach($inlineContents as $_key=>$_value)

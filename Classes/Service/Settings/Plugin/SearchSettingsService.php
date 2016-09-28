@@ -44,7 +44,7 @@ class SearchSettingsService extends PluginSettingsService
 	{
 		$settingId = "search_fields";
 		$setting = $this->getSettingByCode($settingId);
-		$searchFields = array();
+		$searchFields = [];
 
 		if (is_array($setting))
 		{

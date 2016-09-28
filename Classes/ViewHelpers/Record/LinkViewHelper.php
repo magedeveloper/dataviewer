@@ -38,7 +38,7 @@ class LinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVi
 	 * @param string $plugin Plugin Name
 	 * @return string Rendered link
 	 */
-	public function render(\MageDeveloper\Dataviewer\Domain\Model\Record $record, $pid = NULL, $pageType = 0, $noCache = FALSE, $noCacheHash = FALSE, $section = '', $format = '', $linkAccessRestrictedPages = FALSE, array $additionalParams = array(), $absolute = FALSE, $addQueryString = FALSE, array $argumentsToBeExcludedFromQueryString = array(), $class = null, $action = "dynamicDetail", $controller = "Record", $extension = "Dataviewer", $plugin = "Record")
+	public function render(\MageDeveloper\Dataviewer\Domain\Model\Record $record, $pid = NULL, $pageType = 0, $noCache = FALSE, $noCacheHash = FALSE, $section = '', $format = '', $linkAccessRestrictedPages = FALSE, array $additionalParams = [], $absolute = FALSE, $addQueryString = FALSE, array $argumentsToBeExcludedFromQueryString = [], $class = null, $action = "dynamicDetail", $controller = "Record", $extension = "Dataviewer", $plugin = "Record")
 	{
 		$uriBuilder = $this->controllerContext->getUriBuilder();
 
@@ -54,7 +54,7 @@ class LinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVi
 			->setCreateAbsoluteUri($absolute)
 			->setAddQueryString($addQueryString)
 			->setArgumentsToBeExcludedFromQueryString($argumentsToBeExcludedFromQueryString)
-			->uriFor($action, array("record"=>$record), $controller, $extension, $plugin);
+			->uriFor($action, ["record"=>$record], $controller, $extension, $plugin);
 
 		$this->tag->addAttribute("href", $uri);
 

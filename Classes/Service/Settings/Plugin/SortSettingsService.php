@@ -35,7 +35,7 @@ class SortSettingsService extends PluginSettingsService
 	public function getSortFields()
 	{
 		$setting = $this->getSettingByCode("field_ids");
-		return \MageDeveloper\Dataviewer\Utility\StringUtility::explodeSeparatedString($setting, array(","));
+		return \MageDeveloper\Dataviewer\Utility\StringUtility::explodeSeparatedString($setting, [","]);
 	}
 
 	/**

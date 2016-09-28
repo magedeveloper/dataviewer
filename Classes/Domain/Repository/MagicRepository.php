@@ -32,13 +32,13 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 * Collection items
 	 * @var Object[]
 	 */
-	protected $_items = array();
+	protected $_items = [];
 
 	/**
 	 * Filters
 	 * @var array
 	 */
-	protected $_filters = array();
+	protected $_filters = [];
 	protected $_isFiltersRendered;
 
 	/**
@@ -123,7 +123,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 */
 	public function getColumnValues($colName)
 	{
-		$col = array();
+		$col = [];
 
 		foreach( $this->getItems() as $_item )
 			$col[] = $_item->getData($colName);
@@ -139,7 +139,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 */
 	public function getItemsByColumnValue($column, $value)
 	{
-		$res = array();
+		$res = [];
 
 		/** @var \MageDeveloper\Dataviewer\Domain\Model\MagicModel $item */
 		foreach( $this as $item )
@@ -202,7 +202,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 		if( $num >= 0 && $num < count($this->_items) )
 			return $this->_items[$num];
 
-		return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($this->_itemObjectClass(array(), false));
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($this->_itemObjectClass([], false));
 	}
 
 	/**
@@ -222,7 +222,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 */
 	public function getAllIds()
 	{
-		$ids = array();
+		$ids = [];
 
 		/** @var \MageDeveloper\Dataviewer\Domain\Model\MagicModel $item */
 		foreach( $this->getItems() as $item )
@@ -250,7 +250,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 */
 	public function clear()
 	{
-		$this->_items = array();
+		$this->_items = [];
 		return $this;
 	}
 
@@ -298,15 +298,15 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 * @param array $args
 	 * @return array
 	 */
-	public function walk($callback, array $args = array())
+	public function walk($callback, array $args = [])
 	{
-		$results = array();
+		$results = [];
 		$useItemCallback = is_string($callback) && strpos($callback, "::") === false;
 
 		foreach( $this->getItems() as $id => $item )
 		{
 			if( $useItemCallback )
-				$cb = array($item, $callback);
+				$cb = [$item, $callback];
 			else
 			{
 				$cb = $callback;
@@ -325,7 +325,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 * @param array $items
 	 * @return void
 	 */
-	public function each($callback, $items = array())
+	public function each($callback, $items = [])
 	{
 		foreach( $items as $k => $item )
 			$items[$k] = call_user_func($callback, $item);
@@ -397,7 +397,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 * @param array $data
 	 * @return \MageDeveloper\Dataviewer\Domain\Model\MagicModel
 	 */
-	public function getNewItemWithData($data = array())
+	public function getNewItemWithData($data = [])
 	{
 		/** @var \MageDeveloper\Dataviewer\Domain\Model\MagicModel $item */
 		$item = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($this->_itemObjectClass);
@@ -429,11 +429,11 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 * @param array $arrRequiredFields
 	 * @return array
 	 */
-	public function toArray($arrRequiredFields = array())
+	public function toArray($arrRequiredFields = [])
 	{
-		$arrItems = array();
+		$arrItems = [];
 		$arrItems["totalRecords"] = $this->getSize();
-		$arrItems["items"] = array();
+		$arrItems["items"] = [];
 
 		/** @var \MageDeveloper\Dataviewer\Domain\Model\MagicModel $item */
 		foreach( $this as $item )
@@ -450,16 +450,16 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 * @param array $additional Additional Options
 	 * @return array
 	 */
-	protected function _toOptionArray($valueField = "id", $labelField = "name", $additional = array())
+	protected function _toOptionArray($valueField = "id", $labelField = "name", $additional = [])
 	{
-		$res = array();
+		$res = [];
 		$additional['value'] = $valueField;
 		$additional['label'] = $labelField;
 
 		/** @var \MageDeveloper\Dataviewer\Domain\Model\MagicModel $item */
 		foreach( $this as $item )
 		{
-			$data = array();
+			$data = [];
 
 			foreach( $additional as $code => $field )
 				$data[$code] = $item->getData($field);
@@ -577,7 +577,7 @@ class MagicRepository implements \IteratorAggregate, \Countable, \ArrayAccess
 	 */
 	public function addFieldToFilter($field, $value, $logic = self::LOGIC_EQ)
 	{
-		$filter = array();
+		$filter = [];
 		$filter["field"] = $field;
 		$filter["value"] = $value;
 		$filter["logic"] = strtolower($logic);

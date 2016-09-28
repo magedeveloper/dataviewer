@@ -24,7 +24,7 @@ class ValidationSettingsService extends PluginSettingsService
 	public function getRegisteredValidators()
 	{
 		$validatorConfiguration = $this->getValidatorsConfiguration();
-		$registeredValidators = array();
+		$registeredValidators = [];
 		foreach($validatorConfiguration as $_vC)
 			$registeredValidators[] = $_vC->getIdentifier();
 	
