@@ -5,6 +5,7 @@ use MageDeveloper\Dataviewer\Domain\Model\Field;
 use MageDeveloper\Dataviewer\Domain\Model\FieldValue;
 use MageDeveloper\Dataviewer\Domain\Model\RecordValue;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -28,6 +29,8 @@ class Category extends Select
 	 */
 	public function initializeFormDataProviders()
 	{
+		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowDefaultValues::class;
+		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectTreeItems::class;
 		parent::initializeFormDataProviders();
 	}
@@ -39,8 +42,9 @@ class Category extends Select
 	 */
 	public function buildTca()
 	{
-		$rootline = BackendUtility::BEgetRootLine( $this->getRecord()->getUid() );
-	
+		$recordId = $this->getRecordId();
+		$rootline = BackendUtility::BEgetRootLine( $recordId );
+
 		$fieldName 					= $this->getField()->getFieldName();
 		$tableName 					= "tx_dataviewer_domain_model_record";
 		$value 						= $this->getValue();
@@ -49,43 +53,50 @@ class Category extends Select
 		$sourcePids					= $this->getField()->getConfig("pids");
 		$foreignTableWhere			= ($sourcePids)?"AND sys_category.pid IN ({$sourcePids}) ":"";
 
-		$tca = array(
-			"command" => "new",
+		$command = "new";
+		if(is_numeric($recordId) && $recordId > 0 && GeneralUtility::compat_version("8"))
+			$command = "edit";
+
+		$tca = [
+			"command" => $command,
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
 			"rootline" => $rootline,
-			"processedTca" => array(
-				"columns" => array(
-					$fieldName => array(
+			"processedTca" => [
+				"columns" => [
+					$fieldName => [
 						"exclude" => 1,
 						"label" => $this->getField()->getFrontendLabel(),
-						"config" => array(
+						"flexFormFieldName" => "parent",
+						"config" => [
 							"type" => "select",
 							"renderType" => "selectTree",
 							"foreign_table" => "sys_category",
 							"foreign_table_where" => "{$foreignTableWhere}AND sys_category.sys_language_uid IN (-1, 0) ORDER BY sys_category.sorting ASC",
 							"MM" => "sys_category_record_mm",
 							"MM_opposite_field" => "items",
-							"MM_match_fields" => array(
+							"MM_match_fields" => [
 								"tablenames" => "tt_content",
 								"fieldname" => "categories",
-							),
-							"treeConfig" => array(
+							],
+							"treeConfig" => [
 								"parentField" => "parent",
-								"appearance" => array(
-									"expandAll" => (int)$this->getField()->getConfig("expandAll"),
+								"expandAll" => (int)$this->getField()->getConfig("expandAll"),
+								"appearance" => [
 									"showHeader" => (int)$this->getField()->getConfig("showHeader"),
-								),
-							),
-						),
-					),
-				),
-			),
-			"inlineStructure" => array(),
-		);
+								],
+							],
+						],
+					],
+				],
+			],
+			"inlineStructure" => [],
+			"vanillaUid" => $this->getRecord()->getUid(),
+		];
 
 		$this->prepareTca($tca);
+
 		$this->tca = $tca;
 		return $this->tca;
 	}
