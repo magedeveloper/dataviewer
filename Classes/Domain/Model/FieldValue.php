@@ -220,6 +220,9 @@ class FieldValue extends AbstractModel
 	 */
 	public function getWhereClause() 
 	{
+		if(strlen($this->whereClause))
+			return " WHERE {$this->whereClause}";
+	
 		return $this->whereClause;
 	}
 

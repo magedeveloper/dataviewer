@@ -1,6 +1,8 @@
 <?php
 namespace MageDeveloper\Dataviewer\Domain\Repository;
 
+use TYPO3\CMS\Core\Database\DatabaseConnection;
+
 /**
  * MageDeveloper Dataviewer Extension
  * -----------------------------------
@@ -13,6 +15,16 @@ namespace MageDeveloper\Dataviewer\Domain\Repository;
  */
 class FieldRepository extends AbstractRepository
 {
+	/**
+	 * Returns the database connection
+	 *
+	 * @return DatabaseConnection
+	 */
+	protected function getDatabaseConnection()
+	{
+		return $GLOBALS['TYPO3_DB'];
+	}
+
 	/**
 	 * Finds entries for an field value
 	 * Executes an simple select query
@@ -27,8 +39,9 @@ class FieldRepository extends AbstractRepository
 		$whereClause	= $fieldValue->getWhereClause();
 		
 		$query = $this->createQuery();
-		$query->statement("SELECT {$columnname} FROM {$tablename} {$whereClause}");
-		
+		$this->getDatabaseConnection()->debugOutput = false;
+		$statement = "SELECT {$columnname} FROM {$tablename} {$whereClause}";
+		$query->statement($statement);
 		$result = $query->execute(true);
 		return $result;
 	}
@@ -77,7 +90,7 @@ class FieldRepository extends AbstractRepository
 	 */
 	public function findAllOnPid($storagePid)
 	{
-		$query = $this->createQueryWithSettings(true, false, true, array($storagePid));
+		$query = $this->createQueryWithSettings(true, false, true, [$storagePid]);
 		$querySettings = $query->getQuerySettings();
 
 		$this->setDefaultQuerySettings($querySettings);
