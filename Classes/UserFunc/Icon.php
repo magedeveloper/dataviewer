@@ -1,6 +1,9 @@
 <?php
 namespace MageDeveloper\Dataviewer\UserFunc;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+
 /**
  * MageDeveloper Dataviewer Extension
  * -----------------------------------
@@ -27,7 +30,7 @@ class Icon
 		$value			= $config["itemFormElValue"];
 		$checked		= ($value == "")?"checked":"";
 
-		$icons = \MageDeveloper\Dataviewer\Utility\IconUtility::getIcons();
+		$icons = \MageDeveloper\Dataviewer\Utility\IconUtility::getIcons(false);
 		
 		$html = "";
 
@@ -39,19 +42,26 @@ class Icon
 
 		foreach($icons as $_hash=>$_file)
 		{
-			$imageSize = getimagesize($_file);
-			$xS = $imageSize[0];
-			$yS = $imageSize[1];
-			$checked = ($value == $_hash)? "checked" : "";
-
-			if ($xS <= 22 && $yS <= 22)
+			$file = GeneralUtility::getFileAbsFileName($_file);
+			
+			if(file_exists($file))
 			{
-				$html .= "<div style=\"width:50px; height: 30px; float: left; border: 1px solid #c0c0c0; margin:0 3px 3px 0; padding: 3px; \">";
-				$html .= "<input type=\"radio\" {$checked} name=\"{$fieldName}\" value=\"{$_hash}\" id=\"{$_hash}\" style=\"float:left; margin-right:4px; \">";
-				$html .= "<label for=\"{$_hash}\" style=\"display:block; width: 22px; float: left;\">" . "<img src=\"{$_file}\" border=\"0\" title=\"{$_file}\">" . "</label>";
-				$html .= "</div>";
-			}
+				$imageSize = getimagesize($file);
+				$xS = $imageSize[0];
+				$yS = $imageSize[1];
+				$checked = ($value == $_hash)? "checked" : "";
 
+				$img = PathUtility::getAbsoluteWebPath($file);
+				if ($xS <= 22 && $yS <= 22)
+				{
+					$html .= "<div style=\"width:50px; height: 30px; float: left; border: 1px solid #c0c0c0; margin:0 3px 3px 0; padding: 3px; \">";
+					$html .= "<input type=\"radio\" {$checked} name=\"{$fieldName}\" value=\"{$_hash}\" id=\"{$_hash}\" style=\"float:left; margin-right:4px; \">";
+					$html .= "<label for=\"{$_hash}\" style=\"display:block; width: 22px; float: left;\">" . "<img src=\"{$img}\" border=\"0\" title=\"{$file}\">" . "</label>";
+					$html .= "</div>";
+				}
+			
+			}
+			
 		}
 
 		return $html;

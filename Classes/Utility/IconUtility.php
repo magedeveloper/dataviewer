@@ -20,28 +20,41 @@ class IconUtility
 	/**
 	 * Gets all icons from the typo3/gfx folder
 	 *
+	 * @param bool $includePrefix
+	 * @param string $prefix
 	 * @return array
 	 */
-	public static function getIcons()
+	public static function getIcons($includePrefix = true, $prefix = "extensions-dataviewer-")
 	{
-		$files = GeneralUtility::getAllFilesAndFoldersInPath(array(), "../typo3conf/ext/dataviewer/Resources/Public/Icons/Datatype", "gif,png");
-		$icons = array();
+		if(!$includePrefix)
+			$prefix = "";
+	
+		$files = GeneralUtility::getAllFilesAndFoldersInPath([], "../typo3conf/ext/dataviewer/Resources/Public/Icons/Datatype", "gif,png");
+		$icons = [];
+		
 		
 		foreach($files as $_iconFile)
 		{
 			$filename 		= basename($_iconFile);
+			$pos = strpos($_iconFile, "dataviewer");
+			$file = substr($_iconFile, $pos);
+			$file = "EXT:".$file;
+			
 			$code           = \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($filename);
-			$icons[$code] 	= $_iconFile;
+			
+			
+			$code 			= "{$prefix}{$code}";
+			$icons[$code] 	= $file;
 		}
 
 		// Default Icon
-		$icons["default"] 		= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/Default.gif";
-		$icons["datatype"] 		= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/Datatype.gif";
-		$icons["field"] 		= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/Field.gif";
-		$icons["fieldvalue"] 	= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/FieldValue.gif";
-		$icons["record"] 		= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/Record.gif";
-		$icons["recordvalue"] 	= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/RecordValue.gif";
-		$icons["variable"] 		= "../typo3conf/ext/dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif";
+		$icons["{$prefix}default"] 			= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Default.gif";
+		$icons["{$prefix}datatype"] 		= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Datatype.gif";
+		$icons["{$prefix}field"] 			= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Field.gif";
+		$icons["{$prefix}fieldvalue"] 		= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/FieldValue.gif";
+		$icons["{$prefix}record"] 			= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Record.gif";
+		$icons["{$prefix}recordvalue"] 		= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/RecordValue.gif";
+		$icons["{$prefix}variable"] 		= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif";
 		
 		return $icons;
 	}
@@ -54,7 +67,7 @@ class IconUtility
 	public static function getClasses()
 	{
 		$icons = self::getIcons();
-		$classes = array();
+		$classes = [];
 		
 		foreach($icons as $_hash=>$_iconFile)
 		{
@@ -125,7 +138,7 @@ class IconUtility
 	{
 		$fieldtypes = FieldtypeConfigurationUtility::getFieldtypes();
 		
-		$classes = array();
+		$classes = [];
 		foreach($fieldtypes as $_fieldtype)
 		{
 			$ft = strtolower($_fieldtype);
@@ -145,16 +158,17 @@ class IconUtility
 	 */
 	public static function registerIcons()
 	{
-		$icons 		= self::getIcons();
-		//$fieldTypeIcons 	= self::getFieldtypeIcons();
-		//$icons 				= array_merge($generalIcons, $fieldTypeIcons);
+		$mainIcons				 = self::getIcons();
+		$fieldTypeIcons 		 = self::getFieldtypeIcons();
+		$icons 					 = array_merge($mainIcons, $fieldTypeIcons);
 		$bitmapProviderClassName = \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class;
+
 
 		/* @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
 		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
 		foreach($icons as $identifier=>$source)
-			$iconRegistry->registerIcon($identifier, $bitmapProviderClassName, array("source" => $source));
+			$iconRegistry->registerIcon($identifier, $bitmapProviderClassName, ["source" => $source]);
 
 		return;
 	}

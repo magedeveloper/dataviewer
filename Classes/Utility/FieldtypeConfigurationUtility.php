@@ -24,7 +24,7 @@ class FieldtypeConfigurationUtility
 	 * 
 	 * @var array
 	 */
-	public static $fieldtypesConfiguration = array();
+	public static $fieldtypesConfiguration = [];
 
 	/**
 	 * Gets the plugin settings service
@@ -81,13 +81,13 @@ class FieldtypeConfigurationUtility
 	 */
 	public static function getDsConfig()
 	{
-		$defaultDsConfiguration = array(
+		$defaultDsConfiguration = [
 			"default" => 'FILE:EXT:dataviewer/Configuration/FlexForms/Fieldtype/Empty.xml',
-		);
+		];
 
 		$fieldtypesConfiguration = self::getFieldtypesConfiguration();
 		
-		$dsConfig = array();
+		$dsConfig = [];
 		foreach($fieldtypesConfiguration as $_ftC)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Fieldtype $_ftC */
@@ -111,17 +111,13 @@ class FieldtypeConfigurationUtility
 		//PATH_site
 		//PATH_typo3
 		
-		$icons = array();
+		$icons = [];
 		foreach($fieldtypesConfiguration as $_ftC)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Fieldtype $_ftC */
 			$icon = $_ftC->getIcon();
-			$icon = GeneralUtility::getFileAbsFileName($icon);
-			$icon = PathUtility::getRelativePath(PATH_site, $icon);
-			$icon = trim($icon, "\\");      // Remove backslashes
-			$icon = trim($icon, "/");		// Remove slashes
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Fieldtype $_ftC */
-			$icons[$_ftC->getIdentifier()] = "../".$icon;
+			$icons["extensions-dataviewer-".$_ftC->getIdentifier()] = $icon;
 		}
 		
 		return $icons;
@@ -136,7 +132,7 @@ class FieldtypeConfigurationUtility
 	{
 		$fieldtypesConfiguration = self::getFieldtypesConfiguration();
 		
-		$fieldtypes = array();
+		$fieldtypes = [];
 		foreach($fieldtypesConfiguration as $_ftC)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Fieldtype $_ftC */
