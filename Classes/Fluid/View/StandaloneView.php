@@ -23,36 +23,5 @@ class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 	{
 		$this->setTemplateSource($source);
 		return $this->render();
-	
-	
-		$this->baseRenderingContext->setControllerContext($this->controllerContext);
-		$this->templateParser->setConfiguration($this->buildParserConfiguration());
-
-		$parsedTemplate = $this->templateParser->parse($source);
-
-		if ($parsedTemplate->hasLayout())
-		{
-			$layoutName = $parsedTemplate->getLayoutName($this->baseRenderingContext);
-			$layoutIdentifier = $this->getLayoutIdentifier($layoutName);
-			if ($this->templateCompiler->has($layoutIdentifier)) {
-				$parsedLayout = $this->templateCompiler->get($layoutIdentifier);
-			} else {
-				$parsedLayout = $this->templateParser->parse($this->getLayoutSource($layoutName));
-				if ($parsedLayout->isCompilable()) {
-					$this->templateCompiler->store($layoutIdentifier, $parsedLayout);
-				}
-			}
-			$this->startRendering(self::RENDERING_LAYOUT, $parsedTemplate, $this->baseRenderingContext);
-			$output = $parsedLayout->render($this->baseRenderingContext);
-			$this->stopRendering();
-		}
-		else
-		{
-			$this->startRendering(self::RENDERING_TEMPLATE, $parsedTemplate, $this->baseRenderingContext);
-			$output = $parsedTemplate->render($this->baseRenderingContext);
-			$this->stopRendering();
-		}
-
-		return $output;
 	}
 }
