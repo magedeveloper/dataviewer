@@ -51,7 +51,7 @@ class Radio extends AbstractFieldtype implements FieldtypeInterface
 			"processedTca" => array(
 				"columns" => array(
 					$fieldName => array(
-						"exclude" => 1,
+						"exclude" => (int)$this->getField()->isExclude(),
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => array(
 							"type" => "radio",

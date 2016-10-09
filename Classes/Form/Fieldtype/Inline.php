@@ -73,7 +73,7 @@ class Inline extends AbstractFieldtype implements FieldtypeInterface
 				],
 				"columns" => [
 					$fieldName => [
-						"exclude" => 1,
+						"exclude" => (int)$this->getField()->isExclude(),
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "inline",

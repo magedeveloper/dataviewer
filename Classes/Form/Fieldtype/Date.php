@@ -37,7 +37,7 @@ class Date extends Text
 			"processedTca" => [
 				"columns" => [
 					$fieldName => [
-						"exclude" => 1,
+						"exclude" => (int)$this->getField()->isExclude(),
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "input",
