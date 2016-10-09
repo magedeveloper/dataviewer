@@ -29,6 +29,14 @@ class Field extends AbstractModel
 	 * @var boolean
 	 */
 	protected $isActive = true;
+
+	/**
+	 * Field is excluded
+	 * (see TCA exclude)
+	 *
+	 * @var boolean
+	 */
+	protected $exclude = false;
 	
 	/**
 	 * Id of the field
@@ -202,17 +210,6 @@ class Field extends AbstractModel
 	}
 
 	/**
-	 * Gets the setting to show this
-	 * field in the backend record form
-	 * 
-	 * @return boolean
-	 */
-	public function getShowInBackend()
-	{
-		return $this->isActive;
-	}
-
-	/**
 	 * Sets the setting to show this field
 	 * in the backend record form
 	 * 
@@ -222,6 +219,49 @@ class Field extends AbstractModel
 	public function setIsActive($isActive)
 	{
 		$this->isActive = $isActive;
+	}
+
+	/**
+	 * Checks if the field is excluded
+	 * 
+	 * @return bool
+	 */
+	public function getExclude()
+	{
+		return $this->exclude;
+	}
+
+	/**
+	 * Sets the field as exclude
+	 * 
+	 * @param bool $exclude
+	 * @return void
+	 */
+	public function setExclude($exclude)
+	{
+		$this->exclude = $exclude;
+	}
+
+	/**
+	 * Checks if the field is excluded
+	 * 
+	 * @return bool
+	 */
+	public function isExclude()
+	{
+		return $this->exclude;
+	}
+	
+
+	/**
+	 * Gets the setting to show this
+	 * field in the backend record form
+	 *
+	 * @return boolean
+	 */
+	public function getShowInBackend()
+	{
+		return $this->isActive;
 	}
 
 	/**

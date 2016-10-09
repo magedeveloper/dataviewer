@@ -121,6 +121,10 @@
                 <source>Template File for Part-Rendering (PartViewHelper)</source>
                 <target>Templatedatei für Teil-Rendering (PartViewHelper)</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.exclude">
+                <source>Exclude for non-admin users</source>
+                <target>Ausschließen für Nicht-Administratoren</target>
+            </trans-unit>
 
             <!-- Domain/Model/Fieldvalue -->
             <trans-unit id="tx_dataviewer_domain_model_fieldvalue">

@@ -95,6 +95,9 @@
             <trans-unit id="tx_dataviewer_domain_model_field.templatefile">
                 <source>Template File for Part-Rendering (PartViewHelper)</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.exclude">
+                <source>Exclude for non-admin users</source>
+            </trans-unit>
 
             <!-- Domain/Model/Fieldvalue -->
             <trans-unit id="tx_dataviewer_domain_model_fieldvalue">
