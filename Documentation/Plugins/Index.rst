@@ -21,6 +21,9 @@ This extension delivers out-of-the-box a various amount of Frontend-Plugins for 
 
 .. image:: ../Images/new_plugin_tab.jpg
 
+.. note:: **In order to fill the fields in the plugins, it is necessary that you select a Record-Storage Page and
+          then press the Save-Button to refresh the form with the new storage pages!**
+
 Detailed Information about the plugins:
 
 .. toctree::

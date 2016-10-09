@@ -5,6 +5,15 @@
 Changelog
 ---------
 
+**2016-10-07** - 1.1.2
+
+- [BUGFIX] Record Title now saved correctly when Field-Contents is marked as record title
+- [BUGFIX] ActionMenuViewHelper missing phpdoc method parameter (Thanks Thomas)
+- [TASK] Exclude (see TCA) is now an Option in Field Configuration, Default is 0
+- [BUGFIX] Corrected Icon Registration
+- [TASK] Added Information to add static template, when no fieldtypes were found
+- [DOC] Updated Documentation
+
 **2016-09-23** - 1.1.1
 
 - [BUGFIX] Record Title is now kept when hiding records

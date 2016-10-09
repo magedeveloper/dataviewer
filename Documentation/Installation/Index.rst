@@ -24,4 +24,9 @@ In order to add all fieldtypes and validators, it is necessary to include
 the static template ``DataViewer Extension (dataviewer)`` to your Site Template.
 Please refer to the following screenshot for more information.
 
+Step 3 - Clear all caches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is important to clear all the caches. 
+
 .. image:: ../Images/include_static.jpg
