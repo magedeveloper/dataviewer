@@ -137,7 +137,7 @@ class BackendModuleController extends AbstractController
 	public function recordsDetailsAction()
 	{
 		$this->_storeLastAction();
-		$records = $this->recordRepository->findAll([$this->currentPageId], true, true);
+		$records = $this->recordRepository->findAll([$this->currentPageId], true, false);
 		$datatypes = $this->datatypeRepository->findAllOnPid($this->currentPageId);
 		
 		$this->view->assign("records", $records);

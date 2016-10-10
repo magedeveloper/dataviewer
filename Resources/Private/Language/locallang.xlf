@@ -382,6 +382,9 @@
             <trans-unit id="message.this_field_has_no_configuration">
                 <source>This field has no configuration.</source>
             </trans-unit>
+            <trans-unit id="message.no_fieldtypes_found_please_check_ts">
+                <source>No fieldtypes found. Please add the DataViewer Static to your site-template or add at least one fieldtype (plugin.tx_dataviewer.fieldtypes)</source>
+            </trans-unit>
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
             </trans-unit>
@@ -475,6 +478,9 @@
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.templatefile">
                 <source>Template File for Part-Rendering (PartViewHelper)</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.exclude">
+                <source>Exclude for non-admin users</source>
             </trans-unit>
 
             <!-- Domain/Model/Fieldvalue -->

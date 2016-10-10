@@ -463,6 +463,12 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	protected function _processRecordSaveData(RecordModel $record, array $recordSaveData = [])
 	{
+		$record->setTitle("");
+		if(isset($recordSaveData["title"]))
+		{
+		    $record->setTitle($recordSaveData["title"]);
+		}
+
 		$datatype = $record->getDatatype();
 
 		if (!$datatype instanceof DatatypeModel)

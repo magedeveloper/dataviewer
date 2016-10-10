@@ -45,6 +45,7 @@ class Fieldtype
 	 * @param array $config Configuration Array
 	 * @param array $parentObject Parent Object
 	 * @return array
+	 * @throws \Exception
 	 */
 	public function populateFieldtypes(array &$config, &$parentObject)
 	{
@@ -56,6 +57,12 @@ class Fieldtype
 			$options[] = [$fieldtypeConfiguration->getLabel(),
 				          $fieldtypeConfiguration->getIdentifier(),
 				          $fieldtypeConfiguration->getIcon()];
+		}
+		
+		if(count($options) <= 0)
+		{
+			$exceptionMessage = \MageDeveloper\Dataviewer\Utility\LocalizationUtility::translate("message.no_fieldtypes_found_please_check_ts");
+			throw new \Exception($exceptionMessage);
 		}
 
 		if (is_array($config["items"]))

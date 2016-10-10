@@ -38,7 +38,7 @@ class DynamicInput extends Flex
 			"processedTca" => [
 				"columns" => [
 					$fieldName => [
-						"exclude" => 1,
+						"exclude" => (int)$this->getField()->isExclude(),
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "flex",

@@ -1,0 +1,38 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<div class="panel" style="padding:0; margin:15px 0 0 0;">
+
+	<table class="table-condensed table-hover table-striped table-record-values" style="width: 100%; margin-top:20px;">
+		<thead>
+			<tr>
+				<th nowrap="nowrap" class="col-icon col-sm-1"></th>
+				<th nowrap="nowrap" class="col-sm-1">Code</th>
+				<th nowrap="nowrap" class="col-sm-3"><f:translate key="tx_dataviewer_domain_model_field.frontend_label" /></th>
+				<th nowrap="nowrap" class="col-sm-6"><f:translate key="tx_dataviewer_domain_model_recordvalue.value_content" /></th>
+			</tr>
+		</thead>
+		<tbody>
+		<f:for each="{record.values.items}" as="value" key="code" iteration="iteration">
+			<tr class="{f:if(condition:'{iteration.isFirst}',then:' firstcol')}{f:if(condition:'{iteration.isLast}',then:' lastcol')}">
+				<td nowrap="nowrap" class="col-icon nowrap" valign="top">
+						<span title="{f:translate(key:'type.{value.field.type}')}">
+							<core:icon identifier="extensions-dataviewer-{value.field.type}" size="small" />
+						</span>
+				</td>
+				<td nowrap="nowrap" class="nowrap" valign="top">
+					&#123;record.{code}.value&#125;
+				</td>
+				<td nowrap="nowrap" valign="top">
+					{value.field.frontendLabel}
+				</td>
+				<td nowrap="nowrap">
+					<f:debug inline="1" title="">{value.value}</f:debug>
+				</td>
+			</tr>
+		</f:for>
+		</tbody>
+	</table>
+</div>
+
+

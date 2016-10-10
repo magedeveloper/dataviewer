@@ -51,7 +51,7 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 			"processedTca" => [
 				"columns" => [
 					$fieldName => [
-						"exclude" => 1,
+						"exclude" => (int)$this->getField()->isExclude(),
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "group",

@@ -15,7 +15,8 @@ class ActionMenuViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\Menus\ActionM
 {
 	/**
 	 * Render FunctionMenu
-	 *
+	 * 
+	 * @param string $defaultController
 	 * @return string
 	 */
 	public function render($defaultController = null)

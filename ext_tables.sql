@@ -95,6 +95,7 @@ CREATE TABLE tx_dataviewer_domain_model_field (
 	request_update tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	is_active tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	templatefile varchar(255) DEFAULT '' NOT NULL,
+	exclude tinyint(1) unsigned DEFAULT '0' NOT NULL, 
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

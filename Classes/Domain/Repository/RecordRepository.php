@@ -170,25 +170,25 @@ class RecordRepository extends AbstractRepository
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setRespectStoragePage(true);
 		$querySettings->setIgnoreEnableFields($includeHidden);
+		$query->setQuerySettings($querySettings);
 
-		$this->setDefaultQuerySettings($querySettings);
-	
+		$sub = $query;
+
 		if (!empty($storagePids))
 		{
 			$querySettings->setStoragePageIds($storagePids);
-
+			$query->setQuerySettings($querySettings);
+			
 			if($respectHideRecordsSetting)
 			{
 				return $query->matching(
-					$query->equals("datatype.hide_records", "0")
+					$sub->equals("datatype.hide_records", "0")
 				)->execute();
 			}
-			
-			
-			return $this->findAll();
+
 		}
-	
-		return parent::findAll();
+
+		return $query->execute();
 	}
 
 	/**

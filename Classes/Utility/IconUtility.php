@@ -28,23 +28,27 @@ class IconUtility
 	{
 		if(!$includePrefix)
 			$prefix = "";
-	
-		$files = GeneralUtility::getAllFilesAndFoldersInPath([], "../typo3conf/ext/dataviewer/Resources/Public/Icons/Datatype", "gif,png");
-		$icons = [];
-		
-		
-		foreach($files as $_iconFile)
+
+		$paths   = [];
+		$paths[] = "EXT:dataviewer/Resources/Public/Icons/Datatype";
+		$icons   = [];
+
+		foreach($paths as $_path)
 		{
-			$filename 		= basename($_iconFile);
-			$pos = strpos($_iconFile, "dataviewer");
-			$file = substr($_iconFile, $pos);
-			$file = "EXT:".$file;
-			
-			$code           = \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($filename);
-			
-			
-			$code 			= "{$prefix}{$code}";
-			$icons[$code] 	= $file;
+			// We check all paths for icons and add them to the registry
+			$path = GeneralUtility::getFileAbsFileName($_path);
+			$files = GeneralUtility::getAllFilesAndFoldersInPath([], $path, "gif,png");
+
+			foreach($files as $_iconFile)
+			{
+				$filename = basename($_iconFile);
+				$_path = trim($_path, "/");
+
+				$code           = \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($filename);
+
+				$code 			= "{$prefix}{$code}";
+				$icons[$code] 	= $path."/".$filename;
+			}
 		}
 
 		// Default Icon
@@ -55,55 +59,55 @@ class IconUtility
 		$icons["{$prefix}record"] 			= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Record.gif";
 		$icons["{$prefix}recordvalue"] 		= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/RecordValue.gif";
 		$icons["{$prefix}variable"] 		= "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif";
-		
+
 		return $icons;
 	}
 
 	/**
 	 * Gets all classes that are equivalent to the icon
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getClasses()
 	{
 		$icons = self::getIcons();
 		$classes = [];
-		
+
 		foreach($icons as $_hash=>$_iconFile)
 		{
 			$filename 		= basename($_iconFile);
 			$code           = \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($filename);
 			$classes[$code] = "extensions-dataviewer-{$code}";
 		}
-		
+
 		// Default Icon
 		$classes["default"] = "extensions-dataviewer-default";
-		
+
 		return $classes;
 	}
 
 	/**
 	 * Gets an specific icon by hash
-	 * 
+	 *
 	 * @param string $hash
 	 * @return string
 	 */
 	public static function getIconByHash($hash)
 	{
 		$files = self::getIcons();
-		
+
 		foreach($files as $_hash=>$icon)
 		{
 			if ($_hash == $hash)
 				return $icon;
 		}
-		
+
 		return;
 	}
 
 	/**
 	 * Gets all field type icons
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getFieldtypeIcons()
@@ -115,36 +119,36 @@ class IconUtility
 	/**
 	 * Gets the icon url for a specific
 	 * fieldtype
-	 * 
+	 *
 	 * @param string $fieldtype
 	 * @return string
 	 */
 	public static function getFieldtypeIcon($fieldtype)
 	{
 		$icons = FieldtypeConfigurationUtility::getIcons();
-	
+
 		if(isset($icons[$fieldtype]))
 			return $icons[$fieldtype];
-			
-		return $icons["default"];	
+
+		return $icons["default"];
 	}
 
 	/**
 	 * Gets all field type icon classes
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getFieldtypeIconClasses()
 	{
 		$fieldtypes = FieldtypeConfigurationUtility::getFieldtypes();
-		
+
 		$classes = [];
 		foreach($fieldtypes as $_fieldtype)
 		{
 			$ft = strtolower($_fieldtype);
 			$classes[$ft] = "extensions-dataviewer-{$ft}";
 		}
-		
+
 		// Default Icon
 		$classes["default"] = "extensions-dataviewer-default";
 

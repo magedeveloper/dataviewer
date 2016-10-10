@@ -22,6 +22,10 @@ Type
 
 .. image:: ../../Images/field_type_selection.jpg
 
+Exclude
+	If this is set, all backend users are prevented from editing the field, though
+	the field won't be displayed
+
 Field Configuration
    The field configuration depends on the type, that is selected above. 
    Please refer to the Fieldtypes-Section, to learn about each configuration.
