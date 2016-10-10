@@ -47,7 +47,7 @@ class IconUtility
 				$code           = \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($filename);
 
 				$code 			= "{$prefix}{$code}";
-				$icons[$code] 	= $path.DIRECTORY_SEPARATOR.$filename;
+				$icons[$code] 	= $path."/".$filename;
 			}
 		}
 
