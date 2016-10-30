@@ -55,6 +55,23 @@ class SelectSessionService extends SessionService
 	}
 
 	/**
+	 * Returns the status of a previous set
+	 * record selection. If nothing was set,
+	 * we return false
+	 * 
+	 * @return bool
+	 */
+	public function isSetSelectedRecords()
+	{
+		$selectedRecords = $this->restoreFromSession(self::SESSION_KEY_SELECT_RECORDS);
+		
+		if(is_array($selectedRecords))
+			return true;
+			
+		return false;	
+	}
+
+	/**
 	 * Resets all selected records
 	 * 
 	 * @return SelectSessionService

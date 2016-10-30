@@ -115,6 +115,7 @@ class Select extends AbstractFieldtype implements FieldtypeInterface
 			//foreign_table_where
 			if($foreignTableWhere = $this->getField()->getConfig("foreign_table_where"))
 				$tca["processedTca"]["columns"][$fieldName]["config"]["foreign_table_where"] = $foreignTableWhere;
+				
 		}
 
 		parent::prepareTca($tca);

@@ -6,10 +6,9 @@
 <strong><f:translate key="tx_dataviewer" /></strong>
 <br />
 <div style="font-size: smaller;">
-	[Uid {row.uid}] <f:translate key="plugin.wizarditem_pi1" />
+	<span data-toggle="tooltip" data-html="true" data-placement="right" data-title="{f:translate(key:'message.use_this_id_to_link')}" style="cursor:help;; color:cornflowerblue; font-weight: bold;">[Uid <strong style="color:white; background-color:red; padding:2px;">{row.uid}</strong>]</span>&nbsp;<f:translate key="plugin.wizarditem_pi1" />
 	<hr size="1" style="color:#c0c0c0; background-color: #c0c0c0; height: 1px; padding:0; margin: 5px 0;" />
 </div>
-
 
 <div style="margin:5px 0;">
 	<f:switch expression="{flexform.switchableControllerActions}">
