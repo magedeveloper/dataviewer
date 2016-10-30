@@ -20,9 +20,31 @@ DataViewer Settings
 
 Record-Datatype for the Storage
    Please select the record type which will be stored when the form is posted.
+   
+File Upload Folder
+   If the form contains upload-fields, the data will be saved in the selected folder.
+   
+Allowed Actions on Controller
+   Please select the allowed actions that this plugin will support. If you try to call an invalid action,
+   the plugin will add an error-message to the screen.
 
 Record Storage Page
    Please select the record storage page.
+
+Redirect Settings
+#################
+
+Redirect after successful creation
+   The redirect page, when a new record is successfully created.
+   
+   
+Redirect after successful editing
+   The redirect page, when a record is successfully saved after editing.
+   
+   
+Redirect after successful creation
+   The redirect page, when a record was successfully deleted.
+
 
 Template Settings
 #################
@@ -66,4 +88,28 @@ Each field has to get the same name as the code of the field is.
 	<label for="type">Age Rating:</label>
 	<f:form.select options="{record.agerating.fieldtype.items}" name="agerating" value="{record.agerating.value}" />
 	
+	<label for="type">Cover:</label>
+	<f:form.upload name="cover" />
+	<f:if condition="{record.cover}">
+		<br />
+		Current Cover: {record.cover.value.0.publicUrl}
+	</f:if>
+	
 	<f:form.submit name="submit" value="Submit this record" />
+
+
+Link to Edit a Record
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: html
+
+	{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+	<dv:record.link record="{record}" pid="{formPageId}" action="index" controller="Form" extension="Dataviewer" plugin="Form">Edit {record.title}</dv:record.link>
+
+Link to Delete a Record
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: html
+
+	{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+	<dv:record.link record="{record}" pid="{formPageId}" action="delete" controller="Form" extension="Dataviewer" plugin="Form">Delete {record.title}</dv:record.link>

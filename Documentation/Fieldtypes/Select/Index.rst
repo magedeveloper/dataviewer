@@ -9,6 +9,7 @@ Select
 ------
 
 Adds an select box to the form for selecting an entry.
+Items for the selection are added through the FieldValues that you can add in the Field Configuration.
 
 Screenshot
 ~~~~~~~~~~

@@ -9,6 +9,7 @@ MultiSelect
 -----------
 
 Adds an multiselect box to the form for selecting entries.
+Items for the selection are added through the FieldValues that you can add in the Field Configuration.
 
 
 Screenshot
