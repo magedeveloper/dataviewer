@@ -86,7 +86,7 @@ class LetterController extends AbstractController
 		$preselectedLetter = $this->letterSettingsService->getPreselectedLetter();
 
 		$active = null;
-		if ($this->request->hasArgument("letter"))
+		if ($this->request->hasArgument("letter") && $this->_checkTargetUid())
 		{
 			if (strlen($this->request->getArgument("letter")) == 1)
 				$active = $this->request->getArgument("letter");
@@ -96,8 +96,11 @@ class LetterController extends AbstractController
 			if (!is_null($preselectedLetter) && $preselectedLetter != "0")
 				$active = $preselectedLetter;
 
+			// We assign the selected letter, if the session contains one
+			if($sessionSelectedLetter = $this->letterSessionService->getSelectedLetter())
+				$active = $sessionSelectedLetter;
 		}
-
+		
 		return $active;
 	}
 
@@ -108,9 +111,6 @@ class LetterController extends AbstractController
 	 */
 	public function letterAction()
 	{
-		if(!$this->_checkTargetUid())
-			$this->forward("index");
-
 		$active = $this->_getSelectedLetter();
 		
 		// Add letter selection field to the session
@@ -119,7 +119,7 @@ class LetterController extends AbstractController
 		// Set active letter selection field
 		$this->letterSessionService->setLetterSelectionField($field);
 		$this->letterSessionService->setSelectedLetter($active);
-		
+
 		$this->forward("index");		
 		exit();		
 	}
