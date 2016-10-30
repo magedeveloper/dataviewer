@@ -51,6 +51,14 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	protected $typoScriptUtility;
 
 	/**
+	 * Record Repository
+	 *
+	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordRepository
+	 * @inject
+	 */
+	protected $recordRepository;
+
+	/**
 	 * Variable Repository
 	 *
 	 * @var \MageDeveloper\Dataviewer\Domain\Repository\VariableRepository
@@ -104,7 +112,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	 * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
 	 * @return void
 	 */
-	protected function _redirectToPid($redirectPid = null)
+	protected function _redirectToPid($redirectPid = null, array $arguments = array())
 	{
 		if (is_null($redirectPid))
 		{
@@ -114,6 +122,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 		}
 
 		$this->uriBuilder->setTargetPageUid($redirectPid);
+		$this->uriBuilder->setArguments($arguments);
 		$this->redirectToURI($this->uriBuilder->build());
 
 		exit();
@@ -220,6 +229,23 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 							$feUser = $this->authenticationService->getFrontendUser();
 							
 						$variables[$name] = $feUser;
+						break;
+					case Variable::VARIABLE_TYPE_SERVER:
+						$env = $variable->getServer();
+						$variables[$name] = $_SERVER[$env];
+						break;
+					case Variable::VARIABLE_TYPE_DYNAMIC_RECORD:
+						$record = null;
+						if ($this->request->hasArgument("record")) 
+						{
+							$recordUid = $this->request->getArgument("record");
+							$record = $this->recordRepository->findByUid($recordUid, true);
+							
+							if(!$record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
+								$record = $recordUid;
+						}
+						
+						$variables[$name] = $record;
 						break;
 					case Variable::VARIABLE_TYPE_FIXED:
 					default:
