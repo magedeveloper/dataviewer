@@ -136,6 +136,9 @@
             <trans-unit id="flexform.field_option_condition">
                 <source>Option Condition</source>
             </trans-unit>
+            <trans-unit id="flexform.field_condition">
+                <source>Field Condition</source>
+            </trans-unit>
             <trans-unit id="flexform.filter_combination">
                 <source>Filter Combination</source>
             </trans-unit>
@@ -147,6 +150,30 @@
             </trans-unit>
             <trans-unit id="flexform.condition">
                 <source>Cond.</source>
+            </trans-unit>
+            <trans-unit id="flexform.allowed_actions">
+                <source>Allowed Actions on Controller</source>
+            </trans-unit>
+            <trans-unit id="flexform.action_new">
+                <source>post (Create Record)</source>
+            </trans-unit>
+            <trans-unit id="flexform.action_edit">
+                <source>post (Edit Record)</source>
+            </trans-unit>
+            <trans-unit id="flexform.action_delete">
+                <source>delete (Delete Record)</source>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_settings">
+                <source>Redirect Settings</source>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_success_new">
+                <source>Redirect after successful creation</source>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_success_edit">
+                <source>Redirect after successful editing</source>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_success_delete">
+                <source>Redirect after successful deletion</source>
             </trans-unit>
             
             <trans-unit id="flexform.filter_type">
@@ -292,6 +319,9 @@
             <trans-unit id="flexform.record_save_datatype">
                 <source>Record-Datatype for the Storage</source>
             </trans-unit>
+            <trans-unit id="flexform.file_upload_folder">
+                <source>File Upload Folder</source>
+            </trans-unit>
 
             <!-- Plugin Types -->
             <trans-unit id="plugin_types.display">
@@ -385,6 +415,23 @@
             <trans-unit id="message.no_fieldtypes_found_please_check_ts">
                 <source>No fieldtypes found. Please add the DataViewer Static to your site-template or add at least one fieldtype (plugin.tx_dataviewer.fieldtypes)</source>
             </trans-unit>
+            <trans-unit id="message.no_record_storage_page_configured">
+                <source>No Record Storage Page is configured. Please first add a Record Storage Page and press 'Save'.</source>
+            </trans-unit>
+            <trans-unit id="message.use_this_id_to_link">
+                <source>Use this id in the 'Target record display plugin'-Setting for Linking other DataViewer plugins to this!</source>
+            </trans-unit>
+            
+            <trans-unit id="message.creating_not_allowed">
+                <source>Sorry, creating new records is not allowed by this plugin!</source>
+            </trans-unit>
+            <trans-unit id="message.editing_not_allowed">
+                <source>Sorry, editing records is not allowed by this plugin!</source>
+            </trans-unit>
+            <trans-unit id="message.deleting_not_allowed">
+                <source>Sorry, deleting records is not allowed by this plugin!</source>
+            </trans-unit>
+            
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
             </trans-unit>
@@ -532,7 +579,7 @@
                 <source>Record Values</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_record.title">
-                <source>Title</source>
+                <source>Record Title</source>
             </trans-unit>
 
             <trans-unit id="tx_dataviewer_domain_model_recordvalue">
@@ -575,6 +622,9 @@
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.where_clause">
                 <source>Where Clause</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.server">
+                <source>SERVER Environment</source>
             </trans-unit>
 
 
@@ -929,7 +979,7 @@
                 <source>POST Variable</source>
             </trans-unit>
             <trans-unit id="variable_type.5">
-                <source>Record</source>
+                <source>Fixed Record</source>
             </trans-unit>
             <trans-unit id="variable_type.6">
                 <source>Record Field Value</source>
@@ -939,6 +989,12 @@
             </trans-unit>
             <trans-unit id="variable_type.8">
                 <source>Frontend User</source>
+            </trans-unit>
+            <trans-unit id="variable_type.9">
+                <source>Server Variable</source>
+            </trans-unit>
+            <trans-unit id="variable_type.10">
+                <source>Dynamic Record (from LinkViewHelper)</source>
             </trans-unit>
 
             <!-- FieldValue Types -->
