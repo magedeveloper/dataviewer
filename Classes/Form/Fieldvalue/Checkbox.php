@@ -102,6 +102,19 @@ class Checkbox extends AbstractFieldvalue implements FieldvalueInterface
      */
     public function getValueArray()
     {
-        return $this->getFrontendValue();
+		$value = $this->getValue();
+		$selectedItems = $this->_getSelectedItems($value);
+		$allItems = $this->getFieldtype()->getItems();
+
+		$value = [];
+		foreach($allItems as $_key=>$_item) {
+			$value[] = [
+				"label" => $_item,
+				"value" => $_item,
+				"selected" => (int)(in_array($_key, $selectedItems)),
+			];
+		}
+
+		return $value;
     }
 }

@@ -48,10 +48,15 @@ class SelectController extends RecordController
 	{
 		$selectedRecords 	= $this->_getSelectedRecords();
 		$selectedRecordIds 	= $this->selectSessionService->getSelectedRecords();
-		
-		if(empty($selectedRecordIds)) 
+
+		$records = [];
+		if(!$this->selectSessionService->isSetSelectedRecords()) 
 		{
 			$selectedRecordIds = $this->selectSettingsService->getPreselectedRecords();
+			
+			if(empty($selectedRecordIds))
+				$selectedRecordIds = [0=>0];
+			
 			$this->selectSessionService->setSelectedRecords($selectedRecordIds);
 			
 			// We redirect to the current page in order to reload the selection and records
@@ -60,14 +65,13 @@ class SelectController extends RecordController
 			$this->_redirectToPid();
 		}
 		
-		$records = [];
 		foreach($selectedRecords as $_record)
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Record $_record */
 			$label = $_record->getTitle();
-			
+
 			$records[] = [
-				"label" 	=> $label,	
+				"label" 	=> $label,
 				"record"	=> $_record,
 				"selected"	=> (in_array($_record->getUid(), $selectedRecordIds)),
 			];

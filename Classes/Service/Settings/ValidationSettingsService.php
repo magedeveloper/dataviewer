@@ -3,6 +3,7 @@ namespace MageDeveloper\Dataviewer\Service\Settings;
 
 use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService;
+use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -62,12 +63,18 @@ class ValidationSettingsService extends PluginSettingsService
 	 * a given validator identifier
 	 *
 	 * @param string $validatorId
-	 * @return array
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\FieldtypeConfiguration
+	 * @throws NoSuchValidatorException
 	 */
 	public function getValidatorConfiguration($validatorId)
 	{
 		$fieldtypesConfiguration = $this->getValidatorsConfiguration();
-		return $fieldtypesConfiguration->findByIdentifier($validatorId);
+		$validatorConfiguration = $fieldtypesConfiguration->findByIdentifier($validatorId);
+
+		if($validatorConfiguration instanceof \MageDeveloper\Dataviewer\Domain\Model\FieldtypeConfiguration)
+			throw new NoSuchValidatorException("Validator '{$validatorId}' not found", 1477375422);
+
+		return $validatorConfiguration;
 	}
 
 }

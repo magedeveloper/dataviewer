@@ -190,8 +190,8 @@
                 <target>Datensatz-Werte</target>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_record.title">
-                <source>Title</source>
-                <target>Titel</target>
+                <source>Record Title</source>
+                <target>Datensatztitel</target>
             </trans-unit>
 
             <trans-unit id="tx_dataviewer_domain_model_recordvalue">
@@ -248,7 +248,10 @@
                 <source>Where Clause</source>
                 <target>WHERE-Bedingung</target>
             </trans-unit>
-
+            <trans-unit id="tx_dataviewer_domain_model_variable.server">
+                <source>SERVER Environment</source>
+                <target>SERVER Umgebung</target>
+            </trans-unit>
 
         </body>
     </file>

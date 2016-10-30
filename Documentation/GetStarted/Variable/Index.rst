@@ -37,6 +37,8 @@ Type
 +-----------------------+------------------------------------------------------------+
 | Frontend User         | The current frontend user                                  |
 +-----------------------+------------------------------------------------------------+
+| Server Variable       | A variable from the SERVER ($_SERVER)                      |
++-----------------------+------------------------------------------------------------+
 
 Name
    The variable name that can be used in the fluid template.
@@ -47,3 +49,4 @@ Use cases
 * Inject dynamic values like the current date
 * Inject back- or list page Ids to link to other pages without hardcoding ids
 * Add custom PHP Script Values to the output by using TypoScript and USERFUNC
+* Inject the current record on a site when using multiple plugins

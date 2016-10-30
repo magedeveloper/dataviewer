@@ -6,6 +6,7 @@ use MageDeveloper\Dataviewer\Domain\Model\Record;
 use MageDeveloper\Dataviewer\Domain\Model\Variable;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\ListSettingsService;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\SearchSettingsService;
+use MageDeveloper\Dataviewer\Service\Settings\Plugin\FormSettingsService;
 use MageDeveloper\Dataviewer\Utility\DebugUtility;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
@@ -38,6 +39,14 @@ class FormController extends AbstractController
 	 * @var array
 	 */
 	protected $storagePids = [];
+
+	/**
+	 * Resource Factory
+	 * 
+	 * @var \TYPO3\CMS\Core\Resource\ResourceFactory
+	 * @inject
+	 */
+	protected $resourceFactory;
 
 	/**
 	 * Standalone View
@@ -129,10 +138,38 @@ class FormController extends AbstractController
 	 */
 	public function postAction(\MageDeveloper\Dataviewer\Domain\Model\Record $record = null)
 	{
-		$fieldArray = $this->traversePost();
+		$redirectPid = null;
 		if(!$record instanceof Record)
+		{
+			// We need to check here, if the 'new'-Action is allowed, so we can create a new record
+			if(!$this->formSettingsService->isAllowedAction(FormSettingsService::ACTION_NEW))
+				$this->_handleRestrictedAction(FormSettingsService::ACTION_NEW, $record);
+			
 			$record = $this->_getNewRecord();
-				
+			$redirectPid = $this->formSettingsService->getRedirectAfterSuccessfulCreation();
+		}
+		else
+		{
+			// We check here, if the 'edit'-Action is allowed
+			if(!$this->formSettingsService->isAllowedAction(FormSettingsService::ACTION_EDIT))
+				$this->_handleRestrictedAction(FormSettingsService::ACTION_EDIT, $record);
+
+			$redirectPid = $this->formSettingsService->getRedirectAfterSuccessfulEditing();
+		}
+
+		// We perform the normal post action for the new or existing record
+		$post = $_POST;
+		$fieldArray = $this->traverseFieldArray($post);
+
+		/////////////////////////
+		// Handle File Uploads //
+		/////////////////////////
+		$fileInfoArray = $this->handleFileUploads();
+		$fileInfoArrayTraversed = $this->traverseFieldArray($fileInfoArray);
+
+		// Merge FieldArray with the File Upload Information
+		$fieldArray = \TYPO3\CMS\Extbase\Utility\ArrayUtility::arrayMergeRecursiveOverrule($fieldArray, $fileInfoArrayTraversed);
+
 		/////////////////////////////////////////
 		// Signal-Slot 'postPrepareFieldArray' //
 		/////////////////////////////////////////
@@ -169,62 +206,209 @@ class FormController extends AbstractController
 
 		$result = $this->recordDataHandler->processRecord($fieldArray, $record);
 		
+		if($result === true)
+		{
+			$message = Locale::translate("record_was_successfully_saved", array($record->getTitle(), $record->getUid()));
+			$this->addFlashMessage($message, null, AbstractMessage::OK);
+		}
+		else
+		{
+			$message = Locale::translate("record_not_saved");
+			$this->addFlashMessage($message, null, AbstractMessage::ERROR);
+		}
+		
 		////////////////////////////////////
 		// Signal-Slot 'postProcessRecord' //
 		////////////////////////////////////
 		$this->signalSlotDispatcher->dispatch(__CLASS__,"postProcessRecord", [&$record, &$this]);
 		
 		$this->persistenceManager->persistAll();
-		
-		
-		$redirect = "index";
+
+		$actionName = "index";
 		$controllerName = null;
 		$extensionName = null;
 		$arguments = ["record" => $record];
-		$pageUid = null;
 		/////////////////////////////////////
 		// Signal-Slot 'postFinalRedirect' //
 		/////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"postFinalRedirect",[	  &$redirect, 
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"postFinalRedirect",[	  &$actionName, 
 																				  &$controllerName,
 																				  &$extensionName,
 																				  &$arguments, 
-																				  &$pageUid,
+																				  &$redirectPid,
 																				  &$this]);
 		
 		// Validation was passed, final redirect now
-		$this->redirect($redirect, $controllerName, $extensionName, $arguments, $pageUid);
+		$this->redirect($actionName, $controllerName, $extensionName, $arguments, $redirectPid);
 		exit();
 	}
 
 	/**
-	 * Traverses the post and combines the values with
+	 * Action for displaying the form
+	 * -
+	 * This action is mainly for the output of the form.
+	 * The form template is chosen in the backend plugin
+	 * to add a customized form to this plugin
+	 *
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $record
+	 * @return void
+	 */
+	public function deleteAction(\MageDeveloper\Dataviewer\Domain\Model\Record $record = null)
+	{
+		$redirectPid = $this->formSettingsService->getRedirectAfterSuccessfulDeletion();
+	
+		if(!$record instanceof Record) 
+		{
+			$message = Locale::translate("could_not_delete_record", "?");
+			$this->addBackendFlashMessage($message, '', FlashMessage::OK);
+			$this->redirect("error");
+		}
+
+		// We check here, if the 'edit'-Action is allowed
+		if(!$this->formSettingsService->isAllowedAction(FormSettingsService::ACTION_DELETE))
+			$this->_handleRestrictedAction(FormSettingsService::ACTION_DELETE, $record);
+
+		if ($record->getRecordValues() && $record->getRecordValues()->count())
+		{
+			// Remove each record value
+			/* @var RecordValue $_recordValue */
+			foreach ( $record->getRecordValues() as $_recordValue )
+				$_recordValue->setDeleted(true);
+
+		}
+
+		$record->setDeleted(true);
+		$this->recordRepository->update($record);
+
+		// Process changes to the database
+		$this->persistenceManager->persistAll();
+
+		$message = Locale::translate("record_was_successfully_deleted", array($record->getUid()));
+		$this->addFlashMessage($message, null, AbstractMessage::ERROR);
+
+		$actionName = "index";
+		$controllerName = null;
+		$extensionName = null;
+		$arguments = ["record" => $record];
+		
+		/////////////////////////////////////
+		// Signal-Slot 'deleteFinalRedirect' //
+		/////////////////////////////////////
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"deleteFinalRedirect",[	  	&$actionName,
+																					&$controllerName,
+																					&$extensionName,
+																					&$arguments,
+																					&$redirectPid,
+																					&$this]);
+
+		// Validation was passed, final redirect now
+		$this->redirect($actionName, $controllerName, $extensionName, $arguments, $redirectPid);
+	}
+	
+	/**
+	 * Handles a restriction action
+	 * 
+	 * @param string $restrictedAction
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $record
+	 * @return void
+	 */
+	protected function _handleRestrictedAction($restrictedAction, \MageDeveloper\Dataviewer\Domain\Model\Record $record = null)
+	{
+		$message = null;
+		switch($restrictedAction)
+		{
+			case FormSettingsService::ACTION_NEW:
+				$message = Locale::translate("message.creating_not_allowed");
+				break;
+			case FormSettingsService::ACTION_DELETE:
+				$message = Locale::translate("message.deleting_not_allowed");
+				break;
+			case FormSettingsService::ACTION_EDIT:
+			default:
+				$message = Locale::translate("message.editing_not_allowed");
+				break;
+		}
+
+		$this->addFlashMessage($message, null, AbstractMessage::ERROR);
+		$this->redirect("Error");
+	}
+
+	/**
+	 * Error Action to display errors
+	 * without any other stuff
+	 * 
+	 * @return void
+	 */
+	public function errorAction()
+	{
+		
+	}
+
+	/**
+	 * Traverses a given fieldarray and combines the values with
 	 * the correct field ids
 	 * 
 	 * @return array
 	 */
-	public function traversePost()
+	public function traverseFieldArray(array $fieldArray = array())
 	{
-		$post = $_POST;
 		$datatype = $this->_getSelectedDatatype();
 		
 		if($datatype)
 		{
-			foreach($post as $_postVar=>$_value)
+			foreach($fieldArray as $_fieldVar=>$_value)
 			{
 				/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
 				foreach($datatype->getFields() as $_field)
 				{
-					if($_field->getCode() == $_postVar)
+					if($_field->getCode() == $_fieldVar)
 					{
-						$post[$_field->getUid()] = $_value;
-						unset($post[$_postVar]);
+						$fieldArray[$_field->getUid()] = $_value;
+						unset($fieldArray[$_fieldVar]);
 					}	
 				}
 			}
 		}
 		
-		return $post;
+		return $fieldArray;
+	}
+
+	/**
+	 * Handles file uploads
+	 * and returns the finalized array
+	 * 
+	 * @return array
+	 */
+	public function handleFileUploads()
+	{
+		$fileUploadPath = $this->formSettingsService->getFileUploadFolder();
+		$defaultStorage	= $this->resourceFactory->getDefaultStorage();
+		$fileInfoArray = [];
+
+		if($defaultStorage->hasFolder($fileUploadPath))
+			$folder = $defaultStorage->getFolder($fileUploadPath);
+		else
+			$folder = $defaultStorage->createFolder($fileUploadPath);
+		
+		if($folder instanceof \TYPO3\CMS\Core\Resource\Folder)
+		{
+			$files = $_FILES;
+			
+			foreach($files as $_key=>$_fileInfo)
+			{
+				// This is the current behaviour, we still need to investigate this
+				if(strlen($_fileInfo["name"]) <= 0) continue;
+				
+				$duplicationBehaviour = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
+			
+				// The destination folder exists, so we create the uploaded file here
+				$file = $defaultStorage->addUploadedFile($_fileInfo, $folder, null, $duplicationBehaviour);
+				$fileInfoArray[$_key] = $file->getPublicUrl();
+			}
+			
+		}
+		
+		return $fileInfoArray;
 	}
 
 	/**

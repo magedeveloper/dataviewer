@@ -42,10 +42,127 @@
                             </config>
                         </TCEforms>
                     </settings.datatype_selection>
+
+                    <settings.file_upload_folder>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.file_upload_folder</label>
+                            <config type="array">
+                                <type>group</type>
+                                <internal_type>folder</internal_type>
+                                <show_thumbs>0</show_thumbs>
+                                <minitems>0</minitems>
+                                <maxitems>1</maxitems>
+                                <size>1</size>
+                                <eval></eval>
+                            </config>
+                        </TCEforms>
+                    </settings.file_upload_folder>
+
+                    <settings.allowed_actions>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.allowed_actions</label>
+                            <config>
+                                <type>select</type>
+                                <items type="array">
+                                    <numIndex index="0">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.action_new</numIndex>
+                                        <numIndex index="1">new</numIndex>
+                                    </numIndex>
+                                    <numIndex index="1">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.action_edit</numIndex>
+                                        <numIndex index="1">edit</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.action_delete</numIndex>
+                                        <numIndex index="1">delete</numIndex>
+                                    </numIndex>
+                                </items>
+                                <size>4</size>
+                                <multiple>0</multiple>
+                                <minitems>0</minitems>
+                                <maxitems>9999</maxitems>
+                            </config>
+                        </TCEforms>
+                    </settings.allowed_actions>
                     
                 </el>
             </ROOT>
         </general_settings>
+
+        <redirect_setting>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.redirect_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+
+                    <settings.redirect_success_new>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.redirect_success_new</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>pages</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.redirect_success_new>
+
+                    <settings.redirect_success_edit>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.redirect_success_edit</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>pages</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.redirect_success_edit>
+
+                    <settings.redirect_success_delete>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.redirect_success_delete</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>pages</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.redirect_success_delete>
+
+                </el>
+            </ROOT>
+        </redirect_setting>
 
         <template_settings>
             <ROOT>

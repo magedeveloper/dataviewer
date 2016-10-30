@@ -19,6 +19,9 @@ plugin.tx_dataviewer {
 	}
 }
 
+# Using multiple plugins of the same type on the same page
+plugin.tx_dataviewer.mvc.callDefaultActionIfActionCantBeResolved = 1
+
 plugin.tx_dataviewer.fieldtypes {
      
     ## Default Configuration for DataViewer FieldTypes ##

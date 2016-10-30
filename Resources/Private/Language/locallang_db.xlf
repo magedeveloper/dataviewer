@@ -148,7 +148,7 @@
                 <source>Record Values</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_record.title">
-                <source>Title</source>
+                <source>Record Title</source>
             </trans-unit>
 
             <trans-unit id="tx_dataviewer_domain_model_recordvalue">
@@ -191,6 +191,9 @@
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.where_clause">
                 <source>Where Clause</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.server">
+                <source>SERVER Environment</source>
             </trans-unit>
 
 

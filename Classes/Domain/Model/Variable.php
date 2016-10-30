@@ -27,6 +27,8 @@ class Variable extends AbstractModel
 	const VARIABLE_TYPE_RECORD_FIELD	= 6;
 	const VARIABLE_TYPE_DATABASE		= 7;
 	const VARIABLE_TYPE_FRONTEND_USER	= 8;
+	const VARIABLE_TYPE_SERVER			= 9;
+	const VARIABLE_TYPE_DYNAMIC_RECORD	= 10;
 
 	/**
 	 * Variable Type
@@ -83,6 +85,13 @@ class Variable extends AbstractModel
 	 * @var string
 	 */
 	protected $whereClause ="";
+
+	/**
+	 * SERVER Environment Value
+	 *
+	 * @var string
+	 */
+	protected $server ="";
 
 	/**
 	 * Gets the type
@@ -251,5 +260,26 @@ class Variable extends AbstractModel
 	{
 		$this->whereClause = $whereClause;
 	}
-	
+
+	/**
+	 * Gets the name for the server
+	 * environment variable name
+	 * 
+	 * @return string
+	 */
+	public function getServer()
+	{
+		return $this->server;
+	}
+
+	/**
+	 * Sets a server environment variable name
+	 * 
+	 * @param string $server
+	 * @return void
+	 */
+	public function setServer($server)
+	{
+		$this->server = $server;
+	}
 }

@@ -178,6 +178,10 @@
                 <source>Option Condition</source>
                 <target>Option Bedingung</target>
             </trans-unit>
+            <trans-unit id="flexform.field_condition">
+                <source>Field Condition</source>
+                <target>Feld Bedingung</target>
+            </trans-unit>
             <trans-unit id="flexform.filter_combination">
                 <source>Filter Combination</source>
                 <target>Filter Kombination</target>
@@ -194,6 +198,40 @@
                 <source>Cond.</source>
                 <target>Bed.</target>
             </trans-unit>
+            <trans-unit id="flexform.allowed_actions">
+                <source>Allowed Actions on Controller</source>
+                <target>Erlaubte Aktionen am Controller</target>
+            </trans-unit>
+            <trans-unit id="flexform.action_new">
+                <source>post (Create Record)</source>
+                <target>post (Datensatz erstellen)</target>
+            </trans-unit>
+            <trans-unit id="flexform.action_edit">
+                <source>post (Edit Record)</source>
+                <target>post (Datensatz bearbeiten)</target>
+            </trans-unit>
+            <trans-unit id="flexform.action_delete">
+                <source>delete (Delete Record)</source>
+                <target>delete (Datensatz löschen)</target>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_settings">
+                <source>Redirect Settings</source>
+                <target>Weiterleitungen</target>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_success_new">
+                <source>Redirect after successful creation</source>
+                <target>Weiterleitung nach erfolgreicher Neuanlage</target>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_success_edit">
+                <source>Redirect after successful editing</source>
+                <target>Weiterleitung nach erfolgreicher Bearbeitung</target>
+            </trans-unit>
+            <trans-unit id="flexform.redirect_success_delete">
+                <source>Redirect after successful deletion</source>
+                <target>Weiterleitung nach erfolgreicher Löschung</target>
+            </trans-unit>
+
+            
 
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>
@@ -377,8 +415,12 @@
                 <source>Record-Datatype for the Storage</source>
                 <target>Datensatz-Datentyp für die Speicherung</target>
             </trans-unit>
-            
-            
+            <trans-unit id="flexform.file_upload_folder">
+                <source>File Upload Folder</source>
+                <target>Dateiupload-Ordner</target>
+            </trans-unit>
+
+
             <!-- Plugin Types -->
             <trans-unit id="plugin_types.display">
                 <source>Display Record Plugins</source>
@@ -500,6 +542,30 @@
                 <source>No fieldtypes found. Please add the DataViewer Static to your site-template or add at least one fieldtype (plugin.tx_dataviewer.fieldtypes)</source>
                 <target>Es wurden keine Feldtypen gefunden. Bitte fügen Sie das DataViewer Static Ihrem Seitentemplate hinzu oder fügen Sie manuell einen Feldtypen hinzu (plugin.tx_dataviewer.fieldtypes)</target>
             </trans-unit>
+            <trans-unit id="message.no_record_storage_page_configured">
+                <source>No Record Storage Page is configured. Please first add a Record Storage Page and press 'Save'.</source>
+                <target>Es wurde keine Datensatzsammlung angegeben. Bitte wählen Sie zuerst einen Datenordner aus und drücken Sie auf 'Speichern'.</target>
+            </trans-unit>
+            <trans-unit id="message.use_this_id_to_link">
+                <source>Use this id in the 'Target record display plugin'-Setting for Linking other DataViewer plugins to this!</source>
+                <target>Benutzen Sie diese Id in der Einstellung 'Zielplugin der Datensatz-Anzeige', um andere DataViewer-Plugins hiermit zu verknüpfen!</target>
+            </trans-unit>
+
+            <trans-unit id="message.creating_not_allowed">
+                <source>Sorry, creating new records is not allowed by this plugin!</source>
+                <target>Entschuldigung, die Erstellung von Datensätzen ist über dieses Plugin nicht erlaubt!</target>
+            </trans-unit>
+            <trans-unit id="message.editing_not_allowed">
+                <source>Sorry, editing records is not allowed by this plugin!</source>
+                <target>Entschuldigung, das Bearbeiten von Datensätzen ist über dieses Plugin nicht erlaubt!</target>
+            </trans-unit>
+            <trans-unit id="message.deleting_not_allowed">
+                <source>Sorry, deleting records is not allowed by this plugin!</source>
+                <target>Entschuldigung, das Löschen von Datensätzen ist über dieses Plugin nicht erlaubt!</target>
+            </trans-unit>
+
+           
+            
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
                 <target>Keine Konfiguration.</target>
@@ -694,8 +760,8 @@
                 <target>Datensatz-Werte</target>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_record.title">
-                <source>Title</source>
-                <target>Titel</target>
+                <source>Record Title</source>
+                <target>Datensatztitel</target>
             </trans-unit>
 
             <trans-unit id="tx_dataviewer_domain_model_recordvalue">
@@ -751,6 +817,10 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.where_clause">
                 <source>Where Clause</source>
                 <target>WHERE-Bedingung</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.server">
+                <source>SERVER Environment</source>
+                <target>SERVER Umgebung</target>
             </trans-unit>
 
 
@@ -1215,8 +1285,8 @@
                 <target>POST Variable</target>
             </trans-unit>
             <trans-unit id="variable_type.5">
-                <source>Record</source>
-                <target>Datensatz</target>
+                <source>Fixed Record</source>
+                <target>Fester Datensatz</target>
             </trans-unit>
             <trans-unit id="variable_type.6">
                 <source>Record Field Value</source>
@@ -1229,6 +1299,14 @@
             <trans-unit id="variable_type.8">
                 <source>Frontend User</source>
                 <target>Frontend Benutzer</target>
+            </trans-unit>
+            <trans-unit id="variable_type.9">
+                <source>Server Variable</source>
+                <target>Server Variable</target>
+            </trans-unit>
+            <trans-unit id="variable_type.10">
+                <source>Dynamic Record (from LinkViewHelper)</source>
+                <target>Dynamischer Datensatz (aus LinkViewHelper)</target>
             </trans-unit>
 
 

@@ -149,5 +149,5 @@ class Text
 		
 		return;
 	}
-	
+
 }

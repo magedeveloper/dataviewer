@@ -54,8 +54,8 @@ class FieldValidation
 	 */
 	public function __construct()
 	{
-		$this->objectManager 		= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->flexFormService		= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
+		$this->objectManager 			 = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+		$this->flexFormService			 = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
 		$this->validationSettingsService = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\ValidationSettingsService::class);
 	}
 

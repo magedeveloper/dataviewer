@@ -9,6 +9,7 @@ Checkbox
 --------
 
 This field can create checkboxes for selecting entries.
+Items for the selection are added through the FieldValues that you can add in the Field Configuration.
 
 Screenshot
 ~~~~~~~~~~

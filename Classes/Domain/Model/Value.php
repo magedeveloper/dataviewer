@@ -107,6 +107,11 @@ class Value
 		$this->fieldvalue = $fieldvalue;
 	}
 
+	/**
+	 * Gets the fieldtype
+	 * 
+	 * @return mixed
+	 */
 	public function getFieldtype()
 	{
 		return	$this->getFieldvalue()->getFieldtype();
@@ -121,5 +126,17 @@ class Value
 	{
 		if($this->getFieldvalue())
 			return $this->getFieldvalue()->getFrontendValue();
+	}
+
+	/**
+	 * Gets the final value as an array for the
+	 * frontend output
+	 * 
+	 * @return array
+	 */
+	public function getValueArray()
+	{
+		if($this->getFieldvalue())
+			return $this->getFieldvalue()->getValueArray();
 	}
 }

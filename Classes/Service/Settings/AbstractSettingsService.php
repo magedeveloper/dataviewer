@@ -49,17 +49,27 @@ abstract class AbstractSettingsService implements \TYPO3\CMS\Core\SingletonInter
 		$contentObj = $this->configurationManager->getContentObject();
 		if ($contentObj)
 			$uid = $contentObj->data["uid"];
-		
-		if (!isset($this->settings[$uid]))
+			
+		if($uid > 0)
 		{
-			$this->settings[$uid] = $this->configurationManager->getConfiguration(
-				\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-				$extensionName,
-				$pluginName
-			);
+			if ($uid > 0 && !isset($this->settings[$uid]))
+			{
+				$this->settings[$uid] = $this->configurationManager->getConfiguration(
+					\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+					$extensionName,
+					$pluginName
+				);
+			}
+
+			return $this->settings[$uid];
 		}
-		
-		return $this->settings[$uid];
+
+		// We reload the settings here
+		return $this->configurationManager->getConfiguration(
+			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+			$extensionName,
+			$pluginName
+		);	
 	}
 
 	/**
@@ -149,7 +159,7 @@ abstract class AbstractSettingsService implements \TYPO3\CMS\Core\SingletonInter
 	public function getSettingByCode($code)
 	{
 		$settings = $this->getSettings();
-
+		
 		if (is_array($settings) && isset($settings[$code]))
 		{
 			return $settings[$code];

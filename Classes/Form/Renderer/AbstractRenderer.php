@@ -88,6 +88,14 @@ abstract class AbstractRenderer
 		$this->datatypeRepository		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\DatatypeRepository::class);
 		$this->fieldRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
 		$this->recordRepository		 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
+
+		/*
+		$backend = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\BackendInterface::class);
+		//$dataMapRecord = $backend->getDataMapper()->getDataMap("MageDeveloper\\Dataviewer\\Domain\\Model\\Record");
+		//$dataMapRecord->setTableName("tx_dataviewer_domain_model_record_external");
+		$dataMapRecordValue = $backend->getDataMapper()->getDataMap("MageDeveloper\\Dataviewer\\Domain\\Model\\RecordValue");
+		$dataMapRecordValue->setTableName("tx_dataviewer_domain_model_recordvalue_external");
+		*/
 	}
 
 	/**

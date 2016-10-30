@@ -12,7 +12,7 @@ InjectViewHelper
 ################
 
 This ViewHelper injects records to other fluid templates. You can use the records of a previous
-Record-Plugin and inject them in other fluid templates (of extensions).
+Record-Plugin and inject them **in other fluid templates (of extensions)**.
 
 To inject records to other fluid templates, just include a Record-Plugin above and use the following
 code in the fluid template, where you want to inject the records of that Record-Plugin.
@@ -28,8 +28,13 @@ Usage:
 	<dv:inject sourceUid="51" />
 
 
-(Render)PartViewHelper
-######################
+.. note:: The process here is, that the relevant Record Ids are stored in the session, when the "Display Records"-Plugin above this
+          is executed. The Ids then are requested when the ViewHelper is called. So there is an additional Database-Query, when you use this
+          functionality.
+
+
+Render-PartViewHelper
+#####################
 
 The PartViewHelper renders different parts of the Records in case a template was set.
 
@@ -66,10 +71,11 @@ There are serveral GetViewHelper to retrieve data by id.
 +--------------------+--------------------------------------------------------------------+
 
 
-(Record)LinkViewHelper
-######################
+Record-LinkViewHelper
+#####################
 
 This ViewHelper can create a record link with a record parameter and a detail page id.
+The Detail Page Id is normally configured in the Plugin itself and is delivered through ``{settings.detail_page_id}``.
 
 .. code-block:: html
 	
@@ -77,7 +83,7 @@ This ViewHelper can create a record link with a record parameter and a detail pa
 	<dv:record.link record="{record}" pid="{settings.detail_page_id}">
 
 
-(Page)TitleViewHelper
+Page-TitleViewHelper
 ####################
 
 The (Page)TitleViewHelper is used for changing the Page Title within fluid, so

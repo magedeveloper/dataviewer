@@ -5,7 +5,7 @@
 
 	<f:if condition="{datatype}">
 		<f:then>
-			<f:form action="post" object="{record}" objectName="record">
+			<f:form action="post" object="{record}" objectName="record" enctype="multipart/form-data">
 				<dataviewer:render.template template="{template}" arguments="{_all}" />
 			</f:form>
 		</f:then>

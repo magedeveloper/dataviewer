@@ -37,6 +37,7 @@ DataViewer Documentation
    Installation/Index
    Screenshots/Index
    GetStarted/Index
+   Examples/Index
    Fieldtypes/Index
    Plugins/Index
    ViewHelpers/Index

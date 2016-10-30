@@ -28,7 +28,7 @@ class RecordController extends AbstractController
 	/***************************************************************************
 	 * This controller manages the display of records or record parts.
 	 * It is influenced by different session settings like sorting and filtering
-	 * or mainly the search.
+	 * or the search.
 	 ***************************************************************************/
 
 	/**
@@ -37,14 +37,6 @@ class RecordController extends AbstractController
 	 * @var array
 	 */
 	protected $storagePids = [];
-
-	/**
-	 * Record Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordRepository
-	 * @inject
-	 */
-	protected $recordRepository;
 
 	/**
 	 * Field Repository
@@ -287,7 +279,7 @@ class RecordController extends AbstractController
 		
 		// Filters Merged
 		$filters	= array_merge($fieldFilter, $filter, $selectionFilters, $selectFilters, $searchFilters, $letterFilters);
-
+		
 		////////////////////////////////////////////////////////////////////////////////
 		// Signal-Slot for manipulating the complete filters for the record selection //
 		////////////////////////////////////////////////////////////////////////////////

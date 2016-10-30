@@ -3,6 +3,7 @@ namespace MageDeveloper\Dataviewer\UserFunc;
 
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility;
 use MageDeveloper\Dataviewer\Utility\StringUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -143,6 +144,36 @@ class Field
 		$options = [];
 
 		$fields = $this->fieldRepository->findAll(false);
+
+		foreach($fields as $_field)
+		{
+			$pid = $_field->getPid();
+			$label = "[{$pid}] " . $_field->getFrontendLabel();
+			$options[] = [$label, $_field->getUid()];
+		}
+
+		$config["items"] = array_merge($config["items"], $options);
+	}
+
+	/**
+	 * Populate fields
+	 *
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
+	public function populateFieldsOnStoragePages(array &$config, &$parentObject)
+	{
+		$pages = GeneralUtility::trimExplode(",", $config["flexParentDatabaseRow"]["pages"]);
+		$pids = [];
+		foreach($pages as $_page)
+		{
+			preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
+			$pids[] = $match["uid"];
+		}
+		
+		$options = [];
+		$fields = $this->fieldRepository->findAllOnPids($pids);
 
 		foreach($fields as $_field)
 		{

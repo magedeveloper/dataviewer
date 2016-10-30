@@ -122,7 +122,7 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Form",
-	["Form" => "index, post"], // Cached
-	["Form" => "index, post"], // UnCached
+	["Form" => "index, post, delete, error"], // Cached
+	["Form" => "index, post, delete, error"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );

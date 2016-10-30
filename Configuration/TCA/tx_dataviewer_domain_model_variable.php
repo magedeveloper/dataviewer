@@ -29,10 +29,10 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif",
 	],
 	'interface' => [
-		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, variable_name, variable_value, record, field, table_content, column_name, where_clause',
+		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, variable_name, server, variable_value, record, field, table_content, column_name, where_clause',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, variable_name, variable_value, record, field, table_content, column_name, where_clause, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, variable_name, server, variable_value, record, field, table_content, column_name, where_clause, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -145,15 +145,43 @@ return [
 					//['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.2', 2], // TypoScript Variable Name
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.3', 3], // GET Variable
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.4', 4], // POST Variable
-					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.5', 5], // Record
-					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.6', 6], // Record Field
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.5', 5], // Fixed Record
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.6', 6], // Fixed Record Field
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.7', 7], // Database Value
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.8', 8], // Frontend User
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.9', 9], // SERVER Variable
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.10', 10], // Dynamic Record
 				],
 				"default" => "0",
 				'size' => 1,
 				'maxitems' => 1,
 				'eval' => 'required'
+			],
+		],
+		'server' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.server',
+			'displayCond' => 'FIELD:type:IN:9',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+					['SERVER_ADDR', 'SERVER_ADDR'], 			// SERVER_ADDR
+					['SERVER_NAME', 'SERVER_NAME'], 			// SERVER_NAME
+					['REQUEST_METHOD', 'REQUEST_METHOD'], 		// REQUEST_METHOD
+					['QUERY_STRING', 'QUERY_STRING'], 			// QUERY_STRING
+					['DOCUMENT_ROOT', 'DOCUMENT_ROOT'], 		// DOCUMENT_ROOT
+					['HTTP_HOST', 'HTTP_HOST'], 				// HTTP_HOST
+					['HTTP_REFERER', 'HTTP_REFERER'], 			// HTTP_REFERER
+					['HTTP_USER_AGENT', 'HTTP_USER_AGENT'], 	// HTTP_USER_AGENT
+					['HTTPS', 'HTTPS'], 						// HTTPS
+					['REMOTE_ADDR', 'REMOTE_ADDR'], 			// REMOTE_ADDR
+					['SERVER_PORT', 'SERVER_PORT'], 			// SERVER_PORT
+					['REQUEST_URI', 'REQUEST_URI'], 			// REQUEST_URI
+				],
+				"default" => "REMOTE_ADDR",
+				'size' => 1,
+				'maxitems' => 1,
 			],
 		],
 		'variable_name' => [

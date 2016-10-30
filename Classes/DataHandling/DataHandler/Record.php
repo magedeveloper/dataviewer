@@ -84,6 +84,14 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$this->recordValueRepository	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordValueRepository::class);
 		$this->fieldRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
 		$this->fieldValidation			= $this->objectManager->get(\MageDeveloper\Dataviewer\Validation\FieldValidation::class);
+
+		/*
+		$backend = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\BackendInterface::class);
+		//$dataMapRecord = $backend->getDataMapper()->getDataMap("MageDeveloper\\Dataviewer\\Domain\\Model\\Record");
+		//$dataMapRecord->setTableName("tx_dataviewer_domain_model_record_external");
+		$dataMapRecordValue = $backend->getDataMapper()->getDataMap("MageDeveloper\\Dataviewer\\Domain\\Model\\RecordValue");
+		$dataMapRecordValue->setTableName("tx_dataviewer_domain_model_recordvalue_external");
+		*/
 	}
 
 	/**
@@ -98,7 +106,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		/* @var RecordModel $record */
 		$record = $this->recordRepository->findByUid($id, false);
-
+		
 		if ($record instanceof RecordModel)
 			return $record;
 
@@ -245,8 +253,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
+		$record = $this->getRecordById($id);
+		$datatype = $record->getDatatype();
+	
 		// Validate the POST data
-		$validationErrors = $this->validateFieldArray($incomingFieldArray);
+		$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
 
 		if (!empty($validationErrors))
 		{
@@ -284,7 +295,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		// Assign substNEWIds for later usage if the element is in our target
 		$this->substNEWwithIDs = array_merge($this->substNEWwithIDs, $parentObj->substNEWwithIDs);
 		$this->_substituteRecordValues();
-		
+
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
 		// Disable Versioning
@@ -346,26 +357,28 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 * form post on the record editing
 	 *
 	 * @param array $fieldArray
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype
 	 * @return array
 	 */
-	public function validateFieldArray(array $fieldArray)
+	public function validateFieldArray(array $fieldArray, \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype)
 	{
 		$fieldValidationErrors = [];
 
-		foreach($fieldArray as $_fieldId=>$_value)
+		foreach($datatype->getFields() as $_field)
 		{
-			/* @var FieldModel $field */
-			$field = $this->getFieldById($_fieldId);
-			if ($field)
-			{
-				$this->fieldValidation->setField($field);
-				$fieldValueValidationErrors = $this->fieldValidation->validate($_value);
+			/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
+			$this->fieldValidation->setField($_field);
+			
+			$value = null;
+			if(isset($fieldArray[$_field->getUid()]))
+				$value = $fieldArray[$_field->getUid()];
+			
+			$fieldValueValidationErrors = $this->fieldValidation->validate($value);
 
-				if(!empty($fieldValueValidationErrors))
-				{
-					foreach($fieldValueValidationErrors as $_error)
-						$fieldValidationErrors[$field->getFrontendLabel()][] = $_error;
-				}
+			if(!empty($fieldValueValidationErrors))
+			{
+				foreach($fieldValueValidationErrors as $_error)
+					$fieldValidationErrors[$_field->getFrontendLabel()][] = $_error;
 			}
 		}
 
@@ -465,9 +478,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		$record->setTitle("");
 		if(isset($recordSaveData["title"]))
-		{
 		    $record->setTitle($recordSaveData["title"]);
-		}
+		
+		if(isset($recordSaveData["hidden"]))
+			$record->setHidden(true);
+			
 
 		$datatype = $record->getDatatype();
 

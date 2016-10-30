@@ -90,7 +90,18 @@ class FieldRepository extends AbstractRepository
 	 */
 	public function findAllOnPid($storagePid)
 	{
-		$query = $this->createQueryWithSettings(true, false, true, [$storagePid]);
+		return $this->findAllOnPids([$storagePid]);
+	}
+
+	/**
+	 * Finds all records on given storage page ids
+	 *
+	 * @param array $storagePids
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findAllOnPids(array $storagePids)
+	{
+		$query = $this->createQueryWithSettings(true, false, true, $storagePids);
 		$querySettings = $query->getQuerySettings();
 
 		$this->setDefaultQuerySettings($querySettings);
