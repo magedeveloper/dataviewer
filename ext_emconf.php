@@ -1,10 +1,10 @@
 <?php
 $EM_CONF[$_EXTKEY] = [
 	"title" => "MageDeveloper DataViewer",
-	"description" => "Create easy and intuitive TCA-records (e.g. News, Jobs, Events and more) on the fly without developing a new extension. Only templating is needed; includes plugins for Lists, Details, Search and more!",
+	"description" => "Create easy and intuitive TCA-records (e.g. News, Jobs, Events and more) on the fly without developing a new extension. Only templating is needed; includes many plugins for all kinds of display!",
 	"category" => "plugin",
 	"shy" => 0,
-	"version" => "1.1.2",
+	"version" => "1.2.0",
 	"dependencies" => "cms,extbase,fluid",
 	"conflicts" => "",
 	"priority" => "",
