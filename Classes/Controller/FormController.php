@@ -175,7 +175,8 @@ class FormController extends AbstractController
 		/////////////////////////////////////////
 		$this->signalSlotDispatcher->dispatch(__CLASS__,"postPrepareFieldArray",[&$fieldArray, &$this]);
 		
-		$validationErrors = $this->recordDataHandler->validateFieldArray($fieldArray);
+		$datatype = $this->_getSelectedDatatype();
+		$validationErrors = $this->recordDataHandler->validateFieldArray($fieldArray, $datatype);
 		
 		/////////////////////////////////////////////////
 		// Signal-Slot 'postAfterFieldArrayValidation' //
