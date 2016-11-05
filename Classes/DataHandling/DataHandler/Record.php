@@ -106,9 +106,28 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		/* @var RecordModel $record */
 		$record = $this->recordRepository->findByUid($id, false);
-		
+
 		if ($record instanceof RecordModel)
 			return $record;
+
+		return false;
+	}
+
+	/**
+	 * Get an datatype by a given id
+	 *
+	 * @param int $id
+	 * @return DatatypeModel|bool
+	 */
+	public function getDatatypeById($id)
+	{
+		if($id <= 0) return false;
+
+		/* @var DatatypeModel $record */
+		$datatype = $this->datatypeRepository->findByUid($id, false);
+
+		if ($datatype instanceof DatatypeModel)
+			return $datatype;
 
 		return false;
 	}
@@ -254,8 +273,14 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
 		$record = $this->getRecordById($id);
-		$datatype = $record->getDatatype();
-	
+
+		$datatype = null;
+		if ($record)
+			$datatype = $record->getDatatype();
+
+		if(!$datatype)
+			$datatype = $this->getDatatypeById($incomingFieldArray["datatype"]);
+
 		// Validate the POST data
 		$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
 
@@ -368,11 +393,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
 			$this->fieldValidation->setField($_field);
-			
+
 			$value = null;
 			if(isset($fieldArray[$_field->getUid()]))
 				$value = $fieldArray[$_field->getUid()];
-			
+
 			$fieldValueValidationErrors = $this->fieldValidation->validate($value);
 
 			if(!empty($fieldValueValidationErrors))
@@ -460,10 +485,10 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		//////////////////////
 		if(!is_array($recordSaveData))
 			return false;
-			
+
 		$this->_processRecordSaveData($record, $recordSaveData);
 		$this->recordRepository->update($record);
-		
+
 		return true;
 	}
 
@@ -478,11 +503,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		$record->setTitle("");
 		if(isset($recordSaveData["title"]))
-		    $record->setTitle($recordSaveData["title"]);
-		
+			$record->setTitle($recordSaveData["title"]);
+
 		if(isset($recordSaveData["hidden"]))
-			$record->setHidden(true);
-			
+			$record->setHidden((bool)$recordSaveData["hidden"]);
+
 
 		$datatype = $record->getDatatype();
 
@@ -503,10 +528,10 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			//if($record->_hasProperty($_fieldId))
 			//	$record->_setProperty($_fieldId, $_value);
-								
+
 			/* @var FieldModel $field */
 			$field = $datatype->getFieldById($_fieldId);
-			
+
 			if (!$field instanceof FieldModel)
 				continue;
 
@@ -518,7 +543,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$_value = $this->dataHandler->getFlexformValue($_value, $record, $field);
 				$_value = $this->flexTools->flexArray2Xml($_value);
 			}
-			
+
 			// We need to check the field
 			// We get the tca from the fieldtype class
 			// We check agains checkValue_SW in the dataHandler
@@ -570,7 +595,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				}
 
 			}
-			
+
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
