@@ -2,7 +2,13 @@ div.clear                                               { clear:both; }
 
 img.dataviewer-logo										{ height:26px; margin-top:-20px; margin-bottom:-10px; }
 div.dataviewer-record                                   { margin-top:-20px; margin-bottom:-5px; background-color: #fff; padding: 20px; border: 1px solid #c0c0c0; -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); }
-div.dataviewer-record h1								{ margin-bottom:0; font-size:22px; }
+div.dataviewer-header h1								{ margin-bottom:0; font-size:22px; padding:0; }
+div.dataviewer-content h1								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:26px; padding: 10px 0 10px 0px; color:#999; }
+div.dataviewer-content h2								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:22px; padding: 10px 0 10px 0px; color:#999; }
+div.dataviewer-content h3								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:20px; padding: 10px 0 10px 0px; color:#999; }
+div.dataviewer-content h4								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:20px; padding: 10px 0 10px 0px; color:#999; border-bottom:2px solid #ccc; }
+div.dataviewer-content h5								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:18px; padding: 10px 0 10px 0px; color:#999; border-bottom:2px solid #ccc; }
+
 div.dataviewer-header                                   { padding:0; }
 div.dataviewer-header span.icon						    { float:left; margin: 5px 8px 0 0; }
 div.dataviewer-record-title                             { margin-bottom:15px; }
@@ -25,6 +31,7 @@ div.dataviewer-field-flex strong                        { display:none; }
 div.dataviewer-record div.tab-content div.callout		{ padding:5px !important; margin:0 !important; }
 div.dataviewer-record div.tab-content div.callout.callout-notice { background-color:#ffffff !important; border:2px solid #eaeaea !important; }
 div.dataviewer-record .callout							{ padding:10px !important; }
+div.dataviewer-record hr								{ color:#c0c0c0; background-color: #c0c0c0; }
 
 div.dataviewer-record .tab-content                      { border:1px solid #cccccc; background-color:#fafafa; border-top:0; padding: 10px;  }
 div.dataviewer-record .nav-tabs                         { background-color: #f2f2f2 !important; }
@@ -83,3 +90,75 @@ div.dataviewer-backend tr[aria-expanded="false"] .icon-expanded									   	{ di
 
 div.dataviewer-backend table.table-record-values div.extbase-debugger								{ margin:5px 0 !important; width:94%; }
 div.dataviewer-backend table.table-record-values div.extbase-debugger-center						{ padding:0 0 0 10px; }
+
+div.dataviewer-backend div.information-progress														{ margin:0 0 10px 0; padding-bottom:15px; border-bottom:2px solid #c0c0c0; }
+
+div.dataviewer-backend .breadcrumb {
+	list-style: none;
+	overflow: hidden;
+	font-size:10px;
+	margin:10px 0 0 0;
+	padding:0;
+}
+div.dataviewer-backend .breadcrumb li {
+	float: left;
+}
+div.dataviewer-backend .breadcrumb li span {
+	color: white;
+	text-decoration: none;
+	padding: 5px 10px 5px 40px;
+	background-color: #c0c0c0;                   /* fallback color */
+	position: relative;
+	display: block;
+	float: left;
+}
+div.dataviewer-backend .breadcrumb li span:after {
+	content: " ";
+	display: block;
+	width: 0;
+	height: 0;
+	border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+	border-bottom: 50px solid transparent;
+	border-left: 26px solid #c0c0c0;
+	position: absolute;
+	top: 50%;
+	margin-top: -50px;
+	left: 100%;
+	z-index: 2;
+	margin-left:-10px
+}
+div.dataviewer-backend .breadcrumb li span:before {
+	content: " ";
+	display: block;
+	width: 0;
+	height: 0;
+	border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+	border-bottom: 50px solid transparent;
+	border-left: 30px solid white;
+	position: absolute;
+	top: 50%;
+	margin-top: -50px;
+	margin-left: -9px;
+	left: 100%;
+	z-index: 1;
+}
+div.dataviewer-backend .breadcrumb li:first-child span {
+	padding-left: 10px;
+}
+div.dataviewer-backend .breadcrumb li.active span       { background-color:#4086B1; }
+div.dataviewer-backend .breadcrumb li.active span:after { border-left-color: #4086B1; }
+div.dataviewer-backend .breadcrumb li.inactive span      { background-color:#c0c0c0; color:#777; }
+div.dataviewer-backend .breadcrumb li.inactive span:after { border-left-color: #c0c0c0; }
+div.dataviewer-backend .breadcrumb li:last-child span { padding-right:20px; }
+div.dataviewer-backend .breadcrumb li:last-child span:after { border: 0; }
+div.dataviewer-backend hr { height:2px; border:0; color:#c0c0c0; background-color: #c0c0c0; }
+
+.dataviewer-backend-form { }
+.dataviewer-backend-form div.field { width:100%; display:block; height:50px; }
+.dataviewer-backend-form select { }
+.dataviewer-backend-form div.field label { float:left; width:250px; }
+.dataviewer-backend-form div.field input[type=file] { float:left;  }
+.dataviewer-backend-form input[type=submit],
+.dataviewer-backend-form button { float:left; background-color:#4086B1; padding:5px 10px; margin-top:20px; color:white; border:0px; }
+.dataviewer-backend-form input[type=submit]:hover,
+.dataviewer-backend-form button:hover { background-color: #8FB140; }
