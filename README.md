@@ -7,7 +7,7 @@ This extension is a easy to use data handler that saves you a lot of time, becau
 every need.
 
 ###Documentation
-For [documentation have a look at the TYPO3 Docs Page](https://docs.typo3.org/typo3cms/extensions/dataviewer/1.0.1/) or refer
+For [documentation have a look at the TYPO3 Docs Page](https://docs.typo3.org/typo3cms/extensions/dataviewer/1.3.0/) or refer
 to the [DataViewer Extension Page in the TER](https://typo3.org/extensions/repository/view/dataviewer)
 
 ##Compatibility
@@ -20,4 +20,5 @@ to the [DataViewer Extension Page in the TER](https://typo3.org/extensions/repos
 + Inject records to other extensions with a InjectViewHelper
 + Inject dynamic variables of different types to the fluid templates
 + Easy fluid templating with intuitive variable naming
++ Import CSV Files
 
