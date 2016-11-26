@@ -84,8 +84,8 @@ Force these sorting settings
 Template Settings
 #################
 
-Fluid Template
-   The template where the record(s) are injected.
+Template Selection
+   The template where the record(s) are injected. You can either manually select a template or predefine templates.
 
 Variable Injection
    Select the variables, that will be injected into the fluid template.

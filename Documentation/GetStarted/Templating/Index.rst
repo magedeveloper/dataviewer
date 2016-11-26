@@ -64,3 +64,20 @@ Return Types
 |                                                         +--------------------------------------------------------------------------------------------+
 |                                                         | Returns the plain value of the field                                                       |
 +---------------------------------------------------------+--------------------------------------------------------------------------------------------+
+
+
+Predefining Templates
+~~~~~~~~~~~~~~~~~~~~~
+
+Templates in the selector can be predefined with the following TypoScript.
+Please add the TypoScript to your root template.
+
+.. code-block:: typoscript
+	         
+	plugin.tx_dataviewer.templates {
+             movieList = fileadmin/templates/dataviewer/movies/List.html
+             movieDetail = fileadmin/templates/dataviewer/movies/Detail.html
+	}
+	
+
+.. image:: ../../Images/template_selection.jpg

@@ -24,6 +24,9 @@ internal_type
 allowed
    Comma-separated list of allowed types (e.g. tt_content,pages)
 
+Class Name of the according model
+   The class name of the according model that will be delivered in the frontend value
+
 minitems
    Minimum of items that can be selected
 
