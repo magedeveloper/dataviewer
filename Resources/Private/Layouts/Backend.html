@@ -22,15 +22,27 @@
 		9:'TYPO3/CMS/Lang/Lang'
 	}"
 	/>
+
 	<div class="module-docheader t3js-module-docheader">
 		<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
 			<div class="module-docheader-bar-column-left">
 				<f:be.buttons.csh />
 				<dv:backend.actionMenu>
-					<f:be.menus.actionMenuItem label="{f:translate(key:'module.records')}" controller="BackendModule" action="records" />
-					<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes')}" controller="BackendModule" action="datatypes" />
-					<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes_information')}" controller="BackendModule" action="datatypesDetails" />
-					<f:be.menus.actionMenuItem label="{f:translate(key:'module.records_information')}" controller="BackendModule" action="recordsDetails" />
+					<f:be.menus.actionMenuItemGroup label="{f:translate(key:'module.create')}">
+						<f:be.menus.actionMenuItem label="{f:translate(key:'module.create_record')}" controller="BackendModule" action="createRecord" />
+					</f:be.menus.actionMenuItemGroup>
+					<f:be.menus.actionMenuItemGroup label="{f:translate(key:'module.manage')}">
+						<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes')}" controller="BackendModule" action="datatypes" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'module.records')}" controller="BackendModule" action="records" />
+					</f:be.menus.actionMenuItemGroup>
+					<f:be.menus.actionMenuItemGroup label="{f:translate(key:'module.information')}">
+						<f:be.menus.actionMenuItem label="{f:translate(key:'module.datatypes_information')}" controller="BackendModule" action="datatypesDetails" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'module.records_information')}" controller="BackendModule" action="recordsDetails" />
+					</f:be.menus.actionMenuItemGroup>
+					<f:be.menus.actionMenuItemGroup label="{f:translate(key:'module.import')}">
+						<f:be.menus.actionMenuItem label="{f:translate(key:'module.csv_import')}" controller="BackendCsvAssistant" action="index" />
+					</f:be.menus.actionMenuItemGroup>
+				
 				</dv:backend.actionMenu>
 			</div>
 			<div class="module-docheader-bar-column-right">
