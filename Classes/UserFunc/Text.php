@@ -142,6 +142,7 @@ class Text
 				$view = $this->objectManager->get(StandaloneView::class);
 				$view->setTemplatePathAndFilename($templateFile);
 				$view->assignMultiple($parameters);
+				$view->assign("config", $config);
 				
 				return $view->render();
 			}

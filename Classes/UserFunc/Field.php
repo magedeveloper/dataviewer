@@ -49,16 +49,25 @@ class Field
 	protected $flexFormService;
 
 	/**
+	 * Plugin Settings Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
+	 * @inject
+	 */
+	protected $pluginSettingsService;
+
+	/**
 	 * Constructor
 	 *
 	 * @return Field
 	 */
 	public function __construct()
 	{
-		$this->objectManager 	= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->fieldRepository	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-		$this->recordRepository	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
-		$this->flexFormService	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
+		$this->objectManager 			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+		$this->fieldRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
+		$this->recordRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
+		$this->flexFormService			= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
+		$this->pluginSettingsService	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService::class);
 	}
 
 	/**
@@ -74,13 +83,14 @@ class Field
 		$text = ($row["variable_name"] != "")?$row["variable_name"]:$row["frontend_label"];
 		$code = StringUtility::createCodeFromString($text);
 		$title = LocalizationUtility::translate("formvalue_access_to_hidden_field");
+		$recordName = $this->pluginSettingsService->getRecordVarName();	
 
 		if (!$code) $code = "<em>generated on save</em>";
 
 		$html = "";
 		$html .= "<strong>{$title}</strong>";
 		$html .= "<span style=\"font-family: Courier, Courier new, monospace; font-size:16px; float:left; width:100%;\" class='callout callout-info'>";
-		$html .= '{record.<strong>'.$code.'</strong>}';
+		$html .= '{'.$recordName.'.<strong>'.$code.'</strong>}';
 		$html .= "</span><br />";
 
 		return $html;

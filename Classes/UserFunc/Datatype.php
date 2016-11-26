@@ -3,6 +3,7 @@ namespace MageDeveloper\Dataviewer\UserFunc;
 
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use MageDeveloper\Dataviewer\Utility\IconUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -52,11 +53,23 @@ class Datatype
 	public function populateDatatypesAction(array &$config, &$parentObject)
 	{
 		$pageId = (int)$config["row"]["pid"];
-		$datatypesLocalPage = $this->datatypeRepository->findAllOnPid($pageId);
 
 		$options = [];
 		$usedIds = [];
+		
+		if(GeneralUtility::_GET("datatype"))
+		{
+			$dId = (int)GeneralUtility::_GET("datatype");
+			$datatype = $this->datatypeRepository->findByUid($dId, false);
+			$icon = IconUtility::getIconByHash($datatype->getIcon());
+			$options[] = [$datatype->getInfo(), $datatype->getUid(), $icon];
+		}
+		else
+		{
+			$options[] = ["", ""];
+		}
 
+		$datatypesLocalPage = $this->datatypeRepository->findAllOnPid($pageId);
 		if ($datatypesLocalPage->count())
 		{
 			$options[] = [Locale::translate("on_this_page"), "--div--"];
@@ -93,9 +106,9 @@ class Datatype
 			}
 		}
 
-		if (is_array($config["items"]))
-			$config["items"] = array_merge($config["items"], $options);
-		else
+		//if (is_array($config["items"]))
+		//	$config["items"] = array_merge($config["items"], $options);
+		//else
 			$config["items"] = $options;
 
 	}
