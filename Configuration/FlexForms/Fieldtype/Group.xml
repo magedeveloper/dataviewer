@@ -55,6 +55,17 @@
                     </config>
                 </TCEforms>
             </allowed>
+            <modelClass>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:model_class</label>
+                    <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder><![CDATA[VendorName\ExtensionName\Domain\Model\Class]]></placeholder>
+                        <eval>trim,nospace</eval>
+                    </config>
+                </TCEforms>
+            </modelClass>
             <minitems>
                 <TCEforms>
                     <label>minitems</label>
@@ -97,7 +108,16 @@
                     </config>
                 </TCEforms>
             </hideMoveIcons>
-            <!--<uploadfolder>
+            <multiple>
+                <TCEforms>
+                    <label>multiple</label>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </multiple>
+            <uploadfolder>
                 <TCEforms>
                     <label>uploadfolder</label>
                     <displayCond>FIELD:internal_type:=:file</displayCond>
@@ -107,7 +127,7 @@
                         <eval>trim</eval>
                     </config>
                 </TCEforms>
-            </uploadfolder>-->
+            </uploadfolder>
             <disable_controls>
                 <TCEforms>
                     <label>disable_controls</label>
