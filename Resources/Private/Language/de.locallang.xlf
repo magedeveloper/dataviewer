@@ -328,8 +328,8 @@
                 <target>Erlaubte Datensatz-Tabelle</target>
             </trans-unit>
             <trans-unit id="model_class">
-                <source>Class Name of the according model</source>
-                <target>Klassenname des zugehörigen Domain-Models</target>
+                <source>Class Name of the according model (Leave Blank for Array-Return)</source>
+                <target>Klassenname des zugehörigen Domain-Models (Leer lassen für Array-Rückgabe)</target>
             </trans-unit>
 
 
@@ -367,6 +367,18 @@
             </trans-unit>
 
 
+            <trans-unit id="flexform.template_selection">
+                <source>Template Selection</source>
+                <target>Templateauswahl</target>
+            </trans-unit>
+            <trans-unit id="flexform.custom_template_path">
+                <source>Select custom template path</source>
+                <target>Eigenen Templatepfad auswählen</target>
+            </trans-unit>
+            <trans-unit id="flexform.predefined_templates">
+                <source>Predefined Templates</source>
+                <target>Vordefinierte Templates</target>
+            </trans-unit>
             <trans-unit id="flexform.template_override">
                 <source>Fluid Template</source>
                 <target>Fluid Template</target>
@@ -563,9 +575,11 @@
                 <source>Sorry, deleting records is not allowed by this plugin!</source>
                 <target>Entschuldigung, das Löschen von Datensätzen ist über dieses Plugin nicht erlaubt!</target>
             </trans-unit>
+            <trans-unit id="message.caches_cleared">
+                <source>The DataViewer Extension had to clear the cache to reload all fieldtypes. If there are no fieldtypes available, please try to clear the caches manually.</source>
+                <target>Die DataViewer Extension hat alle Caches geleert um die Feldtypen neu zu laden. Sollten keine Feldtypen verfügbar sein, leeren Sie bitte die Caches manuell.</target>
+            </trans-unit>
 
-           
-            
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
                 <target>Keine Konfiguration.</target>
@@ -612,6 +626,10 @@
             <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
                 <source>Hide Records of this type in lists</source>
                 <target>Datensätze dieses Typs in Listen verstecken</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
+                <source>Title Divider Character</source>
+                <target>Titel Trennzeichen</target>
             </trans-unit>
 
             <!-- Domain/Model/Field -->
@@ -794,6 +812,10 @@
                 <source>Name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
+                <source>Session Prefix Key</source>
+                <target>Session Prefix Key</target>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
                 <source>Value</source>
                 <target>Wert</target>
@@ -821,6 +843,10 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.server">
                 <source>SERVER Environment</source>
                 <target>SERVER Umgebung</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.page">
+                <source>Page</source>
+                <target>Seite</target>
             </trans-unit>
 
 
@@ -1042,6 +1068,10 @@
             <trans-unit id="flexform.notnull">
                 <source>Is Not Null (notnull)</source>
                 <target>Ist nicht Null (notnull)</target>
+            </trans-unit>
+            <trans-unit id="flexform.fis">
+                <source>Single Value of a comma-separated List (FIND_IN_SET)</source>
+                <target>Einzelner Wert einer komma-separierten Liste (FIND_IN_SET)</target>
             </trans-unit>
 
             <trans-unit id="showing_records_per_page">
@@ -1308,7 +1338,14 @@
                 <source>Dynamic Record (from LinkViewHelper)</source>
                 <target>Dynamischer Datensatz (aus LinkViewHelper)</target>
             </trans-unit>
-
+            <trans-unit id="variable_type.11">
+                <source>User Session Variable</source>
+                <target>Variable aus Benutzersession</target>
+            </trans-unit>
+            <trans-unit id="variable_type.12">
+                <source>Page</source>
+                <target>Seite</target>
+            </trans-unit>
 
             <!-- FieldValue Types -->
             <trans-unit id="type.0">
@@ -1474,6 +1511,10 @@
                 <source>Records Information</source>
                 <target>Informationen zu Datensätzen</target>
             </trans-unit>
+            <trans-unit id="module.csv_import">
+                <source>CSV Import Assistant</source>
+                <target>CSV Import Assistent</target>
+            </trans-unit>
             <trans-unit id="module.records_on_this_page">
                 <source>Records on this page</source>
                 <target>Datensätze auf dieser Seite</target>
@@ -1522,6 +1563,143 @@
                 <source>Please click on an entry in the following table to open details for the selected entry.</source>
                 <target>Bitte klicken Sie auf einen Eintrag um Details zu öffnen.</target>
             </trans-unit>
+            <trans-unit id="module.please_select_a_page">
+                <source>Please select a page in the pagetree.</source>
+                <target>Bitte wählen Sie eine Seite im Seitenbaum aus.</target>
+            </trans-unit>
+
+
+            <trans-unit id="module.import_step1">
+                <source>Please select a page from the pagetree, where the imported records will be stored.</source>
+                <target>Bitte wählen Sie eine Seite aus dem Seitenbaum in welcher die importierten Datensätze gespeichert werden sollen.</target>
+            </trans-unit>
+            <trans-unit id="module.import_step2">
+                <source>Please select the target datatype for the imported records. This datatype is used for assigning the data of the imported file.</source>
+                <target>Bitte wählen Sie den Ziel-Datentyp aus für die zu importierenden Datensätze. Dieser Datentyp wird benutzt um die importierten Daten einem Datentyp zuzuordnen.</target>
+            </trans-unit>
+            <trans-unit id="module.import_step3">
+                <source>Please select the CSV-File from your computer. The file is uploaded once into a temporary directory and will be deleted from the server after the import is finished.</source>
+                <target>Bitte wählen Sie die CSV-Datei von Ihrem Computer aus. Die Datei wird in ein temporäres Verzeichnis geladen und nach dem Import wieder vom Server gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="module.import_step4">
+                <source>Please assign the columns from the CSV-File to the according field of the datatype. All data of this column will be imported to the selected field if the validation is passed.</source>
+                <target>Bitte weisen Sie die Spalten der CSV-Datei zum passenden Feld des Datentyps zu. Die Daten der Spalte werden dann in das ausgewählte Feld importiert nachdem die Validierung erfolgreich war.</target>
+            </trans-unit>
+            <trans-unit id="module.import_step5">
+                <source>Thank you for using the DataViewer CSV-Import. The final log is displayed in the following lines.</source>
+                <target>Vielen Dank für die Benutzung des DataViewer CSV-Import. Die finale Log finden Sie im Folgenden.</target>
+            </trans-unit>
+            <trans-unit id="module.imported">
+                <source>Imported</source>
+                <target>Importiert</target>
+            </trans-unit>
+            <trans-unit id="module.not_imported">
+                <source>Not imported</source>
+                <target>Nicht importiert</target>
+            </trans-unit>
+            <trans-unit id="module.import_successful">
+                <source>Import successful!</source>
+                <target>Import erfolgreich!</target>
+            </trans-unit>
+            <trans-unit id="module.import_error">
+                <source>Import error! Record is deactivated.</source>
+                <target>Importfehler! Datensatz wurde deaktiviert.</target>
+            </trans-unit>
+            <trans-unit id="module.csv_file">
+                <source>CSV File</source>
+                <target>CSV Datei</target>
+            </trans-unit>
+            <trans-unit id="module.csv_divider">
+                <source>CSV Divider Character</source>
+                <target>CSV Trennzeichen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_first_line">
+                <source>First Line is Header with column names</source>
+                <target>Erste Zeile ist Kopf mit Spaltennamen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_field_enclosure">
+                <source>Field Enclosure</source>
+                <target>Feld-Umschließung</target>
+            </trans-unit>
+            <trans-unit id="module.no_file_given">
+                <source>No file given. Please select a file to continue.</source>
+                <target>Keine Datei angegeben. Bitte wählen Sie eine Datei aus um fortzufahren.</target>
+            </trans-unit>
+            <trans-unit id="module.file_empty">
+                <source>The selected file is empty or cannot be read. Please try again!</source>
+                <target>Die angegebene Datei ist leer oder kann nicht gelesen werden. Bitte versuchen Sie es nochmals!</target>
+            </trans-unit>
+
+            <trans-unit id="module.csv_target_page">
+                <source>Select Target Page</source>
+                <target>Zielseite wählen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_target_datatype">
+                <source>Select Target Datatype</source>
+                <target>Ziel-Datentyp wählen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_source_file">
+                <source>Select Source CSV File</source>
+                <target>Quell-CSV-Datei wählen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_assign_fields">
+                <source>Assign Fields to Columns</source>
+                <target>Feldern zu Spalten zuordnen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_review_log">
+                <source>Review Log</source>
+                <target>Log ansehen</target>
+            </trans-unit>
+            <trans-unit id="module.csv_assigned_column">
+                <source>Assigned Column</source>
+                <target>Zugewiesene Spalte</target>
+            </trans-unit>
+            <trans-unit id="module.csv_not_assigned">
+                <source>Not assigned (Empty)</source>
+                <target>Nicht zugewiesen (Leer)</target>
+            </trans-unit>
+            <trans-unit id="module.csv_custom_value">
+                <source>Custom Value for all records</source>
+                <target>Eigener Wert für alle Datensätze</target>
+            </trans-unit>
+            <trans-unit id="module.csv_contents">
+                <source>CSV File Contents</source>
+                <target>CSV Dateiinhalte</target>
+            </trans-unit>
+            <trans-unit id="module.csv_start_import">
+                <source>Start Import</source>
+                <target>Importieren starten</target>
+            </trans-unit>
+            <trans-unit id="module.csv_log_messages">
+                <source>Messages</source>
+                <target>Ausgaben</target>
+            </trans-unit>
+            <trans-unit id="module.csv_log_line_number">
+                <source>Line Number</source>
+                <target>Zeilennummer</target>
+            </trans-unit>
+            <trans-unit id="module.create">
+                <source>Create</source>
+                <target>Erstellen</target>
+            </trans-unit>
+            <trans-unit id="module.create_record">
+                <source>Create Record</source>
+                <target>Datensatz erstellen</target>
+            </trans-unit>
+            <trans-unit id="module.manage">
+                <source>Manage</source>
+                <target>Verwalten</target>
+            </trans-unit>
+            <trans-unit id="module.information">
+                <source>Information</source>
+                <target>Information</target>
+            </trans-unit>
+            <trans-unit id="module.import">
+                <source>Import</source>
+                <target>Import</target>
+            </trans-unit>  
+            
+            
             
         </body>
     </file>

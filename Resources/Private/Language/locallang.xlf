@@ -33,7 +33,7 @@
             <trans-unit id="flexform.no_plugin_type_selected">
                 <source>No Plugin Type selected</source>
             </trans-unit>
-            <trans-unit id="flexform.available_markers">
+            <trans-unit id="flexform.available_markes">
                 <source>Available Markers</source>
             </trans-unit>
             <trans-unit id="flexform.record_selection_type">
@@ -249,9 +249,8 @@
                 <source>Allowed record table</source>
             </trans-unit>
             <trans-unit id="model_class">
-                <source>Class Name of the according model</source>
+                <source>Class Name of the according model (Leave Blank for Array-Return)</source>
             </trans-unit>
-            
             
             
             <trans-unit id="flexform.number_of_initial_records">
@@ -279,10 +278,18 @@
                 <source>Default Selected 'Items per Page'-Value</source>
             </trans-unit>
 
-            
-            
-            
-            
+
+
+
+            <trans-unit id="flexform.template_selection">
+                <source>Template Selection</source>
+            </trans-unit>
+            <trans-unit id="flexform.custom_template_path">
+                <source>Select custom template path</source>
+            </trans-unit>
+            <trans-unit id="flexform.predefined_templates">
+                <source>Predefined Templates</source>
+            </trans-unit>
             <trans-unit id="flexform.template_override">
                 <source>Fluid Template</source>
             </trans-unit>
@@ -431,6 +438,9 @@
             <trans-unit id="message.deleting_not_allowed">
                 <source>Sorry, deleting records is not allowed by this plugin!</source>
             </trans-unit>
+            <trans-unit id="message.caches_cleared">
+                <source>The DataViewer Extension had to clear the cache to reload all fieldtypes. If there are no fieldtypes available, please try to clear the caches manually.</source>
+            </trans-unit>
             
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
@@ -467,6 +477,9 @@
             <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
                 <source>Hide Records of this type in lists</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
+                <source>Title Divider Character</source>
+            </trans-unit>
 
             <!-- Domain/Model/Field -->
             <trans-unit id="tx_dataviewer_domain_model_field">
@@ -486,6 +499,9 @@
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.variable_name">
                 <source>Custom Variable Name</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
+                <source>Session Prefix Key</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.description">
                 <source>Backend Description</source>
@@ -626,7 +642,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.server">
                 <source>SERVER Environment</source>
             </trans-unit>
-
+            <trans-unit id="tx_dataviewer_domain_model_variable.page">
+                <source>Page</source>
+            </trans-unit>
 
             <!-- Messages -->
             <trans-unit id="please_select_datatype">
@@ -792,6 +810,9 @@
             </trans-unit>
             <trans-unit id="flexform.notnull">
                 <source>Is Not Null (notnull)</source>
+            </trans-unit>
+            <trans-unit id="flexform.fis">
+                <source>Single Value of a comma-separated List (FIND_IN_SET)</source>
             </trans-unit>
 
             <trans-unit id="showing_records_per_page">
@@ -996,6 +1017,12 @@
             <trans-unit id="variable_type.10">
                 <source>Dynamic Record (from LinkViewHelper)</source>
             </trans-unit>
+            <trans-unit id="variable_type.11">
+                <source>User Session Variable</source>
+            </trans-unit>
+            <trans-unit id="variable_type.12">
+                <source>Page</source>
+            </trans-unit>
 
             <!-- FieldValue Types -->
             <trans-unit id="type.0">
@@ -1121,6 +1148,9 @@
             <trans-unit id="module.records_information">
                 <source>Records Information</source>
             </trans-unit>
+            <trans-unit id="module.csv_import">
+                <source>CSV Import Assistant</source>
+            </trans-unit>
             <trans-unit id="module.records_on_this_page">
                 <source>Records on this page</source>
             </trans-unit>
@@ -1157,7 +1187,108 @@
             <trans-unit id="module.click_on_entry_to_open_details">
                 <source>Please click on an entry in the following table to open details for the selected entry.</source>
             </trans-unit>
+            <trans-unit id="module.please_select_a_page">
+                <source>Please select a page in the pagetree.</source>
+            </trans-unit>
 
+            <trans-unit id="module.import_step1">
+                <source>Please select a page from the pagetree, where the imported records will be stored.</source>
+            </trans-unit>
+            <trans-unit id="module.import_step2">
+                <source>Please select the target datatype for the imported records. This datatype is used for assigning the data of the imported file.</source>
+            </trans-unit>
+            <trans-unit id="module.import_step3">
+                <source>Please select the CSV-File from your computer. The file is uploaded once into a temporary directory and will be deleted from the server after the import is finished.</source>
+            </trans-unit>
+            <trans-unit id="module.import_step4">
+                <source>Please assign the columns from the CSV-File to the according field of the datatype. All data of this column will be imported to the selected field if the validation is passed.</source>
+            </trans-unit>
+            <trans-unit id="module.import_step5">
+                <source>Thank you for using the DataViewer CSV-Import. The final log is displayed in the following lines.</source>
+            </trans-unit>
+            <trans-unit id="module.imported">
+                <source>Imported</source>
+            </trans-unit>
+            <trans-unit id="module.not_imported">
+                <source>Not imported</source>
+            </trans-unit>
+            <trans-unit id="module.import_successful">
+                <source>Import successful!</source>
+            </trans-unit>
+            <trans-unit id="module.import_error">
+                <source>Import error! Record is deactivated.</source>
+            </trans-unit>
+            <trans-unit id="module.csv_file">
+                <source>CSV File</source>
+            </trans-unit>
+            <trans-unit id="module.csv_divider">
+                <source>CSV Divider Character</source>
+            </trans-unit>
+            <trans-unit id="module.csv_first_line">
+                <source>First Line is Header with column names</source>
+            </trans-unit>
+            <trans-unit id="module.csv_field_enclosure">
+                <source>Field Enclosure</source>
+            </trans-unit>
+            <trans-unit id="module.no_file_given">
+                <source>No file given. Please select a file to continue.</source>
+            </trans-unit>
+            <trans-unit id="module.file_empty">
+                <source>The selected file is empty or cannot be read. Please try again!</source>
+            </trans-unit>
+
+            <trans-unit id="module.csv_target_page">
+                <source>Select Target Page</source>
+            </trans-unit>
+            <trans-unit id="module.csv_target_datatype">
+                <source>Select Target Datatype</source>
+            </trans-unit>
+            <trans-unit id="module.csv_source_file">
+                <source>Select Source CSV File</source>
+            </trans-unit>
+            <trans-unit id="module.csv_assign_fields">
+                <source>Assign Fields to Columns</source>
+            </trans-unit>
+            <trans-unit id="module.csv_review_log">
+                <source>Review Log</source>
+            </trans-unit>
+            <trans-unit id="module.csv_not_assigned">
+                <source>Not assigned (Empty)</source>
+            </trans-unit>
+            <trans-unit id="module.csv_assigned_column">
+                <source>Assigned Column</source>
+            </trans-unit>
+            <trans-unit id="module.csv_custom_value">
+                <source>Custom Value for all records</source>
+            </trans-unit>
+            <trans-unit id="module.csv_contents">
+                <source>CSV File Contents</source>
+            </trans-unit>
+            <trans-unit id="module.csv_start_import">
+                <source>Start Import</source>
+            </trans-unit>
+            <trans-unit id="module.csv_log_messages">
+                <source>Messages</source>
+            </trans-unit>
+            <trans-unit id="module.csv_log_line_number">
+                <source>Line Number</source>
+            </trans-unit>
+            <trans-unit id="module.create">
+                <source>Create</source>
+            </trans-unit>
+            <trans-unit id="module.create_record">
+                <source>Create Record</source>
+            </trans-unit>
+            <trans-unit id="module.manage">
+                <source>Manage</source>
+            </trans-unit>
+            <trans-unit id="module.information">
+                <source>Information</source>
+            </trans-unit>
+            <trans-unit id="module.import">
+                <source>Import</source>
+            </trans-unit>
+            
         </body>
         
     </file>
