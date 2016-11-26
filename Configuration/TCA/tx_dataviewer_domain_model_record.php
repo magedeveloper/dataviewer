@@ -162,6 +162,7 @@ return [
 				'minitems' => 0,
 				'maxitems' => 1,
 				'multiple' => 0,
+				'showIconTable' => true,
 			],
 		],
 		'title' => [
