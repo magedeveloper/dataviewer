@@ -282,14 +282,19 @@ class Record extends AbstractModel
 
 	/**
 	 * Appends Title Information
+	 * Uses the title divider, that is configured
+	 * in the datatype
 	 * 
 	 * @param string $append Title to append
 	 * @return void
 	 */
 	public function appendTitle($append)
 	{
-		$this->title .= ",".$append;
-		$this->title = trim($this->title, ",");
+		$divider = $this->getDatatype()->getTitleDivider();
+
+		$this->title .= $divider.$append;
+		$this->title = trim($this->title, $divider);
+		$this->title = str_replace("X", " ", $this->title);
 	}
 
 	/**

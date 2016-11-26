@@ -71,6 +71,13 @@ class Datatype extends AbstractModel
 	protected $fields = NULL;
 
 	/**
+	 * Title Divider
+	 *
+	 * @var string
+	 */
+	protected $titleDivider = ' ';
+
+	/**
 	 * __construct
 	 */
 	public function __construct()
@@ -340,6 +347,27 @@ class Datatype extends AbstractModel
 	}
 
 	/**
+	 * Gets the title divider
+	 * 
+	 * @return string
+	 */
+	public function getTitleDivider()
+	{
+		return $this->titleDivider;
+	}
+
+	/**
+	 * Sets the title divider
+	 * 
+	 * @param string $titleDivider
+	 * @return void
+	 */
+	public function setTitleDivider($titleDivider)
+	{
+		$this->titleDivider = $titleDivider;
+	}
+	
+	/**
 	 * Checks if the datatype has a field
 	 * 
 	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
@@ -377,4 +405,23 @@ class Datatype extends AbstractModel
 		return $this->getFieldById($field->getUid());
 	}
 
+	/**
+	 * Determines if the record has an title field
+	 * or needs to use its own title
+	 *
+	 * @return bool
+	 */
+	public function getHasTitleField()
+	{
+		$fields = $this->getFields();
+
+		foreach($fields as $_field)
+		{
+			/* @var Field $_field */
+			if ($_field->getIsRecordTitle())
+				return true;
+		}
+	
+		return false;
+	}
 }
