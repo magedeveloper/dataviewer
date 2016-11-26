@@ -73,6 +73,14 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	 * @inject
 	 */
 	protected $authenticationService;
+
+	/**
+	 * Session Service
+	 * 
+	 * @var \MageDeveloper\Dataviewer\Service\Session\SessionService
+	 * @inject
+	 */
+	protected $sessionService;
 	
 	/**
 	 * Gets the extension name
@@ -246,6 +254,16 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						}
 						
 						$variables[$name] = $record;
+						break;
+					case Variable::VARIABLE_TYPE_USER_SESSION:
+						$sessionKey = $variable->getSessionKey();
+						$this->sessionService->setPrefixKey($sessionKey);
+						$variables[$name] = $this->sessionService->getData($name);
+						break;
+					case Variable::VARIABLE_TYPE_PAGE:
+						/* @var \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository */
+						$pageRepository = $this->objectManager->get(\TYPO3\CMS\Frontend\Page\PageRepository::class);
+						$variables[$name] = $pageRepository->getPage($variable->getPage());
 						break;
 					case Variable::VARIABLE_TYPE_FIXED:
 					default:

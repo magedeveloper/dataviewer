@@ -29,10 +29,10 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif",
 	],
 	'interface' => [
-		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, variable_name, server, variable_value, record, field, table_content, column_name, where_clause',
+		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, variable_name, session_key, server, page, variable_value, record, field, table_content, column_name, where_clause',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, variable_name, server, variable_value, record, field, table_content, column_name, where_clause, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, variable_name, session_key, server, page, variable_value, record, field, table_content, column_name, where_clause, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -151,6 +151,8 @@ return [
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.8', 8], // Frontend User
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.9', 9], // SERVER Variable
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.10', 10], // Dynamic Record
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.11', 11], // User Session Variable
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.12', 12], // Page Id
 				],
 				"default" => "0",
 				'size' => 1,
@@ -190,7 +192,17 @@ return [
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'alpha,nospace,required,trim'
+				'eval' => 'nospace,required,trim'
+			],
+		],
+		'session_key' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.session_key',
+			'displayCond' => 'FIELD:type:IN:11',
+			'config' => [
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'nospace,required,trim'
 			],
 		],
 		'variable_value' => [
@@ -204,6 +216,19 @@ return [
 				'cols' => 40,
 				'rows' => 10,
 				'eval' => 'trim'
+			],
+		],
+		'page' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.page',
+			'displayCond' => 'FIELD:type:IN:12',
+			'config' => [
+				'type' => 'group',
+				'internal_type' => 'db',
+				'allowed' => 'pages',
+				'size' => 1,
+				'maxitems' => 1,
+				'multiple' => 0,
 			],
 		],
 		'record' => [
