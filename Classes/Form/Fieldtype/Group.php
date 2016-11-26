@@ -94,7 +94,8 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 			$tca["processedTca"]["columns"][$fieldName]["config"]["size"] = $size;
 
 		//multiple
-		$tca["processedTca"]["columns"][$fieldName]["config"]["multiple"] = (int)$this->getField()->getConfig("multiple");
+		if ($multiple = $this->getField()->getConfig("multiple"))
+			$tca["processedTca"]["columns"][$fieldName]["config"]["multiple"] = (bool)$multiple;
 
 		//selectedListStyle
 		if($selectedListStyle = $this->getField()->getConfig("selectedListStyle"))
@@ -117,7 +118,8 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 			$tca["processedTca"]["columns"][$fieldName]["config"]["uploadfolder"] = $uploadfolder;
 
 		//hideMoveIcons
-		$tca["processedTca"]["columns"][$fieldName]["config"]["hideMoveIcons"] = (int)$this->getField()->getConfig("hideMoveIcons");
+		if($hideMoveIcons = $this->getField()->getConfig("hideMoveIcons"))
+			$tca["processedTca"]["columns"][$fieldName]["config"]["hideMoveIcons"] = (bool)$hideMoveIcons;
 
 		//disable_controls
 		if($disable_controls = $this->getField()->getConfig("disable_controls"))
@@ -126,8 +128,7 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 		//foreign_table
 		if($foreignTable = $this->getField()->getConfig("foreign_table"))
 			$tca["processedTca"]["columns"][$fieldName]["config"]["foreign_table"] = $foreignTable;
-			
-		
+
 		// internal_type == db
 		if($this->getField()->getConfig("internal_type") == "db")
 		{
@@ -175,7 +176,6 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 			);
 			*/
 		}	
-			
 
 		parent::prepareTca($tca);
 	}

@@ -65,8 +65,14 @@ class File extends AbstractFieldvalue implements FieldvalueInterface
 		$files = [];
 		foreach($values as $_file)
 		{
-			$fullFilePath = GeneralUtility::getFileAbsFileName($_file);
-
+			$dir = dirname($_file);
+			$filename = basename($_file);
+			
+			if($dir == "." || $dir == "")
+				$dir = $this->getField()->getConfig("uploadfolder");
+		
+			$fullFilePath = GeneralUtility::getFileAbsFileName($dir.DIRECTORY_SEPARATOR.$filename);
+			
 			if(file_exists($fullFilePath))
 			{
 				$file = $this->resourceFactory->retrieveFileOrFolderObject($fullFilePath);

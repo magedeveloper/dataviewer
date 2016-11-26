@@ -40,7 +40,6 @@ class MultiSelect extends Select
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "select",
-							"multiple" => 1,
 							"renderType" => "selectMultipleSideBySide",
 							"items" => $this->getFieldItems($this->getField()),
 						],

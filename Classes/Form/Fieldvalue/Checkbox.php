@@ -24,7 +24,29 @@ class Checkbox extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getValueContent()
 	{
-		return $this->getValue();
+		$value = $this->getValue();
+		
+		// Value is not numeric, so we need to convert the selection
+		// to a numeric value
+		if(!is_numeric($value))
+		{
+			$items = $this->getItems();
+			$selectedValues = GeneralUtility::trimExplode(",", $value);
+			
+			$selection = [];
+			foreach($items as $i=>$_item)
+			{
+				$selection[$i] = 0;
+				if(in_array($_item, $selectedValues))
+				{
+					$selection[$i] = 1;
+				}
+			}
+			
+			$value = CheckboxUtility::getIntForSelectionArray($selection);
+		}
+	
+		return $value;
 	}
 
 	/**
