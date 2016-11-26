@@ -16,5 +16,9 @@
 		<br />
 		Additional icons, included in this Extension are from the "Fugue" icon set of Yusuke Kamiyamane,
 		which can be found at http://p.yusukekamiyamane.com/.
+		<br /><br />
+		<f:for each="{icons}" as="icon" key="iconId">
+			<f:image src="{icon}" width="16" height="16" title="{iconId}" />
+		</f:for>
 	</p>
 </div>
