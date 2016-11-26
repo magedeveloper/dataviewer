@@ -21,4 +21,23 @@ class Record extends AbstractCmsLayout
 	 * @var string
 	 */
 	protected $listType = "dataviewer_record";
+
+	/**
+	 * Gets the backend layout
+	 *
+	 * @param string $listType
+	 * @param array $config Configuration
+	 * @param array $additionalVariables
+	 * @return string
+	 */
+	public function getBackendLayout($listType, array $config, array $additionalVariables = [])
+	{
+		$flex = $this->flexFormService->convertFlexFormContentToArray($config["row"]["pi_flexform"]);
+		$templateSelection = $flex["settings"]["template_selection"];
+		$templateFile = $this->pluginSettingsService->getPredefinedTemplateById($templateSelection);
+		
+		$additionalVariables["template_selection_file"] = $templateFile;
+		return parent::getBackendLayout($listType, $config, $additionalVariables);
+	}
+
 }
