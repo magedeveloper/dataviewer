@@ -32,7 +32,7 @@
 					{field.frontendLabel}
 				</td>
 				<td nowrap="nowrap">
-					&#123;record.{field.code}&#125;
+					&#123;{recordName}.{field.code}&#125;
 				</td>
 				<td nowrap="nowrap">
 					<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" class=""><core:icon identifier="actions-open" size="small" /></a>
@@ -42,5 +42,6 @@
 		</tbody>
 	</table>
 </div>
+<f:debug>{_all}</f:debug>
 
 

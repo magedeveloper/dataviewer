@@ -1,0 +1,144 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+
+<f:section name="content">
+	<h1><f:translate key="module.csv_import" /></h1>
+
+	<f:flashMessages/>
+
+	<f:render partial="BackendModule/Csv/Step" arguments="{step:5}" />
+
+	<hr />
+
+	<div class="information-progress">
+		<f:alias map="{page:'{dv:page.get(id:currentPageId)}'}">
+			<f:translate key="LLL:EXT:lang/locallang_common.xlf:page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Templates/CmsLayout/Partials/DoktypeIcon.html" arguments="{doktype:page.doktype}" />[{page.uid}]&nbsp;{page.title}
+		</f:alias>
+		<br />
+		<f:translate key="flexform.record_save_datatype" />:&nbsp;<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;[{datatype.uid}]&nbsp;{datatype.name}
+	</div>
+
+	<h3><f:translate key="module.csv_assign_fields" /></h3>
+	<div class="alert alert-notice">
+		<f:translate key="module.import_step4" />
+	</div>
+
+	<f:form action="import" class="dataviewer-backend-form">
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th nowrap="nowrap" class="col-sm-2"><f:translate key="tx_dataviewer_domain_model_field" /></th>
+					<th nowrap="nowrap" class="col-sm-2"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.variable_name" /></th>
+					<th nowrap="nowrap" class="col-sm-3"><f:translate key="module.csv_assigned_column" /></th>
+					<th nowrap="nowrap" class="col-sm-5"><f:translate key="module.csv_custom_value" /></th>
+				</tr>
+			</thead>
+			<tbody>
+
+			<f:if condition="{datatype.hasTitleField} == 0">
+				<tr style="border-bottom:2px solid #ddd; background-color: white;">
+					<td>
+						<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;<f:translate key="record_title" />
+					</td>
+					<td>
+						title
+					</td>
+					<td>
+						<dv:v.set name="titleFound" value="false" />
+						<f:for each="{csvColumns}" as="column">
+							<f:if condition="{column} == 'title'">
+								<dv:v.set name="titleFound" value="true" />
+							</f:if>
+						</f:for>
+
+						<f:if condition="{dv:v.get(name:'titleFound')} == 'true'">
+							<f:then>
+								<f:form.select name="field_title" options="{columns}" value="title" />
+							</f:then>
+							<f:else>
+								<f:form.select name="field_title" options="{columns}" />
+							</f:else>
+						</f:if>
+					</td>
+					<td>
+						<f:form.textfield name="custom_title" style="width:100%;" />
+					</td>
+				</tr>
+			</f:if>
+	
+	
+			<f:for each="{datatype.fields}" as="field" iteration="i">
+				<tr>
+					<td>				
+						<core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}
+					</td>
+					<td>
+						{field.code}
+					</td>
+					<td>
+						<dv:v.set name="found" value="false" />
+						<f:for each="{csvColumns}" as="column">
+							<f:if condition="{column} == {field.code}">
+								<dv:v.set name="found" value="true" />
+							</f:if>
+						</f:for>
+
+						<f:if condition="{dv:v.get(name:'found')} == 'true'">
+							<f:then>
+								<f:form.select name="field_{field.uid}" options="{columns}" value="{field.code}" />
+							</f:then>
+							<f:else>
+								<f:form.select name="field_{field.uid}" options="{columns}" />
+							</f:else>
+						</f:if>
+					</td>
+					<td>
+						<f:form.textfield name="custom_{field.uid}" style="width:100%;" />
+					</td>
+				</tr>
+			</f:for>
+			</tbody>
+		</table>
+
+		<f:form.hidden name="file" value="{file}" />
+		<f:form.hidden name="delimeter" value="{delimeter}" />
+		<f:form.hidden name="fieldEnclosure" value="{fieldEnclosure}" />
+		<f:form.hidden name="headerLine" value="{headerLine}" />
+		<f:form.hidden name="datatype" value="{datatype}" />
+
+		<div class="field">
+			<f:form.button type="submit" class="dataviewer-backend-submit" name="step_2">
+				<core:icon identifier="actions-system-extension-import" size="small" />&nbsp;{f:translate(key:'module.csv_start_import')}
+			</f:form.button>
+		</div>
+
+	</f:form>
+
+	<hr />
+	<h4><f:translate key="module.csv_contents" />:</h4>
+
+	<table class="table table-hover">
+		<thead>
+		<tr>
+			<f:for each="{csvColumns}" as="column" key="key" iteration="i">
+					<th nowrap="nowrap">{column}</th>
+			</f:for>
+		</tr>
+		</thead>
+		<tbody>
+		<f:for each="{csv}" as="csvContent" key="key" iteration="i">
+			<tr>
+			<f:for each="{csvContent}" as="columnContent">
+				<td>{columnContent}</td>
+			</f:for>
+			</tr>
+		</f:for>
+		</tbody>
+	</table>
+
+</f:section>

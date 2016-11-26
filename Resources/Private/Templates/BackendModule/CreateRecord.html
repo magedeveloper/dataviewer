@@ -1,0 +1,30 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+<f:section name="content">
+    <h1><f:translate key="module.create_record" /></h1>
+
+    <f:flashMessages/>
+
+    <f:if condition="{datatypes->f:count()} > 0">
+        <f:then>
+            <ul class="dataviewer-datatypes-list">
+                <f:for each="{datatypes}" as="datatype">
+                    <f:if condition="{datatype.hideRecords} == 0">
+                        <li>
+                            <a href="{dv:backend.newLink(pid:'{datatype.pid}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;[{datatype.uid}]&nbsp;{datatype.name}</a>
+                        </li>
+                    </f:if>
+                </f:for>
+            </ul>
+        </f:then>
+        <f:else>
+            <f:translate key="module.no_datatypes_found" />
+        </f:else>
+    </f:if>
+
+
+
+</f:section>
