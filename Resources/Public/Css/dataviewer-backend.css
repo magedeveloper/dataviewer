@@ -162,3 +162,9 @@ div.dataviewer-backend hr { height:2px; border:0; color:#c0c0c0; background-colo
 .dataviewer-backend-form button { float:left; background-color:#4086B1; padding:5px 10px; margin-top:20px; color:white; border:0px; }
 .dataviewer-backend-form input[type=submit]:hover,
 .dataviewer-backend-form button:hover { background-color: #8FB140; }
+
+div.dataviewer-datatypes div.datatype { border:1px solid #dedede; margin-bottom:2em; background-color:#f2f2f2; }
+div.dataviewer-datatypes div.datatype:hover { background-color:#fff; }
+div.dataviewer-datatypes div.datatype a { padding:1em 1em 1em 1em; height:160px;  }
+div.dataviewer-datatypes div.datatype a:hover { text-decoration: none; }
+div.dataviewer-datatypes div.datatype div.media-body { padding-left:15px; }
