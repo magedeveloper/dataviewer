@@ -38,7 +38,13 @@ class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 	 */
 	public function render()
 	{
-		$templateFile = GeneralUtility::getFileAbsFileName($this->arguments["template"]);
+		$template = $this->arguments["template"];
+		$predefined = $this->pluginSettingsService->getPredefinedTemplateById($template);
+		
+		if(!is_null($predefined))
+			$template = $predefined;
+		
+		$templateFile = GeneralUtility::getFileAbsFileName($template);
 		
 		if (file_exists($templateFile))
 		{
