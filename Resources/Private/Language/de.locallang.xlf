@@ -1697,10 +1697,14 @@
             <trans-unit id="module.import">
                 <source>Import</source>
                 <target>Import</target>
-            </trans-unit>  
-            
-            
-            
+            </trans-unit>
+            <trans-unit id="module.no_description_available">
+                <source>No description available</source>
+                <target>Keine Beschreibung verfügbar</target>
+            </trans-unit>
+
+
+
         </body>
     </file>
 </xliff>

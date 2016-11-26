@@ -1288,6 +1288,9 @@
             <trans-unit id="module.import">
                 <source>Import</source>
             </trans-unit>
+            <trans-unit id="module.no_description_available">
+                <source>No description available</source>
+            </trans-unit>
             
         </body>
         
