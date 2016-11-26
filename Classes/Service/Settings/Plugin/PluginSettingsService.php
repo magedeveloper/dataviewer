@@ -111,4 +111,30 @@ class PluginSettingsService extends AbstractSettingsService
 		$name = $this->getConfiguration("settings.partVariableName");
 		return \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($name);
 	}
+
+	/**
+	 * Gets the configuration for the predefines
+	 * templates
+	 * 
+	 * @return array
+	 */
+	public function getPredefinedTemplates()
+	{
+		$path = "templates";
+		$configuration = $this->getConfiguration($path);
+		return $configuration;		
+	}
+	
+	/**
+	 * Gets the predefined template by a given
+	 * id
+	 * 
+	 * @param string $templateId
+	 * @return string|null
+	 */
+	public function getPredefinedTemplateById($templateId)
+	{
+		$templates = $this->getPredefinedTemplates();
+		return (isset($templates[$templateId]))?$templates[$templateId]:null;
+	}
 }
