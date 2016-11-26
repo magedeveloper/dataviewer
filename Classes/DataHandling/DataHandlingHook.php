@@ -50,6 +50,14 @@ class DataHandlingHook
 	protected $recordHandling;
 
 	/**
+	 * Cache Manager
+	 *
+	 * @var \TYPO3\CMS\Core\Cache\CacheManager
+	 * @inject
+	 */
+	protected $cacheManager;
+
+	/**
 	 * Constructor
 	 *
 	 * @return DataHandlingHook
@@ -61,6 +69,7 @@ class DataHandlingHook
 		$this->datatypeHandling		= $this->objectManager->get(\MageDeveloper\Dataviewer\DataHandling\DataHandler\Datatype::class);
 		$this->fieldHandling		= $this->objectManager->get(\MageDeveloper\Dataviewer\DataHandling\DataHandler\Field::class);
 		$this->recordHandling		= $this->objectManager->get(\MageDeveloper\Dataviewer\DataHandling\DataHandler\Record::class);
+		$this->cacheManager			= $this->objectManager->get(\TYPO3\CMS\Core\Cache\CacheManager::class);
 	}
 
 	/**
@@ -101,6 +110,20 @@ class DataHandlingHook
 	 */
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
+		if($table == "sys_template" && isset($incomingFieldArray["include_static_file"]))
+		{
+			$staticFileInclude = GeneralUtility::trimExplode(",",$incomingFieldArray["include_static_file"],true);
+
+			if(in_array("EXT:dataviewer/Configuration/TypoScript", $staticFileInclude))
+			{
+				$this->cacheManager->flushCaches();
+
+				$message = Locale::translate("message.caches_cleared");
+				$this->datatypeHandling->addBackendFlashMessage($message, "", FlashMessage::INFO);
+			}
+			return;
+		}
+	
 		$this->datatypeHandling->processDatamap_preProcessFieldArray($incomingFieldArray, $table, $id, $parentObj);
 		$this->fieldHandling->processDatamap_preProcessFieldArray($incomingFieldArray, $table, $id, $parentObj);
 		$this->recordHandling->processDatamap_preProcessFieldArray($incomingFieldArray, $table, $id, $parentObj);
@@ -122,6 +145,32 @@ class DataHandlingHook
 		$this->datatypeHandling->processCmdmap($command, $table, $id, $value, $commandIsProcessed, $parentObj, $pasteUpdate);
 		$this->fieldHandling->processCmdmap($command, $table, $id, $value, $commandIsProcessed, $parentObj, $pasteUpdate);
 		$this->recordHandling->processCmdmap($command, $table, $id, $value, $commandIsProcessed, $parentObj, $pasteUpdate);
+	}
+
+	/**
+	 * processCmdmap_afterFinish
+	 *
+	 * @param \TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler
+	 * @return void
+	 */
+	public function processCmdmap_afterFinish(\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler)
+	{
+		// Redirect Fix for redirecting when inline records were added
+		$datamap = $dataHandler->datamap;
+		if(isset($datamap["tx_dataviewer_domain_model_record"]))
+			$this->_redirectCurrentUrl();
+	}
+
+	/**
+	 * Redirects to the current url
+	 *
+	 * @return void
+	 */
+	protected function _redirectCurrentUrl()
+	{
+		$link = GeneralUtility::linkThisScript(GeneralUtility::_GET());
+		\TYPO3\CMS\Core\Utility\HttpUtility::redirect( GeneralUtility::sanitizeLocalUrl($link) );
+		exit();
 	}
 
 }
