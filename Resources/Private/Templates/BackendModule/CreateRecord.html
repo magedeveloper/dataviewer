@@ -50,15 +50,19 @@
                                 </f:alias>
                             </small>
 
-                            <br />
-                            <br />
+                            <f:comment>
+                                <br />
+                                <br />
+                                <small>
+                                    <f:if condition="{datatype.description}">
+                                        <f:then><f:format.crop maxCharacters="200" append="&nbsp;[...]">{datatype.description}</f:format.crop></f:then>
+                                        <f:else><em><f:translate key="module.no_description_available" /></em></f:else>
+                                    </f:if>
+                                </small>
+                            </f:comment>
 
-                            <small>
-                                <f:if condition="{datatype.description}">
-                                    <f:then><f:format.crop maxCharacters="200" append="&nbsp;[...]">{datatype.description}</f:format.crop></f:then>
-                                    <f:else><em><f:translate key="module.no_description_available" /></em></f:else>
-                                </f:if>
-                            </small>
+
+
 
                         </div>
                         </a>
