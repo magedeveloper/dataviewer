@@ -1,0 +1,40 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+
+<f:section name="content">
+    <h1><f:translate key="module.csv_import" /></h1>
+
+    <f:flashMessages/>
+
+    <f:render partial="BackendModule/Csv/Step" arguments="{step:3}" />
+
+    <hr />
+
+	<div class="information-progress">
+		<f:alias map="{page:'{dv:page.get(id:currentPageId)}'}">
+			<f:translate key="LLL:EXT:lang/locallang_common.xlf:page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Templates/CmsLayout/Partials/DoktypeIcon.html" arguments="{doktype:page.doktype}" />&nbsp;[{page.uid}]&nbsp;{page.title}
+		</f:alias>
+	</div>
+
+	<h3><f:translate key="module.csv_target_datatype" /></h3>
+    <div class="alert alert-notice">
+        <f:translate key="module.import_step2" />
+    </div>
+
+    <f:form action="file" class="dataviewer-backend-form">
+        <div class="field">
+            <label for="datatype"><f:translate key="flexform.record_save_datatype" /></label>
+            <f:form.select name="datatype" options="{datatypes}" class="dataviewer-datatype-select" />
+        </div>
+
+        <div class="field">
+            <f:form.submit class="dataviewer-backend-submit" name="step_2" value="{f:translate(key:'LLL:EXT:lang/locallang_common.xlf:submit')}" />
+        </div>
+
+    </f:form>
+
+</f:section>

@@ -1,4 +1,6 @@
-{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
 
 <img src="{imageUrl}" border="0" style="float:left;margin-right: 5px;"/>
 <strong><f:translate key="tx_dataviewer" /></strong>
@@ -13,7 +15,7 @@
 	<f:if condition="{flexform.settings.field_filter}">
 		<f:for each="{flexform.settings.field_filter}" as="fieldFilter" iteration="i">
 			<f:alias map="{field:'{dv:field.get(id:fieldFilter.fields.field_id)}'}">
-				[{field.uid}] {field.frontendLabel} => {fieldFilter.fields.filter_type}
+				<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}</a> => {fieldFilter.fields.filter_type}
 			</f:alias>
 			<f:if condition="{i.isLast} != 1">
 				<br />
@@ -38,7 +40,9 @@
 			<f:for each="{flexform.settings.filter_options}" as="option" iteration="i">
 				<f:alias map="{field:'{dv:field.get(id:option.fields.field_id)}'}">
 					<tr>
-						<td>[{field.uid}] {field.frontendLabel}</td>
+						<td>
+							<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}</a>
+						</td>
 						<td>{option.fields.option_name}</td>
 						<td>{option.fields.field_value}</td>
 						<td>{option.fields.filter_condition}</td>

@@ -317,16 +317,17 @@ class RecordRepository extends AbstractRepository
 			$searchField = "{$filterCombination}               ({$fieldId}";
 		}
 		/*
-		eq			=			'{$var}'					->equals
-		neq			!=			'{$var}'					->logicalNot->equals
-		like		LIKE		'%{$var}%'					->like
-		nlike		NOT LIKE	'%{$var}%'					->logicalNot->like
-		in			IN			([trimExplode]{$var})		->in
-		nin			NOT IN		([trimExplode]{$var})		->logicalNot->in
-		gt			>			{(int)$var}					->greaterThan
-		lt			<			{(int)$var}					->lessThan
-		gte			>=			{(int)$var}					->greaterThanOrEqual
-		lte			<=			{(int)$var}					->lessThanOrEqual
+		eq			=				'{$var}'					->equals
+		neq			!=				'{$var}'					->logicalNot->equals
+		like		LIKE			'%{$var}%'					->like
+		nlike		NOT LIKE		'%{$var}%'					->logicalNot->like
+		in			IN				([trimExplode]{$var})		->in
+		nin			NOT IN			([trimExplode]{$var})		->logicalNot->in
+		gt			>				{(int)$var}					->greaterThan
+		lt			<				{(int)$var}					->lessThan
+		gte			>=				{(int)$var}					->greaterThanOrEqual
+		lte			<=				{(int)$var}					->lessThanOrEqual
+		fis			FIND_IN_SET		'{$var}'					->FIND_IN_SET
 		*/
 
 		//$filterValue =  $GLOBALS['TYPO3_DB']->quoteStr($filterValue, 'tx_dataviewer_domain_model_recordvalue');
@@ -369,6 +370,10 @@ class RecordRepository extends AbstractRepository
 				$filterValue = (int)$filterValue;
 				$sql .= "{$searchField} <= {$filterValue}".")";
 				break;
+			case "fis":
+				$sql .= "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 ".")";
+				break;
+						
 		}
 		
 		return $sql;

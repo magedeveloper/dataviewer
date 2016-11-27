@@ -1,0 +1,61 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+
+<f:section name="content">
+    <h1><f:translate key="module.csv_import" /></h1>
+
+    <f:flashMessages/>
+
+    <f:render partial="BackendModule/Csv/Step" arguments="{step:4}" />
+
+    <hr />
+
+	<div class="information-progress">
+		<f:alias map="{page:'{dv:page.get(id:currentPageId)}'}">
+			<f:translate key="LLL:EXT:lang/locallang_common.xlf:page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Templates/CmsLayout/Partials/DoktypeIcon.html" arguments="{doktype:page.doktype}" />[{page.uid}]&nbsp;{page.title}
+		</f:alias>
+		<br />
+		<f:translate key="flexform.record_save_datatype" />:&nbsp;<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;[{datatype.uid}]&nbsp;{datatype.name}
+	</div>
+
+	<h3><f:translate key="module.csv_source_file" /></h3>
+    <div class="alert alert-notice">
+        <f:translate key="module.import_step3" />
+    </div>
+
+    <f:form action="assign" class="dataviewer-backend-form" enctype="multipart/form-data">
+
+		<div class="field">
+			<label for="delimeter"><f:translate key="module.csv_divider" /></label>
+			<f:form.select name="delimeter" options="{delimeters}" />
+		</div>
+
+		<div class="field">
+			<label for="divider"><f:translate key="module.csv_field_enclosure" /></label>
+			<f:form.select name="fieldEnclosure" options="{fieldEnclosures}" />
+		</div>
+
+		<div class="field">
+			<label for="headerLine"><f:translate key="module.csv_first_line" /></label>
+			<f:form.checkbox name="headerLine" value="1" checked="checked" />
+		</div>
+
+		<div class="field">
+			<label for="file"><f:translate key="flexform.record_save_datatype" /></label>
+			<f:form.upload name="file" />
+		</div>
+
+        <f:form.hidden name="datatype" value="{datatype}" />
+
+        <div class="field">
+            <f:form.submit class="dataviewer-backend-submit" name="step_2" value="{f:translate(key:'LLL:EXT:lang/locallang_common.xlf:submit')}" />
+        </div>
+
+    </f:form>
+
+
+</f:section>

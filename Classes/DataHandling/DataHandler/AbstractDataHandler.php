@@ -211,6 +211,6 @@ class AbstractDataHandler
 	 */
 	protected function _processUploads($files)
 	{
-		$this->dataHandler->process_uploads($_FILES);
+		$this->dataHandler->process_uploads($files);
 	}
 }

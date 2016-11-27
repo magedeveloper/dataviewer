@@ -47,6 +47,10 @@
                 <source>Hide Records of this type in lists</source>
                 <target>Datensätze dieses Typs in Listen verstecken</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
+                <source>Title Divider Character</source>
+                <target>Titel Trennzeichen</target>
+            </trans-unit>
 
             <!-- Domain/Model/Field -->
             <trans-unit id="tx_dataviewer_domain_model_field">
@@ -224,6 +228,10 @@
                 <source>Name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
+                <source>Session Prefix Key</source>
+                <target>Session Prefix Key</target>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
                 <source>Value</source>
                 <target>Wert</target>
@@ -252,7 +260,11 @@
                 <source>SERVER Environment</source>
                 <target>SERVER Umgebung</target>
             </trans-unit>
-
+            <trans-unit id="tx_dataviewer_domain_model_variable.page">
+                <source>Page</source>
+                <target>Seite</target>
+            </trans-unit>
+            
         </body>
     </file>
 </xliff>

@@ -98,14 +98,54 @@ class ListSettingsService extends PluginSettingsService
 	}
 
 	/**
+	 * Gets the value from the template
+	 * selection
+	 *
+	 * @return null|string
+	 */
+	public function getTemplateSelection()
+	{
+		return $this->getSettingByCode("template_selection");
+	}
+
+	/**
+	 * Retrieves the template path from the template selection
+	 * either from the override or the selector box
+	 * 
+	 * @return string
+	 */
+	public function getTemplate()
+	{
+		$templateSelection = $this->getTemplateSelection();
+		$templateOverride  = $this->getTemplateOverride();
+		
+		if($templateSelection == "CUSTOM" && $templateOverride)
+			return $templateOverride;
+		
+		return $this->getPredefinedTemplateById($templateSelection);
+	}
+
+	/**
 	 * Checks if the plugin setting has a template
 	 * override
 	 *
 	 * @return bool
 	 */
-	public function hasTemplateOverride()
+	public function hasTemplate()
 	{
-		return ($this->getTemplateOverride() != "");
+		$templateSelection = $this->getTemplateSelection();
+		$templateOverride  = $this->getTemplateOverride();
+		
+		if($templateSelection == "CUSTOM")
+			if($templateOverride)
+				return true;
+			else
+				return false;
+			
+		if($templateSelection)	
+			return true;
+			
+		return false;	
 	}
 
 	/**

@@ -56,7 +56,7 @@ class Icon
 				{
 					$html .= "<div style=\"width:50px; height: 30px; float: left; border: 1px solid #c0c0c0; margin:0 3px 3px 0; padding: 3px; \">";
 					$html .= "<input type=\"radio\" {$checked} name=\"{$fieldName}\" value=\"{$_hash}\" id=\"{$_hash}\" style=\"float:left; margin-right:4px; \">";
-					$html .= "<label for=\"{$_hash}\" style=\"display:block; width: 22px; float: left;\">" . "<img src=\"{$img}\" border=\"0\" title=\"{$file}\">" . "</label>";
+					$html .= "<label for=\"{$_hash}\" style=\"display:block; width: 22px; float: left;\">" . "<img src=\"{$img}\" border=\"0\" title=\"extensions-dataviewer-{$_hash}\">" . "</label>";
 					$html .= "</div>";
 				}
 			

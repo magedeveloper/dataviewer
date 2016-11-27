@@ -65,14 +65,28 @@
 
 <div style="font-size: smaller;">
 	<strong><f:translate key="flexform.template_override" />:</strong><br />
-	<f:if condition="{flexform.settings.template_override}">
-		<f:then>{flexform.settings.template_override}</f:then>
-		<f:else>-</f:else>
+	<f:if condition="{flexform.settings.template_selection} == 'CUSTOM'">
+		<f:then>
+			<f:if condition="{flexform.settings.template_override}">
+				<f:then>
+					<a href="/{flexform.settings.template_override}" target="_blank"><div style="float:left; margin-right:5px;"><core:icon identifier="mimetypes-text-html" size="small" /></div>{flexform.settings.template_override}</a>
+				</f:then>
+				<f:else>-</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{flexform.settings.template_selection}">
+				<f:then>
+					<a href="/{template_selection_file}" target="_blank"><div style="float:left; margin-right:5px;"><core:icon identifier="mimetypes-text-html" size="small" /></div>{template_selection_file}&nbsp;({flexform.settings.template_selection})</a>
+				</f:then>
+				<f:else>-</f:else>
+			</f:if>
+		</f:else>
 	</f:if>
 </div>
 
 <f:if condition="{flexform.settings.debug} == 1">
-	<div style="font-size: smaller; border:1px solid #45D5F9; background: repeating-linear-gradient(45deg, #DAF7FE, #DAF7FE 2px, #A2EAFC 4px, #A2EAFC 4px); padding:5px; display: block;text-align: center;">
+	<div style="margin-top:5px; font-size: smaller; border:1px solid #45D5F9; background: repeating-linear-gradient(45deg, #DAF7FE, #DAF7FE 2px, #A2EAFC 4px, #A2EAFC 4px); padding:5px; display: block;text-align: center;">
 		<strong><f:translate key="flexform.debug" /></strong>
 	</div>
 </f:if>

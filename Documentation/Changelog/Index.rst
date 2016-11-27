@@ -5,6 +5,29 @@
 Changelog
 ---------
 
+**1.3.0**
+
+- [TASK] Selectable divider for record title when multiple fields are used for title
+- [TASK] Selected templates are now linked in the backend CmsLayout
+- [TASK] Added new backend form styles for H1-H5, HR when adding HTML into Fluid Fields
+- [TASK] Group Field now can return a model
+- [TASK] Search through Multiselect/Group Fields with FIND_IN_SET
+- [TASK] Displaying correct 'recordName' for all information views
+- [FEATURE] Predefined Templates Selectable; Configurable in TypoScript (plugin.tx_dataviewer.templates)
+- [FEATURE] Render-TemplateViewHelper works with predefined templates
+- [BUGFIX] Hidden record title field on new record creation, when fields are marked as title
+- [BUGFIX] Backend List Module: Hiding records results in loosing title
+- [BUGFIX] 'Multiple'-Configuration for Select and Group Fieldtype
+- [BUGFIX] Deleted Records in Group and Multiselect are now removed
+- [TASK] Upload folder for files
+- [FEATURE] CSV Import Assistant
+- [FEATURE] Custom Folder Icons from the DataViewer Icons of existing Datatypes
+- [TASK] Template Variable 'User Session' obtains information from User Session
+- [TASK] Template Variable 'Page' for easier page selection
+- [BUGFIX] Creating new inline sub-records now redirects back to master record on save
+- [BUGFIX] Corrections for T3D Import/Export
+- [TASK] Comma Separated Values in Checkbox-Field are now converted to the required integer value
+
 **1.2.1**
 
 - [BUGFIX] FormController Datatype Error correction
@@ -77,6 +100,10 @@ Changelog
 
 
 
-**To-Do List**
+**To-Do/Wish- List**
 
-- RecordFactory for creating records with a simple array
+- Fieldtype for implementing a fixed record (Visible or Hidden in Backend)
+- Correct RTE Height
+- (Filter with direct record selection)
+- Ajax Autocomplete functionality
+- Process save values for RecordFactory in Form/Fieldvalues (e.h. Checkbox INT from STRING)

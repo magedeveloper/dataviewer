@@ -44,6 +44,15 @@
                     </config>
                 </TCEforms>
             </disallowed>
+            <uploadfolder>
+                <TCEforms>
+                    <label>uploadfolder</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                    </config>
+                </TCEforms>
+            </uploadfolder>
             <max_size>
                 <TCEforms>
                     <label>max_size</label>

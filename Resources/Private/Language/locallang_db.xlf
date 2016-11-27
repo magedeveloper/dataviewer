@@ -39,6 +39,9 @@
             <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
                 <source>Hide Records of this type in lists</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
+                <source>Title Divider Character</source>
+            </trans-unit>
 
             <!-- Domain/Model/Field -->
             <trans-unit id="tx_dataviewer_domain_model_field">
@@ -174,6 +177,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.variable_name">
                 <source>Name</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
+                <source>Session Prefix Key</source>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
                 <source>Value</source>
             </trans-unit>
@@ -195,7 +201,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.server">
                 <source>SERVER Environment</source>
             </trans-unit>
-
+            <trans-unit id="tx_dataviewer_domain_model_variable.page">
+                <source>Page</source>
+            </trans-unit>
 
         </body>
     </file>

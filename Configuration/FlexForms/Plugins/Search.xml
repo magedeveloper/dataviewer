@@ -206,6 +206,10 @@
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.lteq</numIndex>
                                                         <numIndex index="1">lte</numIndex>
                                                     </numIndex>
+                                                    <numIndex index="10" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fis</numIndex>
+                                                        <numIndex index="1">fis</numIndex>
+                                                    </numIndex>
                                                 </items>
                                                 <minitems>0</minitems>
                                                 <maxitems>1</maxitems>

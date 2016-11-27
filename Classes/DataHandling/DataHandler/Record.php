@@ -281,8 +281,15 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if(!$datatype)
 			$datatype = $this->getDatatypeById($incomingFieldArray["datatype"]);
 
+
+        if(!$datatype)
+            return;
+
+		$validationErrors = [];
+	
 		// Validate the POST data
-		$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
+		if($record)
+			$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
 
 		if (!empty($validationErrors))
 		{
@@ -371,12 +378,15 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				}
 			}
 
-			$this->addBackendFlashMessage($message, '', $severity);
+			// We only deliver a message, when 
+			if(!$record->getDatatype()->getHideRecords() || $severity != FlashMessage::OK)
+				$this->addBackendFlashMessage($message, '', $severity);
+
 			return;
 		}
 
 	}
-
+	
 	/**
 	 * Validates an field array that came with the
 	 * form post on the record editing
@@ -387,6 +397,18 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function validateFieldArray(array $fieldArray, \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype)
 	{
+		// We need to check if all contents of the fieldArray are fields from the TCA
+		// If not, we need to validate the other fields
+		// We check the tca configuration, and retrieve all fields for the table that are general
+		if(isset($GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"]))
+		{
+			$validColumns = $GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"];
+			$diff = array_diff_key($fieldArray, $validColumns);
+		
+			if(empty($diff))
+				return [];
+		}
+	
 		$fieldValidationErrors = [];
 
 		foreach($datatype->getFields() as $_field)
@@ -409,6 +431,8 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		return $fieldValidationErrors;
 	}
+	
+	
 
 	/**
 	 * Transforms the NEW-ID into the
@@ -472,6 +496,14 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$datatype = $record->getDatatype();
 
 		if(!$datatype)
+		{
+			// We try loading the datatype by the recordSaveData Information
+			if(isset($recordSaveData["datatype"]))
+				$datatype = $this->datatypeRepository->findByUid((int)$recordSaveData["datatype"], false);
+		
+		}
+		
+		if(!$datatype)
 			return false;
 
 		// Refresh record timestamp
@@ -501,13 +533,14 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	protected function _processRecordSaveData(RecordModel $record, array $recordSaveData = [])
 	{
-		$record->setTitle("");
+		if($record->hasTitleField())
+			$record->setTitle("");
+	
 		if(isset($recordSaveData["title"]))
 			$record->setTitle($recordSaveData["title"]);
 
 		if(isset($recordSaveData["hidden"]))
 			$record->setHidden((bool)$recordSaveData["hidden"]);
-
 
 		$datatype = $record->getDatatype();
 
@@ -562,9 +595,15 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$fieldtypeModel->setRecord($record);
 
 				$tca = $fieldtypeModel->getFieldTca();
+				
 				$res = [];
-
-				$val = $this->dataHandler->checkValue_SW(	$res,
+				$uploadedFiles = [];			
+	
+				if(isset($this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()]))
+					$uploadedFiles = $this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()];
+				
+				$val = $this->dataHandler->checkValue_SW(	
+					$res,
 					$_value,
 					$tca,
 					"tx_dataviewer_domain_model_record",
@@ -574,11 +613,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					$record->getPid(),
 					"[tx_dataviewer_domain_model_record:{$record->getUid()}:{$field->getUid()}]",
 					$field->getUid(),
-					$_FILES,
+					$uploadedFiles,
 					$record->getPid(),
 					[]
 				);
-
+				
 				if(array_key_exists("value", $val) && $tca["type"] !== "select" && $tca["type"] !== "inline")
 					$_value = $val["value"];
 
@@ -591,7 +630,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 						if ($v) $_value[] = $v;
 
 					$_value = implode(",", $_value);
-
 				}
 
 			}
@@ -669,6 +707,12 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			// We need to initialize the fieldvalue with the plain value
 			$fieldvalue->init($field, $value);
+
+			////////////////////////////////////////////////////////////////////////////////////////////////
+			// This is the place where we will later pre-render the value through each fieldValue
+			// so we can retrieve a TYPO3-valid save value for the database
+			// TODO: render value through each formvalue
+			////////////////////////////////////////////////////////////////////////////////////////////////
 
 			// We retrieve our needed data from the fieldvalue
 			$valueContent 	= $fieldvalue->getValueContent();

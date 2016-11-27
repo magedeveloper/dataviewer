@@ -44,6 +44,7 @@ class Date extends Text
 							"size" => 30,
 							"eval" => "date,".$this->getField()->getConfig("eval"),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
+							"dbType" => "date",
 						],
 					],
 				],

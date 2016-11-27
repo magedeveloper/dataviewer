@@ -1,0 +1,95 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+<f:section name="content">
+    <h1><f:translate key="module.create_record" /></h1>
+
+    <f:flashMessages/>
+
+    <f:if condition="{datatypes->f:count()} > 0">
+        <f:then>
+
+            <div class="dataviewer-datatypes">
+                
+            <f:for each="{datatypes}" as="datatype" iteration="i">
+                <f:if condition="{i.isFirst}">
+                    <f:then>
+                        <div class="row">
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{i.index}%4">
+                            <f:then></f:then>
+                            <f:else><div class="row"></f:else>
+                        </f:if>
+                    </f:else>
+                </f:if>
+
+                <div class="col-xs-12 col-sm-3">
+                    <div class="datatype media clearfix">
+                        <a href="{dv:backend.newLink(pid:'{datatype.pid}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}" title="{datatype.name}" class="pull-left">
+                            <span class="typo3-app-icon pull-left" style="background-color:#ddd;">
+                                <span>
+                                    <span>
+                                        <core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
+                                    </span>
+                                </span>
+                            </span>
+
+                        <div class="media-body">
+                            <strong>
+                                    [{datatype.uid}]&nbsp;{datatype.name}
+                            </strong>
+
+                            <br />
+
+                            <small class="text-muted">
+                                <f:alias map="{page:'{dv:page.get(id:datatype.pid)}'}">
+                                    <f:translate key="page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Templates/CmsLayout/Partials/DoktypeIcon.html" arguments="{doktype:page.doktype}" />&nbsp;[{page.uid}]&nbsp;{page.title}
+                                </f:alias>
+                            </small>
+
+                            <f:comment>
+                                <br />
+                                <br />
+                                <small>
+                                    <f:if condition="{datatype.description}">
+                                        <f:then><f:format.crop maxCharacters="200" append="&nbsp;[...]">{datatype.description}</f:format.crop></f:then>
+                                        <f:else><em><f:translate key="module.no_description_available" /></em></f:else>
+                                    </f:if>
+                                </small>
+                            </f:comment>
+
+
+
+
+                        </div>
+                        </a>
+                    </div>
+                </div>
+
+                <f:if condition="{i.isLast}">
+                    <f:then>
+                        </div>
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{i.cycle}%4">
+                            <f:then></f:then>
+                            <f:else></div></f:else>
+                        </f:if>
+                    </f:else>
+                </f:if>
+            </f:for>
+
+            </div>
+
+        </f:then>
+        <f:else>
+            <f:translate key="module.no_datatypes_found" />
+        </f:else>
+    </f:if>
+
+
+
+</f:section>

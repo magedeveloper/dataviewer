@@ -36,6 +36,15 @@
                     </config>
                 </TCEforms>
             </maxitems>
+            <multiple>
+                <TCEforms>
+                    <label>multiple</label>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </multiple>
             <foreign>
                 <TCEforms>
                     <label>foreign</label>

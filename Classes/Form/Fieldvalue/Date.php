@@ -24,7 +24,29 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getValueContent()
 	{
-		return $this->getValue();
+		$value = $this->getValue();
+
+		// Value check for a timestamp
+		if(!is_numeric($value))
+		{
+			$value = strtotime($value);
+		}
+		
+		return $value;
+	}
+
+	/**
+	 * Validates a date for the required format
+	 * 
+	 * @param string $date
+	 * @return bool
+	 */
+	protected function _validateDate($date)
+	{
+		$format = $this->getFormat();
+		$d = \DateTime::createFromFormat($format, $date);
+
+		return $d && $d->format($format) == $date;
 	}
 
 	/**

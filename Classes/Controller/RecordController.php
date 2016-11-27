@@ -86,8 +86,8 @@ class RecordController extends AbstractController
 		// We set these records as currently active
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($selectedRecordIds);
 
-		if ($this->listSettingsService->hasTemplateOverride() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplateOverride());
+		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
+			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
 		
 		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
 	}
@@ -119,8 +119,8 @@ class RecordController extends AbstractController
 			$this->view->setTemplatePathAndFilename($record->getDatatype()->getTemplatefile());
 			
 		// Template Override by plugin setting
-		if ($this->listSettingsService->hasTemplateOverride() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplateOverride());
+		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
+			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
 
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $record);
 	}
@@ -143,8 +143,8 @@ class RecordController extends AbstractController
 		$field  = $this->fieldRepository->findByUid($selectedFieldId, false);
 		
 		// Template Override by plugin setting
-		if ($this->listSettingsService->hasTemplateOverride() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplateOverride());
+		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
+			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
 
 		if ($record instanceof Record && $field instanceof Field)
 		{
@@ -173,8 +173,8 @@ class RecordController extends AbstractController
 				$this->view->setTemplatePathAndFilename($record->getDatatype()->getTemplatefile());
 
 		// Template Override by plugin setting
-		if ($this->listSettingsService->hasTemplateOverride() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplateOverride());
+		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
+			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
 
 		// We set this record as currently active
 		$activeRecordIds = [];

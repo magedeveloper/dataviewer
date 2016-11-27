@@ -29,6 +29,8 @@ class Variable extends AbstractModel
 	const VARIABLE_TYPE_FRONTEND_USER	= 8;
 	const VARIABLE_TYPE_SERVER			= 9;
 	const VARIABLE_TYPE_DYNAMIC_RECORD	= 10;
+	const VARIABLE_TYPE_USER_SESSION	= 11;
+	const VARIABLE_TYPE_PAGE			= 12;
 
 	/**
 	 * Variable Type
@@ -43,6 +45,13 @@ class Variable extends AbstractModel
 	 * @var string
 	 */
 	protected $variableName;
+
+	/**
+	 * Session Key
+	 * 
+	 * @var string
+	 */
+	protected $sessionKey;
 
 	/**
 	 * Variable Value
@@ -94,6 +103,13 @@ class Variable extends AbstractModel
 	protected $server ="";
 
 	/**
+	 * Page
+	 * 
+	 * @var int
+	 */
+	protected $page;
+
+	/**
 	 * Gets the type
 	 * 
 	 * @return int
@@ -135,6 +151,27 @@ class Variable extends AbstractModel
 		$this->variableName = $variableName;
 	}
 
+	/**
+	 * Gets the session key
+	 * 
+	 * @return string
+	 */
+	public function getSessionKey()
+	{
+		return $this->sessionKey;
+	}
+
+	/**
+	 * Sets the session key
+	 * 
+	 * @param string $sessionKey
+	 * @return void
+	 */
+	public function setSessionKey($sessionKey)
+	{
+		$this->sessionKey = $sessionKey;
+	}
+	
 	/**
 	 * Gets the variable value
 	 * 
@@ -282,4 +319,26 @@ class Variable extends AbstractModel
 	{
 		$this->server = $server;
 	}
+
+	/**
+	 * Gets the page
+	 * 
+	 * @return int
+	 */
+	public function getPage()
+	{
+		return $this->page;
+	}
+
+	/**
+	 * Sets the page
+	 * 
+	 * @param int $page
+	 * @return void
+	 */
+	public function setPage($page)
+	{
+		$this->page = $page;
+	}
+
 }

@@ -79,12 +79,14 @@ class RecordFactory
 	/**
 	 * Creates a record with given values
 	 * and returns the output
-	 * 
+	 *
 	 * @param array $fieldArray
 	 * @param Datatype $datatype
-	 * @return Record
+	 * @param bool $traverse
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\Record
+	 * @throws \MageDeveloper\Dataviewer\Exception\NoDatatypeException
 	 */
-	public function create(array $fieldArray, Datatype $datatype = null)
+	public function create(array $fieldArray, Datatype $datatype = null, $traverse = true)
 	{
 		// The record data has to contain a datatype
 		if(is_null($datatype) && !isset($fieldArray["datatype"]))
@@ -107,13 +109,19 @@ class RecordFactory
 		$this->recordRepository->add($record);
 		$this->persistenceManager->persistAll();
 
-		
 		// Traverse the data into the relevant fieldId=>value information
-		$traversedFieldArray = $this->traverseFieldArray($fieldArray, $datatype);
-		
+		if ($traverse)
+			$traversedFieldArray = $this->traverseFieldArray($fieldArray, $datatype);
+		else
+			$traversedFieldArray = $fieldArray;
+			
 		// Check for validation errors
 		$this->validationErrors = $this->recordDataHandler->validateFieldArray($traversedFieldArray, $datatype);
 		$result = $this->recordDataHandler->processRecord($traversedFieldArray, $record);
+		
+		// We hide the record on any error
+		if(!empty($this->validationErrors))
+			$record->setHidden(true);
 	
 		if($result === true) 
 		{
@@ -128,10 +136,11 @@ class RecordFactory
 
 	/**
 	 * Updates a record with new given values
-	 * 
+	 *
 	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $record
 	 * @param array $updateFieldArray
 	 * @return bool
+	 * @throws \MageDeveloper\Dataviewer\Exception\NoDatatypeException
 	 */
 	public function update(Record $record, array $updateFieldArray)
 	{

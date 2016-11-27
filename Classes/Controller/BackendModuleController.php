@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
  * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class BackendModuleController extends AbstractController
+class BackendModuleController extends BackendController
 {
 	/**
 	 * Main Default Action to begin with
@@ -71,7 +71,9 @@ class BackendModuleController extends AbstractController
 	public function indexAction()
 	{
 		$lastAction = $this->_getLastAction();
-		$this->forward($lastAction);
+		$lastController = $this->_getLastController();
+		
+		$this->forward($lastAction, $lastController);
 	}
 
 	/**
@@ -145,75 +147,15 @@ class BackendModuleController extends AbstractController
 	}
 
 	/**
-	 * Initializes all actions.
-	 *
-	 * @return void
-	 */
-	protected function initializeAction() 
-	{
-		$this->currentPageId = (int)GeneralUtility::_GET("id");
-		
-		//$this->_storeActionName($actionName);
-		parent::initializeAction();
-	}
+     * Overview of all datatype for creating records
+     *
+     * @return void
+     */
+	public function createRecordAction()
+    {
+        $this->_storeLastAction();
+        $datatypes = $this->datatypeRepository->findAll(false);
+        $this->view->assign("datatypes", $datatypes);
+    }
 
-	/**
-	 * Initializes the view before invoking an action method.
-	 *
-	 * Override this method to solve assign variables common for all actions
-	 * or prepare the view in another way before the action is called.
-	 *
-	 * @param ViewInterface $view The view to be initialized
-	 *
-	 * @return void
-	 * @api
-	 */
-	protected function initializeView(ViewInterface $view)
-	{
-		parent::initializeView($view);
-		$this->view->assign("currentPageId", $this->currentPageId);
-	}
-
-	/**
-	 * Makes action name from the current action method name.
-	 *
-	 * @return string
-	 */
-	protected function getActionName() 
-	{
-		return substr($this->actionMethodName, 0, -6);
-	}
-
-	/**
-	 * Stores the last chosen action to the module data
-	 * 
-	 * @return void
-	 */
-	protected function _storeLastAction()
-	{
-		BackendUtility::getModuleData(
-			["action" => ""],
-			["action" => $this->getActionName()],
-			"tx_dataviewer_web_dataviewerdataviewer"
-		);
-	}
-	
-	protected function _getLastAction()
-	{
-		$moduleData = BackendUtility::getModuleData(
-			["action" => ""],
-			[],
-			"tx_dataviewer_web_dataviewerdataviewer"
-		);
-		
-		if (!empty($moduleData)) 
-		{
-			if ($moduleData["action"] !== "" && $moduleData["action"] !== $this->getActionName()) 
-			{
-				return $moduleData["action"];
-			}
-		}
-		
-		return $this->defaultAction;
-	}
 }

@@ -21,7 +21,7 @@
 				<f:comment>-- General Information --</f:comment>
 				<tr data-uid="{record.uid}" class="{f:if(condition:'{iteration.isFirst}',then:' firstcol')}{f:if(condition:'{iteration.isLast}',then:' lastcol')}" data-toggle="collapse" data-target="#info{record.uid}" class="accordion-toggle">
 					<td colspan="4">
-						<f:render partial="BackendModule/Record/Line" arguments="{record:record}" />
+						<f:render partial="BackendModule/Record/Line" arguments="{record:record,recordName:recordName}" />
 					</td>					
 				</tr>
 			</f:for>
@@ -29,5 +29,6 @@
 		</table>
 	</div>
 </div>
+
 
 

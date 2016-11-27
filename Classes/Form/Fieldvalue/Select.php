@@ -1,6 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\Form\Fieldvalue;
 
+use MageDeveloper\Dataviewer\Domain\Model\Record;
 use MageDeveloper\Dataviewer\Domain\Model\Field;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -22,14 +23,13 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 	 * Gets an field item by a given id
 	 * 
 	 * @param int $id
-	 * @return mixed
+	 * @return Record|array
 	 */
-	public function getItemById($id)
+	public function getItemById($id, $table, $modelClass = null)
 	{
-		// If the select box uses a foreign field
-		if($this->getField()->getConfig("foreign"))
+		$item = $id;
+		if(!is_null($modelClass))
 		{
-			$modelClass 	= $this->getField()->getConfig("modelClass");
 			$repoClassName 	= \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateModelNameToRepositoryName($modelClass);
 
 			if($this->objectManager->isRegistered($repoClassName))
@@ -45,21 +45,18 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 
 				}
 			}
-			else
-			{
-				// This is not a normal item, so we just fetch the data from the database
-				$table = $this->getField()->getConfig("foreign_table");
-				try
-				{
-					$item = BackendUtility::getRecord($table, $id);
-				}
-				catch (\Exception $e) {	}
-			}
 
-			return $item;
 		}
-		
-		return $id;
+		else
+		{
+			try
+			{
+				$item = BackendUtility::getRecord($table, $id);
+			}
+			catch (\Exception $e) {	}
+		}
+
+		return $item;
 	}
 
 	/**
@@ -80,7 +77,7 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 	public function getSearch()
 	{
 		$value = $this->getValue();
-		$search = $value;
+		$searchParams = [];
 		
 		// If the select box uses a foreign field
 		if($this->getField()->getConfig("foreign"))
@@ -94,20 +91,26 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 				
 				foreach($ids as $_id)
 				{
+					$searchParams[] = $_id;
+					
 					$record = BackendUtility::getRecord($foreignTable, $_id);
 					if(is_array($record))
 					{
 						$searchFields = $GLOBALS["TCA"][$foreignTable]["ctrl"]["searchFields"];
 						$searchFieldsArr = GeneralUtility::trimExplode(",", $searchFields, true);
 						$searchData = array_intersect_key($record, array_flip($searchFieldsArr));
-						$search .= implode(" ", $searchData);
+						$searchParams[] = implode(" ", $searchData);
 					}
 				}
 				
 			}
 		}
+		else
+		{
+			$searchParams[] = $value;
+		}
 		
-		return $search;
+		return implode(",", $searchParams);
 	}
 
 	/**
@@ -124,7 +127,9 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$value = $this->getValue();
-		$item = $this->getItemById($value);
+		$table = $this->getField()->getConfig("foreign_table");
+		$modelClass = $this->getField()->getConfig("modelClass");
+		$item = $this->getItemById($value, $table, $modelClass);
 		
 		if($item)
 			return $item;

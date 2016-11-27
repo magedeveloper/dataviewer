@@ -1,0 +1,22 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+
+<f:section name="content">
+	<h1><f:translate key="module.csv_import" /></h1>
+
+	<f:flashMessages/>
+
+	<f:render partial="BackendModule/Csv/Step" arguments="{step:3}" />
+
+	<hr />
+
+	<h3><f:translate key="module.csv_target_page" /></h3>
+	<div class="alert alert-notice">
+		<f:translate key="module.import_step2" />
+	</div>
+
+</f:section>

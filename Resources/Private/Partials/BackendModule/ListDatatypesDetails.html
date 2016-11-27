@@ -1,6 +1,5 @@
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
 {namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
-
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<f:translate key="module.datatypes_information" />
@@ -55,7 +54,7 @@
 				<tr>
 					<td colspan="5" style="padding:0 !important;">
 						<div class="accordian-body collapse" id="info{datatype.uid}">
-							<f:render partial="BackendModule/ListFields" arguments="{fields:datatype.fields,currentPageId:currentPageId}" />
+							<f:render partial="BackendModule/ListFields" arguments="{fields:datatype.fields,currentPageId:currentPageId,recordName:recordName}" />
 						</div>
 					</td>
 				</tr>

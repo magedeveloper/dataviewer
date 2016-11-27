@@ -1,0 +1,77 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<f:layout name="Backend"/>
+
+
+<f:section name="content">
+	<h1><f:translate key="module.csv_import" /></h1>
+
+	<f:flashMessages/>
+
+	<f:render partial="BackendModule/Csv/Step" arguments="{step:6}" />
+
+	<hr />
+
+	<h3><f:translate key="module.csv_review_log" /></h3>
+	<div class="alert alert-notice">
+		<f:translate key="module.import_step5" />
+	</div>
+
+	<table class="table table-hover">
+		<thead>
+		<tr>
+			<th nowrap="nowrap" class="col-sm-2"><f:translate key="module.csv_log_line_number" /></th>
+			<th nowrap="nowrap" class="col-sm-2"><f:translate key="tx_dataviewer_domain_model_record" /></th>
+			<th nowrap="nowrap" class="col-sm-8"><f:translate key="module.csv_log_messages" /></th>
+		</tr>
+		</thead>
+		<tbody>
+		<f:for each="{log}" as="logForLine" iteration="i">
+			<tr class="{f:if(condition: logForLine.hasErrors, then: 'danger', else: 'success')}">
+				<td>
+					#{i.cycle}
+				</td>
+				<td>
+					<f:alias map="{record:'{dv:record.get(id:logForLine.recordId,includeHidden:1)}'}">
+						<f:if condition="{record.hidden}">
+							<f:then>
+								<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" overlay="overlay-hidden" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+							</f:then>
+							<f:else>
+								<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+							</f:else>
+						</f:if>
+					</f:alias>
+				</td>
+				<td style="font-size:smaller;">
+					<f:if condition="{logForLine.messages->f:count()} > 0">
+						<f:then>
+							<f:for each="{logForLine.messages}" as="errors" key="fieldName">
+								<strong>{fieldName}:</strong>
+								<ul>
+									<f:for each="{errors}" as="error">
+										<li>{error}</li>
+									</f:for>
+								</ul>
+							</f:for>
+						</f:then>
+						<f:else>
+							<f:translate key="module.import_successful" />
+						</f:else>
+					</f:if>
+				</td>
+			</tr>
+		</f:for>
+		</tbody>
+	</table>
+
+	<hr />
+	<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text.png" />
+
+
+
+
+
+</f:section>

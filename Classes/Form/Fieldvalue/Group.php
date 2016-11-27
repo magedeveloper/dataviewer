@@ -1,6 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\Form\Fieldvalue;
 
+use MageDeveloper\Dataviewer\Domain\Model\Record;
 use MageDeveloper\Dataviewer\Domain\Model\Field;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -15,7 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Group extends AbstractFieldvalue implements FieldvalueInterface
+class Group extends Select
 {
 	/**
 	 * Gets the optimized value for the field
@@ -81,7 +82,7 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 	public function getSearch()
 	{
 		$solvedValues = $this->_getSolvedValues();
-		$search = "";
+		$searchParams = [];
 		
 		foreach($solvedValues as $_value)
 		{
@@ -97,12 +98,12 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 					$searchFields = $GLOBALS["TCA"][$table]["ctrl"]["searchFields"];
 					$searchFieldsArr = GeneralUtility::trimExplode(",", $searchFields, true);
 					$searchData = array_intersect_key($record, array_flip($searchFieldsArr));
-					$search .= implode(" ", $searchData);
+					$searchParams[] = implode(" ", $searchData);
 				}
 			}
 		}
 
-		return $search;
+		return implode(",", $searchParams);
 	}
 
 	/**
@@ -119,15 +120,21 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$solvedValues = $this->_getSolvedValues();
+		$modelClass = $this->getField()->getConfig("modelClass");
 		$valueArr = [];
 
 		foreach($solvedValues as $_value) 
 		{
 			$table = $_value["table"];
 			$uid = $_value["uid"];
+			
+			if($modelClass)
+				$record = $this->getItemById($uid, $table, $modelClass);
+			else
+				$record = BackendUtility::getRecord($table, $uid);
 		
-			$record = BackendUtility::getRecord($table, $uid);
-			$valueArr[] = $record;
+			if($record instanceof Record || is_array($record))
+				$valueArr[] = $record;
 		}
 		
 		return $valueArr;
@@ -160,7 +167,7 @@ class Group extends AbstractFieldvalue implements FieldvalueInterface
 				// We check the tca configuration, if we can find the searchFields field
 				if(isset($GLOBALS["TCA"][$table]["ctrl"]["searchFields"]))
 				{
-					$record 		= BackendUtility::getRecord($table, $id);
+					$record = BackendUtility::getRecord($table, $id);
 					if(is_array($record))
 					{
 						$searchFields = $GLOBALS["TCA"][$table]["ctrl"]["searchFields"];

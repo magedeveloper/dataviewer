@@ -63,6 +63,16 @@ class Constants
 		
 		if(!is_array($EM_CONF[$_EXTKEY]))
 			die("Error loading extension information");
+			
+		$icons = \MageDeveloper\Dataviewer\Utility\IconUtility::getIcons();	
+		// Prepare icon path
+		foreach($icons as $_iconId=>$_iconPath)
+		{
+			$pos = strpos($_iconPath, "ext/dataviewer/");
+			$correctedIconPath = substr($_iconPath, $pos);
+			$correctedIconPath = str_replace("ext/dataviewer/", "EXT:dataviewer/", $correctedIconPath);
+			$icons[$_iconId] = $correctedIconPath;
+		}
 		
 		$templateFile = "EXT:dataviewer/Resources/Private/Templates/Constants/ExtInformation.html";
 		$templateFile = GeneralUtility::getFileAbsFileName($templateFile);
@@ -70,6 +80,7 @@ class Constants
 		
 		$this->standaloneView->assign("config", $config);
 		$this->standaloneView->assign("emConf", $EM_CONF[$_EXTKEY]);
+		$this->standaloneView->assign("icons", $icons);
 		return $this->standaloneView->render();
 	}
 

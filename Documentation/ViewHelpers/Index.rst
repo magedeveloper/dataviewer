@@ -32,6 +32,27 @@ Usage:
           is executed. The Ids then are requested when the ViewHelper is called. So there is an additional Database-Query, when you use this
           functionality.
 
+Render-TemplateViewHelper
+#########################
+
+This ViewHelper renders template files, either defined in the plugin TypoScript or a manual file path.
+
++---------------+----------------------------------------------------------------------------------------------+
+| Argument      | Description                                                                                  |
++===============+==============================================================================================+
+| template      | Please enter a valid file or a template identifier from plugin.tx_dataviewer.templates       |
++---------------+----------------------------------------------------------------------------------------------+
+| arguments     | The Arguments for the ViewHelper as an array                                                 |
++---------------+----------------------------------------------------------------------------------------------+
+
+Usage:
+
+.. code-block:: html
+
+   {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+   <dv:render.template template="movieMini" arguments="{record:record} />
+   <dv:render.template template="fileadmin/templates/dataviewer/movies/partials/mini.html" arguments="{record:record} />
+
 
 Render-PartViewHelper
 #####################
@@ -49,10 +70,10 @@ The PartViewHelper renders different parts of the Records in case a template was
 Usage:
 
 .. code-block:: html
-
-   {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
-   <dv:render.part part="{record}" />
-   <dv:render.part part="{record.myfieldname}" />
+	
+	{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+	<dv:render.part part="{record}" />
+	<dv:render.part part="{record.myfieldname}" />
 
 
 GetViewHelper

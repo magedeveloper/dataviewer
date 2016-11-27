@@ -152,6 +152,9 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		// Assign current title
 		$record->setTitle($row["title"]);
 		
+		// Assign the datatype to the record
+		$record->setDatatype($datatype);
+		
 		// Adding the current record to the field renderer
 		$this->fieldRenderer->setRecord($record)
 							->setParameterArray($params);
@@ -238,13 +241,14 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			$this->renderHeader($datatype)						.
 			$this->formResultCompiler->JStop() 					.
 			implode("\r\n", $topParts)							.
+			"<div class=\"dataviewer-content\">"				.
 			$contentHtml 										.
 			$this->renderTabMenu($menuItems, "dataviewer-tabs")	.
+			"</div>"											.
 			implode("\r\n", $bottomParts)						.
 			//$this->formResultCompiler->printNeededJSFunctions()	.
 			"<input type=\"hidden\" name=\"{$baseRecordFormName}[datatype]\" value=\"{$datatype->getUid()}\" />".
 			"<div class=\"clear\"></div>"						.
-
 			"</div>"
 		;
 		
