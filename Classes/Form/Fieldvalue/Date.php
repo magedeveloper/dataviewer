@@ -25,12 +25,10 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
 	public function getValueContent()
 	{
 		$value = $this->getValue();
-
-		// Value check for a timestamp
+		
+		// Value convert to timestamp
 		if(!is_numeric($value))
-		{
 			$value = strtotime($value);
-		}
 		
 		return $value;
 	}
