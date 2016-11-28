@@ -7,13 +7,15 @@
 	<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons" style="height:auto;">
 		<f:if condition="{datatypes -> f:count()} > 0">
 			<f:for each="{datatypes}" as="datatype">
-				<f:if condition="{datatype.icon}">
-					<f:then>
-						<a href="{dv:backend.newLink(pid:'{currentPageId}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" /><core:icon identifier="actions-add" size="small" /><small>{datatype.name}</small></a>
-					</f:then>
-					<f:else>
-						<a href="{dv:backend.newLink(pid:'{currentPageId}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-default" size="small" /><core:icon identifier="actions-add" size="small" /></a>
-					</f:else>
+				<f:if condition="{datatype.hideAdd} == 0">
+					<f:if condition="{datatype.icon}">
+						<f:then>
+							<a href="{dv:backend.newLink(pid:'{currentPageId}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" /><core:icon identifier="actions-add" size="small" /><small>{datatype.name}</small></a>
+						</f:then>
+						<f:else>
+							<a href="{dv:backend.newLink(pid:'{currentPageId}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}" title="{datatype.name}" class="btn btn-default"><core:icon identifier="extensions-dataviewer-default" size="small" /><core:icon identifier="actions-add" size="small" /></a>
+						</f:else>
+					</f:if>
 				</f:if>
 			</f:for>
 		</f:if>

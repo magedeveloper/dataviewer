@@ -64,4 +64,22 @@ class DatatypeRepository extends AbstractRepository
 		return $ids;
 	}
 
+	/**
+	 * Finds datatype by the hidden setting
+	 * 
+	 * @param bool $hiddenInLists
+	 * @param bool $hiddenAdd
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByHiddenSetting($hiddenInLists = true, $hiddenAdd = true)
+	{
+		$query = $this->createQueryWithSettings(true,true,false);
+		return $query->matching(
+			$query->logicalAnd(
+				$query->greaterThanOrEqual("hide_records", (int)$hiddenInLists),
+				$query->lessThanOrEqual("hide_add", (int)$hiddenAdd)
+			)
+		)->execute();
+	}
+
 }

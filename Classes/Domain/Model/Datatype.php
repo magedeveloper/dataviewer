@@ -57,6 +57,13 @@ class Datatype extends AbstractModel
 	protected $hideRecords = false;
 
 	/**
+	 * Hide Add Button in the backend
+	 *
+	 * @var boolean
+	 */
+	protected $hideAdd = false;
+
+	/**
 	 * Datatype is hidden
 	 *
 	 * @var boolean
@@ -243,6 +250,31 @@ class Datatype extends AbstractModel
 	{
 		$this->hideRecords = $hideRecords;
 	}
+
+	/**
+	 * Gets the configuration to hide the
+	 * add button in the backend
+	 * 
+	 * @return boot
+	 */
+	public function getHideAdd()
+	{
+		return $this->hideAdd;
+	}
+
+	/**
+	 * Sets the configuration to hide the add button
+	 * in the backend
+	 * 
+	 * @param bool $hideAdd
+	 * @return void
+	 */
+	public function setHideAdd($hideAdd = true)
+	{
+		$this->hideAdd = $hideAdd;
+	}
+	
+	
 
 	/**
 	 * Checks if the fieldvalue is hidden

@@ -139,7 +139,7 @@ class BackendModuleController extends BackendController
 	public function recordsDetailsAction()
 	{
 		$this->_storeLastAction();
-		$records = $this->recordRepository->findAll([$this->currentPageId], true, false);
+		$records = $this->recordRepository->findAll([$this->currentPageId], true, true);
 		$datatypes = $this->datatypeRepository->findAllOnPid($this->currentPageId);
 		
 		$this->view->assign("records", $records);
@@ -154,7 +154,7 @@ class BackendModuleController extends BackendController
 	public function createRecordAction()
     {
         $this->_storeLastAction();
-        $datatypes = $this->datatypeRepository->findAll(false);
+        $datatypes = $this->datatypeRepository->findByHiddenSetting(false, false);
         $this->view->assign("datatypes", $datatypes);
     }
 

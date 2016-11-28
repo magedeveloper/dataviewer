@@ -627,6 +627,10 @@
                 <source>Hide Records of this type in lists</source>
                 <target>Datensätze dieses Typs in Listen verstecken</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.hide_add">
+                <source>Hide Button to Add new Record</source>
+                <target>Button verstecken um neue Datensätze zu erstellen</target>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
                 <source>Title Divider Character</source>
                 <target>Titel Trennzeichen</target>
