@@ -84,6 +84,7 @@ class Value
 	public function setRecordValue(\MageDeveloper\Dataviewer\Domain\Model\RecordValue &$recordValue)
 	{
 		$this->recordValue = $recordValue;
+		$this->getFieldvalue()->setRecordValue($recordValue);
 	}
 
 	/**

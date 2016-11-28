@@ -24,6 +24,20 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 	protected $standaloneView;
 
 	/**
+	 * Gets the view model
+	 * 
+	 * @return \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
+	 */
+	protected function _getView()
+	{
+		// Check for a record and inject it to the view
+		if($this->getRecord() !== false)
+				$this->standaloneView->assign("record", $this->getRecord());
+		
+		return $this->standaloneView;
+	}
+
+	/**
 	 * Renders the source fluid code
 	 * 
 	 * @return string
@@ -35,7 +49,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 		foreach($items as $_fielditem)
 		{
 			$fluidSource = reset($_fielditem);
-			$rendered = $this->standaloneView->renderSource($fluidSource);
+			$rendered = $this->_getView()->renderSource($fluidSource);
 			$html .= $rendered;
 		}
 		
