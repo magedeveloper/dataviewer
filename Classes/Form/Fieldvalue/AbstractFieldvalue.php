@@ -47,6 +47,13 @@ abstract class AbstractFieldvalue
 	protected $value;
 
 	/**
+	 * According RecordValue
+	 * 
+	 * @var \MageDeveloper\Dataviewer\Domain\Model\RecordValue
+	 */
+	protected $recordValue;
+
+	/**
 	 * Constructor
 	 *
 	 * @return AbstractFieldvalue
@@ -56,7 +63,6 @@ abstract class AbstractFieldvalue
 		$this->objectManager 				= GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 		$this->fieldtypeSettingsService		= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService::class);
 	}
-
 
 	/**
 	 * Gets the field
@@ -101,7 +107,41 @@ abstract class AbstractFieldvalue
 		$this->value = $value;
 		return $this;
 	}
-	
+
+	/**
+	 * Gets the according recordValue
+	 * 
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\RecordValue
+	 */
+	public function getRecordValue()
+	{
+		return $this->recordValue;
+	}
+
+	/**
+	 * Sets the according recordValue
+	 * 
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\RecordValue $recordValue
+	 * @return void
+	 */
+	public function setRecordValue($recordValue)
+	{
+		$this->recordValue = $recordValue;
+	}
+
+	/**
+	 * Gets the according record
+	 * 
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\Record|bool
+	 */
+	public function getRecord()
+	{
+		if($this->getRecordValue() instanceof \MageDeveloper\Dataviewer\Domain\Model\RecordValue)
+			return $this->getRecordValue()->getRecord();
+			
+		return false;	
+	}
+
 	/**
 	 * Initializes the fieldvalue with the
 	 * given field and value
@@ -146,5 +186,25 @@ abstract class AbstractFieldvalue
 			return $this->objectManager->get($fieldClass);
 		
 		return null;	
+	}
+
+	/**
+	 * Checks if input value is an xml
+	 * 
+	 * @param mixed $value
+	 * @return bool
+	 */
+	protected function _isXml($value)
+	{
+		if(is_string($value))
+		{
+			libxml_use_internal_errors(true);
+			$doc = new \DOMDocument('1.0', 'utf-8');
+			$doc->loadXML($value);
+			$errors = libxml_get_errors();
+			return empty($errors);
+		}
+		
+		return false;
 	}
 }
