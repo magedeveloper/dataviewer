@@ -5,6 +5,13 @@
 Changelog
 ---------
 
+**1.3.1**
+
+- [BUGFIX] Date(Time) Fields will work now for CSV Import as well as for normal fields
+- [TASK] Current Record is now injected into fluid fields
+- [TASK] Added possibility to hide Add-Button for New Records in Datatype Configuration
+- [DOC] Documentation update
+
 **1.3.0**
 
 - [TASK] Selectable divider for record title when multiple fields are used for title
