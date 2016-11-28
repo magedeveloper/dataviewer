@@ -44,7 +44,7 @@ class DateTime extends Date
 							"size" => 30,
 							"eval" => "datetime,".$this->getField()->getConfig("eval"),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
-							"dbType" => "datetime",
+							//"dbType" => "datetime",
 						],
 					],
 				],

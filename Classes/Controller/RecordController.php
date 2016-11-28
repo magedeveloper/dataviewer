@@ -346,7 +346,7 @@ class RecordController extends AbstractController
 				&$this,
 			]
 		);
-
+		
 		return $records;
 	}
 

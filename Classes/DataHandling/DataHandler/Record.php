@@ -559,6 +559,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		foreach($recordSaveData as $_fieldId=>$_value)
 		{
+			$originalValue = $_value;
 			//if($record->_hasProperty($_fieldId))
 			//	$record->_setProperty($_fieldId, $_value);
 
@@ -568,7 +569,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			if (!$field instanceof FieldModel)
 				continue;
 
-			// Process Array (formerly Flexform Element)
+			// Process Array (formerly Flexform Element) but don't process checkbox values
 			if(is_array($_value))
 			{
 				// Panic substitute :)
@@ -601,7 +602,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	
 				if(isset($this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()]))
 					$uploadedFiles = $this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()];
-				
+
 				$val = $this->dataHandler->checkValue_SW(	
 					$res,
 					$_value,
@@ -617,7 +618,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					$record->getPid(),
 					[]
 				);
-				
+
 				if(array_key_exists("value", $val) && $tca["type"] !== "select" && $tca["type"] !== "inline")
 					$_value = $val["value"];
 
@@ -631,9 +632,13 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 					$_value = implode(",", $_value);
 				}
-
+				
+				// Conversion of fieldvalue is wrong (dbType date/datetime is not good enough for us)
+				if( ($field->getType() == "date" || $field->getType() == "datetime") )
+					$_value = $originalValue;
+				
 			}
-
+		
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
@@ -718,7 +723,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			$valueContent 	= $fieldvalue->getValueContent();
 			$search 		= $fieldvalue->getSearch();
 		}
-
+		
 		// Assign value to the recordValue
 		$recordValue->setValueContent($valueContent);
 		// Assign clean search string to the recordValue

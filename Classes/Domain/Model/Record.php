@@ -17,7 +17,6 @@ use TYPO3\CMS\Extbase\Object\UnknownClassException;
  */
 class Record extends AbstractModel
 {
-
 	/**
 	 * Record - Datatype Relation
 	 * 
@@ -144,6 +143,7 @@ class Record extends AbstractModel
 			$value->setFieldvalue($fieldvalue);
 
 			$recordValue = $this->getRecordValueByField($_field);
+
 			if($recordValue instanceof \MageDeveloper\Dataviewer\Domain\Model\RecordValue)
 			{
 				if($fieldvalue instanceof \MageDeveloper\Dataviewer\Form\Fieldvalue\FieldvalueInterface)
@@ -152,14 +152,17 @@ class Record extends AbstractModel
 					$fieldvalue->setValue($recordValue->getValueContent());
 				}
 
-				$value->setRecordValue($recordValue);
 			}
 			else
 			{
+				// Temporary RecordValue
+				/* @var \MageDeveloper\Dataviewer\Domain\Model\RecordValue $recordValue */
+				$recordValue = $objectManager->get(\MageDeveloper\Dataviewer\Domain\Model\RecordValue::class);
+				$recordValue->setRecord($this);
 			}
 
+			$value->setRecordValue($recordValue);
 			$value->setField($_field);
-			
 			$this->values->addValue($value);			
 		}
 		

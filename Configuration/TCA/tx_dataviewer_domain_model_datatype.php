@@ -29,10 +29,10 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Datatype.gif"
 	],
 	'interface' => [
-		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, templatefile, icon, color, title_divider, hide_records, fields',
+		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, templatefile, icon, color, title_divider, hide_records, hide_add, fields',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, hide_add, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -233,6 +233,14 @@ return [
 		'hide_records' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_datatype.hide_records',
+			'config' => [
+				'type' => 'check',
+				'default' => 0,
+			],
+		],
+		'hide_add' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_datatype.hide_add',
 			'config' => [
 				'type' => 'check',
 				'default' => 0,

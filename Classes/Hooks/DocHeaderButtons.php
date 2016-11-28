@@ -99,6 +99,10 @@ class DocHeaderButtons
 			foreach($datatypes as $_datatype)
 			{
 				/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
+				
+				if($_datatype->getHideAdd())
+					continue;
+				
 				$rendered = "";
 
 				$buttonHtmlRender = $html . $htmlButton;

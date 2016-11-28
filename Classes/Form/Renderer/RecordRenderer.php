@@ -189,7 +189,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 				{
 					if ($renderResults["html"])
 						$fieldHtml .= $renderResults["html"];
-						
+					
 					$this->formResultCompiler->mergeResult($renderResults);
 					$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
 					$bottomParts[$_field->getUid()] = $this->formResultCompiler->printNeededJSFunctions();

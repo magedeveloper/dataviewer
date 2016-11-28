@@ -38,6 +38,7 @@ CREATE TABLE tx_dataviewer_domain_model_datatype (
 	fields int(11) unsigned DEFAULT '0' NOT NULL,
 	color varchar(255) DEFAULT '' NOT NULL,
 	hide_records tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	hide_add tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	title_divider varchar(5) DEFAULT ' ' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

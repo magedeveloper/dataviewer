@@ -25,11 +25,14 @@ class Fluid extends AbstractFieldtype
 	 */
 	protected function _getStandaloneView()
 	{
+		/* @var StandaloneView $view */
 		$view = $this->objectManager->get(StandaloneView::class);
 		
 		// TODO:
-		// This needs of course a way to add custom variables to our view
-		// so we later need to add a signal slot here
+		// This needs a way to add custom variables to our view
+		// so we later can to add a signal slot here
+		$view->assign("record", $this->getRecord());
+		$view->assign("recordId", $this->getRecordId());
 		
 		return $view;
 	} 
@@ -42,7 +45,6 @@ class Fluid extends AbstractFieldtype
 	public function render()
 	{
 		$html = "";
-		
 		if($this->getField()->getConfig("showInBackend"))
 		{
 			// Show only field content in backend, when

@@ -211,7 +211,6 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 		$fieldtype->setRecordId($row["uid"]);
 		$fieldtype->setPid($row["pid"]);
 		
-		
 		$rendered = $fieldtype->render();
 		
 		if (isset($rendered["html"]) && $rendered["html"])

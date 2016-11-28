@@ -39,6 +39,9 @@
             <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
                 <source>Hide Records of this type in lists</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.hide_add">
+                <source>Hide Button to Add new Record</source>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
                 <source>Title Divider Character</source>
             </trans-unit>
