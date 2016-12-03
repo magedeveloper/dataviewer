@@ -35,12 +35,19 @@
 				</td>
 				<td>
 					<f:alias map="{record:'{dv:record.get(id:logForLine.recordId,includeHidden:1)}'}">
-						<f:if condition="{record.hidden}">
+						<f:if condition="{record.uid}">
 							<f:then>
-								<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" overlay="overlay-hidden" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+								<f:if condition="{record.hidden}">
+									<f:then>
+										<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" overlay="overlay-hidden" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+									</f:then>
+									<f:else>
+										<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+									</f:else>
+								</f:if>
 							</f:then>
 							<f:else>
-								<a href="{dv:backend.editLink(id:record.uid,table:'tx_dataviewer_domain_model_record')}" target="_self"><core:icon identifier="extensions-dataviewer-{record.icon}" size="small" />&nbsp;[{record.uid}]&nbsp;{record.title}</a>
+								<f:comment>No record was saved!</f:comment>
 							</f:else>
 						</f:if>
 					</f:alias>
@@ -58,7 +65,7 @@
 							</f:for>
 						</f:then>
 						<f:else>
-							<f:translate key="module.import_successful" />
+							<strong style="color:darkgreen;"><f:translate key="module.import_successful" /></strong>
 						</f:else>
 					</f:if>
 				</td>
