@@ -57,6 +57,13 @@
 				</f:alias>
 			</div>
 		</f:case>
+		<f:case value="Record->ajaxRequest">
+			<f:comment>============ LIST ============</f:comment>
+			<strong><f:translate key="plugin_type.ajax_request" /></strong><br />
+			<div style="font-size:smaller;">
+				<f:render partial="Selection" arguments="{_all}" />
+			</div>
+		</f:case>
 		<f:case default="TRUE">
 			<em><f:translate key="not_configured" /></em>
 		</f:case>
@@ -82,6 +89,9 @@
 				<f:else>-</f:else>
 			</f:if>
 		</f:else>
+	</f:if>
+	<f:if condition="{flexform.settings.template_switch->f:count()} > 0">
+		&nbsp;<em>(&amp; <f:translate key="flexform.template_switch" />)</em>
 	</f:if>
 </div>
 
