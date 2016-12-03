@@ -34,7 +34,7 @@ class SearchSettingsService extends PluginSettingsService
 	{
 		return $this->getSettingByCode("search_type");
 	}
-
+	
 	/**
 	 * Gets the search fields configuration
 	 * 

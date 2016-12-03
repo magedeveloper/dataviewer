@@ -50,7 +50,6 @@ class SearchController extends AbstractController
 			$this->searchSessionService->reset();
 	
 		$searchString 		= ($searchString != "")?$searchString:$this->searchSessionService->getSearchString();
-
 		$min 				= $this->searchSettingsService->getMinimumChars();
 		$searchStringLen 	= strlen($searchString);
 
@@ -67,6 +66,7 @@ class SearchController extends AbstractController
 		
 		$this->view->assign("searchString", $searchString);
 		$this->view->assign("targetUid", $this->searchSettingsService->getTargetContentUid());
+		$this->view->assign("minLength", $min);
 	}
 
 	/**
