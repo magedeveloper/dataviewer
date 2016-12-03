@@ -272,8 +272,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
+		// Storing the fieldArray to the session to prefill form values for easier modifying
+		$this->recordValueSessionService->store($id, $incomingFieldArray);
+		
 		$record = $this->getRecordById($id);
-
+		
 		$datatype = null;
 		if ($record)
 			$datatype = $record->getDatatype();
@@ -281,15 +284,21 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if(!$datatype)
 			$datatype = $this->getDatatypeById($incomingFieldArray["datatype"]);
 
-
         if(!$datatype)
             return;
 
+		$datatypeId = $datatype->getUid();
+		if(GeneralUtility::_POST()["datatype"]) {
+			// This is for the single datatype selection on creating a new
+			// record in the New-Record-Assistant of TYPO3
+			$datatypeId = (int)GeneralUtility::_POST("datatype");
+			$this->_redirectCurrentUrl(["datatype" => $datatypeId]);
+		}
+		
 		$validationErrors = [];
 	
 		// Validate the POST data
-		if($record)
-			$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
+		$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
 
 		if (!empty($validationErrors))
 		{
@@ -299,14 +308,15 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				foreach($_errors as $_error)
 					$this->addBackendFlashMessage($_error, $field);
 
-			// Storing the fieldArray to the session to prefill form values for easier modifying
-			$this->recordValueSessionService->store("NEW", $incomingFieldArray);
-			$this->_redirectCurrentUrl();
-			exit();
-		}
+			$incomingFieldArray["icon"] = $datatype->getIcon();
+			$incomingFieldArray["hidden"] = true;
 
-		// Storing the fieldArray to the session to prefill form values for easier modifying
-		$this->recordValueSessionService->store($id, $incomingFieldArray);
+			// Storing the fieldArray to the session to prefill form values for easier modifying
+			//$this->recordValueSessionService->store("NEW", $incomingFieldArray);
+			
+			$this->_redirectCurrentUrl(["datatype" => $datatypeId]);
+			return;
+		}
 
 		// Records save data is stored for later usage to
 		// correctly store NEW<hash>-Records
@@ -366,7 +376,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$severity = FlashMessage::OK;
 
 				// We clear the according session data
-				$this->recordValueSessionService->resetForRecord($record);
+				$this->recordValueSessionService->resetForRecordId($id);
 			}
 			else
 			{
@@ -476,7 +486,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 			}
 
-			$this->persistenceManager->persistAll();
+			//$this->persistenceManager->persistAll();
 		}
 	}
 
@@ -489,8 +499,8 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function processRecord(array $recordSaveData, RecordModel $record)
 	{
-		if ($record->getUid() <= 0)
-			return false;
+		//NOTif ($record->getUid() <= 0)
+		//NOT	return false;
 
 		// Get datatype
 		$datatype = $record->getDatatype();
@@ -511,7 +521,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		// Add icon
 		$record->setIcon($datatype->getIcon());
-
+		
 		//////////////////////
 		// RECORD SAVE DATA //
 		//////////////////////
@@ -519,7 +529,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			return false;
 
 		$this->_processRecordSaveData($record, $recordSaveData);
-		$this->recordRepository->update($record);
+		//NOT$this->recordRepository->update($record);
 
 		return true;
 	}
@@ -533,6 +543,8 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	protected function _processRecordSaveData(RecordModel $record, array $recordSaveData = [])
 	{
+		$datatype = $record->getDatatype();
+
 		if($record->hasTitleField())
 			$record->setTitle("");
 	
@@ -541,11 +553,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		if(isset($recordSaveData["hidden"]))
 			$record->setHidden((bool)$recordSaveData["hidden"]);
-
-		$datatype = $record->getDatatype();
-
-		if (!$datatype instanceof DatatypeModel)
-			return;
 
 		///////////////////////////////////////////
 		// process all uploads
@@ -652,7 +659,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			$record->setHidden(true);
 
 			// Persist valid fields
-			$this->persistenceManager->persistAll();
+			//$this->persistenceManager->persistAll();
 
 			// Redirect back to form
 			$this->_redirectRecord($record->getUid());
@@ -740,7 +747,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			// Add
 			$this->recordValueRepository->add($recordValue);
 			$record->addRecordValue($recordValue);
-			$this->recordRepository->update($record);
 		}
 
 		// FieldType Text can overwrite the record title, so it can be inactive

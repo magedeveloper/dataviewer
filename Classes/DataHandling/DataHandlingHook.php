@@ -2,6 +2,7 @@
 namespace MageDeveloper\Dataviewer\DataHandling;
 
 use MageDeveloper\Dataviewer\Utility\ArrayUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -157,8 +158,33 @@ class DataHandlingHook
 	{
 		// Redirect Fix for redirecting when inline records were added
 		$datamap = $dataHandler->datamap;
-		if(isset($datamap["tx_dataviewer_domain_model_record"]))
-			$this->_redirectCurrentUrl();
+		$substNEW = $dataHandler->substNEWwithIDs;
+		
+		// We need to redirect to the current record mask
+		if(isset($datamap["tx_dataviewer_domain_model_record"]) 	&& 
+		   !GeneralUtility::_GET("ajaxID") 							&&
+		   (GeneralUtility::_POST("_savedoknew") != "1") 			
+		)   
+		{
+			$count = count($datamap["tx_dataviewer_domain_model_record"]);
+			if($count > 1)
+			{
+				$sourceId = key($datamap["tx_dataviewer_domain_model_record"]);
+
+				if(strpos($sourceId, "NEW") !== false)
+					$sourceId = $substNEW[$sourceId];
+
+				$url = BackendUtility::getModuleUrl(
+					'record_edit',
+					[
+						"edit[tx_dataviewer_domain_model_record][{$sourceId}]" => "edit",
+						"returnUrl" => GeneralUtility::_GET('returnUrl')
+					]
+				);
+
+				$this->_redirectUrl($url);
+			}
+		}	
 	}
 
 	/**
@@ -169,7 +195,20 @@ class DataHandlingHook
 	protected function _redirectCurrentUrl()
 	{
 		$link = GeneralUtility::linkThisScript(GeneralUtility::_GET());
+		die("<a href=\"{$link}\" target=\"_self\">{$link}</a>");
 		\TYPO3\CMS\Core\Utility\HttpUtility::redirect( GeneralUtility::sanitizeLocalUrl($link) );
+		exit();
+	}
+
+	/**
+	 * Redirects to the current url
+	 *
+	 * @param string $url
+	 * @return void
+	 */
+	protected function _redirectUrl($url)
+	{
+		\TYPO3\CMS\Core\Utility\HttpUtility::redirect( GeneralUtility::sanitizeLocalUrl($url) );
 		exit();
 	}
 

@@ -83,10 +83,11 @@ class RecordFactory
 	 * @param array $fieldArray
 	 * @param Datatype $datatype
 	 * @param bool $traverse
+	 * @param bool $forceCreation
 	 * @return \MageDeveloper\Dataviewer\Domain\Model\Record
 	 * @throws \MageDeveloper\Dataviewer\Exception\NoDatatypeException
 	 */
-	public function create(array $fieldArray, Datatype $datatype = null, $traverse = true)
+	public function create(array $fieldArray, Datatype $datatype = null, $traverse = true, $forceCreation = false)
 	{
 		// The record data has to contain a datatype
 		if(is_null($datatype) && !isset($fieldArray["datatype"]))
@@ -105,10 +106,6 @@ class RecordFactory
 		// Setting the datatype to the record
 		$record->setDatatype($datatype);
 		
-		// We need to initially save the record
-		$this->recordRepository->add($record);
-		$this->persistenceManager->persistAll();
-
 		// Traverse the data into the relevant fieldId=>value information
 		if ($traverse)
 			$traversedFieldArray = $this->traverseFieldArray($fieldArray, $datatype);
@@ -117,21 +114,15 @@ class RecordFactory
 			
 		// Check for validation errors
 		$this->validationErrors = $this->recordDataHandler->validateFieldArray($traversedFieldArray, $datatype);
-		$result = $this->recordDataHandler->processRecord($traversedFieldArray, $record);
-		
+
 		// We hide the record on any error
 		if(!empty($this->validationErrors))
 			$record->setHidden(true);
-	
-		if($result === true) 
-		{
-			$this->recordRepository->update($record);
-			$this->persistenceManager->persistAll();
 
-			return $record;
-		}
+		if(empty($this->validationErrors) || $forceCreation)
+			$result = $this->recordDataHandler->processRecord($traversedFieldArray, $record);
 		
-		return false;
+		return $record;
 	}
 
 	/**
