@@ -21,6 +21,11 @@ abstract class AbstractSettingsService implements \TYPO3\CMS\Core\SingletonInter
 	/**
 	 * @var mixed
 	 */
+	protected $settingsOverride = null;
+
+	/**
+	 * @var mixed
+	 */
 	protected $configuration = null;
 
 	/**
@@ -45,6 +50,9 @@ abstract class AbstractSettingsService implements \TYPO3\CMS\Core\SingletonInter
 	 */
 	public function getSettings($extensionName = null, $pluginName = null)
 	{
+		if(is_array($this->settingsOverride))
+			return $this->settingsOverride;
+			
 		$uid = 0;
 		$contentObj = $this->configurationManager->getContentObject();
 		if ($contentObj)
@@ -63,13 +71,24 @@ abstract class AbstractSettingsService implements \TYPO3\CMS\Core\SingletonInter
 
 			return $this->settings[$uid];
 		}
-
+		
 		// We reload the settings here
 		return $this->configurationManager->getConfiguration(
 			\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
 			$extensionName,
 			$pluginName
 		);	
+	}
+
+	/**
+	 * Sets the settings manually
+	 *
+	 * @param array $settings
+	 * @return void
+	 */
+	public function setSettings(array $settings = [])
+	{
+		$this->settingsOverride = $settings;
 	}
 
 	/**
