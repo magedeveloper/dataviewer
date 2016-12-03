@@ -564,8 +564,10 @@ abstract class AbstractFieldtype
 		if(!$default && !$noSessionValue)
 		{
 			// We get a session value if it exists and if this method shall return the record value content
-			$sessionValue = $this->recordValueSessionService->getValueForRecordField($this->getRecord(), $this->getField());
-			if($sessionValue) return $sessionValue;
+			$sessionValue = $this->recordValueSessionService->getStoredValueForRecordIdAndFieldId($this->getRecordId(), $this->getField()->getUid());
+			
+			if(!is_null($sessionValue))
+				return $sessionValue;
 		}
 		
 		$value = "";

@@ -47,14 +47,19 @@
                                         <numIndex index="2">EXT:dataviewer/Resources/Public/Icons/Plugins/Record/detail.gif</numIndex>
                                     </numIndex>
                                     <numIndex index="4">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin_type.dynamic_detail</numIndex>
+                                        <numIndex index="1">Record->dynamicDetail</numIndex>
+                                        <numIndex index="2">EXT:dataviewer/Resources/Public/Icons/Plugins/Record/dynamic.gif</numIndex>
+                                    </numIndex>
+                                    <numIndex index="5">
                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin_type.part</numIndex>
                                         <numIndex index="1">Record->part</numIndex>
                                         <numIndex index="2">EXT:dataviewer/Resources/Public/Icons/Plugins/Record/part.gif</numIndex>
                                     </numIndex>
-                                    <numIndex index="5">
-                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin_type.dynamic_detail</numIndex>
-                                        <numIndex index="1">Record->dynamicDetail</numIndex>
-                                        <numIndex index="2">EXT:dataviewer/Resources/Public/Icons/Plugins/Record/dynamic.gif</numIndex>
+                                    <numIndex index="6">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin_type.ajax_request</numIndex>
+                                        <numIndex index="1">Record->ajaxRequest</numIndex>
+                                        <numIndex index="2">EXT:dataviewer/Resources/Public/Icons/Plugins/Record/ajax_request.gif</numIndex>
                                     </numIndex>
                                 </items>
                                 <size>1</size>
@@ -67,7 +72,7 @@
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.record_selection_type</label>
                             <onChange>reload</onChange>
-                            <displayCond>FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail</displayCond>
+                            <displayCond>FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail,Record->ajaxRequest</displayCond>
                             <config>
                                 <type>select</type>
                                 <items type="array">
@@ -113,7 +118,7 @@
                             <displayCond>
                                 <AND>
                                     <numIndex index="0">FIELD:settings.record_selection_type:=:SELECTION_DATATYPE</numIndex>
-                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail</numIndex>
+                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail,Record->ajaxRequest</numIndex>
                                 </AND>
                             </displayCond>
                             <config>
@@ -140,7 +145,7 @@
                             <displayCond>
                                 <AND>
                                     <numIndex index="0">FIELD:settings.record_selection_type:=:SELECTION_RECORDS</numIndex>
-                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail</numIndex>
+                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail,Record->ajaxRequest</numIndex>
                                 </AND>
                             </displayCond>
                             <config>
@@ -229,7 +234,7 @@
                             <displayCond>
                                 <AND>
                                     <numIndex index="0">FIELD:settings.record_selection_type:IN:SELECTION_CREATION_DATE,SELECTION_CHANGE_DATE</numIndex>
-                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail</numIndex>
+                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail,Record->ajaxRequest</numIndex>
                                 </AND>
                             </displayCond>
                             <config>
@@ -249,7 +254,7 @@
                             <displayCond>
                                 <AND>
                                     <numIndex index="0">FIELD:settings.record_selection_type:IN:SELECTION_CREATION_DATE,SELECTION_CHANGE_DATE</numIndex>
-                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail</numIndex>
+                                    <numIndex index="1">FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->dynamicDetail,Record->ajaxRequest</numIndex>
                                 </AND>
                             </displayCond>
                             <config>
@@ -267,7 +272,7 @@
                         <TCEforms>
                             <exclude>1</exclude>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.detail_page_id</label>
-                            <displayCond>FIELD:switchableControllerActions:=:Record->list;Record->detail;</displayCond>
+                            <displayCond>FIELD:switchableControllerActions:=:Record->list;Record->detail;,Record->ajaxRequest</displayCond>
                             <config>
                                 <type>group</type>
                                 <internal_type>db</internal_type>
@@ -285,23 +290,6 @@
                         </TCEforms>
                     </settings.detail_page_id>
 
-                    <settings.target_plugin>
-                        <TCEforms>
-                            <exclude>1</exclude>
-                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.target_plugin</label>
-                            <displayCond>FIELD:switchableControllerActions:IN:Record->search,Record->letterSelect,Record->sort</displayCond>
-                            <config>
-                                <type>group</type>
-                                <internal_type>db</internal_type>
-                                <allowed>tt_content</allowed>
-                                <size>1</size>
-                                <maxitems>1</maxitems>
-                                <minitems>0</minitems>
-                                <show_thumbs>1</show_thumbs>
-                            </config>
-                        </TCEforms>
-                    </settings.target_plugin>
-
                 </el>
             </ROOT>
         </general_settings>
@@ -310,7 +298,7 @@
             <ROOT>
                 <TCEforms>
                     <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_value_filter_setting</sheetTitle>
-                    <displayCond>FIELD:general_settings.switchableControllerActions:IN:Record->list;Record->detail;</displayCond>
+                    <displayCond>FIELD:general_settings.switchableControllerActions:IN:Record->list;Record->detail;,Record->ajaxRequest</displayCond>
                 </TCEforms>
                 <type>array</type>
                 <el>
@@ -480,7 +468,7 @@
             <ROOT>
                 <TCEforms>
                     <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.display_settings</sheetTitle>
-                    <displayCond>FIELD:general_settings.switchableControllerActions:=:Record->list;Record->detail;</displayCond>
+                    <displayCond>FIELD:general_settings.switchableControllerActions:=:Record->list;Record->detail;,Record->ajaxRequest</displayCond>
                 </TCEforms>
                 <type>array</type>
                 <el>
@@ -608,6 +596,10 @@
                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.please_select</numIndex>
                                         <numIndex index="1"></numIndex>
                                     </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_template_path</numIndex>
+                                        <numIndex index="1">CUSTOM</numIndex>
+                                    </numIndex>
                                 </items>
                                 <multiple>0</multiple>
                                 <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Template->populateTemplates</itemsProcFunc>
@@ -634,6 +626,60 @@
                             </config>
                         </TCEforms>
                     </settings.template_override>
+                    <settings.template_switch>
+                        <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_switch</title>
+                        <section>1</section>
+                        <type>array</type>
+                        <el>
+                            <switches>
+                                <type>array</type>
+                                <el>
+                                    <info>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                                            <config>
+                                                <type>user</type>
+                                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayAvailableMarkers</userFunc>
+                                                <parameters>
+                                                    <template>EXT:dataviewer/Resources/Private/Templates/CmsLayout/available_markers.html</template>
+                                                </parameters>
+                                            </config>
+                                        </TCEforms>
+                                    </info>
+                                    <condition>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid_condition</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>150</size>
+                                                <placeholder><![CDATA[{yourVariable} == '1337']]></placeholder>
+                                            </config>
+                                        </TCEforms>
+                                    </condition>
+                                    <template_selection>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_selection</label>
+                                            <config type="array">
+                                                <type>select</type>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.please_select</numIndex>
+                                                        <numIndex index="1"></numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <multiple>0</multiple>
+                                                <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Template->populateTemplates</itemsProcFunc>
+                                                <maxitems>1</maxitems>
+                                                <minitems>1</minitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </template_selection>
+                                </el>
+                            </switches>
+                        </el>
+                    </settings.template_switch>
+                    
                     <settings.variable_injection>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.variable_injection</label>
