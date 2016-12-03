@@ -19,22 +19,25 @@ use TYPO3\CMS\Backend\Form\Container\SingleFieldContainer;
 class Fluid extends AbstractFieldtype
 {
 	/**
+	 * Standalone View
+	 * 
+	 * @var StandaloneView
+	 */
+	protected $standaloneView;
+
+	/**
 	 * Gets a instance for a standalone view
 	 * 
 	 * @return StandaloneView
 	 */
 	protected function _getStandaloneView()
 	{
-		/* @var StandaloneView $view */
-		$view = $this->objectManager->get(StandaloneView::class);
+		if(!$this->standaloneView instanceof StandaloneView)
+		{
+			$this->standaloneView = $this->objectManager->get(StandaloneView::class);
+		}
 		
-		// TODO:
-		// This needs a way to add custom variables to our view
-		// so we later can to add a signal slot here
-		$view->assign("record", $this->getRecord());
-		$view->assign("recordId", $this->getRecordId());
-		
-		return $view;
+		return $this->standaloneView;
 	} 
 	 
 	/**
@@ -49,10 +52,12 @@ class Fluid extends AbstractFieldtype
 		{
 			// Show only field content in backend, when
 			// the checkbox is set
+			$view = $this->_getStandaloneView();
+			$view->assign("record", $this->getRecord());
+
 			foreach($this->getFieldItems() as $_fielditem)
 			{
 				$fluidSource = reset($_fielditem);
-				$view = $this->_getStandaloneView();
 				$rendered = $view->renderSource($fluidSource);
 				$html .= $rendered;
 			}
