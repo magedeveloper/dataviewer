@@ -198,6 +198,10 @@
                 <source>Cond.</source>
                 <target>Bed.</target>
             </trans-unit>
+            <trans-unit id="flexform.fluid_condition">
+                <source>Condition (written in Fluid)</source>
+                <target>Bedingung (angegeben in Fluid)</target>
+            </trans-unit>
             <trans-unit id="flexform.allowed_actions">
                 <source>Allowed Actions on Controller</source>
                 <target>Erlaubte Aktionen am Controller</target>
@@ -383,6 +387,10 @@
                 <source>Fluid Template</source>
                 <target>Fluid Template</target>
             </trans-unit>
+            <trans-unit id="flexform.template_switch">
+                <source>Template Switch</source>
+                <target>Template-Weiche</target>
+            </trans-unit>
             <trans-unit id="flexform.divide_records">
                 <source>Divide records</source>
                 <target>Datensätze trennen</target>
@@ -457,6 +465,10 @@
             <trans-unit id="plugin_type.dynamic_detail">
                 <source>Dynamic Detail</source>
                 <target>Dynamische Einzelansicht</target>
+            </trans-unit>
+            <trans-unit id="plugin_type.ajax_request">
+                <source>Ajax Request Listener (alpha)</source>
+                <target>Ajax Abfrageempfänger (alpha)</target>
             </trans-unit>
             <trans-unit id="plugin_type.search">
                 <source>Search Form</source>
@@ -1681,6 +1693,10 @@
             <trans-unit id="module.csv_log_line_number">
                 <source>Line Number</source>
                 <target>Zeilennummer</target>
+            </trans-unit>
+            <trans-unit id="module.csv_import_validation_failed">
+                <source>Import Records with failed validation (as hidden)</source>
+                <target>Importiere Datensätze mit fehlgeschlagener Validierung (als versteckt)</target>
             </trans-unit>
             <trans-unit id="module.create">
                 <source>Create</source>
