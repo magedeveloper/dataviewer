@@ -155,11 +155,15 @@ class AbstractDataHandler
 	/**
 	 * Redirects to the current url
 	 *
+	 * @param array $parameters
 	 * @return void
 	 */
-	protected function _redirectCurrentUrl()
+	protected function _redirectCurrentUrl(array $parameters = [])
 	{
-		$link = GeneralUtility::linkThisScript(GeneralUtility::_GET());
+		$getParameters = GeneralUtility::_GET();
+		$parameters = array_merge($getParameters, $parameters);
+		
+		$link = GeneralUtility::linkThisScript($parameters);
 		\TYPO3\CMS\Core\Utility\HttpUtility::redirect( GeneralUtility::sanitizeLocalUrl($link) );
 		exit();
 	}
