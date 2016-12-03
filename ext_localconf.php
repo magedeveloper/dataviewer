@@ -24,6 +24,14 @@ if (!defined("TYPO3_MODE")) {
  * records or a record part to your
  * page.
  * 
+ * This plugin is for
+ * 
+ * - Listing Records
+ * - Viewing Record Details
+ * - Viewing Record Details dynamically
+ * - Showing a part from a record
+ * - Listening for Ajax Requests
+ * 
  * #2 - Search Records
  * ---------------------------------
  * This plugin can search through
@@ -68,8 +76,8 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'MageDeveloper.'.$_EXTKEY,
 	"Record",
-	["Record" => "index, list, detail, dynamicDetail, part"], // Cached
-	["Record" => "index, list, detail, dynamicDetail, part"], // UnCached
+	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // Cached
+	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
