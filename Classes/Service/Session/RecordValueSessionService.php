@@ -41,79 +41,47 @@ class RecordValueSessionService
 	 * 
 	 * @param int|string $recordId
 	 * @param array $fieldArray
-	 * @return $this
+	 * @return \MageDeveloper\Dataviewer\Service\Session\SessionService
 	 */
 	public function store($recordId, array $fieldArray)
 	{
-		foreach($fieldArray as $_fieldId=>$_fieldValue)
-		{
-			$key = "{$recordId}-{$_fieldId}";
-			$this->writeToSession($_fieldValue, $key);
-		}
+		if(!is_numeric($recordId)) $recordId = "NEW";
 		
+		$this->writeToSession($fieldArray, $recordId);
 		return $this;
 	}
 
 	/**
-	 * Sets a session value for a field
+	 * Resets the session values for a 
+	 * specific record id
 	 * 
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
-	 * @param $value
-	 * @return FieldValueSessionService
+	 * @param string $recordId
+	 * @return \MageDeveloper\Dataviewer\Service\Session\SessionService
 	 */
-	public function setValueForRecordField(Record $record, Field $field, $value)
+	public function resetForRecordId($recordId)
 	{
-		$key = $record->getUid() . "-" . $field->getUid();
-		return $this->writeToSession($value, $key);
+		if(!is_numeric($recordId)) $recordId = "NEW";
+		return $this->cleanUpSession($recordId);
 	}
 
 	/**
-	 * Gets an according session value for a specific
-	 * field instance
+	 * Retrieves a stored value by a given
+	 * recordId and fieldId
 	 * 
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
+	 * @param string $recordId
+	 * @param int $fieldId
 	 * @return mixed
 	 */
-	public function getValueForRecordField(Record $record, Field $field)
+	public function getStoredValueForRecordIdAndFieldId($recordId, $fieldId)
 	{
-		$recordUid = ($record->getUid())?$record->getUid():"NEW";
-		$key = $recordUid . "-" . $field->getUid();
-		return $this->restoreFromSession($key);
-	}
-
-	/**
-	 * Reset a session value for a specific field
-	 * 
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $record
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
-	 * @return FieldValueSessionService
-	 */
-	public function resetForRecordField(Record $record, Field $field)
-	{
-		$key = $record->getUid() . "-" . $field->getUid();
-		return $this->cleanUpSession($key);
-	}
-
-	/**
-	 * Resets session values for a whole record
-	 * 
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $record
-	 * @return FieldValueSessionService
-	 */
-	public function resetForRecord(Record $record)
-	{
-		$datatype = $record->getDatatype();
+		if(!is_numeric($recordId)) $recordId = "NEW";
 		
-		if($datatype instanceof \MageDeveloper\Dataviewer\Domain\Model\Datatype)
-		{
-			$fields = $datatype->getFields();
-			
-			foreach($fields as $_field)
-				$this->resetForRecordField($record, $_field);
-			
-		}
+		$values = $this->restoreFromSession($recordId);
 		
-		return $this;
+		if(is_array($values) && array_key_exists($fieldId, $values))
+			return $values[$fieldId];
+			
+		return null;	
 	}
 
 	/**

@@ -5,6 +5,18 @@
 Changelog
 ---------
 
+**1.4.0**
+
+- [BUGFIX] Unlimited redirects when hiding records in List Module
+- [BUGFIX] Record Title is no more removing X's
+- [BUGFIX] Validation is now triggered even when record is not saved before
+- [BUGFIX] Record Title is now kept when trying to save an invalid record
+- [TASK] Save-Procedure revised
+- [TASK] Selecting a datatype is no more forcing to store a record
+- [TASK] Importing 'validation-failed' records is now an option in the CSV Import Assistant
+- [FEATURE] Template Switch by Conditions
+- [FEATURE] Ajax Request Listener with Signal/Slot for implementing Ajax calls (early alpha, proof of concept)
+
 **1.3.1**
 
 - [BUGFIX] Date(Time) Fields will work now for CSV Import as well as for normal fields
@@ -107,10 +119,9 @@ Changelog
 
 
 
-**To-Do/Wish- List**
+**To-Do-/Wish- List**
 
 - Fieldtype for implementing a fixed record (Visible or Hidden in Backend)
 - Correct RTE Height
 - (Filter with direct record selection)
 - Ajax Autocomplete functionality
-- Process save values for RecordFactory in Form/Fieldvalues (e.h. Checkbox INT from STRING)

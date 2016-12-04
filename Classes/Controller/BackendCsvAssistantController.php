@@ -2,6 +2,7 @@
 namespace MageDeveloper\Dataviewer\Controller;
 
 use MageDeveloper\Dataviewer\Domain\Model\Record;
+use MageDeveloper\Dataviewer\Utility\DebugUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Resource\Exception\FileOperationErrorException;
@@ -135,9 +136,10 @@ class BackendCsvAssistantController extends BackendController
 	 * @param int $delimeter
 	 * @param int $fieldEnclosure
 	 * @param int $headerLine
+	 * @param bool $importValidationFailed
 	 * @return void
 	 */
-	public function assignAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype, array $file, $delimeter, $fieldEnclosure, $headerLine)
+	public function assignAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype, array $file, $delimeter, $fieldEnclosure, $headerLine, $importValidationFailed)
 	{
 		if(TYPO3_MODE != "BE") die();
 		
@@ -182,6 +184,7 @@ class BackendCsvAssistantController extends BackendController
 			$this->view->assign("delimeter", $delimeter);
 			$this->view->assign("fieldEnclosure", $fieldEnclosure);
 			$this->view->assign("headerLine", $headerLine);
+			$this->view->assign("importValidationFailed", $importValidationFailed);
 			return;
         }
 
@@ -203,10 +206,11 @@ class BackendCsvAssistantController extends BackendController
 	 * @param string $delimeter
 	 * @param string $fieldEnclosure
 	 * @param bool $headerLine
+	 * @param bool $importValidationFailed
 	 * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
 	 * @return void
 	 */
-	public function importAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype, $file, $delimeter, $fieldEnclosure, $headerLine)
+	public function importAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype, $file, $delimeter, $fieldEnclosure, $headerLine, $importValidationFailed)
 	{
 		if(TYPO3_MODE != "BE") die();
 		
@@ -269,14 +273,34 @@ class BackendCsvAssistantController extends BackendController
 			$log[$i]["messages"] = [];
 			$log[$i]["recordId"] = null;
 			$log[$i]["hasErrors"] = null;
+
+			$record = $this->recordFactory->create($_fieldArr, $datatype, false, $importValidationFailed);
 			
-			$record = $this->recordFactory->create($_fieldArr, $datatype, false);
-			
-			if(!empty($this->recordFactory->getValidationErrors()))
+			if(empty($this->recordFactory->getValidationErrors()))
 			{
-				$log[$i]["hasErrors"] = true;
-				$log[$i]["messages"]["Import"][] = Locale::translate("module.import_error");
+				$this->recordRepository->add($record);
+				$this->persistenceManager->persistAll();
+
+				// Record successfully created, we add the record id to the log
+				$log[$i]["recordId"] = $record->getUid();
+			}
+			else
+			{
+				if($importValidationFailed === true)
+				{
+					$this->recordRepository->add($record);
+					$this->persistenceManager->persistAll();
+
+					// Record successfully created, we add the record id to the log
+					$log[$i]["recordId"] = $record->getUid();
+				}
 			
+				$log[$i]["hasErrors"] = true;
+				if($importValidationFailed)
+					$log[$i]["messages"]["Import"][] = Locale::translate("module.import_error");
+				else
+					$log[$i]["messages"]["Import"][] = Locale::translate("record_not_saved");
+
 				$validationErrors = $this->recordFactory->getValidationErrors();
 				foreach($validationErrors as $_field=>$_fieldErrors)
 				{
@@ -286,19 +310,12 @@ class BackendCsvAssistantController extends BackendController
 						$log[$i]["messages"][$_field][] = $_error->getMessage();
 					}
 				}
-
-			}
-
-			if($record instanceof Record)
-			{
-				// Record successfully created
-				$log[$i]["recordId"] = $record->getUid();
 			}
 			
 			$i++;
 			
 		}
-
+		
 		// Remove the temporary file
 		//GeneralUtility::unlink_tempfile($file);
 		
@@ -318,7 +335,7 @@ class BackendCsvAssistantController extends BackendController
 	public function reviewAction()
 	{
 		if(TYPO3_MODE != "BE") die();
-		
+
 		$log = $this->request->getArgument("log");
 		$this->view->assign("log", $log);
 	}

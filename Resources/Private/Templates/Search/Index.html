@@ -1,8 +1,8 @@
 <f:layout name="Default" />
 <f:section name="main">
-    <div class="dataviewer-search">
+    <div class="dataviewer-search" id="dataviewer-search-{cObj.uid}">
         <f:form action="search">
-            <f:form.textfield name="searchString" value="{searchString}" />
+            <f:form.textfield name="searchString" value="{searchString}" id="tx-dataviewer-searchstring" />
             <f:form.submit name="submitSearch" value="{f:translate(key:'LLL:EXT:lang/locallang_common.xlf:search')}" />
             <f:link.action class="button button-primary button-reset" action="reset" arguments="{targetUid:targetUid}">{f:translate(key:'LLL:EXT:lang/locallang_wizards.xlf:imwizard.reset')}</f:link.action>
         	<f:form.hidden name="targetUid" value="{targetUid}" />

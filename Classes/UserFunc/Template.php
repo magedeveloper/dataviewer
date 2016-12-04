@@ -54,8 +54,6 @@ class Template
 		$configuration = $this->pluginSettingsService->getPredefinedTemplates();
 		$options = [];
 
-		$options[] = [LocalizationUtility::translate("flexform.custom_template_path"), "CUSTOM"];
-		
 		if(is_array($configuration))
 		{
 			$options[] = [LocalizationUtility::translate("flexform.predefined_templates"), "--div--"];

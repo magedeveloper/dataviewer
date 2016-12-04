@@ -53,6 +53,14 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	protected $iconFactory;
 
 	/**
+	 * RecordValue Session Service
+	 * 
+	 * @var \MageDeveloper\Dataviewer\Service\Session\RecordValueSessionService
+	 * @inject
+	 */
+	protected $recordValueSessionService;
+	
+	/**
 	 * Constructor
 	 *
 	 * @return RecordRenderer
@@ -60,9 +68,10 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	public function __construct()
 	{
 		parent::__construct();
-		$this->formResultCompiler 	= $this->objectManager->get(\TYPO3\CMS\Backend\Form\FormResultCompiler::class);
-		$this->fieldRenderer 		= $this->objectManager->get(\MageDeveloper\Dataviewer\Form\Renderer\FieldRenderer::class);
-		$this->iconFactory			= $this->objectManager->get(\TYPO3\CMS\Core\Imaging\IconFactory::class);
+		$this->formResultCompiler 			= $this->objectManager->get(\TYPO3\CMS\Backend\Form\FormResultCompiler::class);
+		$this->fieldRenderer 				= $this->objectManager->get(\MageDeveloper\Dataviewer\Form\Renderer\FieldRenderer::class);
+		$this->iconFactory					= $this->objectManager->get(\TYPO3\CMS\Core\Imaging\IconFactory::class);
+		$this->recordValueSessionService 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Session\RecordValueSessionService::class);
 	}
 
 	/**
@@ -85,6 +94,10 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$contentHtml = "";
 
 		$row = $params["row"];
+		
+		// Id of the record
+		$recordUid = $row["uid"];
+		
 		$datatypeUid = (int)reset($row["datatype"]);
 		
 		// For new record links with given datatype id
@@ -93,13 +106,17 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			$datatypeUid = (int)$_GET["datatype"];
 			$params["row"]["datatype"] = $datatypeUid;
 		}
-		
+
 		// Error when no datatype is selected
 		if (!is_numeric($datatypeUid) || $datatypeUid <= 0)
 		{
 			$message = Locale::translate("please_select_datatype_to_continue");
 			$this->addBackendFlashMessage($message);
-			return;
+			
+			// We only deliver a script for the datatype selection box,
+			// that helps us determine the selected datatype, when
+			// the record is loaded again
+			return $this->_getDatatypeSelectionScriptHtml($recordUid);
 		}
 
 		/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype */
@@ -119,9 +136,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			$message = Locale::translate("datatype_has_no_fields");
 			return $this->getMessageHtml($message, null, FlashMessage::INFO);
 		}
-
-		// Id of the record
-		$recordUid = $row["uid"];
 
 		/* @var Record $record */
 		$record = $this->recordRepository->findByUid($recordUid, false);
@@ -151,6 +165,13 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 
 		// Assign current title
 		$record->setTitle($row["title"]);
+		
+		// Inject the title from the session
+		if(!is_numeric($recordUid) && $row["title"] == "")
+		{
+			$sessionTitle = $this->recordValueSessionService->getStoredValueForRecordIdAndFieldId($recordUid, "title");
+			$record->setTitle($sessionTitle);
+		}
 		
 		// Assign the datatype to the record
 		$record->setDatatype($datatype);
@@ -230,7 +251,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			else				
 				$menuItems[$_tI]["content"] .= "<div class=\"clear\"></div>";
 		}
-		
 		///////////////////////////////////////////////////////////////////////
 
 		$backgroundColor = ($record->getDatatype() && $record->getDatatype()->getColor())?"style=\"background-color:{$record->getDatatype()->getColor()};\"":"";
@@ -251,8 +271,60 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			"<div class=\"clear\"></div>"						.
 			"</div>"
 		;
-		
+
+		// Fix for Datatype Selection when creating a new record
+		// --------------------------------------------------------------------------
+		// We need to add the selected datatype to the reloadUrl (form-url) in order
+		// to reload the form with the selected datatype
+		$html .= $this->_getDatatypeSelectionScriptHtml($recordUid);
+
+		// Resetting the stored record values for cleaing up the
+		// form on the end
+		$this->recordValueSessionService->resetForRecordId($recordUid);
+
 		return $html;
+	}
+
+	/**
+	 * This delivers a script for the datatype selector box that
+	 * adds a hidden datatype field with the selected datatypeId,
+	 * which delivers the selected id on the form post that
+	 * happens when the selectbox is changed.
+	 * 
+	 * @param int|string $recordId
+	 * @return string
+	 */
+	protected function _getDatatypeSelectionScriptHtml($recordId)
+	{
+		$html = "";
+		$selectName = "select[name=\"data[tx_dataviewer_domain_model_record][{$recordId}][datatype]\"]";
+
+		$html .= "
+				<script type=\"text/javascript\">
+					(function (jQuery) {
+						jQuery('{$selectName}').on('change', function(e){
+							e.preventDefault();
+							var eventTarget = jQuery(e.target),
+								datatypeId = eventTarget.val(),
+								form = jQuery('form[name=\"editform\"');
+							
+							if (form.find('input[name=\"datatype\"]').val())
+							{
+								form.find('input[name=\"datatype\"]').val(datatypeId);
+							}
+							else 
+							{
+								form.append('<input type=\"hidden\" name=\"datatype\" value=\"'+datatypeId+'\" />');
+							}
+							
+							return;
+						});
+						
+					})(TYPO3.jQuery);
+				</script>
+			";
+			
+		return $html;	
 	}
 
 	/**

@@ -86,6 +86,7 @@ Template Settings
 
 Template Selection
    The template where the record(s) are injected. You can either manually select a template or predefine templates.
+   There is also a way to switch templates on certain conditions with the help of the template variables.
 
 Variable Injection
    Select the variables, that will be injected into the fluid template.

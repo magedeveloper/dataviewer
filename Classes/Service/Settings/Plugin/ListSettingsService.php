@@ -301,4 +301,20 @@ class ListSettingsService extends PluginSettingsService
 	{
 		return (bool)$this->getSettingByCode("force_sorting");
 	}
+
+	/**
+	 * Gets the template switch conditions
+	 * from the plugin configuration
+	 * 
+	 * @return array
+	 */
+	public function getTemplateSwitchConditions()
+	{
+		$conditions = $this->getSettingByCode("template_switch");
+		
+		if(!is_array($conditions))
+			$conditions = [];
+			
+		return $conditions;
+	}
 }

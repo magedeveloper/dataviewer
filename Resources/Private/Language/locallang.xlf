@@ -33,7 +33,7 @@
             <trans-unit id="flexform.no_plugin_type_selected">
                 <source>No Plugin Type selected</source>
             </trans-unit>
-            <trans-unit id="flexform.available_markes">
+            <trans-unit id="flexform.available_markers">
                 <source>Available Markers</source>
             </trans-unit>
             <trans-unit id="flexform.record_selection_type">
@@ -150,6 +150,9 @@
             </trans-unit>
             <trans-unit id="flexform.condition">
                 <source>Cond.</source>
+            </trans-unit>
+            <trans-unit id="flexform.fluid_condition">
+                <source>Condition (written in Fluid)</source>
             </trans-unit>
             <trans-unit id="flexform.allowed_actions">
                 <source>Allowed Actions on Controller</source>
@@ -293,6 +296,9 @@
             <trans-unit id="flexform.template_override">
                 <source>Fluid Template</source>
             </trans-unit>
+            <trans-unit id="flexform.template_switch">
+                <source>Template Switch</source>
+            </trans-unit>
             <trans-unit id="flexform.divide_records">
                 <source>Divide records</source>
             </trans-unit>
@@ -348,6 +354,9 @@
             </trans-unit>
             <trans-unit id="plugin_type.dynamic_detail">
                 <source>Dynamic Detail</source>
+            </trans-unit>
+            <trans-unit id="plugin_type.ajax_request">
+                <source>Ajax Request Listener (alpha)</source>
             </trans-unit>
             <trans-unit id="plugin_type.search">
                 <source>Search Form</source>
@@ -1275,6 +1284,9 @@
             </trans-unit>
             <trans-unit id="module.csv_log_line_number">
                 <source>Line Number</source>
+            </trans-unit>
+            <trans-unit id="module.csv_import_validation_failed">
+                <source>Import Records with failed validation (as hidden)</source>
             </trans-unit>
             <trans-unit id="module.create">
                 <source>Create</source>

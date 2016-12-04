@@ -338,3 +338,37 @@ plugin.tx_dataviewer.validators {
 	
 	
 }
+
+# DataViewer Ajax Request Class #
+page.includeJSFooter {
+	file1461848046 = EXT:dataviewer/Resources/Public/Js/jquery.dataviewer-ajax.js
+	file1461848046.type = text/javascript
+}	
+
+
+tx_dataviewer_ajax = PAGE
+tx_dataviewer_ajax {
+	typeNum = 100444
+	
+	config {
+		disableAllHeaderCode = 1
+		xhtml_cleaning = 0
+		admPanel = 0
+		additionalHeaders = Content-type: text/html
+		no_cache = 1
+	}
+	
+	10 = USER
+	10 {
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		vendorName = MageDeveloper
+		extensionName = Dataviewer
+		pluginName = Record
+		controller = Record
+		action = ajaxResponse
+		
+		view < plugin.tx_dataviewer.view
+		settings < plugin.tx_dataviewer.settings
+	}
+	
+}

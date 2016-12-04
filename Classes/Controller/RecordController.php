@@ -8,6 +8,7 @@ use MageDeveloper\Dataviewer\Service\Settings\Plugin\ListSettingsService;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\SearchSettingsService;
 use MageDeveloper\Dataviewer\Utility\DebugUtility;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -63,11 +64,14 @@ class RecordController extends AbstractController
 	protected $listSettingsService;
 
 	/**
-	 * Standalone View
-	 *
-	 * @var \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
+	 * Gets the session service container
+	 * 
+	 * @return \MageDeveloper\Dataviewer\Service\Session\SessionServiceContainer
 	 */
-	protected $standaloneView;
+	public function getSessionServiceContainer()
+	{
+		return $this->sessionServiceContainer;
+	}
 
 	/**
 	 * List Action
@@ -79,17 +83,47 @@ class RecordController extends AbstractController
 	{
 		$selectedRecords = $this->_getSelectedRecords();
 		
-		$selectedRecordIds = [];
-		foreach($selectedRecords as $_sR)
-			$selectedRecordIds[] = $_sR->getUid();
-
-		// We set these records as currently active
-		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($selectedRecordIds);
-
-		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
+		$templateSwitch = $this->getTemplateSwitch();
+		if($templateSwitch)
+			$this->view->setTemplatePathAndFilename($templateSwitch);
 		
 		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
+	}
+
+	/**
+	 * Evaluations the conditions for a template switch
+	 * and returns the evaluated template path that
+	 * can be used
+	 * 
+	 * @return string
+	 */
+	public function getTemplateSwitch()
+	{
+		// Evaluation the template switch conditions
+		$conditions = $this->listSettingsService->getTemplateSwitchConditions();
+	
+		// Get a view with all injected variables
+		$view = $this->getStandaloneView();
+	
+		foreach($conditions as $_condition)
+		{
+			$conditionStr = $_condition["switches"]["condition"];
+			$templateId = $_condition["switches"]["template_selection"];
+
+			// Since we yet do not know how to render the nodes separately, we
+			// just render a simple full fluid condition here
+			$conditionText = "<f:if condition=\"{$conditionStr}\">1</f:if>";
+			$isValid = (bool)$view->renderSource($conditionText);
+			
+			if($isValid)
+				return $this->listSettingsService->getPredefinedTemplateById($templateId);
+			
+		}
+
+		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
+			return $this->listSettingsService->getTemplate();
+		
+		return;
 	}
 
 	/**
@@ -107,7 +141,6 @@ class RecordController extends AbstractController
 			$record = null;
 
 		// We set this record as currently active
-		// We set this record as currently active
 		$activeRecordIds = [];
 		if(!is_null($record))
 			$activeRecordIds = [$record->getUid()];
@@ -117,10 +150,10 @@ class RecordController extends AbstractController
 		// Override by datatype template setting
 		if ($record->getDatatype()->getTemplatefile() && !$this->listSettingsService->isDebug())
 			$this->view->setTemplatePathAndFilename($record->getDatatype()->getTemplatefile());
-			
-		// Template Override by plugin setting
-		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
+
+		$templateSwitch = $this->getTemplateSwitch();
+		if($templateSwitch)
+			$this->view->setTemplatePathAndFilename($templateSwitch);
 
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $record);
 	}
@@ -143,8 +176,9 @@ class RecordController extends AbstractController
 		$field  = $this->fieldRepository->findByUid($selectedFieldId, false);
 		
 		// Template Override by plugin setting
-		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
+		$templateSwitch = $this->getTemplateSwitch();
+		if($templateSwitch)
+			$this->view->setTemplatePathAndFilename($templateSwitch);
 
 		if ($record instanceof Record && $field instanceof Field)
 		{
@@ -173,8 +207,9 @@ class RecordController extends AbstractController
 				$this->view->setTemplatePathAndFilename($record->getDatatype()->getTemplatefile());
 
 		// Template Override by plugin setting
-		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
-			$this->view->setTemplatePathAndFilename($this->listSettingsService->getTemplate());
+		$templateSwitch = $this->getTemplateSwitch();
+		if($templateSwitch)
+			$this->view->setTemplatePathAndFilename($templateSwitch);
 
 		// We set this record as currently active
 		$activeRecordIds = [];
@@ -182,7 +217,6 @@ class RecordController extends AbstractController
 			$activeRecordIds = [$recordObj->getUid()];
 
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($activeRecordIds);
-
 
 		////////////////////////////////////////////////////
 		// We need to obtain the selected records for
@@ -199,6 +233,121 @@ class RecordController extends AbstractController
 
 		// Get selected records and check if the record is allowed
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $recordObj);
+	}
+
+	/**
+	 * Ajax Request Action
+	 * This action is the main entry for the ajax request handling.
+	 * It initially shows the configured template and is then
+	 * ready for the ajax call.
+	 * 
+	 * @return string
+	 */
+	public function ajaxRequestAction()
+	{
+		$contentUid = $this->_getContentUid();
+		$selectedRecords = $this->_getSelectedRecords();
+
+		$templateSwitch = $this->getTemplateSwitch();
+		if($templateSwitch)
+			$this->view->setTemplatePathAndFilename($templateSwitch);
+
+		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
+		$this->view->assign("ajax", false);
+		$rendered = $this->view->render();
+
+		return "<div id=\"dataviewer-ajax-{$contentUid}\">".$rendered."</div>";
+	}
+
+	/**
+	 * Ajax Response Action
+	 * This action is for handling ajax requests that
+	 * are done with the dataviewer extension.
+	 *
+	 * It can handle different type of requests, given as
+	 * arguments in this action
+	 *
+	 * @return string
+	 */
+	public function ajaxResponseAction()
+	{
+		// TODO: hookable method for evaluating records that will be
+		// injected to the selected templates as chosen in ajaxRequestAction.
+		// --------------------------------------------------------------------
+		// We need a ViewHelper that can run the Ajax Request by
+		// click, change, keyUp (all configurable) and adds parameters to
+		// the call
+		if($this->request->hasArgument("uid"))
+		{
+			/* @var \MageDeveloper\Dataviewer\Service\FlexFormService $flexFormService */
+			$flexFormService = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
+			$uid = $this->request->getArgument("uid");
+			$cObj = BackendUtility::getRecord("tt_content", $uid);
+			
+			// Storage Page Ids
+			$this->storagePids = GeneralUtility::trimExplode(",", $cObj["pages"]);
+		
+			// Settings Array
+			$flexArr = $flexFormService->convertFlexFormContentToArray($cObj["pi_flexform"]);
+			$this->settings = $flexArr["settings"];
+			$this->listSettingsService->setSettings($this->settings);
+			
+			// Session Container Connection
+			$this->sessionServiceContainer->setTargetUid($uid);
+
+			$parameters = [];
+			if($this->request->hasArgument("parameters"))
+				$parameters = $this->request->getArgument("parameters");
+
+			$view = $this->getStandaloneView();
+			$additionalVariables = [];
+
+			/////////////////////////////////////////////
+			// Signal-Slot for hooking the ajax return //
+			/////////////////////////////////////////////
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				"ajaxResponsePreRecords",
+				[
+					&$parameters,
+					&$uid,
+					&$additionalVariables,
+					&$this,
+				]
+			);
+
+			$records = $this->_getSelectedRecords();
+
+			$templateSwitch = $this->getTemplateSwitch();
+			if($templateSwitch)
+				$view->setTemplatePathAndFilename($templateSwitch);
+
+			/////////////////////////////////////////////
+			// Signal-Slot for hooking the ajax return //
+			/////////////////////////////////////////////
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				"ajaxResponsePostRecords",
+				[
+					&$records,
+					&$parameters,
+					&$uid,
+					&$additionalVariables,
+					&$this,
+				]
+			);
+			
+			$view->assign("records", $records);
+			$view->assign("ajax", 1);
+			$view->assign("parameters", $parameters);
+			
+			if(!empty($additionalVariables))
+				$view->assignMultiple($additionalVariables);
+			
+			return $view->render();
+		}
+		
+		return "";
 	}
 
 	/**
@@ -321,19 +470,29 @@ class RecordController extends AbstractController
 			$this->view->assign("statement", $statement);
 		}
 		
+		
+		
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 		$records = null;
 		$validRecordIds = array_column($validRecords, "uid");
 		
 		if(!empty($validRecordIds))
 			$records = $this->recordRepository->findByRecordIds($validRecordIds, $this->storagePids);
-
+			
 		/* @var \MageDeveloper\Dataviewer\Domain\Model\Record $_record */
-		if($records)
-			foreach($records as $_record)
+		$selectedRecordIds = [];
+		if($records) 
+		{
+			foreach ($records as $_record) 
+			{
 				$_record->initializeValues();
+				$selectedRecordIds[] = $_record->getUid();
+			}
+		}
 		else
+		{
 			$records = [];
+		}
 
 		//////////////////////////////////////////////////////
 		// Signal-Slot for post-processing selected records //
@@ -346,7 +505,10 @@ class RecordController extends AbstractController
 				&$this,
 			]
 		);
-		
+
+		// We set these records as currently active
+		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($selectedRecordIds);
+
 		return $records;
 	}
 
@@ -442,7 +604,7 @@ class RecordController extends AbstractController
 				$additionalFilters = array_merge($additionalFilters, $searchFields);
 				break;
 		}
-
+		
 		return $additionalFilters;
 	}
 
@@ -567,6 +729,7 @@ class RecordController extends AbstractController
 		$uid = $this->_getContentUid();
 		$this->sessionServiceContainer->setTargetUid($uid);
 
+
 		$cObj = $this->configurationManager->getContentObject();
 		if ($cObj instanceof \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer)
 			$this->view->assign("cObj", $cObj->data);
@@ -593,7 +756,6 @@ class RecordController extends AbstractController
 	{
 		foreach($filters as $i=>$_filter)
 			$filters[$i]["field_value"] = $this->_replaceMarkersInString($_filter["field_value"]);
-			
 	}
 
 	/**
@@ -608,26 +770,23 @@ class RecordController extends AbstractController
 	}
 
 	/**
-	 * Gets the standalone view instance
+	 * Gets a standalone view instance
 	 * 
 	 * @return \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
 	 */
 	protected function getStandaloneView()
 	{
-		if(!$this->standaloneView) 
-		{
-			$this->standaloneView = $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
+		$view = $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
+
+		$variables = $this->variableRepository->findByStoragePids($this->storagePids);
+		$ids = [];
 			
-			$variables = $this->variableRepository->findByStoragePids($this->storagePids);
-			$ids = [];
+		foreach($variables as $_v)
+			$ids[] = $_v->getUid();
 			
-			foreach($variables as $_v)
-				$ids[] = $_v->getUid();
-			
-			$variables = $this->prepareVariables($ids);
-			$this->standaloneView->assignMultiple($variables);
-		}	
+		$variables = $this->prepareVariables($ids);
+		$view->assignMultiple($variables);
 					
-		return $this->standaloneView;	
+		return $view;	
 	}
 }

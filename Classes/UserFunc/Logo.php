@@ -26,9 +26,13 @@ class Logo
 	 */
 	public function displayLogoText(array &$config, &$parentObject)
 	{
-		$html = "";
+		$version = ExtensionManagementUtility::getExtensionVersion("dataviewer");
 		$logoUrl = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Images/logo_dataviewer_text.png";
-		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"MageDeveloper DataViewer\" class=\"dataviewer-logo\" />";
+
+		$html = "";
+		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"MageDeveloper DataViewer {$version}\" class=\"dataviewer-logo\" />";
+		$html .= "<div style=\"margin-top:20px;\">Version <strong>{$version}</strong>&nbsp;| Mail:&nbsp;<a href=\"mailto:kontakt@magedeveloper.de\">kontakt@magedeveloper.de</a></div>";
+		
 		return $html;
 	}
 
