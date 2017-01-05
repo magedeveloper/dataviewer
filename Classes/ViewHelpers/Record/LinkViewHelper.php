@@ -36,9 +36,10 @@ class LinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVi
 	 * @param string $controller Controller Name
 	 * @param string $extension Extension Name
 	 * @param string $plugin Plugin Name
+	 * @param string $target Link Target
 	 * @return string Rendered link
 	 */
-	public function render(\MageDeveloper\Dataviewer\Domain\Model\Record $record, $pid = NULL, $pageType = 0, $noCache = FALSE, $noCacheHash = FALSE, $section = '', $format = '', $linkAccessRestrictedPages = FALSE, array $additionalParams = [], $absolute = FALSE, $addQueryString = FALSE, array $argumentsToBeExcludedFromQueryString = [], $class = null, $action = "dynamicDetail", $controller = "Record", $extension = "Dataviewer", $plugin = "Record")
+	public function render(\MageDeveloper\Dataviewer\Domain\Model\Record $record, $pid = NULL, $pageType = 0, $noCache = FALSE, $noCacheHash = FALSE, $section = '', $format = '', $linkAccessRestrictedPages = FALSE, array $additionalParams = [], $absolute = FALSE, $addQueryString = FALSE, array $argumentsToBeExcludedFromQueryString = [], $class = null, $action = "dynamicDetail", $controller = "Record", $extension = "Dataviewer", $plugin = "Record", $target = null)
 	{
 		$uriBuilder = $this->controllerContext->getUriBuilder();
 
@@ -60,6 +61,9 @@ class LinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedVi
 
 		if ($class !== null)
 			$this->tag->addAttribute("class", $class);
+
+		if(!is_null($target))
+			$this->tag->addAttribute("target", $target);
 
 		$this->tag->setContent($this->renderChildren());
 		$this->tag->forceClosingTag(true);
