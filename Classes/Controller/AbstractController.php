@@ -179,7 +179,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 			if($variable instanceof Variable)
 			{
 				$name = $variable->getVariableName();
-
+				
 				if(in_array($name, $deniedVariableNames))
 					throw new InvalidArgumentNameException("Variable must not be named '".implode("' or '", $deniedVariableNames)."'!");
 
@@ -225,7 +225,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						$variables[$name] = $value;
 						break;
 					case Variable::VARIABLE_TYPE_DATABASE:
-						$fields = $variable->getColumnName();
+						$fields = GeneralUtility::trimExplode(",", $variable->getColumnName());
 						$table = $variable->getTableContent();
 						$where = $variable->getWhereClause();
 						$result = $this->fieldRepository->rawQuery($fields, $table, $where);
