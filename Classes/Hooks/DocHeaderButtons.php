@@ -89,7 +89,8 @@ class DocHeaderButtons
 		$html 		= "{namespace core=TYPO3\\CMS\\Core\\ViewHelpers}
 					   {namespace dv=MageDeveloper\\Dataviewer\\ViewHelpers}";
 					   
-		$htmlButton = "<a href=\"{dv:backend.newLink(pid:'{currentPageId}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}\" title=\"{title}\"><core:icon identifier=\"extensions-dataviewer-{datatype.icon}\" size=\"small\" /><core:icon identifier=\"actions-add\" size=\"small\" /></a>";
+					   
+		$htmlButton = "<a href=\"{dv:backend.newLink(pid:'{currentPageId}',table:'tx_dataviewer_domain_model_record',datatype:datatype.uid)}\" title=\"{title}\"><core:icon identifier=\"extensions-dataviewer-{icon}\" size=\"small\" /><core:icon identifier=\"actions-add\" size=\"small\" /></a>";
 		/* @var \MageDeveloper\Dataviewer\Fluid\View\StandaloneView $view */
 		$view 		= $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
 
@@ -103,13 +104,17 @@ class DocHeaderButtons
 				if($_datatype->getHideAdd())
 					continue;
 				
+				$iconId = "default";
+				if($_datatype->getIcon())
+					$iconId = $_datatype->getIcon();
+				
 				$rendered = "";
-
 				$buttonHtmlRender = $html . $htmlButton;
 				$title = LocalizationUtility::translate("module.create_record_by_datatype", [$_datatype->getName()]);
 
 				$view->assign("currentPageId", $currentPageId);
 				$view->assign("datatype", $_datatype);
+				$view->assign("icon", $iconId);
 				$view->assign("title", $title);				
 				
 				$rendered = $view->renderSource($buttonHtmlRender);
