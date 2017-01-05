@@ -68,14 +68,14 @@ abstract class AbstractCmsLayout
 	public function getBackendPluginLayout(array $params, \TYPO3\CMS\Backend\View\PageLayoutView $pObj)
 	{
 		$listType = $params["row"]["list_type"];
-		
+
 		if($listType == $this->listType)
 		{
 			$html = $this->getBackendLayout($listType, $params);
 			if($html)
 				return $html;
 		}
-		
+
 		return;
 	}
 
@@ -90,8 +90,11 @@ abstract class AbstractCmsLayout
 	public function getBackendLayout($listType, array $config, array $additionalVariables = [])
 	{
 		$templatePaths 	= $this->pluginSettingsService->getTemplatePaths();
+		$partialPaths   = $this->pluginSettingsService->getPartialPaths();
+		$layoutPaths    = $this->pluginSettingsService->getLayoutPaths();
+
 		sort($templatePaths);
-		
+
 		for($i = count($templatePaths) - 1; $i >= 0; $i--)
 		{
 			$filename	  = "CmsLayout/{$listType}.html";
@@ -101,16 +104,22 @@ abstract class AbstractCmsLayout
 			if (is_dir($templatePath) && file_exists($templateFile))
 				break;
 		}
-		
+
 		$variables = [];
 		if (file_exists($templateFile))
 		{
 			/* @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
 			$view = $this->objectManager->get(\TYPO3\CMS\Fluid\View\StandaloneView::class);
 			$view->setTemplatePathAndFilename($templateFile);
+
+			// Setting the paths to the view
+			$view->setTemplateRootPaths($templatePaths);
+			$view->setPartialRootPaths($partialPaths);
+			$view->setLayoutRootPaths($layoutPaths);
+
 			$view->getRequest()->setControllerExtensionName( ExtensionConfiguration::EXTENSION_KEY );
 			$imageUrl 				= $this->getImageUrl("Plugins/{$listType}.gif");
-			
+
 			$variables["imageUrl"] 	= $imageUrl;
 
 			if (isset($config["row"]) && isset($config["row"]["pi_flexform"]))
