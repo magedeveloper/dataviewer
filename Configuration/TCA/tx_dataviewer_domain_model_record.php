@@ -15,7 +15,7 @@ return [
 		"dividers2tabs" => TRUE,
 		"sortby" => "sorting",
 		"versioningWS" => false,
-		//"versioningWS" => 2,
+		"versioningWS" => 2,
 		"versioning_followPages" => TRUE,
 		"requestUpdate" => "datatype",
 		"languageField" => "sys_language_uid",
