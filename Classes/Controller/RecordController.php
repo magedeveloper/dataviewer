@@ -101,9 +101,9 @@ class RecordController extends AbstractController
 	{
 		// Evaluation the template switch conditions
 		$conditions = $this->listSettingsService->getTemplateSwitchConditions();
-	
+		
 		// Get a view with all injected variables
-		$view = $this->getStandaloneView();
+		$view = $this->getStandaloneView(true);
 	
 		foreach($conditions as $_condition)
 		{
@@ -299,7 +299,7 @@ class RecordController extends AbstractController
 			if($this->request->hasArgument("parameters"))
 				$parameters = $this->request->getArgument("parameters");
 
-			$view = $this->getStandaloneView();
+			$view = $this->getStandaloneView(true);
 			$additionalVariables = [];
 
 			/////////////////////////////////////////////
@@ -774,19 +774,22 @@ class RecordController extends AbstractController
 	 * 
 	 * @return \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
 	 */
-	protected function getStandaloneView()
+	protected function getStandaloneView($includeVariables = false)
 	{
 		$view = $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
 
-		$variables = $this->variableRepository->findByStoragePids($this->storagePids);
-		$ids = [];
-			
-		foreach($variables as $_v)
-			$ids[] = $_v->getUid();
-			
-		$variables = $this->prepareVariables($ids);
-		$view->assignMultiple($variables);
-					
+		if($includeVariables === true)
+		{
+			$variables = $this->variableRepository->findByStoragePids($this->storagePids);
+			$ids = [];
+
+			foreach($variables as $_v)
+				$ids[] = $_v->getUid();
+
+			$variables = $this->prepareVariables($ids);
+			$view->assignMultiple($variables);
+		}
+		
 		return $view;	
 	}
 }
