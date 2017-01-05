@@ -856,11 +856,12 @@ class Field extends AbstractModel
 	/**
 	 * Gets the display conditions as array
 	 * 
-	 * @return array
+	 * @return string
 	 */
 	public function getDisplayCond()
 	{
-		$arr = GeneralUtility::xml2array($this->displayCond);
+		$displayCondition = "<displayCond>{$this->displayCond}</displayCond>";
+		$arr = GeneralUtility::xml2array($displayCondition);
 		
 		if(is_array($arr))
 			return $arr;
