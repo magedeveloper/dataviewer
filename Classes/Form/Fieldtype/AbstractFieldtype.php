@@ -200,7 +200,7 @@ abstract class AbstractFieldtype
 	/**
 	 * Gets the field
 	 *
-	 * @return Field
+	 * @return FieldModel
 	 */
 	public function getField()
 	{
@@ -252,7 +252,7 @@ abstract class AbstractFieldtype
 		if($requestUpdate = $this->getField()->getRequestUpdate())
 			$tca["processedTca"]["ctrl"]["requestUpdate"] = $fieldName;
 
-		//displayCond
+		//displayCond Display Conditions
 		if($displayCond = $this->getField()->getDisplayCond())
 			$tca["processedTca"]["columns"][$fieldName]["displayCond"] = $displayCond;
 

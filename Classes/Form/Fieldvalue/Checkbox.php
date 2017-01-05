@@ -112,7 +112,7 @@ class Checkbox extends AbstractFieldvalue implements FieldvalueInterface
 	 * this, you need to have some knowledge,
 	 * what value is returned.
 	 *
-	 * @return array
+	 * @return array [label => value]
 	 */
 	public function getFrontendValue()
 	{
