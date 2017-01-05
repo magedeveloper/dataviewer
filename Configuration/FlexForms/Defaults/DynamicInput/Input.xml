@@ -20,7 +20,7 @@
                                 <el>
                                     <input>
                                         <config>
-                                            <type>text</type>
+                                            <type>input</type>
                                         </config>
                                     </input>
                                 </el>
