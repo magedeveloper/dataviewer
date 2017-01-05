@@ -48,6 +48,30 @@ class RecordRepository extends AbstractRepository
 			$query->in("uid", $uids)
 		)->execute();
 	}
+
+	/**
+	 * Find latest records
+	 * 
+	 * @param int $limit
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findLatest($limit = 10)
+	{
+		$query 			= $this->createQuery();
+		$querySettings 	= $query->getQuerySettings();
+
+		$querySettings->setRespectStoragePage(false);
+		$querySettings->setIgnoreEnableFields(true);
+		$query->setOrderings(["crdate" => QueryInterface::ORDER_DESCENDING]);
+		$query->setLimit($limit);
+
+		return $query->matching(
+			$query->logicalAnd(
+				$query->greaterThan("pid", 0),
+				$query->equals("datatype.hide_records", "0")
+			)
+		)->execute();
+	}
 	
 	
 	/**
