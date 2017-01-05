@@ -59,13 +59,21 @@ class Template
 			$options[] = [LocalizationUtility::translate("flexform.predefined_templates"), "--div--"];
 			foreach($configuration as $_template=>$_file)
 			{
-				$filePath = GeneralUtility::getFileAbsFileName($_file);
-				if(file_exists($filePath))
+				if($_file == "--div--")
 				{
-					$id = $_template;
-					$options[] = [$id, $id];
+					$str = (LocalizationUtility::translate($_template))?LocalizationUtility::translate($_template):$_template;
+					$options[] = [$str, "--div--"];
 				}
-				
+				else
+				{
+					$filePath = GeneralUtility::getFileAbsFileName($_file);
+					if(file_exists($filePath))
+					{
+						$id = $_template;
+						$options[] = [$id, $id];
+					}
+				}
+			
 			}	
 		}
 
