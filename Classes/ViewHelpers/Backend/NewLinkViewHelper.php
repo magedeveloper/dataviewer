@@ -18,9 +18,10 @@ class NewLinkViewHelper extends AbstractViewHelper implements CompilableInterfac
 	 * @param string $table,
 	 * @param int $datatype
      * @param int $id
+	 * @param string $returnUrl
 	 * @return string
 	 */
-	public function render($pid, $table, $datatype = null, $id = null)
+	public function render($pid, $table, $datatype = null, $id = null, $returnUrl = null)
 	{
 		return static::renderStatic(
 			[
@@ -28,6 +29,7 @@ class NewLinkViewHelper extends AbstractViewHelper implements CompilableInterfac
 				'datatype' => $datatype,
 				'table' => $table,
                 'id' => $id,
+				'returnUrl' => $returnUrl,
 			],
 			$this->buildRenderChildrenClosure(),
 			$this->renderingContext
@@ -45,7 +47,7 @@ class NewLinkViewHelper extends AbstractViewHelper implements CompilableInterfac
 	{
 		$urlParameters = [
 			'edit['.$arguments['table'].'][' . $arguments['pid'] . ']' => 'new',
-			'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
+			'returnUrl' => (isset($arguments["returnUrl"]))?$arguments["returnUrl"]:GeneralUtility::getIndpEnv('REQUEST_URI'),
 		];
 
         if(isset($arguments["id"]) && $arguments["id"] > 0)
