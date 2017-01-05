@@ -1,0 +1,83 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
+{namespace be=TYPO3\CMS\Beuser\ViewHelpers}
+
+<div style="position:absolute; top:7px; right:10px;">
+	<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_mini.png" height="16" title="MageDeveloper DataViewer Extension" />
+</div>
+<div class="row" style="min-width:50em;">
+	<div class="col-md-4" style="border-right:1px solid #000; /*min-height:420px;*/ padding-bottom:10px; overflow-x:hidden; overflow-y: auto;">
+		<ul class="dropdown-list">
+			<li><core:icon identifier="actions-add" size="small" alternativeMarkupIdentifier="inline" />&nbsp;<strong><f:translate key="module.create_record" /></strong></li>
+			<li role="separator" class="divider"></li>
+
+			<f:for each="{datatypes}" as="datatype" iteration="i">
+				<f:if condition="{datatype.hideAdd} == 0">
+					<li>
+						<a href="#" onclick="{dv:backend.jumpUrl(link:'{dv:backend.newLink(pid:datatype.pid,table:\'tx_dataviewer_domain_model_record\',datatype:datatype.uid,returnUrl:\'{dv:backend.listLink(id:datatype.pid)}\')}')}"  title="{datatype.name} / Uid: {datatype.uid}" class="dropdown-list-link" style="margin-right: -15px;">
+							<f:if condition="{datatype.icon}">
+								<f:then>
+									<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
+								</f:then>
+								<f:else>
+									<core:icon identifier="extensions-dataviewer-default" size="small" />
+								</f:else>
+							</f:if>
+							&nbsp;{datatype.name}
+						</a>
+					</li>
+				</f:if>
+			</f:for>
+		</ul>
+	</div>
+	<div class="col-md-8" style="max-height: 438px; overflow: hidden;">
+		<ul class="dropdown-list">
+			<strong><core:icon identifier="actions-document-history-open" size="small" alternativeMarkupIdentifier="inline" />&nbsp;<f:translate key="backend.latest" /></strong>
+			<li role="separator" class="divider"></li>
+			<f:if condition="{latest->f:count() > 0">
+				<f:then>
+					<f:for each="{latest}" as="record" iteration="j">
+						<f:alias map="{page:'{dv:page.get(id:record.pid)}'}">
+							<li class="record" data-recordid="{record.uid}">
+								<a onclick="{dv:backend.jumpUrl(link:'{dv:backend.editLink(id:record.uid,table:\'tx_dataviewer_domain_model_record\',returnUrl:\'{dv:backend.listLink(id:record.pid)}\')}')}" class="dropdown-list-link" style="text-align: left; max-width:none !important;">
+									<f:if condition="{record.hidden}">
+										<f:then><core:icon identifier="extensions-dataviewer-{record.datatype.icon}" size="small" overlay="overlay-hidden" /></f:then>
+										<f:else><core:icon identifier="extensions-dataviewer-{record.datatype.icon}" size="small" /></f:else>
+									</f:if>
+									&nbsp;
+									[{record.uid}]&nbsp;{record.title}
+									<br />
+									<small class="text-muted">
+										<f:translate key="page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Partials/CmsLayout/DoktypeIcon.html" arguments="{doktype:page.doktype}" />&nbsp;[{page.pid}]&nbsp;{page.title}
+									</small>
+								</a>
+								<f:if condition="{record.hidden}">
+									<f:then>
+										<f:comment>-- Record is hidden --</f:comment>
+										<a href="#" class="dropdown-list-link-edit dv-record-hide" title="{f:translate(key:'LLL:EXT:lang/locallang_core:labels.show')}">
+											<core:icon identifier="actions-edit-hide" size="small" alternativeMarkupIdentifier="inline" />
+										</a>
+									</f:then>
+									<f:else>
+										<f:comment>-- Record is visible --</f:comment>
+										<a href="#" class="dropdown-list-link-edit dv-record-hide" title="{f:translate(key:'LLL:EXT:lang/locallang_core:cm.hide')}">
+											<core:icon identifier="actions-edit-unhide" size="small" alternativeMarkupIdentifier="inline" />
+										</a>
+									</f:else>
+								</f:if>
+								<a href="#" class="dropdown-list-link-delete dv-record-delete">
+									<core:icon identifier="actions-delete" size="small" alternativeMarkupIdentifier="inline" />
+								</a>
+							</li>
+						</f:alias>
+					</f:for>
+				</f:then>
+				<f:else>
+					<f:translate key="no_records_found" />
+				</f:else>
+			</f:if>
+		</ul>
+	</div>
+</div>
+
+

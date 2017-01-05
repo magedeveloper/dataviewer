@@ -931,6 +931,10 @@
                 <source>Record with Id '%s' was successfully deleted.</source>
                 <target>Datensatz mit Id '%s' wurde erfolgreich gelöscht.</target>
             </trans-unit>
+            <trans-unit id="variable_was_successfully_deleted">
+                <source>Variable with Id '%s' was successfully deleted.</source>
+                <target>Variable mit Id '%s' wurde erfolgreich gelöscht.</target>
+            </trans-unit>
             <trans-unit id="could_not_delete_record">
                 <source>Could not delete Record with Id '%s'.</source>
                 <target>Datensatz mit Id '%s' konnte nicht gelöscht werden.</target>
@@ -942,6 +946,10 @@
             <trans-unit id="field_was_successfully_saved">
                 <source>Field '%s' (%s) was successfully saved.</source>
                 <target>Feld '%s' (%s) wurde erfolgreich gespeichert.</target>
+            </trans-unit>
+            <trans-unit id="variable_was_successfully_saved">
+                <source>Variable '%s' (%s) was successfully saved.</source>
+                <target>Variable '%s' (%s) wurde erfolgreich gespeichert.</target>
             </trans-unit>
             <trans-unit id="field_was_successfully_deleted">
                 <source>Field with Id '%s' and according record values were successfully deleted.</source>
@@ -1004,8 +1012,8 @@
                 <target>Seite</target>
             </trans-unit>
             <trans-unit id="entry">
-                <source>Entry Id %s</source>
-                <target>Eintrag Id %s</target>
+                <source>New '%s' Entry</source>
+                <target>Neuer '%s' Eintrag</target>
             </trans-unit>
             <trans-unit id="dynamic_value">
                 <source>Attach Values from Database for Frontend</source>
@@ -1566,6 +1574,30 @@
             <trans-unit id="module.no_datatypes_found">
                 <source>No datatypes were found on this page.</source>
                 <target>Es befinden sich keine Datentypen auf dieser Seite.</target>
+            </trans-unit>
+            <trans-unit id="backend.no_datatypes_found">
+                <source>No datatypes found.</source>
+                <target>Keine Datentypen gefunden.</target>
+            </trans-unit>
+            <trans-unit id="backend.create">
+                <source>Create '%s'</source>
+                <target>Erstelle '%s'</target>
+            </trans-unit>
+            <trans-unit id="backend.latest">
+                <source>Latest Records</source>
+                <target>Neueste Datensätze</target>
+            </trans-unit>
+            <trans-unit id="backend.loading">
+                <source>Loading ...</source>
+                <target>Wird geladen ...</target>
+            </trans-unit>
+            <trans-unit id="backend.delete_record">
+                <source>Delete Record</source>
+                <target>Datensatz löschen</target>
+            </trans-unit>
+            <trans-unit id="backend.confirm_delete_record">
+                <source>Do you really want to delete the record?</source>
+                <target>Wollen Sie wirklich diesen Datensatz löschen?</target>
             </trans-unit>
             <trans-unit id="module.new_datatype">
                 <source>Create new datatype</source>
