@@ -5,6 +5,24 @@
 Changelog
 ---------
 
+**1.5.0**
+
+- [BUGFIX] Corrected Message when saving a new field
+- [BUGFIX] File Relations now saved correctly
+- [BUGFIX] Added PartialRootPaths and LayoutRootPaths to AbstractCmsLayout and corrected file positions
+- [BUGFIX] Count of CSV Import columns in backend when no title line exists
+- [BUGFIX] Minitems and Maxitems for File Relation Fieldtype
+- [BUGFIX] Multiple Display Conditions for Fields (AND, OR) as XML
+- [BUGFIX] DocHeaderButtons now shows default icon when Datatype has no icon
+- [TASK] Return Types in Field-Toolbox on click
+- [TASK] Slighly changed colors of the backend form
+- [TASK] Added donation link to the extension information in the constants
+- [FEATURE] Backend Toolbar Item for fast record creation / access
+
+**1.4.1**
+
+- [BUGFIX] Installation bug fixed
+
 **1.4.0**
 
 - [BUGFIX] Unlimited redirects when hiding records in List Module
@@ -123,5 +141,10 @@ Changelog
 
 - Fieldtype for implementing a fixed record (Visible or Hidden in Backend)
 - Correct RTE Height
+- Fluid Field as UserFunc for displayCond compatibility
 - (Filter with direct record selection)
 - Ajax Autocomplete functionality
+- Field for merging different record values (e.g. search)
+- Change Record DataHandler to use RecordFactory
+- Provide Delete link for records in ToolbarItem
+- Workspaces support

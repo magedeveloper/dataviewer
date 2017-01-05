@@ -22,9 +22,20 @@ These records are accessible and rendered in fluid-templates.
 Fields in this extension are rendered in mostly the same way as the normal TCA rendering happens, but there
 is no need for creating an extra extension for every record-type. 
 
-*You need News on your page?* Create a "News"-Datatype and include the plugins... 
-*You need a Job-List?* Create a "Job"-Datatype and start including plugins... 
-*You need an Event-List?* Create a "Event"-Datatype and guess what...? :)
+Here are some examples for records:
+
+- News Records (like tt_news)
+- Job Records (like dmmjobcontrol)
+- Address Records (like tt_address)
+- Event Records (like cal)
+- Media Records for building a Media-Library
+- Product Records 
+- Award Records
+- Company Records
+- Form Answer Records for creating Frontend Forms and saving the results as a form answer record
+- and a lot more!
+
+The estimated time for creating all these things are far better than creating a new extension for these.
 
 The extension contains various Frontend-Plugins to help and support you with displaying records as of your needs.
 It is dynamically in every way, even to include records to another extension is possible!
@@ -37,6 +48,7 @@ Highlights
 - Inject records to other extensions with a InjectViewHelper
 - Inject dynamic variables of different types to the fluid templates
 - Easy fluid templating with intuitive variable naming
+- Import CSV Files as Records
 
 Please see the Screenshots-Section for more information about the possibilities.
  
