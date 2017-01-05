@@ -16,7 +16,7 @@ return [
 		"sortby" => "sorting",
 		"versioningWS" => 2,
 		"versioning_followPages" => TRUE,
-		"requestUpdate" => "type,table_content,column_name",
+		"requestUpdate" => "type,table_content",
 		"languageField" => "sys_language_uid",
 		"transOrigPointerField" => "l10n_parent",
 		"transOrigDiffSourceField" => "l10n_diffsource",
