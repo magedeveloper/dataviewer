@@ -88,6 +88,12 @@ class Datatype extends AbstractDataHandler implements DataHandlerInterface
 	public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_datatype") return;
+		
+		// If we think about it, we should delete
+		// - All according fields
+		// - All according records
+		// - All according recordValues
+		// TODO: Delete connected entries
 	}
 
 	/**

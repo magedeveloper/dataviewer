@@ -19,5 +19,5 @@ class ExtensionConfiguration
 	 * Extension Key
 	 * @var string
 	 */
-	const EXTENSION_KEY				= "dataviewer";
+	const EXTENSION_KEY = "dataviewer";
 }

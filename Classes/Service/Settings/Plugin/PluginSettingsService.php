@@ -122,6 +122,7 @@ class PluginSettingsService extends AbstractSettingsService
 	{
 		$path = "templates";
 		$configuration = $this->getConfiguration($path);
+		
 		return $configuration;		
 	}
 	
