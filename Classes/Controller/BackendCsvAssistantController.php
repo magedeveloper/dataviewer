@@ -170,7 +170,7 @@ class BackendCsvAssistantController extends BackendController
 			}
 			else
 			{
-				$columns = array_merge($columns, range(0, count(reset($csvArray))));
+				$columns = array_merge($columns, range(0, count(reset($csvArray))-1 ));
 			}
 			
 			$csvColumns = $columns;
@@ -340,7 +340,44 @@ class BackendCsvAssistantController extends BackendController
 		$this->view->assign("log", $log);
 	}
 
-	/**
+    /**
+     * Records Action
+     * for Backward Compatibility Issues
+     */
+	public function recordsAction()
+    {
+        $this->forward("index");
+    }
+
+    /**
+     * Datatypes Action
+     * for Backward Compatibility Issues
+     */
+    public function datatypesAction()
+    {
+        $this->forward("index");
+    }
+
+    /**
+     * Datatype Details Action
+     * for Backward Compatibility Issues
+     */
+    public function datatypesDetailsAction()
+    {
+        $this->forward("index");
+    }
+
+    /**
+     * Record Details Action
+     * for Backward Compatibility Issues
+     */
+    public function recordsDetailsAction()
+    {
+        $this->forward("index");
+    }
+
+
+    /**
 	 * Generates an optimized array from csv file contents
 	 *
 	 * @param string $file
@@ -367,7 +404,7 @@ class BackendCsvAssistantController extends BackendController
 		}
 	
 		$csvArray = \TYPO3\CMS\Core\Utility\CsvUtility::csvToArray($fileContents, $delimeter, $fieldEnclosure);
-
+		
 		$header = [];
 		if($headerLine)
 		{
@@ -377,10 +414,6 @@ class BackendCsvAssistantController extends BackendController
 			foreach($csvArray as $i=>$_item)
 				$csvArray[$i] = array_combine($header, $_item);
 
-		}
-		else
-		{
-			unset($csvArray[0]);
 		}
 		
 		return $csvArray;
