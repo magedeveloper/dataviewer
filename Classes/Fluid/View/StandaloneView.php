@@ -14,6 +14,14 @@ namespace MageDeveloper\Dataviewer\Fluid\View;
 class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 {
 	/**
+	 * Plugin Settings Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
+	 * @inject
+	 */
+	protected $pluginSettingsService;
+
+	/**
 	 * Renders template source code by a given string
 	 *
 	 * @param string $source Template Source Code
@@ -23,5 +31,46 @@ class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 	{
 		$this->setTemplateSource($source);
 		return $this->render();
+	}
+
+	/**
+	 * Gets the full template path for a file
+	 * 
+	 * @param string $file
+	 * @return string
+	 */
+	public function getFullTemplatePathForFile($file)
+	{
+		$templatePaths = $this->pluginSettingsService->getTemplatePaths();
+		sort($templatePaths);
+
+		for($i = count($templatePaths) - 1; $i >= 0; $i--)
+		{
+			$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templatePaths[$i]);
+			$templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templatePaths[$i].$file);
+
+			if (is_dir($templatePath) && file_exists($templateFile))
+				break;
+		}
+		
+		return $templateFile;
+	}
+	
+	/**
+	 * Initializes the view with certain properties
+	 * 
+	 * @return void
+	 */
+	public function initializeView()
+	{
+		$templatePaths 	= $this->pluginSettingsService->getTemplatePaths();
+		$partialPaths   = $this->pluginSettingsService->getPartialPaths();
+		$layoutPaths    = $this->pluginSettingsService->getLayoutPaths();
+
+		$this->setTemplateRootPaths($templatePaths);
+		$this->setPartialRootPaths($partialPaths);
+		$this->setLayoutRootPaths($layoutPaths);
+
+		parent::initializeView();
 	}
 }
