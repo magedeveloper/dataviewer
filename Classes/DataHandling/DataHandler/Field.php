@@ -121,6 +121,8 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	}
 
 	/**
+	 * processDatamap_afterDatabaseOperations
+	 * 
 	 * @param string $status
 	 * @param string $table
 	 * @param int $id
@@ -131,13 +133,22 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	{
 		if ($table != "tx_dataviewer_domain_model_field") return;
 		
-		$field = $this->getFieldById($id);
-
-		if ($field)
+		if(isset($parentObj->substNEWwithIDs[$id]))
+			$id = $parentObj->substNEWwithIDs[$id];
+			
+		$name = '-';	
+		if(isset($fieldArray["frontend_label"])) 
 		{
-			$message  = Locale::translate("field_was_successfully_saved", [$field->getFrontendLabel(), $id]);
-			$this->addBackendFlashMessage($message, '', FlashMessage::OK);
+			$name = $fieldArray["frontend_label"];
 		}
+		else
+		{
+			$field = $this->getFieldById($id);
+			$name = $field->getFrontendLabel();
+		}		
+		
+		$message  = Locale::translate("field_was_successfully_saved", [$name, $id]);
+		$this->addBackendFlashMessage($message, '', FlashMessage::OK);
 
 		// Save processed data
 		$this->persistenceManager->persistAll();
