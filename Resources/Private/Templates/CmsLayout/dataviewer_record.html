@@ -16,7 +16,7 @@
 			<f:comment>============ LIST ============</f:comment>
 			<strong><f:translate key="plugin_type.list" /></strong><br />
 			<div style="font-size:smaller;">
-				<f:render partial="Selection" arguments="{_all}" />
+				<f:render partial="CmsLayout/Selection" arguments="{_all}" />
 			</div>
 		</f:case>
 		<f:case value="Record->detail;Record->list;">
@@ -34,7 +34,7 @@
 			<f:comment>============ DYNAMIC ============</f:comment>
 			<strong><f:translate key="plugin_type.dynamic_detail" /></strong><br />
 			<div style="font-size:smaller;">
-				<f:render partial="Selection" arguments="{_all}" />
+				<f:render partial="CmsLayout/Selection" arguments="{_all}" />
 			</div>
 		</f:case>
 		<f:case value="Record->part">
@@ -61,7 +61,7 @@
 			<f:comment>============ LIST ============</f:comment>
 			<strong><f:translate key="plugin_type.ajax_request" /></strong><br />
 			<div style="font-size:smaller;">
-				<f:render partial="Selection" arguments="{_all}" />
+				<f:render partial="CmsLayout/Selection" arguments="{_all}" />
 			</div>
 		</f:case>
 		<f:case default="TRUE">
@@ -91,7 +91,15 @@
 		</f:else>
 	</f:if>
 	<f:if condition="{flexform.settings.template_switch->f:count()} > 0">
-		&nbsp;<em>(&amp; <f:translate key="flexform.template_switch" />)</em>
+		<br /><br />
+		<strong><f:translate key="flexform.template_switch" />:</strong>
+		<br />
+		<f:for each="{flexform.settings.template_switch}" as="switch" iteration="t">
+			<core:icon identifier="actions-merge" size="small" />&nbsp;{switch.switches.condition}&nbsp;<core:icon identifier="actions-version-workspace-sendtostage" size="small" />&nbsp;{switch.switches.template_selection}
+			<f:if condition="{t.isLast} == 0"><br /></f:if>
+		</f:for>
+	
+	
 	</f:if>
 </div>
 
