@@ -8,6 +8,8 @@ use MageDeveloper\Dataviewer\Domain\Model\RecordValue as RecordValueModel;
 use MageDeveloper\Dataviewer\Domain\Model\Field as FieldModel;
 use MageDeveloper\Dataviewer\Domain\Model\FieldValue as FieldValueModel;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Html\RteHtmlParser;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -363,6 +365,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if (isset($this->saveData[$id]) && is_array($this->saveData[$id]))
 		{
 			$recordSaveData = reset($this->saveData[$id]);
+			
 			$result 		= $this->processRecord($recordSaveData, $record);
 
 			$message  = Locale::translate("record_not_saved");
@@ -486,7 +489,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 			}
 
-			//$this->persistenceManager->persistAll();
+			$this->persistenceManager->persistAll();
 		}
 	}
 
@@ -499,9 +502,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function processRecord(array $recordSaveData, RecordModel $record)
 	{
-		//NOTif ($record->getUid() <= 0)
-		//NOT	return false;
-
 		// Get datatype
 		$datatype = $record->getDatatype();
 
@@ -529,7 +529,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			return false;
 
 		$this->_processRecordSaveData($record, $recordSaveData);
-		//NOT$this->recordRepository->update($record);
 
 		return true;
 	}
@@ -584,7 +583,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$_value = $this->dataHandler->getFlexformValue($_value, $record, $field);
 				$_value = $this->flexTools->flexArray2Xml($_value);
 			}
-
+			
 			// We need to check the field
 			// We get the tca from the fieldtype class
 			// We check agains checkValue_SW in the dataHandler
@@ -605,8 +604,8 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$tca = $fieldtypeModel->getFieldTca();
 				
 				$res = [];
-				$uploadedFiles = [];			
-	
+				$uploadedFiles = [];
+
 				if(isset($this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()]))
 					$uploadedFiles = $this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()];
 
@@ -626,6 +625,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					[]
 				);
 
+				// Select and Inline Value
 				if(array_key_exists("value", $val) && $tca["type"] !== "select" && $tca["type"] !== "inline")
 					$_value = $val["value"];
 
@@ -644,6 +644,23 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				if( ($field->getType() == "date" || $field->getType() == "datetime") )
 					$_value = $originalValue;
 				
+				if($field->getType() == "rte")
+				{
+					// nl2br
+					$_value = nl2br($_value);
+					
+					/* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtypeModel */
+					$defaultExtras = $fieldtypeModel->getDefaultExtras();
+					$specConf = BackendUtility::getSpecConfParts($defaultExtras);
+					
+					// Initialize transformation:
+					/* @var RteHtmlParser $parseHTML */
+					$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
+					$parseHTML->init("tt_content" . ':' . "bodytext", $record->getPid()); // We imitate a tt_content bodytext field
+					$parseHTML->setRelPath('');
+					// Perform transformation:
+					$_value = $parseHTML->RTE_transform($_value, $specConf, 'db', []);
+				}
 			}
 		
 			$result = $this->_saveRecordValue($record, $field, $_value);
@@ -652,7 +669,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$overallResult = false;
 
 		}
-
+		
 		if ($overallResult === false)
 		{
 			// We hide the record until it is ok
@@ -688,7 +705,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$recordValue->setRecord($record);
 		$recordValue->setField($field);
 		$recordValue->setPid($pid);
-
 
 		// Defaults
 		$valueContent = $value;
