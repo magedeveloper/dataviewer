@@ -11,7 +11,8 @@ use MageDeveloper\Dataviewer\Domain\Model\FieldValue as FieldValue;
 use MageDeveloper\Dataviewer\Domain\Model\RecordValue as RecordValue;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\CMS\Backend\Utility\IconUtility;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -52,6 +53,22 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 	 * @var array
 	 */
 	protected $tca = [];
+
+	/**
+	 * Fieldtype Settings Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService
+	 * @inject
+	 */
+	protected $fieldtypeSettingsService;
+
+	/**
+	 * Reflection Service
+	 * 
+	 * @var \TYPO3\CMS\Extbase\Reflection\ReflectionService
+	 * @inject
+	 */
+	protected $reflectionService;
 
 	/**
 	 * Sets the record
@@ -172,8 +189,11 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	public function renderHeader()
 	{
+		// Process help html for popup toolbox
+		$help = $this->_getHelpHtml();
+	
 		$html = "";
-		$html .= "<label for=\"data[tx_dataviewer_domain_model_record][{$this->getRecord()->getUid()}][{$this->getField()->getFieldName()}]\"><span class=\"t3-help-link\" data-description=\"{$this->getField()->getDescription()} <hr style='background-color:lightgrey;padding:0;margin:6px 0;' />Fluid: {$this->getField()->getIdentification()}<hr style='background-color:lightgrey;padding:0;margin:6px 0;' />Id: {$this->getField()->getUid()}\" data-title=\"{$this->getField()->getFrontendLabel()}\" href=\"#\"><abbr class=\"t3-help-teaser\"><strong>{$this->getField()->getFrontendLabel()}</strong></abbr></span></label>";
+		$html .= "<label for=\"data[tx_dataviewer_domain_model_record][{$this->getRecord()->getUid()}][{$this->getField()->getFieldName()}]\"><span class=\"t3-help-link\" data-description=\"{$help}\" data-title=\"{$this->getField()->getFrontendLabel()}\" href=\"#\"><abbr class=\"t3-help-teaser\"><strong>{$this->getField()->getFrontendLabel()}</strong></abbr></span></label>";
 
 		if (strlen($this->getField()->getDescription()) > 0)
 			$html .= $this->getMessageHtml($this->getField()->getDescription(), null, FlashMessage::NOTICE);
@@ -182,6 +202,57 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 			$html .= $this->getMessageHtml(Locale::translate("field_has_no_field_values"), null, FlashMessage::ERROR);
 
 		return $html;
+	}
+
+	/**
+	 * Processes the html code for the popup help on each field label
+	 * 
+	 * @return string
+	 */
+	protected function _getHelpHtml()
+	{
+		$fieldtype = $this->getField()->getType();
+		$fieldtypeConfiguration = $this->fieldtypeSettingsService->getFieldtypeConfiguration( $fieldtype );
+		$valueClass = $fieldtypeConfiguration->getValueClass();
+
+		if (!$this->objectManager->isRegistered($valueClass))
+			$valueClass = \MageDeveloper\Dataviewer\Form\Fieldvalue\General::class;
+
+		/* @var \MageDeveloper\Dataviewer\Form\Fieldvalue\FieldvalueInterface $fieldValue */
+		$fieldvalue = $this->objectManager->get($valueClass);
+
+		$returnType = null;
+		if($fieldvalue instanceof \MageDeveloper\Dataviewer\Form\Fieldvalue\FieldvalueInterface)
+		{
+			$methodTagsValues = $this->reflectionService->getMethodTagsValues($valueClass, "getFrontendValue");
+			if(isset($methodTagsValues["return"]))
+			{
+				$returnType = reset( $methodTagsValues["return"] );
+			}
+
+		}
+		
+		$iconIdentifier = "extensions-dataviewer-{$fieldtype}";
+		$icon = $this->iconFactory->getIcon($iconIdentifier);
+		$icon->setSize(Icon::SIZE_SMALL);
+		
+		$iconHtml = htmlentities($icon->render());
+		
+		$help = "";
+		$help = "
+			{$iconHtml}&nbsp;".strtoupper($fieldtype)."
+			<hr style='background-color:lightgrey;padding:0;margin:6px 0;' />
+			Fluid: {$this->getField()->getIdentification()}
+			<br />
+			Id: {$this->getField()->getUid()}
+		";
+
+		if(!is_null($returnType))
+		{
+			$help .= "<hr style='background-color:lightgrey;padding:0;margin:6px 0;' />@return {$returnType}";
+		}
+		
+		return $help;
 	}
 
 	/**

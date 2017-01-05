@@ -5,6 +5,8 @@ use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContext;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -75,6 +77,14 @@ abstract class AbstractRenderer
 	protected $objectManager;
 
 	/**
+	 * Icon Factory
+	 *
+	 * @var \TYPO3\CMS\Core\Imaging\IconFactory
+	 * @inject
+	 */
+	protected $iconFactory;
+
+	/**
 	 * Constructor
 	 *
 	 * @return AbstractRenderer
@@ -88,7 +98,8 @@ abstract class AbstractRenderer
 		$this->datatypeRepository		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\DatatypeRepository::class);
 		$this->fieldRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
 		$this->recordRepository		 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
-
+		$this->iconFactory					= $this->objectManager->get(\TYPO3\CMS\Core\Imaging\IconFactory::class);
+		
 		/*
 		$backend = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\BackendInterface::class);
 		//$dataMapRecord = $backend->getDataMapper()->getDataMap("MageDeveloper\\Dataviewer\\Domain\\Model\\Record");
