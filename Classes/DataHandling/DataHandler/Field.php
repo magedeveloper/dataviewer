@@ -147,6 +147,13 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 			$name = $field->getFrontendLabel();
 		}		
 		
+		if($name == "")
+        {
+            $message  = Locale::translate("field_has_no_name");
+            $this->addBackendFlashMessage($message, '', FlashMessage::ERROR);
+            return;
+        }
+		
 		$message  = Locale::translate("field_was_successfully_saved", [$name, $id]);
 		$this->addBackendFlashMessage($message, '', FlashMessage::OK);
 
