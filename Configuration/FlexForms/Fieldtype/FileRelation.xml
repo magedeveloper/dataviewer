@@ -42,6 +42,28 @@
                     </config>
                 </TCEforms>
             </showUpload>
+            <minitems>
+                <TCEforms>
+                    <label>minitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>0</default>
+                    </config>
+                </TCEforms>
+            </minitems>
+            <maxitems>
+                <TCEforms>
+                    <label>maxitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>1</default>
+                    </config>
+                </TCEforms>
+            </maxitems>
         </el>
     </ROOT>
 </T3DataStructure>

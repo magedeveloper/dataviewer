@@ -341,10 +341,9 @@ plugin.tx_dataviewer.validators {
 
 # DataViewer Ajax Request Class #
 page.includeJSFooter {
-	file1461848046 = EXT:dataviewer/Resources/Public/Js/jquery.dataviewer-ajax.js
+	file1461848046 = EXT:dataviewer/Resources/Public/JavaScript/jquery.dataviewer-ajax.js
 	file1461848046.type = text/javascript
 }	
-
 
 tx_dataviewer_ajax = PAGE
 tx_dataviewer_ajax {

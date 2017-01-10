@@ -23,7 +23,7 @@ return [
 			"starttime" => "starttime",
 			"endtime" => "endtime",
 		],
-		"searchFields" => "value_content,record,field,",
+		"searchFields" => "",
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/RecordValue.gif",
 	],
 	'interface' => [

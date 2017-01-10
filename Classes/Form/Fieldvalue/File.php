@@ -71,11 +71,14 @@ class File extends AbstractFieldvalue implements FieldvalueInterface
 			if($dir == "." || $dir == "")
 				$dir = $this->getField()->getConfig("uploadfolder");
 		
+			$dir = rtrim($dir, "\\");
+			$dir = rtrim($dir, "/");
+		
 			$fullFilePath = GeneralUtility::getFileAbsFileName($dir.DIRECTORY_SEPARATOR.$filename);
+			$file = $this->resourceFactory->retrieveFileOrFolderObject($fullFilePath);
 			
-			if(file_exists($fullFilePath))
+			if($file instanceof \TYPO3\CMS\Core\Resource\File)
 			{
-				$file = $this->resourceFactory->retrieveFileOrFolderObject($fullFilePath);
 				$files[] = $file;
 			}
 		}

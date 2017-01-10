@@ -5,13 +5,34 @@
 Changelog
 ---------
 
+**1.5.0**
+
+- [FEATURE] Send custom headers in the record plugin to generate different content types
+- [FEATURE] Select to render only record template or with full site template
+- [BUGFIX] Corrected Message when saving a new field
+- [BUGFIX] File Relations now saved correctly
+- [BUGFIX] Added PartialRootPaths and LayoutRootPaths to AbstractCmsLayout and corrected file positions
+- [BUGFIX] Count of CSV Import columns in backend when no title line exists
+- [BUGFIX] Minitems and Maxitems for File Relation Fieldtype
+- [BUGFIX] Multiple Display Conditions for Fields (AND, OR) as XML
+- [BUGFIX] DocHeaderButtons now shows default icon when Datatype has no icon
+- [TASK] Return Types in Field-Toolbox on click
+- [TASK] Slighly changed colors of the backend form
+- [TASK] Added donation link to the extension information in the constants
+- [FEATURE] Backend Toolbar Item for fast record creation / access
+- [DOC] Documentation update
+
+**1.4.1**
+
+- [BUGFIX] Installation bug fixed
+
 **1.4.0**
 
 - [BUGFIX] Unlimited redirects when hiding records in List Module
 - [BUGFIX] Record Title is no more removing X's
 - [BUGFIX] Validation is now triggered even when record is not saved before
 - [BUGFIX] Record Title is now kept when trying to save an invalid record
-- [TASK] Save-Procedure revised
+- [TASK] Save-Procedure revisited
 - [TASK] Selecting a datatype is no more forcing to store a record
 - [TASK] Importing 'validation-failed' records is now an option in the CSV Import Assistant
 - [FEATURE] Template Switch by Conditions
@@ -122,6 +143,12 @@ Changelog
 **To-Do-/Wish- List**
 
 - Fieldtype for implementing a fixed record (Visible or Hidden in Backend)
-- Correct RTE Height
+- Different Data-Sources for a Datatype/or Field (Webservice, XML, External Database)
+- Fluid Field as UserFunc for displayCond compatibility
 - (Filter with direct record selection)
 - Ajax Autocomplete functionality
+- Field for merging different record values (e.g. search)
+- Change Record DataHandler to use RecordFactory
+- Provide Delete link for records in ToolbarItem
+- Full Workspaces support
+- Record Validation as separate validation class

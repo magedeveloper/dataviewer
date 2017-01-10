@@ -58,7 +58,7 @@ class FieldRepository extends AbstractRepository
 	{
 		$query = $this->createQuery();
 		$fields = implode(",", $fields);
-		$statement = "SELECT {$fields} FROM {$table} WHERE {$where}";
+		$statement = "SELECT {$fields} FROM {$table} {$where}";
 		
 		$query->statement($statement);
 		$result = $query->execute(true);

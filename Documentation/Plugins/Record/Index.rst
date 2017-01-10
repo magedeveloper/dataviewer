@@ -87,6 +87,10 @@ Template Settings
 Template Selection
    The template where the record(s) are injected. You can either manually select a template or predefine templates.
    There is also a way to switch templates on certain conditions with the help of the template variables.
+   
+Render this Template without Sitetemplate
+	If this option is set, the complete output of this plugin will showed without rendering the whole
+	site template.
 
 Variable Injection
    Select the variables, that will be injected into the fluid template.
@@ -99,3 +103,7 @@ Debug
    This setting can help a developer to check for possible errors and to validate
    the form.
 
+Custom Headers
+	With this option, you are able to send and overwrite the headers of the response. This
+	adds the possibility to generate XML or JSON Files if you set the ``Content-Type`` header or
+	to force a download by using ``Content-Disposition``

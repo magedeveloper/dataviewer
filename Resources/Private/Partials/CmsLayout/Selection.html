@@ -47,7 +47,7 @@
 		<strong><f:translate key="flexform.selection_by_all" /></strong>:<br />
 		<f:for each="{dv:string.explode(delimeter:',',string:row.pages)}" as="pageId" iteration="i">
 			<f:alias map="{page:'{dv:page.get(id:pageId)}'}">
-				<a href="{dv:backend.listLink(id:pageId)}" target="_self"><f:render partial="DoktypeIcon" arguments="{doktype:page.doktype}" />&nbsp;[{page.uid}]&nbsp;{page.title}</a>
+				<a href="{dv:backend.listLink(id:pageId)}" target="_self"><f:render partial="CmsLayout/DoktypeIcon" arguments="{doktype:page.doktype}" />&nbsp;[{page.uid}]&nbsp;{page.title}</a>
 				<f:if condition="{i.isLast} != 1"><br /></f:if>
 			</f:alias>
 		</f:for>

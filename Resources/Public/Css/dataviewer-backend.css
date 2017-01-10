@@ -1,7 +1,7 @@
 div.clear                                               { clear:both; }
 
 img.dataviewer-logo										{ height:26px; margin-top:-20px; margin-bottom:-10px; }
-div.dataviewer-record                                   { margin-top:-20px; margin-bottom:-5px; background-color: #fff; padding: 20px; border: 1px solid #c0c0c0; -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); }
+div.dataviewer-record                                   { margin-top:-20px; margin-bottom:-5px; background-color: #fff; padding: 20px; border: 1px solid #ddd; -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); }
 div.dataviewer-header h1								{ margin-bottom:0; font-size:22px; padding:0; }
 div.dataviewer-content h1								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:26px; padding: 10px 0 10px 0px; color:#999; }
 div.dataviewer-content h2								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:22px; padding: 10px 0 10px 0px; color:#999; }
@@ -9,14 +9,14 @@ div.dataviewer-content h3								{ font-family: Share, Verdana, Arial, Helvetica
 div.dataviewer-content h4								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:20px; padding: 10px 0 10px 0px; color:#999; border-bottom:2px solid #ccc; }
 div.dataviewer-content h5								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:18px; padding: 10px 0 10px 0px; color:#999; border-bottom:2px solid #ccc; }
 div.dataviewer-content h3.popover-title					{ margin:auto; padding:5px 10px; }
-
+div.dataviewer-content .popover							{ max-width:50% !important; line-break: normal; }
 
 div.dataviewer-header                                   { padding:0; }
 div.dataviewer-header span.icon						    { float:left; margin: 5px 8px 0 0; }
 div.dataviewer-record-title                             { margin-bottom:15px; }
 div.dataviewer-record-title input                       { padding:8px; font-size: 16px; width:100%; font-family: Share,Verdana,Arial,Helvetica,sans-serif; background-color:#fefefe; border: 1px solid #bbbbbb;   border-radius: 2px; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }
-div.dataviewer-field                                    { padding: 0px 10px 0px; border-right:4px solid transparent; margin-top:10px; }
-div.dataviewer-field:hover                              { border-right:4px solid #c0c0c0; }
+div.dataviewer-field                                    { padding: 10px; border:1px solid transparent; margin-top:5px; }
+div.dataviewer-field:hover                              { border:1px solid transparent; }
 div.dataviewer-field h4                                 { padding-bottom:5px; margin:0 0 5px 0; }
 div.dataviewer-field-required                           { }
 div.dataviewer-field-required input,
@@ -36,9 +36,10 @@ div.dataviewer-record .callout							{ padding:10px !important; }
 div.dataviewer-record hr								{ color:#c0c0c0; background-color: #c0c0c0; }
 
 div.dataviewer-record .tab-content                      { border:1px solid #cccccc; background-color:#fafafa; border-top:0; padding: 10px;  }
-div.dataviewer-record .nav-tabs                         { background-color: #f2f2f2 !important; }
-div.dataviewer-record .nav-tabs li.tab                  { }
-div.dataviewer-record .nav-tabs>li.tab>a                { border:1px solid #cecece; background-color: #f2f2f2; }
+div.dataviewer-record .nav-tabs                         { background-color: transparent !important; }
+div.dataviewer-record .nav-tabs li.t3js-tabmenu-item    { }
+div.dataviewer-record .nav-tabs li.t3js-tabmenu-item.active>a{ background-color:#FAFAFA; border-bottom:1px solid #FAFAFA; }
+div.dataviewer-record .nav-tabs>li.t3js-tabmenu-item>a  { border:1px solid #cecece; background-color: #f2f2f2; }
 
 div.dataviewer-record span.label                        { background-color: transparent; font-size: x-small !important; padding:0; font-weight:normal !important; }
 div.dataviewer-record span.label-primary                { color:#0078e6; }

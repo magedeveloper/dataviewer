@@ -16,7 +16,7 @@
 
 	<div class="information-progress">
 		<f:alias map="{page:'{dv:page.get(id:currentPageId)}'}">
-			<f:translate key="LLL:EXT:lang/locallang_common.xlf:page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Templates/CmsLayout/Partials/DoktypeIcon.html" arguments="{doktype:page.doktype}" />[{page.uid}]&nbsp;{page.title}
+			<f:translate key="LLL:EXT:lang/locallang_common.xlf:page" />:&nbsp;<f:format.html parseFuncTSPath=""><dv:render.template template="EXT:dataviewer/Resources/Private/Partials/CmsLayout/DoktypeIcon.html" arguments="{doktype:page.doktype}" /></f:format.html>&nbsp;[{page.uid}]&nbsp;{page.title}
 		</f:alias>
 		<br />
 		<f:translate key="flexform.record_save_datatype" />:&nbsp;<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />&nbsp;[{datatype.uid}]&nbsp;{datatype.name}

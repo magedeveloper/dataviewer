@@ -1,6 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\Domain\Model;
 
+use MageDeveloper\Dataviewer\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\UnknownClassException;
@@ -267,8 +268,8 @@ class Record extends AbstractModel
 	public function getTitle()
 	{
 		if (!$this->title && $this->getDatatype())
-			return $this->getDatatype()->getName() . " " . \MageDeveloper\Dataviewer\Utility\LocalizationUtility::translate("entry", $this->getUid());
-		
+			return \MageDeveloper\Dataviewer\Utility\LocalizationUtility::translate("entry", $this->getDatatype()->getName());
+
 		return $this->title;
 	}
 
@@ -498,6 +499,16 @@ class Record extends AbstractModel
 	}
 
 	/**
+	 * Gets debugging information for the current record
+	 * 
+	 * @return string
+	 */
+	public function getDebuggingInformation()
+	{
+		echo DebugUtility::debugVariable($this, "Record Information");
+	}
+
+	/**
 	 * Set/Get attribute wrapper
 	 * @param string $method
 	 * @param array $args
@@ -507,8 +518,11 @@ class Record extends AbstractModel
 	public function __call($method, $args)
 	{
 		$this->initializeValues();
-		
 		$key = $this->_underscore(substr($method,3));
+		
+		if($key == "__debug")
+			return $this->getDebuggingInformation();
+		
 		switch( substr($method, 0, 3) )
 		{
 			case "get":

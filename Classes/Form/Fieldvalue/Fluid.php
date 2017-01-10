@@ -85,7 +85,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 	 * this, you need to have some knowledge,
 	 * what value is returned.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function getFrontendValue()
 	{

@@ -22,12 +22,16 @@
                         <multiple>0</multiple>
                         <items type="array">
                             <numIndex index="0" type="array">
-                                <numIndex index="0">LLL:EXT:lang/locallang_tca.xlf:sys_file.type.text</numIndex>
-                                <numIndex index="1">FILE:EXT:dataviewer/Configuration/FlexForms/Defaults/DynamicInput/Text.xml</numIndex>
+                                <numIndex index="0">LLL:EXT:lang/locallang_wizards.xlf:forms_type_input</numIndex>
+                                <numIndex index="1">FILE:EXT:dataviewer/Configuration/FlexForms/Defaults/DynamicInput/Input.xml</numIndex>
                             </numIndex>
                             <numIndex index="1" type="array">
                                 <numIndex index="0">LLL:EXT:lang/locallang_tca.xlf:sys_file_reference.link</numIndex>
                                 <numIndex index="1">FILE:EXT:dataviewer/Configuration/FlexForms/Defaults/DynamicInput/Link.xml</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">LLL:EXT:lang/locallang_wizards.xlf:forms_type_textarea</numIndex>
+                                <numIndex index="1">FILE:EXT:dataviewer/Configuration/FlexForms/Defaults/DynamicInput/Text.xml</numIndex>
                             </numIndex>
                         </items>
                         <maxitems>1</maxitems>

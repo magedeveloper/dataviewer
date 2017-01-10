@@ -58,7 +58,8 @@ class Field
 			{
 				$pid = $field->getPid();
 				$tabName = ($field->getTabName())?"".$field->getTabName().">":"";
-				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $tabName . $field->getFrontendLabel();
+				$label = ($field->getFrontendLabel())?$field->getFrontendLabel():"[".Locale::translate("no_label")."]";
+				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $tabName . $label;
 			}
 
 		}

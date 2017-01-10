@@ -1,7 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\DataHandling\DataHandler;
 
-use MageDeveloper\Dataviewer\Domain\Model\Field as FieldModel;
+use MageDeveloper\Dataviewer\Domain\Model\Variable as VariableModel;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 
@@ -15,49 +15,40 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Field extends AbstractDataHandler implements DataHandlerInterface
+class Variable extends AbstractDataHandler implements DataHandlerInterface
 {
 	/**
 	 * Field Repository
 	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
+	 * @var \MageDeveloper\Dataviewer\Domain\Repository\VariableRepository
 	 * @inject
 	 */
-	protected $fieldRepository;
-
-	/**
-	 * RecordValue Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordValueRepository
-	 * @inject
-	 */
-	protected $recordValueRepository;
+	protected $variableRepository;
 
 	/**
 	 * Constructor
 	 *
-	 * @return Field
+	 * @return Variable
 	 */
 	public function __construct()
 	{
 		parent::__construct();
-		$this->fieldRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-		$this->recordValueRepository 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordValueRepository::class); 
+		$this->variableRepository = $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\VariableRepository::class);
 	}
 
 	/**
-	 * Get an field by a given id
+	 * Get an variable by a given id
 	 *
 	 * @param int $id
-	 * @return FieldModel|bool
+	 * @return VariableModel|bool
 	 */
-	public function getFieldById($id)
+	public function getVariableById($id)
 	{
 		/* @var FieldModel $field */
-		$field = $this->fieldRepository->findByUid($id, false);
+		$variable = $this->variableRepository->findByUid($id, false);
 
-		if ($field instanceof FieldModel && $field->getUid() == $id)
-			return $field;
+		if ($variable instanceof VariableModel && $variable->getUid() == $id)
+			return $variable;
 
 		return false;
 	}
@@ -75,7 +66,7 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function processCmdmap($command, $table, $id, $value, &$commandIsProcessed, $parentObj, $pasteUpdate)
 	{
-		if ($table != "tx_dataviewer_domain_model_field") return;
+		if ($table != "tx_dataviewer_domain_model_variable") return;
 	}
 
 	/**
@@ -87,23 +78,9 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function processCmdmap_deleteAction($table, $id, $recordToDelete, &$recordWasDeleted, &$parentObj)
 	{
-		if ($table != "tx_dataviewer_domain_model_field") return;
-	
-		// We need to delete all recordValues that are related to this field
-		$recordValues = $this->recordValueRepository->findByFieldId($id);
+		if ($table != "tx_dataviewer_domain_model_variable") return;
 
-		if($recordValues && $recordValues->count())
-		{
-			foreach($recordValues as $_recordValue)
-			{
-				$_recordValue->setDeleted(true);
-				$this->recordValueRepository->update($_recordValue);
-			}
-
-			$this->persistenceManager->persistAll();
-		}
-
-		$message = Locale::translate("field_was_successfully_deleted", $id);
+		$message = Locale::translate("variable_was_successfully_deleted", $id);
 		$this->addBackendFlashMessage($message, '', FlashMessage::OK);
 	}
 
@@ -117,12 +94,10 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
-		if ($table != "tx_dataviewer_domain_model_field") return;
+		if ($table != "tx_dataviewer_domain_model_variable") return;
 	}
 
 	/**
-	 * processDatamap_afterDatabaseOperations
-	 * 
 	 * @param string $status
 	 * @param string $table
 	 * @param int $id
@@ -131,30 +106,26 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	 */
 	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$parentObj)
 	{
-		if ($table != "tx_dataviewer_domain_model_field") return;
-		
+		if ($table != "tx_dataviewer_domain_model_variable") return;
+
+		if(isset($parentObj->substNEWwithIDs[$id]))
+			$id = $parentObj->substNEWwithIDs[$id];
+			
 		if(isset($parentObj->substNEWwithIDs[$id]))
 			$id = $parentObj->substNEWwithIDs[$id];
 			
 		$name = '-';	
-		if(isset($fieldArray["frontend_label"])) 
+		if(isset($fieldArray["variable_name"]))
 		{
-			$name = $fieldArray["frontend_label"];
+			$name = $fieldArray["variable_name"];
 		}
 		else
 		{
-			$field = $this->getFieldById($id);
-			$name = $field->getFrontendLabel();
+			$variable = $this->getVariableById($id);
+			$name = $variable->getVariableName();
 		}		
 		
-		if($name == "")
-        {
-            $message  = Locale::translate("field_has_no_name");
-            $this->addBackendFlashMessage($message, '', FlashMessage::ERROR);
-            return;
-        }
-		
-		$message  = Locale::translate("field_was_successfully_saved", [$name, $id]);
+		$message  = Locale::translate("variable_was_successfully_saved", [$name, $id]);
 		$this->addBackendFlashMessage($message, '', FlashMessage::OK);
 
 		// Save processed data

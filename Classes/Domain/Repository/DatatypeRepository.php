@@ -19,14 +19,17 @@ class DatatypeRepository extends AbstractRepository
 	 * @param bool $respectStoragePage
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findAll($respectStoragePage = true)
+	public function findAll($respectStoragePage = true, array $orderings = [])
 	{
 		$query = $this->createQueryWithSettings(true, false, $respectStoragePage);
 		$querySettings = $query->getQuerySettings();
+		
+		if(!empty($orderings))
+			$query->setOrderings($orderings);
 
 		$this->setDefaultQuerySettings($querySettings);
-		
-		return parent::findAll(); 
+
+		return $query->execute();
 	}
 
 	/**

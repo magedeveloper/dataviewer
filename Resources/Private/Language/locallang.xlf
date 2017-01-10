@@ -27,6 +27,9 @@
             <trans-unit id="flexform.template_settings">
                 <source>Template Settings</source>
             </trans-unit>
+            <trans-unit id="flexform.render_only_template">
+                <source>Render this Template without Sitetemplate</source>
+            </trans-unit>
             <trans-unit id="flexform.plugin_type">
                 <source>Plugin Type</source>
             </trans-unit>
@@ -295,6 +298,18 @@
             </trans-unit>
             <trans-unit id="flexform.template_override">
                 <source>Fluid Template</source>
+            </trans-unit>
+            <trans-unit id="flexform.header_configuration">
+                <source>Header Configuration</source>
+            </trans-unit>
+            <trans-unit id="flexform.custom_headers">
+                <source>Custom Headers</source>
+            </trans-unit>
+            <trans-unit id="flexform.header_name">
+                <source>Header Name</source>
+            </trans-unit>
+            <trans-unit id="flexform.header_value">
+                <source>Header Value</source>
             </trans-unit>
             <trans-unit id="flexform.template_switch">
                 <source>Template Switch</source>
@@ -671,6 +686,12 @@
             <trans-unit id="field_not_found">
                 <source>Field not found</source>
             </trans-unit>
+            <trans-unit id="field_has_no_name">
+                <source>Please enter a frontend label for the field.</source>
+            </trans-unit>
+            <trans-unit id="no_label">
+                <source>No label given</source>
+            </trans-unit>
             <trans-unit id="datatype_not_selected">
                 <source>No Datatype selected</source>
             </trans-unit>
@@ -707,6 +728,9 @@
             <trans-unit id="record_was_successfully_deleted">
                 <source>Record with Id '%s' was successfully deleted.</source>
             </trans-unit>
+            <trans-unit id="variable_was_successfully_deleted">
+                <source>Variable with Id '%s' was successfully deleted.</source>
+            </trans-unit>
             <trans-unit id="could_not_delete_record">
                 <source>Could not delete Record with Id '%s'.</source>
             </trans-unit>
@@ -718,6 +742,9 @@
             </trans-unit>
             <trans-unit id="field_was_successfully_deleted">
                 <source>Field with Id '%s' and according record values were successfully deleted.</source>
+            </trans-unit>
+            <trans-unit id="variable_was_successfully_saved">
+                <source>Variable '%s' (%s) was successfully saved.</source>
             </trans-unit>
             <trans-unit id="fieldvalue_was_successfully_deleted">
                 <source>FieldValue with Id '%s' and according record values were successfully deleted.</source>
@@ -762,7 +789,7 @@
                 <source>Page</source>
             </trans-unit>
             <trans-unit id="entry">
-                <source>Entry Id %s</source>
+                <source>New '%s' Entry</source>
             </trans-unit>
             <trans-unit id="dynamic_value">
                 <source>Attach Values from Database for Frontend</source>
@@ -1189,6 +1216,24 @@
             </trans-unit>
             <trans-unit id="module.no_datatypes_found">
                 <source>No datatypes were found on this page.</source>
+            </trans-unit>
+            <trans-unit id="backend.no_datatypes_found">
+                <source>No datatypes found.</source>
+            </trans-unit>
+            <trans-unit id="backend.create">
+                <source>Create '%s'</source>
+            </trans-unit>
+            <trans-unit id="backend.latest">
+                <source>Latest Records</source>
+            </trans-unit>
+            <trans-unit id="backend.loading">
+                <source>Loading ...</source>
+            </trans-unit>
+            <trans-unit id="backend.delete_record">
+                <source>Delete Record</source>
+            </trans-unit>
+            <trans-unit id="backend.confirm_delete_record">
+                <source>Do you really want to delete the record?</source>
             </trans-unit>
             <trans-unit id="module.new_datatype">
                 <source>Create new datatype</source>

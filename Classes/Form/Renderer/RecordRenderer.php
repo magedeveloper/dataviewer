@@ -4,10 +4,8 @@ namespace MageDeveloper\Dataviewer\Form\Renderer;
 
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Imaging\Icon;
-use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 use MageDeveloper\Dataviewer\Domain\Model\Field as Field;
 use MageDeveloper\Dataviewer\Domain\Model\Record as Record;
 use MageDeveloper\Dataviewer\Domain\Model\Datatype as Datatype;
@@ -45,14 +43,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	protected $formResultCompiler;
 
 	/**
-	 * Icon Factory
-	 * 
-	 * @var \TYPO3\CMS\Core\Imaging\IconFactory
-	 * @inject
-	 */
-	protected $iconFactory;
-
-	/**
 	 * RecordValue Session Service
 	 * 
 	 * @var \MageDeveloper\Dataviewer\Service\Session\RecordValueSessionService
@@ -70,7 +60,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		parent::__construct();
 		$this->formResultCompiler 			= $this->objectManager->get(\TYPO3\CMS\Backend\Form\FormResultCompiler::class);
 		$this->fieldRenderer 				= $this->objectManager->get(\MageDeveloper\Dataviewer\Form\Renderer\FieldRenderer::class);
-		$this->iconFactory					= $this->objectManager->get(\TYPO3\CMS\Core\Imaging\IconFactory::class);
 		$this->recordValueSessionService 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Session\RecordValueSessionService::class);
 	}
 
@@ -383,7 +372,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$placeholder = "";
 		
 		if ($record->getDatatype())
-			$placeholder = $record->getDatatype()->getName() . " " . Locale::translate("entry", $record->getUid());
+			$placeholder = Locale::translate("entry", $record->getDatatype()->getName());
 
 		$title .= "<label for=\"{$fieldName}[title]\">{$titleLabel}:</label>";
 		$title .= "<input name=\"{$fieldName}[title]\" value=\"{$recordTitle}\" placeholder=\"{$placeholder}\" class=\"dataviewer-record-title-input\" />";

@@ -44,7 +44,7 @@ class Rte extends Text
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
 						],
-						'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',
+						'defaultExtras' => $this->getDefaultExtras(),
 					],
 				],
 			],
@@ -54,5 +54,15 @@ class Rte extends Text
 		$this->prepareTca($tca);
 		$this->tca = $tca;
 		return $this->tca;
+	}
+
+	/**
+	 * Gets the 'defaultExtras' Setting for the RTE
+	 * 
+	 * @return string
+	 */
+	public function getDefaultExtras()
+	{
+		return 'richtext:rte_transform[flag=rte_enabled|mode=ts]';
 	}
 }
