@@ -616,7 +616,6 @@
                             <config type="array">
                                 <type>group</type>
                                 <internal_type>file</internal_type>
-                                <allowed>html</allowed>
                                 <max_size>2000</max_size>
                                 <show_thumbs>0</show_thumbs>
                                 <size>1</size>
@@ -626,6 +625,15 @@
                             </config>
                         </TCEforms>
                     </settings.template_override>
+                    <settings.render_only_template>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.render_only_template</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.render_only_template>
                     <settings.template_switch>
                         <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_switch</title>
                         <section>1</section>
@@ -721,6 +729,61 @@
                             </config>
                         </TCEforms>
                     </settings.debug>
+                    
+                    <settings.custom_headers>
+                        <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_headers</title>
+                        <section>1</section>
+                        <type>array</type>
+                        <el>
+                            <headers>
+                                <type>array</type>
+                                <el>
+                                    <info>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                                            <config>
+                                                <type>user</type>
+                                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayAvailableMarkers</userFunc>
+                                                <parameters>
+                                                    <template>EXT:dataviewer/Resources/Private/Templates/CmsLayout/available_markers.html</template>
+                                                </parameters>
+                                            </config>
+                                        </TCEforms>
+                                    </info>
+                                    <name>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.header_name</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>50</size>
+                                                <placeholder>Content-Type</placeholder>
+                                            </config>
+                                        </TCEforms>
+                                    </name>
+                                    <value>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.header_value</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>50</size>
+                                                <placeholder>text/html; charset=utf-8</placeholder>
+                                            </config>
+                                        </TCEforms>
+                                    </value>
+                                    <condition>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid_condition</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>150</size>
+                                                <placeholder><![CDATA[{yourVariable} == '1337']]></placeholder>
+                                            </config>
+                                        </TCEforms>
+                                    </condition>
+                                </el>
+                            </headers>
+                        </el>
+                    </settings.custom_headers>
                 </el>
             </ROOT>
         </developer_settings>

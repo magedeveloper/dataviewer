@@ -88,6 +88,79 @@ class RecordController extends AbstractController
 			$this->view->setTemplatePathAndFilename($templateSwitch);
 		
 		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
+
+		// Custom Headers
+		$customHeaders = $this->getCustomHeaders();
+		$this->performCustomHeaders($customHeaders);
+		
+		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
+		{
+			echo $this->view->render();
+			exit();
+		}	
+	}
+
+	/**
+	 * Adds custom headers to the response object
+	 * 
+	 * @param array $customHeaders
+	 * @return bool
+	 */
+	public function performCustomHeaders($customHeaders)
+	{
+		if(!empty($customHeaders))
+		{
+			// Setting custom headers
+			foreach($customHeaders as $_headerName=>$_headerValue)
+				$this->response->setHeader($_headerName, $_headerValue, true);
+
+			$this->response->sendHeaders();
+			return true;
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Gets all custom headers that are valid for
+	 * the current view
+	 * 
+	 * @return array
+	 */
+	public function getCustomHeaders()
+	{
+		// Custom Headers Configuration
+		$customHeadersConfiguration = $this->listSettingsService->getCustomHeaders();
+
+		// Get a view with all injected variables
+		$view = $this->getStandaloneView(true);
+
+		$customHeaders = [];
+		foreach($customHeadersConfiguration as $_header)
+		{
+			$conditionStr = $_header["headers"]["condition"];
+			$headerName = $_header["headers"]["name"];
+			$headerValue = $_header["headers"]["value"];
+			$headerValue = $this->_replaceMarkersInString($headerValue);
+
+			if($conditionStr == "")
+			{
+				// Header is always valid
+				$isValid = true;
+			}
+			else
+			{
+				// Since we yet do not know how to render the nodes separately, we
+				// just render a simple full fluid condition here
+				$conditionText = "<f:if condition=\"{$conditionStr}\">1</f:if>";
+				$isValid = (bool)$view->renderSource($conditionText);
+			}
+
+			if($isValid)
+				$customHeaders[$headerName] = $headerValue;
+		}
+		
+		return $customHeaders;
 	}
 
 	/**
@@ -156,6 +229,16 @@ class RecordController extends AbstractController
 			$this->view->setTemplatePathAndFilename($templateSwitch);
 
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $record);
+
+		// Custom Headers
+		$customHeaders = $this->getCustomHeaders();
+		$this->performCustomHeaders($customHeaders);
+
+		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
+		{
+			echo $this->view->render();
+			exit();
+		}
 	}
 
 	/**
@@ -185,7 +268,16 @@ class RecordController extends AbstractController
 			$value = $record->getValueByField($field);
 			$this->view->assign($this->listSettingsService->getPartVarName(), $value);
 		}
-		
+
+		// Custom Headers
+		$customHeaders = $this->getCustomHeaders();
+		$this->performCustomHeaders($customHeaders);
+
+		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
+		{
+			echo $this->view->render();
+			exit();
+		}
 	}
 
 	/**
@@ -233,6 +325,16 @@ class RecordController extends AbstractController
 
 		// Get selected records and check if the record is allowed
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $recordObj);
+
+		// Custom Headers
+		$customHeaders = $this->getCustomHeaders();
+		$this->performCustomHeaders($customHeaders);
+
+		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
+		{
+			echo $this->view->render();
+			exit();
+		}
 	}
 
 	/**
@@ -729,7 +831,6 @@ class RecordController extends AbstractController
 		$uid = $this->_getContentUid();
 		$this->sessionServiceContainer->setTargetUid($uid);
 
-
 		$cObj = $this->configurationManager->getContentObject();
 		if ($cObj instanceof \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer)
 			$this->view->assign("cObj", $cObj->data);
@@ -766,7 +867,7 @@ class RecordController extends AbstractController
 	 */
 	protected function _replaceMarkersInString($string)
 	{
-		return $this->getStandaloneView()->renderSource($string);
+		return $this->getStandaloneView(true)->renderSource($string);
 	}
 
 	/**

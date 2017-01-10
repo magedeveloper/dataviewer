@@ -27,6 +27,9 @@
             <trans-unit id="flexform.template_settings">
                 <source>Template Settings</source>
             </trans-unit>
+            <trans-unit id="flexform.render_only_template">
+                <source>Render this Template without Sitetemplate</source>
+            </trans-unit>
             <trans-unit id="flexform.plugin_type">
                 <source>Plugin Type</source>
             </trans-unit>
@@ -295,6 +298,18 @@
             </trans-unit>
             <trans-unit id="flexform.template_override">
                 <source>Fluid Template</source>
+            </trans-unit>
+            <trans-unit id="flexform.header_configuration">
+                <source>Header Configuration</source>
+            </trans-unit>
+            <trans-unit id="flexform.custom_headers">
+                <source>Custom Headers</source>
+            </trans-unit>
+            <trans-unit id="flexform.header_name">
+                <source>Header Name</source>
+            </trans-unit>
+            <trans-unit id="flexform.header_value">
+                <source>Header Value</source>
             </trans-unit>
             <trans-unit id="flexform.template_switch">
                 <source>Template Switch</source>
@@ -670,6 +685,12 @@
             </trans-unit>
             <trans-unit id="field_not_found">
                 <source>Field not found</source>
+            </trans-unit>
+            <trans-unit id="field_has_no_name">
+                <source>Please enter a frontend label for the field.</source>
+            </trans-unit>
+            <trans-unit id="no_label">
+                <source>No label given</source>
             </trans-unit>
             <trans-unit id="datatype_not_selected">
                 <source>No Datatype selected</source>

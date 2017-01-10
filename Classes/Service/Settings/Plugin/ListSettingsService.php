@@ -317,4 +317,31 @@ class ListSettingsService extends PluginSettingsService
 			
 		return $conditions;
 	}
+
+	/**
+	 * Gets the custom header configuration from
+	 * the plugin configuration
+	 * 
+	 * @return array
+	 */
+	public function getCustomHeaders()
+	{
+		$headers = $this->getSettingByCode("custom_headers");
+
+		if(!is_array($headers))
+			$headers = [];
+
+		return $headers;
+	}
+
+	/**
+	 * Gets the setting for rendering only the selected
+	 * template without complete site template
+	 * 
+	 * @return bool
+	 */
+	public function renderOnlyTemplate()
+	{
+		return (bool)$this->getSettingByCode("render_only_template");
+	}
 }

@@ -34,6 +34,10 @@
                 <source>Template Settings</source>
                 <target>Template Einstellungen</target>
             </trans-unit>
+            <trans-unit id="flexform.render_only_template">
+                <source>Render this Template without Sitetemplate</source>
+                <target>Nur dieses Template ausgeben, ohne Seitentemplate</target>
+            </trans-unit>
             <trans-unit id="flexform.plugin_type">
                 <source>Plugin Type</source>
                 <target>Plugintyp</target>
@@ -390,6 +394,22 @@
             <trans-unit id="flexform.template_switch">
                 <source>Template Switch</source>
                 <target>Template-Weiche</target>
+            </trans-unit>
+            <trans-unit id="flexform.header_configuration">
+                <source>Header Configuration</source>
+                <target>Header-Konfiguration</target>
+            </trans-unit>
+            <trans-unit id="flexform.custom_headers">
+                <source>Custom Headers</source>
+                <target>Eigene Header</target>
+            </trans-unit>
+            <trans-unit id="flexform.header_name">
+                <source>Header Name</source>
+                <target>Eigene Header</target>
+            </trans-unit>
+            <trans-unit id="flexform.header_value">
+                <source>Header Value</source>
+                <target>Header Wert</target>
             </trans-unit>
             <trans-unit id="flexform.divide_records">
                 <source>Divide records</source>
@@ -882,6 +902,14 @@
             <trans-unit id="field_not_found">
                 <source>Field not found</source>
                 <target>Feld nicht gefunden</target>
+            </trans-unit>
+            <trans-unit id="field_has_no_name">
+                <source>Please enter a frontend label for the field.</source>
+                <target>Bitte geben Sie einen Frontend Label für das Feld an.</target>
+            </trans-unit>
+            <trans-unit id="no_label">
+                <source>No label given</source>
+                <target>Kein Label angegeben</target>
             </trans-unit>
             <trans-unit id="datatype_not_selected">
                 <source>No Datatype selected</source>
