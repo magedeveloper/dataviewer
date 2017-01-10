@@ -34,7 +34,7 @@ class Template
 	/**
 	 * Constructor
 	 *
-	 * @return Letter
+	 * @return Template
 	 */
 	public function __construct()
 	{
@@ -70,7 +70,8 @@ class Template
 					if(file_exists($filePath))
 					{
 						$id = $_template;
-						$options[] = [$id, $id];
+						$label = "{$id}";
+						$options[] = [$label, $id];
 					}
 				}
 			
