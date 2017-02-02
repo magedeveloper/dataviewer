@@ -16,14 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Field extends AbstractModel
 {
 	/**
-	 * FlexForm Service
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Service\FlexFormService
-	 * @inject
-	 */
-	protected $flexFormService;
-
-	/**
 	 * Display Field in Backend
 	 * 
 	 * @var boolean
