@@ -96,13 +96,18 @@ class RecordRepository extends AbstractRepository
 	 * @param array $storagePids
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByDatatypeIds(array $datatypeIds, array $storagePids)
+	public function findByDatatypeIds(array $datatypeIds, array $storagePids = [])
 	{
 		$query 			= $this->createQuery();
 		$querySettings 	= $query->getQuerySettings();
-		$querySettings->setStoragePageIds($storagePids);
-		$querySettings->setRespectStoragePage(true);
 
+		$querySettings->setRespectStoragePage(false);
+		if(!empty($storagePids))
+		{
+			$querySettings->setStoragePageIds($storagePids);
+			$querySettings->setRespectStoragePage(true);
+		}
+		
 		return $query->matching(
 			$query->in("datatype", $datatypeIds)
 		)->execute();
@@ -188,13 +193,16 @@ class RecordRepository extends AbstractRepository
 	 * @param bool $respectHideRecordsSetting
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findAll($storagePids = [], $includeHidden = false, $respectHideRecordsSetting = false)
+	public function findAll(array $storagePids = [], $includeHidden = false, $respectHideRecordsSetting = false, array $orderings = [])
 	{
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
-		$querySettings->setRespectStoragePage(true);
+		$querySettings->setRespectStoragePage(!empty($storagePids));
 		$querySettings->setIgnoreEnableFields($includeHidden);
 		$query->setQuerySettings($querySettings);
+
+		if(!empty($orderings))
+			$query->setOrderings($orderings);
 
 		$sub = $query;
 
@@ -230,13 +238,27 @@ class RecordRepository extends AbstractRepository
 	{	
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
-		$querySettings->setStoragePageIds($storagePids);
+		
+		if(!empty($storagePids))
+			$querySettings->setStoragePageIds($storagePids);
+		else
+			$querySettings->setRespectStoragePage(false);
+		
 		$query->setQuerySettings($querySettings);
 		
 		$statement = $this->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $storagePids);
+
 		$query->statement($statement);
 		$result = $query->execute(true);
 		
+		// Apply Sorting
+		usort($result, function ($a, $b) {
+			return $a['sort'] - $b['sort'];
+		});
+
+		if(is_numeric($sortField) && $sortOrder == QueryInterface::ORDER_DESCENDING)
+			$result=array_reverse($result, true);
+
 		return $result;
 	}
 
@@ -258,12 +280,12 @@ class RecordRepository extends AbstractRepository
 		{
 			$fieldId = (int)$sortField;
 			$subSelectOrdering = ",";
-			$subSelectOrdering .= "(SELECT search FROM tx_dataviewer_domain_model_recordvalue AS SSRV WHERE field = {$fieldId} AND SSRV.record = RECORD.uid) AS sort";
+			$subSelectOrdering .= "(SELECT search FROM tx_dataviewer_domain_model_recordvalue AS SSRV WHERE SSRV.field = {$fieldId} AND SSRV.record = RECORD.uid AND SSRV.hidden = 0 AND SSRV.deleted = 0 LIMIT 1) AS sort";
 			$sortField = "sort";
 		}
 
 		$statement = "";
-		$statement .= "SELECT            RECORD.uid,RECORD.title{$subSelectOrdering}"."\r\n";
+		$statement .= "SELECT            RECORD.uid,RECORD.pid,RECORD.title{$subSelectOrdering}"."\r\n";
 		$statement .= "FROM              tx_dataviewer_domain_model_record AS RECORD"."\r\n";
 		$statement .= "LEFT JOIN         tx_dataviewer_domain_model_recordvalue AS RECORDVALUE"."\r\n";
 		$statement .= "ON                RECORDVALUE.record = RECORD.uid"."\r\n";
@@ -271,7 +293,6 @@ class RecordRepository extends AbstractRepository
 		$statement .= "AND               RECORD.hidden = '0'"."\r\n";
 		$statement .= "AND               RECORDVALUE.deleted = '0'"."\r\n";
 		$statement .= "AND               RECORDVALUE.hidden = '0'"."\r\n";
-		
 		
 		if(!empty($storagePids))
 		{
@@ -287,7 +308,7 @@ class RecordRepository extends AbstractRepository
 		$statement .= "GROUP BY          RECORD.uid"."\r\n";
 		$statement .= "ORDER BY          {$sortField} {$sortOrder}"."\r\n";
 
-		if (!is_null($limit) && is_numeric($limit) && $limit > 0)
+		if (!is_null($limit))
 			$statement .= "LIMIT             {$limit}"."\r\n";
 			
 		return $statement;	
@@ -310,8 +331,9 @@ class RecordRepository extends AbstractRepository
 			$filterCondition 	= $_filter["filter_condition"];
 			$filterValue 		= $_filter["field_value"];
 			$filterCombination  = $_filter["filter_combination"];
+			$filterField		= (isset($_filter["filter_field"]))?$_filter["filter_field"]:"search";
 		
-			$additionalWhereClause .= $this->_getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination)."\r\n";
+			$additionalWhereClause .= $this->_getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination, $filterField)."\r\n";
 		}
 		
 		return $additionalWhereClause;
@@ -323,11 +345,11 @@ class RecordRepository extends AbstractRepository
 	 * @param mixed $filterValue
 	 * @return string
 	 */
-	protected function _getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination = "AND")
+	protected function _getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination = "AND", $filterField = "search")
 	{
 		$filterCondition = strtolower($filterCondition);
 	
-		$searchField = "search";
+		$searchField = $filterField;
 		$sql = "";
 		
 		// A selected dataviewer field

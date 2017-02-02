@@ -456,6 +456,27 @@
                                             </config>
                                         </TCEforms>
                                     </field_value>
+                                    <filter_field>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field</label>
+                                            <config>
+                                                <type>select</type>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_search</numIndex>
+                                                        <numIndex index="1">search</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_value</numIndex>
+                                                        <numIndex index="1">value_content</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <minitems>0</minitems>
+                                                <maxitems>1</maxitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </filter_field>
                                 </el>
                             </filters>
                         </el>
@@ -468,7 +489,7 @@
             <ROOT>
                 <TCEforms>
                     <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.display_settings</sheetTitle>
-                    <displayCond>FIELD:general_settings.switchableControllerActions:=:Record->list;Record->detail;,Record->ajaxRequest</displayCond>
+                    <displayCond>FIELD:general_settings.switchableControllerActions:IN:Record->list;Record->detail;,Record->ajaxRequest</displayCond>
                 </TCEforms>
                 <type>array</type>
                 <el>
@@ -600,6 +621,10 @@
                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_template_path</numIndex>
                                         <numIndex index="1">CUSTOM</numIndex>
                                     </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_fluid_code</numIndex>
+                                        <numIndex index="1">FLUID</numIndex>
+                                    </numIndex>
                                 </items>
                                 <multiple>0</multiple>
                                 <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Template->populateTemplates</itemsProcFunc>
@@ -609,6 +634,18 @@
                             </config>
                         </TCEforms>
                     </settings.template_selection>
+                    <settings.fluid_code>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid</label>
+                            <displayCond>FIELD:settings.template_selection:=:FLUID</displayCond>
+                            <config>
+                                <type>text</type>
+                                <renderType>t3editor</renderType>
+                                <format>mixed</format>
+                                <rows>15</rows>
+                            </config>
+                        </TCEforms>
+                    </settings.fluid_code>
                     <settings.template_override>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_override</label>
