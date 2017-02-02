@@ -28,7 +28,6 @@ class SortSessionService extends SessionService
 	 */
 	const SESSION_KEY_SORT_ORDER 	= "tx-dataviewer-sort-order";
 	const SESSION_KEY_SORT_BY	 	= "tx-dataviewer-sort-by";
-	const SESSION_KEY_PER_PAGE	 	= "tx-dataviewer-sort-per-page";
 	const SESSION_KEY_IS_SET		= "tx-dataviewer-sort-is-set";
 
 	/**
@@ -93,26 +92,5 @@ class SortSessionService extends SessionService
 		return $this->restoreFromSession(self::SESSION_KEY_SORT_BY);
 	}
 
-	/**
-	 * Sets the results per page
-	 *
-	 * @param int $perPage
-	 * @return $this
-	 */
-	public function setPerPage($perPage)
-	{
-		$this->writeToSession($perPage, self::SESSION_KEY_PER_PAGE);
-		return $this;
-	}
-
-	/**
-	 * Gets the result number per page
-	 *
-	 * @return int
-	 */
-	public function getPerPage()
-	{
-		return $this->restoreFromSession(self::SESSION_KEY_PER_PAGE);
-	}
 
 }

@@ -5,6 +5,7 @@ use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configurati
 
 use MageDeveloper\Dataviewer\Service\Session\FilterSessionService;
 use MageDeveloper\Dataviewer\Service\Session\LetterSessionService;
+use MageDeveloper\Dataviewer\Service\Session\PagerSessionService;
 use MageDeveloper\Dataviewer\Service\Session\SearchSessionService;
 use MageDeveloper\Dataviewer\Service\Session\SortSessionService;
 use MageDeveloper\Dataviewer\Service\Session\SessionService;
@@ -53,6 +54,14 @@ class SessionServiceContainer
 	protected $letterSessionService;
 
 	/**
+	 * Pager Session Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Session\PagerSessionService
+	 * @inject
+	 */
+	protected $pagerSessionService;
+
+	/**
 	 * Search Session Service
 	 *
 	 * @var \MageDeveloper\Dataviewer\Service\Session\SearchSessionService
@@ -77,7 +86,7 @@ class SessionServiceContainer
 	protected $selectSessionService;
 
 	/**
-	 * Injector SessionService
+	 * Injector Session Service
 	 * 
 	 * @var \MageDeveloper\Dataviewer\Service\Session\SessionService
 	 * @inject
@@ -94,13 +103,16 @@ class SessionServiceContainer
 	{
 		$filterSessionKey	= FilterSessionService::SESSION_PREFIX_KEY;
 		$letterSessionKey	= LetterSessionService::SESSION_PREFIX_KEY;
+		$pagerSessionKey	= PagerSessionService::SESSION_PREFIX_KEY;
 		$searchSessionKey	= SearchSessionService::SESSION_PREFIX_KEY;
 		$sortSessionKey		= SortSessionService::SESSION_PREFIX_KEY;
 		$selectSessionKey	= SelectSessionService::SESSION_PREFIX_KEY;
+		
 		$injectorSessionKey = \MageDeveloper\Dataviewer\ViewHelpers\InjectViewHelper::SESSION_PREFIX_KEY;
 	
 		$this->filterSessionService->setPrefixKey("{$filterSessionKey}-{$targetUid}");
 		$this->letterSessionService->setPrefixKey("{$letterSessionKey}-{$targetUid}");
+		$this->pagerSessionService->setPrefixKey("{$pagerSessionKey}-{$targetUid}");
 		$this->searchSessionService->setPrefixKey("{$searchSessionKey}-{$targetUid}");
 		$this->sortSessionService->setPrefixKey("{$sortSessionKey}-{$targetUid}");
 		$this->selectSessionService->setPrefixKey("{$selectSessionKey}-{$targetUid}");
@@ -119,12 +131,22 @@ class SessionServiceContainer
 
 	/**
 	 * Returns the letter session service
-	 * 
+	 *
 	 * @return LetterSessionService
 	 */
 	public function getLetterSessionService()
 	{
 		return $this->letterSessionService;
+	}
+
+	/**
+	 * Returns the pager session service
+	 *
+	 * @return PagerSessionService
+	 */
+	public function getPagerSessionService()
+	{
+		return $this->pagerSessionService;
 	}
 
 	/**
