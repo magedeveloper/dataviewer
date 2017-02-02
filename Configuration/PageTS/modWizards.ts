@@ -76,6 +76,15 @@ mod.wizards {
                             list_type = dataviewer_form
                         }
                     }
+                    tx_dataviewer_pager {
+                        icon = ../typo3conf/ext/dataviewer/Resources/Public/Icons/Plugins/dataviewer_pager.gif
+                        title = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.wizarditem_pi8
+                        description = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.wizarditem_pi8_description
+                        tt_content_defValues {
+                            CType = list
+                            list_type = dataviewer_pager
+                        }
+                    }                    
 					
                 }
                 show = *
