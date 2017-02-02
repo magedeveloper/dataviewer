@@ -37,7 +37,7 @@ class FieldRepository extends AbstractRepository
 		$tablename 		= $fieldValue->getTableContent();
 		$columnname 	= $fieldValue->getColumnName();
 		$whereClause	= $fieldValue->getWhereClause();
-		
+
 		$query = $this->createQuery();
 		$this->getDatabaseConnection()->debugOutput = false;
 		$statement = "SELECT {$columnname} FROM {$tablename} {$whereClause}";
@@ -48,7 +48,7 @@ class FieldRepository extends AbstractRepository
 
 	/**
 	 * Executes an raw query
-	 * 
+	 *
 	 * @param array $fields
 	 * @param string $table
 	 * @param string $where
@@ -59,10 +59,10 @@ class FieldRepository extends AbstractRepository
 		$query = $this->createQuery();
 		$fields = implode(",", $fields);
 		$statement = "SELECT {$fields} FROM {$table} {$where}";
-		
+
 		$query->statement($statement);
 		$result = $query->execute(true);
-		
+
 		return $result;
 	}
 
@@ -107,5 +107,33 @@ class FieldRepository extends AbstractRepository
 		$this->setDefaultQuerySettings($querySettings);
 
 		return parent::findAll();
+	}
+
+	/**
+	 * Finds all fields by certain types
+	 *
+	 * @param array $types
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByTypes(array $types)
+	{
+		$query = $this->createQueryWithSettings(true, false, false);
+		return $query->matching(
+			$query->in("type", $types)
+		)->execute();
+	}
+
+	/**
+	 * Finds a field by given variable name
+	 *
+	 * @param string $variableName
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\Field|null
+	 */
+	public function findOneByVariableName($variableName)
+	{
+		$query = $this->createQueryWithSettings(true, true, false);
+		return $query->matching(
+			$query->equals("variable_name", $variableName)
+		)->execute()->getFirst();
 	}
 }
