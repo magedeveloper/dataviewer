@@ -81,7 +81,7 @@ class SearchController extends AbstractController
 	{
 		if(!$this->_checkTargetUid())
 			$this->redirect("index");
-	
+			
 		$searchType 	= $this->searchSettingsService->getSearchType();
 		$searchFields	= $this->searchSettingsService->getSearchFields();
 
