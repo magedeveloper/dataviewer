@@ -115,7 +115,7 @@ abstract class AbstractFieldtype
 	 *
 	 * @var array
 	 */
-	protected $formDataProviders = [];
+	public $formDataProviders = [];
 
 	/**
 	 * Constructor

@@ -31,7 +31,6 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 		if(!is_null($modelClass))
 		{
 			$repoClassName 	= \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateModelNameToRepositoryName($modelClass);
-
 			if($this->objectManager->isRegistered($repoClassName))
 			{
 				/* @var \TYPO3\CMS\Core\Resource\AbstractRepository $repository */
@@ -44,6 +43,7 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 						$item = $model;
 
 				}
+				
 			}
 
 		}

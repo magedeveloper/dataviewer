@@ -43,11 +43,11 @@ class Group extends Select
 		$value = $this->getValue();
 		$values = GeneralUtility::trimExplode(",", $value, true);
 		$solved = [];
-
+		
 		foreach($values as $_value)
 		{
 			preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})/', $_value, $match);
-
+			
 			if($match["table"] && $match["uid"])
 			{
 				$table = $match["table"];
@@ -70,7 +70,7 @@ class Group extends Select
 				}
 			}
 		}
-	
+		
 		return $solved;
 	}
 	
@@ -122,7 +122,7 @@ class Group extends Select
 		$solvedValues = $this->_getSolvedValues();
 		$modelClass = $this->getField()->getConfig("modelClass");
 		$valueArr = [];
-
+		
 		foreach($solvedValues as $_value) 
 		{
 			$table = $_value["table"];
@@ -133,8 +133,7 @@ class Group extends Select
 			else
 				$record = BackendUtility::getRecord($table, $uid);
 		
-			if($record instanceof Record || is_array($record))
-				$valueArr[] = $record;
+			$valueArr[] = $record;
 		}
 		
 		return $valueArr;

@@ -66,7 +66,7 @@ class Select extends AbstractFieldtype implements FieldtypeInterface
 			"inlineStructure" => [],
 			"rootline" => [],
 		];
-
+		
 		if($this->getField()->getConfig("foreign"))
 			$tca["processedTca"]["columns"][$fieldName]["config"]["items"] = [];
 
@@ -115,8 +115,19 @@ class Select extends AbstractFieldtype implements FieldtypeInterface
 			//foreign_table_where
 			if($foreignTableWhere = $this->getField()->getConfig("foreign_table_where"))
 				$tca["processedTca"]["columns"][$fieldName]["config"]["foreign_table_where"] = $foreignTableWhere;
-				
-		}
+
+			// Additional items from fieldvalues
+			if((bool)$this->getField()->getConfig("include_field_values_as_options") == true)
+				$tca["processedTca"]["columns"][$fieldName]["config"]["items"] = $this->getFieldItems($this->getField());
+
+			// Suggest Wizard
+			if((bool)$this->getField()->getConfig("suggest_wizard") == true)
+				$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"] = [
+					"suggest" => [
+						"type" => "suggest",
+					],
+				];
+        }
 
 		parent::prepareTca($tca);
 	}
