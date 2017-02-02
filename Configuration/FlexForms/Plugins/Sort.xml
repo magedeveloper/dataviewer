@@ -48,7 +48,7 @@
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_fields</label>
                             <config>
                                 <type>select</type>
-                                <multiple>1</multiple>
+                                <multiple>0</multiple>
                                 <allowNonIdValues>1</allowNonIdValues>
                                 <default></default>
                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
@@ -96,19 +96,6 @@
                             </config>
                         </TCEforms>
                     </settings.field_ids>
-
-                    <settings.per_page>
-                        <TCEforms>
-                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.per_page_entries</label>
-                            <config>
-                                <type>input</type>
-                                <size>20</size>
-                                <default>8,16,32,40</default>
-                                <placeholder>8,16,32,40</placeholder>
-                                <eval>trim</eval>
-                            </config>
-                        </TCEforms>
-                    </settings.per_page>
 
                 </el>
             </ROOT>
