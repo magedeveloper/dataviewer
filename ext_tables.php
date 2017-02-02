@@ -141,6 +141,19 @@ $GLOBALS["TCA"]["tt_content"]["types"]["list"]["subtypes_excludelist"][$pluginSi
 $GLOBALS["TCA"]["tt_content"]["types"]["list"]["subtypes_addlist"][$pluginSigPi7] 		= "pi_flexform";
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSigPi7, "FILE:EXT:" . $_EXTKEY . "/Configuration/FlexForms/Plugins/Form.xml");
 
+/***********************************
+ * Plugin - Pager
+ ***********************************/
+$pluginSigPi8 = strtolower($extensionName) . "_pager";
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+	$_EXTKEY,
+	"Pager",
+	"LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.wizarditem_pi8"
+);
+$GLOBALS["TCA"]["tt_content"]["types"]["list"]["subtypes_excludelist"][$pluginSigPi8] 	= "layout,select_key,recursive";
+$GLOBALS["TCA"]["tt_content"]["types"]["list"]["subtypes_addlist"][$pluginSigPi8] 		= "pi_flexform";
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSigPi8, "FILE:EXT:" . $_EXTKEY . "/Configuration/FlexForms/Plugins/Pager.xml");
+
 
 /***********************************
  * CMS Layout Hook
@@ -152,6 +165,7 @@ $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["cms/layout/class.tx_cms_layout.php"][
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["cms/layout/class.tx_cms_layout.php"]["list_type_Info"][$pluginSigPi5][$_EXTKEY] = "EXT:" . $_EXTKEY . "/Classes/CmsLayout/Filter.php:MageDeveloper\\Dataviewer\\CmsLayout\\Filter->getBackendPluginLayout";
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["cms/layout/class.tx_cms_layout.php"]["list_type_Info"][$pluginSigPi6][$_EXTKEY] = "EXT:" . $_EXTKEY . "/Classes/CmsLayout/Select.php:MageDeveloper\\Dataviewer\\CmsLayout\\Select->getBackendPluginLayout";
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["cms/layout/class.tx_cms_layout.php"]["list_type_Info"][$pluginSigPi7][$_EXTKEY] = "EXT:" . $_EXTKEY . "/Classes/CmsLayout/Form.php:MageDeveloper\\Dataviewer\\CmsLayout\\Form->getBackendPluginLayout";
+$GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["cms/layout/class.tx_cms_layout.php"]["list_type_Info"][$pluginSigPi8][$_EXTKEY] = "EXT:" . $_EXTKEY . "/Classes/CmsLayout/Pager.php:MageDeveloper\\Dataviewer\\CmsLayout\\Pager->getBackendPluginLayout";
 
 /***********************************
  * Backend CSS File Include
@@ -186,6 +200,11 @@ $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["inlineParentR
  * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to get the Category Element correctly to work
  */
 $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [];
+
+/**
+ * We need to inject the rendered tca of select/multiselect fields to the GLOBALS to restore compatibility to the suggest wizard
+ */
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['extTablesInclusion-PostProcessing'][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\ExtTablesInclusion"; 
 
 /**
  * Backend DataViewer Widget on Top

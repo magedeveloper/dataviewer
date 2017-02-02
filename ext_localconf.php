@@ -70,6 +70,12 @@ if (!defined("TYPO3_MODE")) {
  * for creating new records in the 
  * backend.
  * 
+ * #8 - Pager
+ * ---------------------------------
+ * Adds a page to your site for 
+ * paging the records of the 
+ * connected records plugin.
+ * 
  * 
  ***********************************/
 // #1 - Display Records
@@ -132,5 +138,14 @@ if (!defined("TYPO3_MODE")) {
 	"Form",
 	["Form" => "index, post, delete, error"], // Cached
 	["Form" => "index, post, delete, error"], // UnCached
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
+);
+
+// #8 - Pager
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'MageDeveloper.'.$_EXTKEY,
+	"Pager",
+	["Pager" => "index, page"], // Cached
+	["Pager" => "index, page"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );

@@ -1,0 +1,74 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+
+        <general_settings>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.general_settings</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+
+                    <settings.logo>
+                        <TCEforms>
+                            <label></label>
+                            <config>
+                                <type>user</type>
+                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Logo->displayLogoText</userFunc>
+                            </config>
+                        </TCEforms>
+                    </settings.logo>
+
+                    <settings.target_plugin>
+                        <TCEforms>
+                            <exclude>1</exclude>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.target_plugin</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>tt_content</allowed>
+                                <size>1</size>
+                                <maxitems>1</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                            </config>
+                        </TCEforms>
+                    </settings.target_plugin>
+
+                    <settings.per_page>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.per_page_entries</label>
+                            <config>
+                                <type>input</type>
+                                <size>20</size>
+                                <default>8,16,32,40</default>
+                                <placeholder>8,16,32,40</placeholder>
+                                <eval>trim</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.per_page>
+
+                    <settings.show_view_all>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.show_view_all</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.show_view_all>
+                </el>
+            </ROOT>
+        </general_settings>
+
+    </sheets>
+</T3DataStructure> 

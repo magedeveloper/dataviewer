@@ -81,6 +81,9 @@ class RecordController extends AbstractController
 	 */
 	public function listAction()
 	{
+		if($this->listSettingsService->isCustomFluidCode())
+			$this->forward("renderFluid");
+			
 		$selectedRecords = $this->_getSelectedRecords();
 		
 		$templateSwitch = $this->getTemplateSwitch();
@@ -98,6 +101,48 @@ class RecordController extends AbstractController
 			echo $this->view->render();
 			exit();
 		}	
+	}
+
+	/**
+	 * This action directly renders the entered fluid code
+	 * 
+	 * @return string
+	 */
+	public function renderFluidAction()
+	{
+		$selectedRecords = $this->_getSelectedRecords();
+		$view = $this->getStandaloneView(false);
+		$selectedVariableIds = $this->listSettingsService->getSelectedVariableIds();
+		$variables = $this->prepareVariables($selectedVariableIds);
+		$templateSource = $this->listSettingsService->getFluidCode();
+
+		// Assign variables to the view
+		$view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
+		$view->assignMultiple($variables);
+		
+		$templateSwitch = $this->getTemplateSwitch();
+		if($templateSwitch)
+			$view->setTemplatePathAndFilename($templateSwitch);
+		else
+			$view->setTemplateSource($templateSource);
+
+		// Custom Headers
+		$customHeaders = $this->getCustomHeaders();
+		$this->performCustomHeaders($customHeaders);
+		
+		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
+		{
+			echo $view->render();
+			exit();
+		}
+
+		if($this->listSettingsService->isDebug())
+		{
+			$templateSource = "<f:debug>{_all}</f:debug>".$templateSource;
+			$view->setTemplateSource($templateSource);
+		}
+
+		return $view->render();
 	}
 
 	/**
@@ -207,6 +252,9 @@ class RecordController extends AbstractController
 	 */
 	public function detailAction()
 	{
+		if($this->listSettingsService->isCustomFluidCode())
+			$this->forward("renderFluid");
+	
 		$selectedRecordId 	= $this->listSettingsService->getSelectedRecordId();
 		$record 			= $this->recordRepository->findByUid($selectedRecordId, false);
 
@@ -296,7 +344,7 @@ class RecordController extends AbstractController
 			$recordObj = null;
 		else	
 			if ($recordObj->getDatatype()->getTemplatefile() && !$this->listSettingsService->isDebug())
-				$this->view->setTemplatePathAndFilename($record->getDatatype()->getTemplatefile());
+				$this->view->setTemplatePathAndFilename($recordObj->getDatatype()->getTemplatefile());
 
 		// Template Override by plugin setting
 		$templateSwitch = $this->getTemplateSwitch();
@@ -469,6 +517,56 @@ class RecordController extends AbstractController
 	}
 
 	/**
+	 * Gets merged filters
+	 * 
+	 * @return array
+	 */
+	protected function _getFilters()
+	{
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Record Selection Type Filters
+		/////////////////////////////////////////////////////////////////////////////////////////
+		$selectionType 	= $this->listSettingsService->getRecordSelectionType();
+		$selectFilters	= $this->_getAdditionalFiltersBySelectionType($selectionType);
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Field/Value Filter Settings
+		/////////////////////////////////////////////////////////////////////////////////////////
+		$fieldFilter	= $this->listSettingsService->getFieldValueFilters();
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Search Filters
+		/////////////////////////////////////////////////////////////////////////////////////////
+		$searchFields	= $this->sessionServiceContainer->getSearchSessionService()->getSearchFields();
+		$searchString	= $this->sessionServiceContainer->getSearchSessionService()->getSearchString();
+		$searchType		= $this->sessionServiceContainer->getSearchSessionService()->getSearchType();
+		$searchFilters	= $this->_getAdditionalFiltersBySearch($searchType, $searchString, $searchFields);
+		
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Filter Plugin Filters
+		/////////////////////////////////////////////////////////////////////////////////////////
+		$filter			= $this->sessionServiceContainer->getFilterSessionService()->getCleanSelectedOptions();
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Selection Plugin Filters
+		/////////////////////////////////////////////////////////////////////////////////////////
+		$selection		= $this->sessionServiceContainer->getSelectSessionService()->getSelectedRecords();
+		$selectionFilters = $this->_getAdditionalFiltersByRecordSelection($selection);
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Letter Selection Plugin Filters
+		/////////////////////////////////////////////////////////////////////////////////////////
+		$letter			= $this->sessionServiceContainer->getLetterSessionService()->getSelectedLetter();
+		$letterField	= $this->sessionServiceContainer->getLetterSessionService()->getLetterSelectionField();
+		$letterFilters	= $this->_getAdditionalFiltersByLetterSelection($letter, $letterField);
+
+		// Merging all Filters
+		$filters	= array_merge($fieldFilter, $filter, $selectionFilters, $selectFilters, $searchFilters, $letterFilters);
+
+		return $filters;
+	}
+	
+	/**
 	 * Gets the selected records with the use of all
 	 * session services to apply the following cicumstances
 	 * 
@@ -481,31 +579,21 @@ class RecordController extends AbstractController
 	 */
 	protected function _getSelectedRecords()
 	{
-		$selectionType 	= $this->listSettingsService->getRecordSelectionType();
-		
-		// Record Selection Type Filters
-		$selectFilters	= $this->_getAdditionalFiltersBySelectionType($selectionType);
-		
 		// Limit
 		$limit			= $this->listSettingsService->getLimitation();
+
+		// Pager
+		$perPage		= $this->sessionServiceContainer->getPagerSessionService()->getPerPage();
+		$selectedPage	= $this->sessionServiceContainer->getPagerSessionService()->getSelectedPage();
+		$page			= ($selectedPage*$perPage) - $perPage;
 		
-		// Field/Value Filter Settings
-		$fieldFilter	= $this->listSettingsService->getFieldValueFilters();
+		// If nothing was set before, we use the per page setting from our records plugin
+		if(is_null($perPage)) $perPage = $this->listSettingsService->getPerPage();
 		
-		// Search
-		$searchFields	= $this->sessionServiceContainer->getSearchSessionService()->getSearchFields();
-		$searchString	= $this->sessionServiceContainer->getSearchSessionService()->getSearchString();
-		$searchType		= $this->sessionServiceContainer->getSearchSessionService()->getSearchType();
-		$searchFilters	= $this->_getAdditionalFiltersBySearch($searchType, $searchString, $searchFields);
-		
-		// Filter
-		$filter			= $this->sessionServiceContainer->getFilterSessionService()->getCleanSelectedOptions();
-		
-		// Selection
-		$selection		= $this->sessionServiceContainer->getSelectSessionService()->getSelectedRecords();
-		$selectionFilters = $this->_getAdditionalFiltersByRecordSelection($selection);
-		
-		// Sort
+		if($perPage && $selectedPage > 0)
+			$limit = "$page,{$perPage}";
+			
+		// Sorting
 		if(!$this->sessionServiceContainer->getSortSessionService()->hasOrderings() || !$this->_hasTargetSortPlugin())
 		{
 			// We initally set orderings from our plugin settings and will use
@@ -519,17 +607,12 @@ class RecordController extends AbstractController
 			$this->sessionServiceContainer->getSortSessionService()->setPerPage($configPerPage);
 		}
 		
+		
 		$sortField		= $this->sessionServiceContainer->getSortSessionService()->getSortField();
 		$sortOrder		= $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
-		$perPage		= $this->sessionServiceContainer->getSortSessionService()->getPerPage();
 		
-		// Letter Selection
-		$letter			= $this->sessionServiceContainer->getLetterSessionService()->getSelectedLetter();
-		$letterField	= $this->sessionServiceContainer->getLetterSessionService()->getLetterSelectionField();
-		$letterFilters	= $this->_getAdditionalFiltersByLetterSelection($letter, $letterField);
-		
-		// Filters Merged
-		$filters	= array_merge($fieldFilter, $filter, $selectionFilters, $selectFilters, $searchFilters, $letterFilters);
+		// Retrieving all filters from different sources
+		$filters = $this->_getFilters();
 		
 		////////////////////////////////////////////////////////////////////////////////
 		// Signal-Slot for manipulating the complete filters for the record selection //
@@ -553,6 +636,7 @@ class RecordController extends AbstractController
 		[filter_condition] => like
 		[field_value] => filterval
 		[filter_combination] => AND|OR
+		[filter_field] => search|value_content
 
 		---------------------------------------------------------------------------------------------------------
 		eq			=			'{$var}'					->equals
@@ -571,8 +655,6 @@ class RecordController extends AbstractController
 			$statement = $this->recordRepository->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 			$this->view->assign("statement", $statement);
 		}
-		
-		
 		
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 		$records = null;
@@ -633,6 +715,7 @@ class RecordController extends AbstractController
 				"filter_condition" => "in",
 				"field_value" => $selectedRecordIds,
 				"filter_combination" => "AND",
+				"filter_field" => "search",
 			];
 		}
 
@@ -661,6 +744,7 @@ class RecordController extends AbstractController
 				"filter_condition" => "like",
 				"field_value" => "{$letter}%",
 				"filter_combination" => "AND",
+				"filter_field" => "search",
 			];
 		}
 		
@@ -691,6 +775,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "like",
 					"field_value" => "%{$searchString}%",
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				break;
 			case SearchSettingsService::SEARCH_RECORD_TITLE_FIELDS:
@@ -699,6 +784,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "like",
 					"field_value" => "%{$searchString}%",
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				$additionalFilters = array_merge($additionalFilters, $searchFields);
 				break;
@@ -731,6 +817,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "in",
 					"field_value" => $selectedDatatypes,
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_RECORDS:
@@ -740,6 +827,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "in",
 					"field_value" => $selectedRecordIds,
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_CREATION_DATE:
@@ -753,6 +841,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "gte",
 					"field_value" => $dateFrom->getTimestamp(),
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				
 				$additionalFilters[] = [
@@ -760,6 +849,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "lte",
 					"field_value" => $dateTo->getTimestamp(),
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_CHANGE_DATE:
@@ -773,6 +863,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "gte",
 					"field_value" => $dateFrom->getTimestamp(),
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 
 				$additionalFilters[] = [
@@ -780,6 +871,7 @@ class RecordController extends AbstractController
 					"filter_condition" => "lte",
 					"field_value" => $dateTo->getTimestamp(),
 					"filter_combination" => "AND",
+					"filter_field" => "search",
 				];
 				break;
 			case ListSettingsService::SELECTION_TYPE_FIELD_VALUE_FILTER:
