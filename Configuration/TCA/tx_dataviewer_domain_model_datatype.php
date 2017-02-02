@@ -29,10 +29,10 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Datatype.gif"
 	],
 	'interface' => [
-		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, templatefile, icon, color, title_divider, hide_records, hide_add, fields',
+		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, templatefile, icon, color, title_divider, hide_records, hide_add, fields, tab_config',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, hide_add, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, tab_config, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, hide_add, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -259,7 +259,7 @@ return [
 				'autoSizeMax' => 30,
 				'iconsInOptionTags' => 1,
 				'maxitems' => 9999,
-				'multiple' => 1,
+				'multiple' => 0,
 				'wizards' => [
 					'_PADDING' => 4,
 					'_VERTICAL' => 1,
@@ -289,6 +289,16 @@ return [
 							'name' => 'wizard_add'
 						],
 					],
+				],
+			],
+		],
+		'tab_config' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_datatype.tab_config',
+			'config' => [
+				'type' => 'flex',
+				'ds' => [
+					'default' => 'FILE:EXT:dataviewer/Configuration/FlexForms/Datatype/TabConfig.xml'
 				],
 			],
 		],

@@ -30,16 +30,17 @@ div.dataviewer-field-hidden                             { margin:10px; border:1p
 div.dataviewer-field-hidden input                       { border: 1px dotted #777; }
 div.dataviewer-dynamic-value                            { margin: 0px 0px 4px;  color: #999; border: 1px dashed; padding: 2px; background-color: #f2f2f2; font-style: italic; }
 div.dataviewer-field-flex strong                        { display:none; }
-div.dataviewer-record div.tab-content div.callout		{ padding:5px !important; margin:0 !important; }
-div.dataviewer-record div.tab-content div.callout.callout-notice { background-color:#ffffff !important; border:2px solid #eaeaea !important; }
-div.dataviewer-record .callout							{ padding:10px !important; }
+div.dataviewer-record div.tab-content div.callout		{ padding:5px 5px 5px 0 !important; margin:0 !important; }
+div.dataviewer-record div.tab-content div.callout.callout-notice { border:0px !important; color:#666; }
+div.dataviewer-record .callout							{ border:0px !important; padding:10px; }
 div.dataviewer-record hr								{ color:#c0c0c0; background-color: #c0c0c0; }
 
-div.dataviewer-record .tab-content                      { border:1px solid #cccccc; background-color:#fafafa; border-top:0; padding: 10px;  }
-div.dataviewer-record .nav-tabs                         { background-color: transparent !important; }
-div.dataviewer-record .nav-tabs li.t3js-tabmenu-item    { }
-div.dataviewer-record .nav-tabs li.t3js-tabmenu-item.active>a{ background-color:#FAFAFA; border-bottom:1px solid #FAFAFA; }
-div.dataviewer-record .nav-tabs>li.t3js-tabmenu-item>a  { border:1px solid #cecece; background-color: #f2f2f2; }
+div.dataviewer-record .tab-content                      { border:1px solid transparent; background-color:#fafafa; border-top:0; padding: 10px;  }
+div.dataviewer-record .nav-tabs                         { background-color: #ffffff; border-bottom:1px solid #cecece; padding:0; }
+div.dataviewer-record .nav-tabs li.t3js-tabmenu-item    { margin-left:0px !important; margin-right:2px; margin-top: -2px; }
+div.dataviewer-record .nav-tabs li.t3js-tabmenu-item.active>a{ color:#000; background-color:#FAFAFA; border-bottom:1px solid #FAFAFA; }
+div.dataviewer-record .nav-tabs>li.t3js-tabmenu-item>a  { color:#666; border:1px solid #cecece; background-color: #f2f2f2; }
+div.dataviewer-record .nav-tabs>li.t3js-tabmenu-item>a:hover { background-color: #fefefe; }
 
 div.dataviewer-record span.label                        { background-color: transparent; font-size: x-small !important; padding:0; font-weight:normal !important; }
 div.dataviewer-record span.label-primary                { color:#0078e6; }
@@ -159,7 +160,7 @@ div.dataviewer-backend hr { height:2px; border:0; color:#c0c0c0; background-colo
 .dataviewer-backend-form { }
 .dataviewer-backend-form div.field { width:100%; display:block; height:50px; }
 .dataviewer-backend-form select { }
-.dataviewer-backend-form div.field label { float:left; width:250px; margin-right:20px; }
+.dataviewer-backend-form div.field label { float:left; width:320px; margin-right:20px; }
 .dataviewer-backend-form div.field input[type=file] { float:left;  }
 .dataviewer-backend-form input[type=submit],
 .dataviewer-backend-form button { float:left; background-color:#4086B1; padding:5px 10px; margin-top:20px; color:white; border:0px; }
