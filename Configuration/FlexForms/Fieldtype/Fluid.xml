@@ -23,6 +23,20 @@
                     </config>
                 </TCEforms>
             </showInBackend>
+            <injectVariables>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.variable_injection</label>
+                    <config>
+                        <type>select</type>
+                        <multiple>0</multiple>
+                        <autosizemax>10</autosizemax>
+                        <foreign_table>tx_dataviewer_domain_model_variable</foreign_table>
+                        <maxitems>9999</maxitems>
+                        <minitems>0</minitems>
+                        <size>5</size>
+                    </config>
+                </TCEforms>
+            </injectVariables>
         </el>
     </ROOT>
 </T3DataStructure>
