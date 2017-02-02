@@ -2,9 +2,12 @@
 {namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
 {namespace be=TYPO3\CMS\Beuser\ViewHelpers}
 
-<div style="position:absolute; top:7px; right:10px;">
-	<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_mini.png" height="16" title="MageDeveloper DataViewer Extension" />
-</div>
+<f:if condition="{logoUrl}">
+	<div style="position:absolute; top:7px; right:10px;">
+		<f:image src="{logoUrl}" height="16" title="MageDeveloper DataViewer Extension" />
+	</div>
+</f:if>
+
 <div class="row" style="min-width:50em;">
 	<div class="col-md-4" style="border-right:1px solid #000; /*min-height:420px;*/ padding-bottom:10px; overflow-x:hidden; overflow-y: auto;">
 		<ul class="dropdown-list">
