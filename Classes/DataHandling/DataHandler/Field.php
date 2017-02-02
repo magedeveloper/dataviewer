@@ -135,17 +135,19 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 		
 		if(isset($parentObj->substNEWwithIDs[$id]))
 			$id = $parentObj->substNEWwithIDs[$id];
-			
+
+		$field = $this->getFieldById($id);
+		
+		// Assign generated code to the field
+		$code = $field->getCode();
+		$field->setVariableName($code);
+		$this->fieldRepository->update($field);
+
 		$name = '-';	
 		if(isset($fieldArray["frontend_label"])) 
-		{
 			$name = $fieldArray["frontend_label"];
-		}
 		else
-		{
-			$field = $this->getFieldById($id);
 			$name = $field->getFrontendLabel();
-		}		
 		
 		if($name == "")
         {
