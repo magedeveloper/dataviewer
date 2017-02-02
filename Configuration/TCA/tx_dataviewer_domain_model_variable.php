@@ -14,7 +14,7 @@ return [
 		"dividers2tabs" => TRUE,
 		"versioningWS" => 2,
 		"hideTable" => false,
-		"requestUpdate" => "type,table_content,column_name",
+		"requestUpdate" => "type,table_content,column_name,record",
 		"versioning_followPages" => TRUE,
 		"languageField" => "sys_language_uid",
 		"transOrigPointerField" => "l10n_parent",
@@ -238,8 +238,10 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-				'foreign_table' => 'tx_dataviewer_domain_model_record',
-				'foreign_table_where' => 'AND tx_dataviewer_domain_model_record.pid=###CURRENT_PID###',
+				'itemsProcFunc' => "MageDeveloper\\Dataviewer\\UserFunc\\Record->populateRecordsAction",
+				'items' => [
+					['', 0],
+				],
 				'size' => 1,
 				'maxitems' => 1,
 				'multiple' => 0,
@@ -252,8 +254,10 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-				'foreign_table' => 'tx_dataviewer_domain_model_field',
-				'foreign_table_where' => 'AND tx_dataviewer_domain_model_field.pid=###CURRENT_PID###',
+				'itemsProcFunc' => "MageDeveloper\\Dataviewer\\UserFunc\\Field->populateFieldsByRecord",
+				'items' => [
+					['', 0],
+				],
 				'size' => 1,
 				'maxitems' => 1,
 				'multiple' => 0,
