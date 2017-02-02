@@ -33,8 +33,29 @@ Step 3 - Clear all caches
 It is important to clear all the caches.
 
 
-Backend Configuration
-=====================
+Additional Configuration
+========================
+
+
+Pre-Defining Templates for the Template Selector
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You manually can add predefined templates to the template selector for easy usage.
+You have to edit the TypoScript of your Page-Template and add the following information. (example)
+
+.. code-block:: html
+
+     plugin.tx_dataviewer.templates {
+         MOVIE = --div--
+         movieList = fileadmin/templates/dataviewer/movies/List.html
+         movieDetail = fileadmin/templates/dataviewer/movies/Detail.html
+         DATA = --div--
+         main = fileadmin/templates/dataviewer/data/main.html
+         record = fileadmin/templates/dataviewer/data/record.html
+         EXTENSION = --div--
+         external = EXT:ext/Resources/Private/Templates/DataViewer/External.html
+     }
+
 
 Toolbar Item
 ~~~~~~~~~~~~
@@ -50,6 +71,8 @@ the following code
 
 .. code-block:: html
 
-	options {
-	  disableDataViewerToolbarItem = 0
-	}
+    options {
+        dataviewer {
+           disableDataViewerToolbarItem = 1
+        }
+    }

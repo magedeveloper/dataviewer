@@ -20,10 +20,10 @@ DataViewer Settings
 
 Record-Datatype for the Storage
    Please select the record type which will be stored when the form is posted.
-   
+
 File Upload Folder
    If the form contains upload-fields, the data will be saved in the selected folder.
-   
+
 Allowed Actions on Controller
    Please select the allowed actions that this plugin will support. If you try to call an invalid action,
    the plugin will add an error-message to the screen.
@@ -36,12 +36,12 @@ Redirect Settings
 
 Redirect after successful creation
    The redirect page, when a new record is successfully created.
-   
-   
+
+
 Redirect after successful editing
    The redirect page, when a record is successfully saved after editing.
-   
-   
+
+
 Redirect after successful creation
    The redirect page, when a record was successfully deleted.
 
@@ -77,24 +77,24 @@ Each field has to get the same name as the code of the field is.
 
 	<label for="title">Title:</label>
 	<f:form.textfield name="title" value="{record.title}" />
-	
+
 	<!-- {record.type.fieldtype.items} is used to retrieve all items from the select box -->
 	<label for="type">Type:</label>
 	<f:form.select options="{record.type.fieldtype.items}" name="type" value="{record.type.value}" />
-	
+
 	<label for="type">Length:</label>
 	<f:form.textfield name="length" value="{record.length.value}" />
-	
+
 	<label for="type">Age Rating:</label>
 	<f:form.select options="{record.agerating.fieldtype.items}" name="agerating" value="{record.agerating.value}" />
-	
+
 	<label for="type">Cover:</label>
 	<f:form.upload name="cover" />
 	<f:if condition="{record.cover}">
 		<br />
 		Current Cover: {record.cover.value.0.publicUrl}
 	</f:if>
-	
+
 	<f:form.submit name="submit" value="Submit this record" />
 
 
