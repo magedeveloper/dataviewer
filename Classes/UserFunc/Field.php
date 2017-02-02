@@ -172,6 +172,30 @@ class Field
 	 * @param array $parentObject Parent Object
 	 * @return array
 	 */
+	public function populateFieldsOnCurrentPid(array &$config, &$parentObject)
+	{
+		$pid = $config["flexParentDatabaseRow"]["pid"];
+		
+		$options = [];
+		$fields = $this->fieldRepository->findAllOnPids([$pid]);
+
+		foreach($fields as $_field)
+		{
+			$pid = $_field->getPid();
+			$label = "[{$pid}] " . $_field->getFrontendLabel();
+			$options[] = [$label, $_field->getUid()];
+		}
+
+		$config["items"] = $options;
+	}
+
+	/**
+	 * Populate fields
+	 *
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
 	public function populateFieldsOnStoragePages(array &$config, &$parentObject)
 	{
 		$pages = GeneralUtility::trimExplode(",", $config["flexParentDatabaseRow"]["pages"]);
@@ -206,40 +230,44 @@ class Field
 	{
 		$options = [];
 
-		if (is_array($config["row"]) && isset($config["row"]["settings.single_record_selection"]))
-		{
-			if(is_array($config["row"]["settings.single_record_selection"]))
+		// Plugin Settings Check
+		if (is_array($config["row"]) && isset($config["row"]["settings.single_record_selection"])) {
+			if (is_array($config["row"]["settings.single_record_selection"])) {
 				$singleRecordId = (int)reset($config["row"]["settings.single_record_selection"]);
-			else
+			} else {
 				$singleRecordId = (int)$config["row"]["settings.single_record_selection"];
-				
-			$record = $this->recordRepository->findByUid($singleRecordId, false);
-			if ($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
-			{
-				$types = $record->getDatatype()->getSortedFields();
-
-				foreach($types as $_type=>$_fields)
-				{
-					$options[] = [strtoupper($_type), "--div--"];
-
-					if(count($_fields)>0)
-					{
-						foreach($_fields as $_field)
-						{
-							/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
-							$tabName 	= ($_field->getTabName())?$_field->getTabName() . ">":"";
-							$label	 	= "[{$_field->getUid()}] " . strtoupper($_field->getType()) . ": " . $tabName . $_field->getFrontendLabel();
-							$options[] 	= [$label, $_field->getUid()];
-						}
-					
-					
-					}
-				}
-
 			}
-			
-			$config["items"] = array_merge($config["items"], $options);
+		}		
+		else {
+			// Variable Configuration
+			$singleRecordId = (int)reset($config["row"]["record"]);
 		}
+
+		$record = $this->recordRepository->findByUid($singleRecordId, false);
+		if ($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
+		{
+			$types = $record->getDatatype()->getSortedFields();
+
+			foreach($types as $_type=>$_fields)
+			{
+				$options[] = [strtoupper($_type), "--div--"];
+
+				if(count($_fields)>0)
+				{
+					foreach($_fields as $_field)
+					{
+						/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
+						$label	 	= "[{$_field->getUid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
+						$options[] 	= [$label, $_field->getUid()];
+					}
+
+
+				}
+			}
+
+		}
+
+		$config["items"] = array_merge($config["items"], $options);
 
 	}
 }
