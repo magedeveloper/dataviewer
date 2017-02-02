@@ -117,7 +117,10 @@
             <trans-unit id="flexform.label_field">
                 <source>Field for Option Label</source>
             </trans-unit>
-            
+
+            <trans-unit id="active_filters">
+                <source>Active Filters</source>
+            </trans-unit>
             <trans-unit id="flexform.field_filter">
                 <source>Field for filtering</source>
             </trans-unit>
@@ -144,6 +147,15 @@
             </trans-unit>
             <trans-unit id="flexform.filter_combination">
                 <source>Filter Combination</source>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field">
+                <source>Filter Field (searches through the selected field in the database)</source>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field_search">
+                <source>Searchfield (search) - Default setting</source>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field_value">
+                <source>Value (value_content)</source>
             </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
@@ -257,6 +269,12 @@
             <trans-unit id="model_class">
                 <source>Class Name of the according model (Leave Blank for Array-Return)</source>
             </trans-unit>
+            <trans-unit id="include_field_values_as_options">
+                <source>Adopt Field Values as additional options</source>
+            </trans-unit>
+            <trans-unit id="add_suggest_wizard">
+                <source>Add Suggest Wizard</source>
+            </trans-unit>
             
             
             <trans-unit id="flexform.number_of_initial_records">
@@ -280,6 +298,9 @@
             <trans-unit id="flexform.per_page_entries">
                 <source>List of entries for 'Per Page'-Field. (Comma separated)</source>
             </trans-unit>
+            <trans-unit id="flexform.show_view_all">
+                <source>Show 'View All' selection</source>
+            </trans-unit>
             <trans-unit id="flexform.selected_per_page">
                 <source>Default Selected 'Items per Page'-Value</source>
             </trans-unit>
@@ -292,6 +313,12 @@
             </trans-unit>
             <trans-unit id="flexform.custom_template_path">
                 <source>Select custom template path</source>
+            </trans-unit>
+            <trans-unit id="flexform.custom_fluid_code">
+                <source>Enter custom fluid code</source>
+            </trans-unit>
+            <trans-unit id="flexform.fluid">
+                <source>Fluid Input</source>
             </trans-unit>
             <trans-unit id="flexform.predefined_templates">
                 <source>Predefined Templates</source>
@@ -411,6 +438,9 @@
             <trans-unit id="plugin.wizarditem_pi7">
                 <source>Record Save Form</source>
             </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi8">
+                <source>Insert Pager</source>
+            </trans-unit>
             <trans-unit id="plugin.wizarditem_pi1_description">
                 <source>Add records to your site. This plugin offers different possibilities to integrate records.</source>
             </trans-unit>
@@ -431,6 +461,9 @@
             </trans-unit>
             <trans-unit id="plugin.wizarditem_pi7_description">
                 <source>Adds an Form to the site for saving and validating form data which is passed from a template.</source>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi8_description">
+                <source>Adds a pager that divides the shown records into pages for better visualization.</source>
             </trans-unit>
 
             <!-- Messages -->
@@ -475,6 +508,9 @@
             <trans-unit id="see_tca_reference">
                 <source>See TCA Reference for more information.</source>
             </trans-unit>
+            <trans-unit id="support_information">
+                <source>If you need additional support, you can contact us by the following email address.</source>
+            </trans-unit>
 
             <!-- Domain/Model/Datatype -->
             <trans-unit id="tx_dataviewer_domain_model_datatype">
@@ -491,6 +527,9 @@
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_datatype.templatefile">
                 <source>Template File for Rendering (PartViewHelper)</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.tab_config">
+                <source>Tab Configuration</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_datatype.fields">
                 <source>Fields</source>
@@ -679,6 +718,9 @@
             </trans-unit>
             <trans-unit id="please_select_datatype_to_continue">
                 <source>Please select a datatype to continue</source>
+            </trans-unit>
+            <trans-unit id="please_configure_tabs_and_assign_fields">
+                <source>Please configure tabs and assign fields in the datatype</source>
             </trans-unit>
             <trans-unit id="datatype_not_found">
                 <source>Datatype not found</source>
@@ -907,6 +949,9 @@
             <trans-unit id="sort.sort_order">
                 <source>Sort Order</source>
             </trans-unit>
+            <trans-unit id="sort.sort_by_value">
+                <source>Sort by %s</source>
+            </trans-unit>
             <trans-unit id="sort.per_page">
                 <source>Items per Page</source>
             </trans-unit>
@@ -1093,6 +1138,25 @@
                 <source>Select</source>
             </trans-unit>
 
+            <trans-unit id="flexform.tab_config">
+                <source>Tab Configuration</source>
+            </trans-unit>
+            <trans-unit id="flexform.tabs_fields">
+                <source>Create tabs and assign fields</source>
+            </trans-unit>
+            <trans-unit id="flexform.tab_name">
+                <source>Name of the Tab</source>
+            </trans-unit>
+            <trans-unit id="flexform.tab_icon">
+                <source>Icon Id (from Font Awesome)</source>
+            </trans-unit>
+            <trans-unit id="flexform.tab_icon_color">
+                <source>Icon Color (HEX)</source>
+            </trans-unit>
+            <trans-unit id="flexform.tab_according_fields">
+                <source>According Fields</source>
+            </trans-unit>
+
             <trans-unit id="flexform.validation">
                 <source>Validation</source>
             </trans-unit>
@@ -1104,6 +1168,16 @@
             </trans-unit>
             <trans-unit id="flexform.category_sources">
                 <source>Category Sources</source>
+            </trans-unit>
+
+            <trans-unit id="per_page">
+                <source>%s per Page</source>
+            </trans-unit>
+            <trans-unit id="page_of">
+                <source>Page %s of %s</source>
+            </trans-unit>
+            <trans-unit id="records_of">
+                <source>%s - %s of %s</source>
             </trans-unit>
 
             <trans-unit id="validator.alphanumeric">

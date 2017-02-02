@@ -190,6 +190,18 @@
                 <source>Filter Combination</source>
                 <target>Filter Kombination</target>
             </trans-unit>
+            <trans-unit id="flexform.filter_field">
+                <source>Filter Field (searches through the selected field in the database)</source>
+                <target>Filter Feld (durchsucht das ausgewählte Feld in der Datenbank)</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field_search">
+                <source>Searchfield (search) - Default setting</source>
+                <target>Suchfeld (search) - Standardeinstellung</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field_value">
+                <source>Value (value_content)</source>
+                <target>Wert (value_content)</target>
+            </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
                 <target>Label</target>
@@ -239,8 +251,11 @@
                 <target>Weiterleitung nach erfolgreicher Löschung</target>
             </trans-unit>
 
-            
 
+            <trans-unit id="active_filters">
+                <source>Active Filters</source>
+                <target>Aktive Filter</target>
+            </trans-unit>
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>
                 <target>Filter Frontendtyp</target>
@@ -339,6 +354,15 @@
                 <source>Class Name of the according model (Leave Blank for Array-Return)</source>
                 <target>Klassenname des zugehörigen Domain-Models (Leer lassen für Array-Rückgabe)</target>
             </trans-unit>
+            <trans-unit id="include_field_values_as_options">
+                <source>Adopt Field Values as additional options</source>
+                <target>Feldwerte als zusätzliche Optionen übernehmen</target>
+            </trans-unit>
+            <trans-unit id="add_suggest_wizard">
+                <source>Add Suggest Wizard</source>
+                <target>Suchfeld einblenden</target>
+            </trans-unit>
+            
 
 
             <trans-unit id="flexform.number_of_initial_records">
@@ -369,6 +393,10 @@
                 <source>List of entries for 'Per Page'-Field. (Comma separated)</source>
                 <target>Einträge im 'pro Seite' Feld. (Kommasepariert)</target>
             </trans-unit>
+            <trans-unit id="flexform.show_view_all">
+                <source>Show 'View All' selection</source>
+                <target>Zeige 'Alle Anzeigen' Auswahl</target>
+            </trans-unit>
             <trans-unit id="flexform.selected_per_page">
                 <source>Default Selected 'Items per Page'-Value</source>
                 <target>Standardauswahl für 'pro Seite'</target>
@@ -383,6 +411,15 @@
                 <source>Select custom template path</source>
                 <target>Eigenen Templatepfad auswählen</target>
             </trans-unit>
+            <trans-unit id="flexform.custom_fluid_code">
+                <source>Enter custom fluid code</source>
+                <target>Eigenen Fluid Code eingeben</target>
+            </trans-unit>
+            <trans-unit id="flexform.fluid">
+                <source>Fluid Input</source>
+                <target>Fluid Eingabe</target>
+            </trans-unit>
+            
             <trans-unit id="flexform.predefined_templates">
                 <source>Predefined Templates</source>
                 <target>Vordefinierte Templates</target>
@@ -540,6 +577,10 @@
                 <source>Record Save Form</source>
                 <target>Datensatz-Speichern Formular</target>
             </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi8">
+                <source>Insert Pager</source>
+                <target>Pager einfügen</target>
+            </trans-unit>
             <trans-unit id="plugin.wizarditem_pi1_description">
                 <source>Add records to your site. This plugin offers different possibilities to integrate records.</source>
                 <target>Fügen Sie Datensätze Ihrer Seite hinzu. Dieses Plugin ermöglicht unterschiedliche Anzeigearten von Datensätzen.</target>
@@ -567,6 +608,10 @@
             <trans-unit id="plugin.wizarditem_pi7_description">
                 <source>Adds an Form to the site for saving and validating form data which is passed from a template.</source>
                 <target>Fügt ein Formular der Seite hinzu, zum Speichern und Auswerten von Formulardaten, welche über ein Template übergeben werden.</target>
+            </trans-unit>
+            <trans-unit id="plugin.wizarditem_pi8_description">
+                <source>Adds a pager that divides the shown records into pages for better visualization.</source>
+                <target>Fügt einen Pager ein, welcher die angezeigten Datensätze in Seiten aufteilt um eine bessere Darstellung zu erreichen.</target>
             </trans-unit>
 
             <!-- Messages -->
@@ -624,6 +669,10 @@
                 <source>See TCA Reference for more information.</source>
                 <target>Bitte beachten Sie die TCA-Referenz Dokumentation für weitere Informationen.</target>
             </trans-unit>
+            <trans-unit id="support_information">
+                <source>If you need additional support, you can contact us by the show email address.</source>
+                <target>Für erweiterten Support können Sie uns unter angezeigter E-Mail Adresse kontaktieren.</target>
+            </trans-unit>
             
 
             <!-- Domain/Model/Datatype -->
@@ -646,6 +695,10 @@
             <trans-unit id="tx_dataviewer_domain_model_datatype.templatefile">
                 <source>Template File for Rendering (PartViewHelper)</source>
                 <target>Templatedatei für Rendering (PartViewHelper)</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.tab_config">
+                <source>Tab Configuration</source>
+                <target>Reiter Konfiguration</target>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_datatype.fields">
                 <source>Fields</source>
@@ -895,6 +948,11 @@
                 <source>Please select a datatype to continue</source>
                 <target>Bitte wählen Sie einen Datentyp um fortzufahren</target>
             </trans-unit>
+            <trans-unit id="please_configure_tabs_and_assign_fields">
+                <source>Please configure tabs and assign fields in the datatype</source>
+                <target>Bitte konfigurieren Sie Reiter und weisen Sie Felder zu in den Datentyp Einstellungen</target>
+            </trans-unit>
+            
             <trans-unit id="datatype_not_found">
                 <source>Datatype not found</source>
                 <target>Datentyp nicht gefunden</target>
@@ -1196,6 +1254,10 @@
                 <source>Sort Order</source>
                 <target>Sortierung</target>
             </trans-unit>
+            <trans-unit id="sort.sort_by_value">
+                <source>Sort by %s</source>
+                <target>Sortieren nach %s</target>
+            </trans-unit>
             <trans-unit id="sort.per_page">
                 <source>Items per Page</source>
                 <target>Einträge pro Seite</target>
@@ -1438,6 +1500,32 @@
                 <target>Auswählen</target>
             </trans-unit>
 
+
+            <trans-unit id="flexform.tab_config">
+                <source>Tab Configuration</source>
+                <target>Reiter Konfiguration</target>
+            </trans-unit>    
+            <trans-unit id="flexform.tabs_fields">
+                <source>Create tabs and assign fields</source>
+                <target>Reiter erstellen und Felder zuweisen</target>
+            </trans-unit>
+            <trans-unit id="flexform.tab_name">
+                <source>Name of the Tab</source>
+                <target>Name des Reiters</target>
+            </trans-unit>
+            <trans-unit id="flexform.tab_icon">
+                <source>Icon Id (from Font Awesome)</source>
+                <target>Icon Id (aus Font Awesome)</target>
+            </trans-unit>
+            <trans-unit id="flexform.tab_icon_color">
+                <source>Icon Color (HEX)</source>
+                <target>Icon Farbe (HEX)</target>
+            </trans-unit>
+            <trans-unit id="flexform.tab_according_fields">
+                <source>According Fields</source>
+                <target>Zugehörige Felder</target>
+            </trans-unit>
+            
             <trans-unit id="flexform.validation">
                 <source>Validation</source>
                 <target>Validierung</target>
@@ -1453,6 +1541,19 @@
             <trans-unit id="flexform.category_sources">
                 <source>Category Sources</source>
                 <target>Kategorie Quellen</target>
+            </trans-unit>
+
+            <trans-unit id="per_page">
+                <source>%s per Page</source>
+                <target>%s pro Seite</target>
+            </trans-unit>
+            <trans-unit id="page_of">
+                <source>Page %s of %s</source>
+                <target>Seite %s von %s</target>
+            </trans-unit>
+            <trans-unit id="records_of">
+                <source>%s - %s of %s</source>
+                <target>%s - %s von %s</target>
             </trans-unit>
 
             <trans-unit id="validator.alphanumeric">
