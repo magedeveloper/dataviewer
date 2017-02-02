@@ -1,20 +1,35 @@
 <f:layout name="Default" />
 <f:section name="main">
+
+	<style type="text/css">
+		.tx-dataviewer-filter legend { margin-bottom:10px; }
+		.tx-dataviewer-filter { padding:10px 0; }
+	</style>
+
 	<f:if condition="{activeFilters}">
 		<div class="tx-dataviewer-active-filters">
-			<ul>
 			<f:for each="{activeFilters}" as="fieldGroup">
-				<li class="filter-title">{fieldGroup.field.frontendLabel}</li>
-				<ul>
-					<f:for each="{fieldGroup.filters}" as="activeFilter">
-						<li><f:render partial="Filter/ActiveFilterRenderer" arguments="{filter:activeFilter,targetUid:targetUid}" /></li>
-					</f:for>
-				</ul>
+
+				<legend>
+					<f:translate key="active_filters" />
+						<div class="tx-dataviewer-filters-reset pull-right">
+							<f:link.action action="reset" class="btn btn-xs btn-default" arguments="{targetUid:targetUid}"><f:translate key="reset" /></f:link.action>
+						</div>
+				</legend>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">{fieldGroup.field.frontendLabel}</h3>
+					</div>
+					<ul class="list-group">
+						<f:for each="{fieldGroup.filters}" as="activeFilter">
+							<li class="list-group-item">
+								<f:render partial="Filter/ActiveFilterRenderer" arguments="{filter:activeFilter,targetUid:targetUid}" />
+							</li>
+						</f:for>
+					</ul>
+				</div>
 			</f:for>
-			</ul>
-			<div class="tx-dataviewer-filters-reset">
-				<f:link.action action="reset" arguments="{targetUid:targetUid}"><f:translate key="reset" /></f:link.action>
-			</div>
+
 		</div>
 	</f:if>
 	<f:if condition="{filters}">

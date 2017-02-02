@@ -1,8 +1,10 @@
 <f:if condition="{filter}">
 	<div class="tx-dataviewer-active-filter tx-dataviewer-active-filter-{filter.field_id}">
 		{filter.option_name}<f:if condition="{filter.option_name} != {filter.field_value}">&nbsp;<em>{filter.field_value}</em></f:if>
-		<div class="tx-dataviewer-remove" style="display:inline;">
-			<f:link.action action="remove" arguments="{id:filter.id,targetUid:targetUid}"><f:image src="EXT:dataviewer/Resources/Public/Images/remove.png" alt="{f:translate(key:'remove')}" title="{f:translate(key:'remove')}" /></f:link.action>
-		</div>
+		<span class="pull-right">
+			<f:link.action action="remove" class="btn btn-xs btn-warning" arguments="{id:filter.id,targetUid:targetUid}">
+			  <span class="glyphicon glyphicon-trash"></span>
+			</f:link.action>
+      	</span>
 	</div>
 </f:if>
