@@ -59,6 +59,7 @@
                                                 <type>select</type>
                                                 <multiple>0</multiple>
                                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                                <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
                                                 <items type="array"></items>
                                                 <maxitems>1</maxitems>
                                                 <minitems>1</minitems>
@@ -147,6 +148,7 @@
                                                 <type>select</type>
                                                 <multiple>0</multiple>
                                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                                <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
                                                 <items type="array"></items>
                                                 <maxitems>1</maxitems>
                                                 <minitems>1</minitems>
