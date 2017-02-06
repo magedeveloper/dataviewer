@@ -1,6 +1,7 @@
 <f:if condition="{filter}">
 	<div class="tx-dataviewer-active-filter tx-dataviewer-active-filter-{filter.field_id}">
-		{filter.option_name}<f:if condition="{filter.option_name} != {filter.field_value}">&nbsp;<em>{filter.field_value}</em></f:if>
+		{filter.option_name}
+		<f:if condition="{filter.filter_type} == 'input'">{filter.field_value}{filter.field.unitSpace}</f:if>
 		<span class="pull-right">
 			<f:link.action action="remove" class="btn btn-xs btn-warning" arguments="{id:filter.id,targetUid:targetUid}">
 			  <span class="glyphicon glyphicon-trash"></span>
