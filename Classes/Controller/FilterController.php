@@ -195,12 +195,14 @@ class FilterController extends AbstractController
 		{
 			$fieldId = $_filter["field_id"];
 			$filters[$i]["is_active"] = false;
+			$filterType = $_filter["filter_type"];
 			
 			foreach($_filter["options"] as $j=>$_option)
 			{
 				$optionId = $_option["id"];
 				$optionSelected = $this->filterSessionService->checkIsSelected($fieldId, $optionId);
 				$filters[$i]["options"][$j]["selected"] = $optionSelected;
+				$filters[$i]["options"][$j]["filter_type"] = $filterType;
 				
 				if ($optionSelected)
 					$filters[$i]["is_active"] = true;
