@@ -111,6 +111,9 @@
             <trans-unit id="flexform.variable_injection">
                 <source>Variable Injection</source>
             </trans-unit>
+            <trans-unit id="flexform.generate_output">
+                <source>Generated Output as Record Value to the Database</source>
+            </trans-unit>
             <trans-unit id="flexform.selection_limit">
                 <source>Selection Limit</source>
             </trans-unit>

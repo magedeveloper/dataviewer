@@ -146,6 +146,10 @@
                 <source>Variable Injection</source>
                 <target>Variablen hinzufügen</target>
             </trans-unit>
+            <trans-unit id="flexform.generate_output">
+                <source>Generated Output as Record Value to the Database</source>
+                <target>Generierte Ausgabe der Datenbank als Eintrag hinzufügen</target>
+            </trans-unit>
             <trans-unit id="flexform.selection_limit">
                 <source>Selection Limit</source>
                 <target>Auswahllimitierung</target>
