@@ -62,6 +62,7 @@ class RecordRepository extends AbstractRepository
 
 		$querySettings->setRespectStoragePage(false);
 		$querySettings->setIgnoreEnableFields(true);
+		
 		$query->setOrderings(["crdate" => QueryInterface::ORDER_DESCENDING]);
 		$query->setLimit($limit);
 

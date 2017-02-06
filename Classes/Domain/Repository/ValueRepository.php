@@ -47,8 +47,11 @@ class ValueRepository
 	{
 		if($this->values)
 			foreach($this->values as $_value)
+			{
 				if($_value->getField()->getCode() == $code)
 					return $_value;
+			}
+				
 
 		return new Value();
 	}

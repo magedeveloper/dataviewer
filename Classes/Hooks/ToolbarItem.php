@@ -219,9 +219,10 @@ class ToolbarItem implements ToolbarItemInterface
 	public function getDropDown()
 	{
 		$orderings = ["name" => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING];
+
 		$datatypes = $this->datatypeRepository->findAll(false, $orderings);
 		$latest = $this->recordRepository->findLatest(20);
-
+		
 		if(count($datatypes))
 		{
 			/* @var \TYPO3\CMS\Fluid\View\StandaloneView $view */
