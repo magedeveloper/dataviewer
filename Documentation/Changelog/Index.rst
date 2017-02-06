@@ -32,6 +32,8 @@ Changelog
 - [FEATURE] Pager-Plugin for paging records
 - [TASK] Corrected sorting by fields
 - [FEATURE] Bootstrap CSS Compatibility for all plugins
+- [TASK] Fields are now sorted by PID in selector boxes
+- [FEATURE] Save Value from generated fluid to the database (e.g. for custom search values)
 - [DOC] Documentation update
 
 **1.5.0**
@@ -179,7 +181,6 @@ Changelog
 - Fluid Field as UserFunc for displayCond compatibility
 - (Filter with direct record selection)
 - Ajax Autocomplete functionality
-- Field for merging different record values to 'value_content' or 'search' (e.g. search)
 - Change Record DataHandler to use RecordFactory
 - Provide Delete link for records in ToolbarItem
 - Full Workspaces support
