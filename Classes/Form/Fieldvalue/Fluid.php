@@ -77,7 +77,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getValueContent()
 	{
-		return $this->getValue();
+		return $this->getFrontendValue();
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getSearch()
 	{
-		return $this->getValue();
+		return $this->getFrontendValue();
 	}
 
 	/**

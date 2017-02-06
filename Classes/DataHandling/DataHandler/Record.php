@@ -668,7 +668,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					$_value = $parseHTML->RTE_transform($_value, $specConf, 'db', []);
 				}
 			}
-		
+			
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
@@ -741,6 +741,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			// We need to initialize the fieldvalue with the plain value
 			$fieldvalue->init($field, $value);
+			$fieldvalue->setRecordValue($recordValue);
 
 			////////////////////////////////////////////////////////////////////////////////////////////////
 			// This is the place where we will later pre-render the value through each fieldValue
