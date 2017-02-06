@@ -17,6 +17,7 @@ class DatatypeRepository extends AbstractRepository
 	 * FindAll Override
 	 * 
 	 * @param bool $respectStoragePage
+	 * @param array $orderings
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
 	public function findAll($respectStoragePage = true, array $orderings = [])
@@ -28,24 +29,41 @@ class DatatypeRepository extends AbstractRepository
 			$query->setOrderings($orderings);
 
 		$this->setDefaultQuerySettings($querySettings);
-
 		return $query->execute();
 	}
 
+	/**
+	 * Finds all records on a given storage page id
+	 *
+	 * @param array $storagePids
+	 * @param array $orderings
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findAllOnPids(array $storagePids, array $orderings = [])
+	{
+		$query 			= $this->createQuery();
+		$querySettings 	= $query->getQuerySettings();
+
+		$querySettings->setStoragePageIds($storagePids);
+		$querySettings->setRespectStoragePage(true);
+		
+		if(!empty($orderings))
+			$query->setOrderings($orderings);
+
+		$this->setDefaultQuerySettings($querySettings);
+
+		return $query->execute();
+	}
+	
 	/**
 	 * Finds all records on a given storage page id
 	 * 
 	 * @param int $storagePid
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findAllOnPid($storagePid)
+	public function findAllOnPid($storagePid, array $orderings = [])
 	{
-		$query = $this->createQueryWithSettings(true, true, true, [$storagePid]);
-		$querySettings = $query->getQuerySettings();
-		
-		$this->setDefaultQuerySettings($querySettings);
-		
-		return parent::findAll();
+		return $this->findAllOnPids([$storagePid], $orderings);
 	}
 
 	/**
