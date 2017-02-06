@@ -427,6 +427,16 @@ class Field extends AbstractModel
 	 */
 	public function getUnit() 
 	{
+		return $this->unit;
+	}
+
+	/**
+	 * Returns the unit including a trailing space
+	 *
+	 * @return string $unit
+	 */
+	public function getUnitSpace()
+	{
 		return ($this->unit)?" {$this->unit}":"";
 	}
 
