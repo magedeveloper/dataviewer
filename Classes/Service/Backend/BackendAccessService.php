@@ -79,6 +79,28 @@ class BackendAccessService
 	}
 
 	/**
+	 * Gets the storage pids of the accessible
+	 * mounts
+	 * 
+	 * @return array
+	 */
+	public function getAccessibleStoragePids()
+	{
+		$beUser = $this->_getBackendUser();
+		return $beUser->returnWebmounts();
+	}
+
+	/**
+	 * Check if logged in as admin
+	 * 
+	 * @return bool
+	 */
+	public function isAdmin()
+	{
+		return (bool)$this->_getBackendUser()->isAdmin();
+	}
+
+	/**
 	 * Returns the current BE user.
 	 *
 	 * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
