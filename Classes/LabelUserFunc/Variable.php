@@ -33,7 +33,7 @@ class Variable
 	/**
 	 * Constructor
 	 *
-	 * @return FieldValue
+	 * @return Variable
 	 */
 	public function __construct()
 	{
@@ -59,9 +59,10 @@ class Variable
 			{
 				$type = $variable->getType();
 				$name = $variable->getVariableName();
+				$pid = $variable->getPid();
 				$typeStr = Locale::translate("variable_type.{$type}");
 				if ($typeStr)
-					$pObj["title"] = $typeStr . " '{$name}'";
+					$pObj["title"] = "[{$pid}]" . " " . $typeStr . " '{$name}'";
 
 			}
 
