@@ -34,6 +34,7 @@ Changelog
 - [FEATURE] Bootstrap CSS Compatibility for all plugins
 - [TASK] Fields are now sorted by PID in selector boxes
 - [FEATURE] Save Value from generated fluid to the database (e.g. for custom search values)
+- [BUGFIX] Fallback Path for Standalone View Template suggestion
 - [DOC] Documentation update
 
 **1.5.0**
@@ -177,6 +178,7 @@ Changelog
 **To-Do-/Wish- List**
 
 - Different Data-Sources for a Datatype/or Field (Webservice, XML, External Database)
+- Record Injector Service for Extensions
 - Access Rights for Datatypes
 - Fluid Field as UserFunc for displayCond compatibility
 - (Filter with direct record selection)

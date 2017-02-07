@@ -42,6 +42,8 @@ class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 	public function getFullTemplatePathForFile($file)
 	{
 		$templatePaths = $this->pluginSettingsService->getTemplatePaths();
+		$templateFile = null;
+		
 		sort($templatePaths);
 
 		for($i = count($templatePaths) - 1; $i >= 0; $i--)
@@ -52,7 +54,11 @@ class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 			if (is_dir($templatePath) && file_exists($templateFile))
 				break;
 		}
-		
+
+		// if we havent found any template that matches
+		if(is_null($templateFile))
+			$templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName("EXT:dataviewer/Resources/Private/Templates/{$file}");
+
 		return $templateFile;
 	}
 	
