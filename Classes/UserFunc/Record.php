@@ -32,14 +32,23 @@ class Record
 	protected $recordRepository;
 
 	/**
+	 * Field Repository
+	 *
+	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
+	 * @inject
+	 */
+	protected $fieldRepository;
+
+	/**
 	 * Constructor
 	 *
-	 * @return Field
+	 * @return Record
 	 */
 	public function __construct()
 	{
 		$this->objectManager 			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 		$this->recordRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
+		$this->fieldRepository          = $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
 	}
 
 	/**
@@ -63,4 +72,52 @@ class Record
 		$config["items"] = array_merge($config["items"], $options);
 	}
 
+	/**
+	 * Gets a value from a dynamic record
+	 *
+	 * @param string $info
+	 * @param array $config
+	 * @return string|void
+	 */
+	public function getDynamicRecordValue($info, $config)
+	{
+		$parameters = $config["parameter."];
+
+		if(isset($parameters["uid"]))
+		{
+			$uid = (int)$parameters["uid"];
+		}
+		else
+		{
+			$recordInfo = GeneralUtility::_GP("tx_dataviewer_record");
+			$uid = $recordInfo["record"];
+		}
+
+		$record = $this->recordRepository->findByUid($uid, false);
+
+		if($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
+		{
+			$fieldUidOrName = $parameters["field"];
+			$func = "get".ucwords($fieldUidOrName);
+
+			if(method_exists($record, $func))
+				return $record->{$func}();
+
+			$field = $this->fieldRepository->findOneByVariableName($fieldUidOrName);
+			if(!$field instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
+			{
+				$field = $this->fieldRepository->findByUid($fieldUidOrName, false);
+			}
+
+			// We finally check if we got a field now
+			if($field instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
+			{
+				$value = $record->getValueByField($field);
+				return $value->getValue();
+			}
+
+		}
+
+		return;
+	}
 }
