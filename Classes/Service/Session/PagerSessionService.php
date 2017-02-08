@@ -77,4 +77,16 @@ class PagerSessionService extends SessionService
 	{
 		return $this->restoreFromSession(self::SESSION_KEY_PER_PAGE);
 	}
+
+	/**
+	 * Resets all pager settings
+	 *
+	 * @return PagerSessionService
+	 */
+	public function reset()
+	{
+		$this->setSelectedPage(1);
+		$this->setPerPage(null);
+		return $this;
+	}
 }

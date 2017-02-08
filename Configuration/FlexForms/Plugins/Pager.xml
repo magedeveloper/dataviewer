@@ -66,6 +66,16 @@
                             </config>
                         </TCEforms>
                     </settings.show_view_all>
+
+                    <settings.clear_on_page_load>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.clear_on_page_load</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.clear_on_page_load>
                 </el>
             </ROOT>
         </general_settings>

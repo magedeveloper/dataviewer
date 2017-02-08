@@ -65,6 +65,13 @@ class PagerController extends RecordController
 		$perPage 		= $this->pagerSessionService->getPerPage();
 		$selectedPage	= $this->pagerSessionService->getSelectedPage();
 		
+		// We clear the pager if we reload the page manually
+		if($this->pagerSettingsService->getClearOnPageLoad() && 
+		   empty($this->request->getArguments()))
+		{
+			$this->forward("reset");
+		}
+	
 		if(!$selectedPage) $selectedPage = 1;
 		
 		if(!is_int($perPage))
@@ -131,7 +138,7 @@ class PagerController extends RecordController
 	{
 		if(!$this->_checkTargetUid())
 			$this->redirect("index");
-			
+
 		if(!is_null($page))
 		{
 			$this->pagerSessionService->setSelectedPage((int)$page);
@@ -152,7 +159,19 @@ class PagerController extends RecordController
 		}
 
 		$this->redirect("index");
+
 		exit();
+	}
+
+	/**
+	 * Action for resetting the pager
+	 * 
+	 * @return void
+	 */
+	public function resetAction()
+	{
+		$this->pagerSessionService->reset();
+		$this->redirect("index");
 	}
 
 	/**
@@ -185,14 +204,11 @@ class PagerController extends RecordController
 			// Replace markers in the filters
 			$this->_replaceMarkersInFilters($filters);
 
-			$sortField = "RECORD.uid";
-			$sortOrder = \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING;
-			$limit = null;
-
-			// We leave this here, but we could do a COUNT() in the database for even better usage
-			// TODO: make COUNT() instead of a complete query with data
-			$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
-			return count($validRecords);
+			// We do nearly the same request to observe the records count but with a COUNT()
+			// for faster access
+			$count = $this->recordRepository->countByConditions($filters, $this->storagePids);
+			
+			return (int)$count;
 		}
 
 		return 0;

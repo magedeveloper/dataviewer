@@ -49,4 +49,15 @@ class PagerSettingsService extends PluginSettingsService
 	{
 		return (bool)$this->getSettingByCode("show_view_all");
 	}
+
+	/**
+	 * Get the setting to clear the search string
+	 * on new page load
+	 *
+	 * @return bool
+	 */
+	public function getClearOnPageLoad()
+	{
+		return (bool)$this->getSettingByCode("clear_on_page_load");
+	}
 }
