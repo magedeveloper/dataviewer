@@ -34,7 +34,7 @@ class RecordController extends AbstractController
 
 	/**
 	 * Storage Pids
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $storagePids = [];
@@ -49,7 +49,7 @@ class RecordController extends AbstractController
 
 	/**
 	 * Session Service Container
-	 * 
+	 *
 	 * @var \MageDeveloper\Dataviewer\Service\Session\SessionServiceContainer
 	 * @inject
 	 */
@@ -57,7 +57,7 @@ class RecordController extends AbstractController
 
 	/**
 	 * List Settings Service
-	 * 
+	 *
 	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\ListSettingsService
 	 * @inject
 	 */
@@ -65,7 +65,7 @@ class RecordController extends AbstractController
 
 	/**
 	 * Gets the session service container
-	 * 
+	 *
 	 * @return \MageDeveloper\Dataviewer\Service\Session\SessionServiceContainer
 	 */
 	public function getSessionServiceContainer()
@@ -81,73 +81,28 @@ class RecordController extends AbstractController
 	 */
 	public function listAction()
 	{
-		if($this->listSettingsService->isCustomFluidCode())
-			$this->forward("renderFluid");
-			
 		$selectedRecords = $this->_getSelectedRecords();
-		
+
 		$templateSwitch = $this->getTemplateSwitch();
 		if($templateSwitch)
 			$this->view->setTemplatePathAndFilename($templateSwitch);
-		
+
 		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
 
 		// Custom Headers
 		$customHeaders = $this->getCustomHeaders();
 		$this->performCustomHeaders($customHeaders);
-		
+
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
 			echo $this->view->render();
 			exit();
-		}	
-	}
-
-	/**
-	 * This action directly renders the entered fluid code
-	 * 
-	 * @return string
-	 */
-	public function renderFluidAction()
-	{
-		$selectedRecords = $this->_getSelectedRecords();
-		$view = $this->getStandaloneView(false);
-		$selectedVariableIds = $this->listSettingsService->getSelectedVariableIds();
-		$variables = $this->prepareVariables($selectedVariableIds);
-		$templateSource = $this->listSettingsService->getFluidCode();
-
-		// Assign variables to the view
-		$view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
-		$view->assignMultiple($variables);
-		
-		$templateSwitch = $this->getTemplateSwitch();
-		if($templateSwitch)
-			$view->setTemplatePathAndFilename($templateSwitch);
-		else
-			$view->setTemplateSource($templateSource);
-
-		// Custom Headers
-		$customHeaders = $this->getCustomHeaders();
-		$this->performCustomHeaders($customHeaders);
-		
-		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
-		{
-			echo $view->render();
-			exit();
 		}
-
-		if($this->listSettingsService->isDebug())
-		{
-			$templateSource = "<f:debug>{_all}</f:debug>".$templateSource;
-			$view->setTemplateSource($templateSource);
-		}
-
-		return $view->render();
 	}
 
 	/**
 	 * Adds custom headers to the response object
-	 * 
+	 *
 	 * @param array $customHeaders
 	 * @return bool
 	 */
@@ -162,14 +117,14 @@ class RecordController extends AbstractController
 			$this->response->sendHeaders();
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	/**
 	 * Gets all custom headers that are valid for
 	 * the current view
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getCustomHeaders()
@@ -204,7 +159,7 @@ class RecordController extends AbstractController
 			if($isValid)
 				$customHeaders[$headerName] = $headerValue;
 		}
-		
+
 		return $customHeaders;
 	}
 
@@ -212,17 +167,17 @@ class RecordController extends AbstractController
 	 * Evaluations the conditions for a template switch
 	 * and returns the evaluated template path that
 	 * can be used
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getTemplateSwitch()
 	{
 		// Evaluation the template switch conditions
 		$conditions = $this->listSettingsService->getTemplateSwitchConditions();
-		
+
 		// Get a view with all injected variables
 		$view = $this->getStandaloneView(true);
-	
+
 		foreach($conditions as $_condition)
 		{
 			$conditionStr = $_condition["switches"]["condition"];
@@ -232,15 +187,15 @@ class RecordController extends AbstractController
 			// just render a simple full fluid condition here
 			$conditionText = "<f:if condition=\"{$conditionStr}\">1</f:if>";
 			$isValid = (bool)$view->renderSource($conditionText);
-			
+
 			if($isValid)
 				return $this->listSettingsService->getPredefinedTemplateById($templateId);
-			
+
 		}
 
 		if ($this->listSettingsService->hasTemplate() && !$this->listSettingsService->isDebug())
 			return $this->listSettingsService->getTemplate();
-		
+
 		return;
 	}
 
@@ -252,9 +207,6 @@ class RecordController extends AbstractController
 	 */
 	public function detailAction()
 	{
-		if($this->listSettingsService->isCustomFluidCode())
-			$this->forward("renderFluid");
-	
 		$selectedRecordId 	= $this->listSettingsService->getSelectedRecordId();
 		$record 			= $this->recordRepository->findByUid($selectedRecordId, false);
 
@@ -299,13 +251,13 @@ class RecordController extends AbstractController
 	{
 		$selectedRecordId 	= $this->listSettingsService->getSelectedRecordId();
 		$selectedFieldId	= $this->listSettingsService->getSelectedFieldId();
-		
+
 		// We set this record as currently active
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds(array($selectedRecordId));
 
 		$record = $this->recordRepository->findByUid($selectedRecordId, false);
 		$field  = $this->fieldRepository->findByUid($selectedFieldId, false);
-		
+
 		// Template Override by plugin setting
 		$templateSwitch = $this->getTemplateSwitch();
 		if($templateSwitch)
@@ -342,7 +294,7 @@ class RecordController extends AbstractController
 
 		if (!$recordObj instanceof Record)
 			$recordObj = null;
-		else	
+		else
 			if ($recordObj->getDatatype()->getTemplatefile() && !$this->listSettingsService->isDebug())
 				$this->view->setTemplatePathAndFilename($recordObj->getDatatype()->getTemplatefile());
 
@@ -390,7 +342,7 @@ class RecordController extends AbstractController
 	 * This action is the main entry for the ajax request handling.
 	 * It initially shows the configured template and is then
 	 * ready for the ajax call.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function ajaxRequestAction()
@@ -433,15 +385,15 @@ class RecordController extends AbstractController
 			$flexFormService = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
 			$uid = $this->request->getArgument("uid");
 			$cObj = BackendUtility::getRecord("tt_content", $uid);
-			
+
 			// Storage Page Ids
 			$this->storagePids = GeneralUtility::trimExplode(",", $cObj["pages"]);
-		
+
 			// Settings Array
 			$flexArr = $flexFormService->convertFlexFormContentToArray($cObj["pi_flexform"]);
 			$this->settings = $flexArr["settings"];
 			$this->listSettingsService->setSettings($this->settings);
-			
+
 			// Session Container Connection
 			$this->sessionServiceContainer->setTargetUid($uid);
 
@@ -486,17 +438,17 @@ class RecordController extends AbstractController
 					&$this,
 				]
 			);
-			
+
 			$view->assign("records", $records);
 			$view->assign("ajax", 1);
 			$view->assign("parameters", $parameters);
-			
+
 			if(!empty($additionalVariables))
 				$view->assignMultiple($additionalVariables);
-			
+
 			return $view->render();
 		}
-		
+
 		return "";
 	}
 
@@ -518,7 +470,7 @@ class RecordController extends AbstractController
 
 	/**
 	 * Gets merged filters
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function _getFilters()
@@ -541,7 +493,7 @@ class RecordController extends AbstractController
 		$searchString	= $this->sessionServiceContainer->getSearchSessionService()->getSearchString();
 		$searchType		= $this->sessionServiceContainer->getSearchSessionService()->getSearchType();
 		$searchFilters	= $this->_getAdditionalFiltersBySearch($searchType, $searchString, $searchFields);
-		
+
 		/////////////////////////////////////////////////////////////////////////////////////////
 		// Filter Plugin Filters
 		/////////////////////////////////////////////////////////////////////////////////////////
@@ -565,16 +517,16 @@ class RecordController extends AbstractController
 
 		return $filters;
 	}
-	
+
 	/**
 	 * Gets the selected records with the use of all
 	 * session services to apply the following cicumstances
-	 * 
+	 *
 	 * - Filtering
 	 * - Sorting
 	 * - Searching
 	 * - Letter Selection
-	 * 
+	 *
 	 * @return array|QueryInterface
 	 */
 	protected function _getSelectedRecords()
@@ -586,13 +538,13 @@ class RecordController extends AbstractController
 		$perPage		= $this->sessionServiceContainer->getPagerSessionService()->getPerPage();
 		$selectedPage	= $this->sessionServiceContainer->getPagerSessionService()->getSelectedPage();
 		$page			= ($selectedPage*$perPage) - $perPage;
-		
+
 		// If nothing was set before, we use the per page setting from our records plugin
 		if(is_null($perPage)) $perPage = $this->listSettingsService->getPerPage();
-		
+
 		if($perPage && $selectedPage > 0)
 			$limit = "$page,{$perPage}";
-			
+
 		// Sorting
 		if(!$this->sessionServiceContainer->getSortSessionService()->hasOrderings() || !$this->_hasTargetSortPlugin())
 		{
@@ -601,19 +553,19 @@ class RecordController extends AbstractController
 			$configSortField	= $this->listSettingsService->getSortField();
 			$configSortOrder	= $this->listSettingsService->getSortOrder();
 			$configPerPage		= $this->listSettingsService->getPerPage();
-			
+
 			$this->sessionServiceContainer->getSortSessionService()->setSortField($configSortField);
 			$this->sessionServiceContainer->getSortSessionService()->setSortOrder($configSortOrder);
 			$this->sessionServiceContainer->getSortSessionService()->setPerPage($configPerPage);
 		}
-		
-		
+
+
 		$sortField		= $this->sessionServiceContainer->getSortSessionService()->getSortField();
 		$sortOrder		= $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
-		
+
 		// Retrieving all filters from different sources
 		$filters = $this->_getFilters();
-		
+
 		////////////////////////////////////////////////////////////////////////////////
 		// Signal-Slot for manipulating the complete filters for the record selection //
 		////////////////////////////////////////////////////////////////////////////////
@@ -628,7 +580,7 @@ class RecordController extends AbstractController
 
 		// Replace markers in the filters
 		$this->_replaceMarkersInFilters($filters);
-		
+
 		/***************************************************************************************************
 		Adding a filter:
 		--------------------------------------
@@ -649,25 +601,25 @@ class RecordController extends AbstractController
 		lt			<			{(int)$var}					->lessThan
 		gte			>=			{(int)$var}					->greaterThanOrEqual
 		lte			<=			{(int)$var}					->lessThanOrEqual
-		****************************************************************************************************/
+		 ****************************************************************************************************/
 		if($this->settings["debug"] == 1)
 		{
 			$statement = $this->recordRepository->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 			$this->view->assign("statement", $statement);
 		}
-		
+
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 		$records = null;
 		$validRecordIds = array_column($validRecords, "uid");
-		
+
 		if(!empty($validRecordIds))
 			$records = $this->recordRepository->findByRecordIds($validRecordIds, $this->storagePids);
-			
+
 		/* @var \MageDeveloper\Dataviewer\Domain\Model\Record $_record */
 		$selectedRecordIds = [];
-		if($records) 
+		if($records)
 		{
-			foreach ($records as $_record) 
+			foreach ($records as $_record)
 			{
 				$_record->initializeValues();
 				$selectedRecordIds[] = $_record->getUid();
@@ -725,7 +677,7 @@ class RecordController extends AbstractController
 	/**
 	 * Gets additional filters computed
 	 * by a letter and the according field
-	 * 
+	 *
 	 * @param string $letter
 	 * @param int|string $letterField
 	 * @return array
@@ -733,12 +685,12 @@ class RecordController extends AbstractController
 	protected function _getAdditionalFiltersByLetterSelection($letter, $letterField)
 	{
 		$additionalFilters = [];
-		
+
 		if(strlen($letter) === 1)
 		{
 			if(!is_numeric($letterField))
 				$letterField = "RECORD.{$letterField}";
-		
+
 			$additionalFilters[] = [
 				"field_id" => $letterField,
 				"filter_condition" => "like",
@@ -747,14 +699,14 @@ class RecordController extends AbstractController
 				"filter_field" => "search",
 			];
 		}
-		
+
 		return $additionalFilters;
 	}
 
 	/**
 	 * Gets additional filters computed
 	 * by search
-	 * 
+	 *
 	 * @param string $searchType
 	 * @param string $searchString
 	 * @param array $searchFields
@@ -766,7 +718,7 @@ class RecordController extends AbstractController
 
 		foreach($searchFields as $i=>$_sF)
 			$searchFields[$i]["field_value"] = $searchString;
-	
+
 		switch($searchType)
 		{
 			case SearchSettingsService::SEARCH_RECORD_TITLE:
@@ -792,26 +744,26 @@ class RecordController extends AbstractController
 				$additionalFilters = array_merge($additionalFilters, $searchFields);
 				break;
 		}
-		
+
 		return $additionalFilters;
 	}
 
 	/**
 	 * Gets additional filters computed
 	 * by a selection type
-	 * 
+	 *
 	 * @param string $selectionType
 	 * @return array
 	 */
 	protected function _getAdditionalFiltersBySelectionType($selectionType)
 	{
 		$additionalFilters = [];
-	
+
 		switch($selectionType)
 		{
 			case ListSettingsService::SELECTION_TYPE_DATATYPES:
 				$selectedDatatypes = $this->listSettingsService->getSelectedDatatypeIds();
-			
+
 				$additionalFilters[] = [
 					"field_id" => "RECORD.datatype",
 					"filter_condition" => "in",
@@ -835,7 +787,7 @@ class RecordController extends AbstractController
 				$dateFrom = $this->listSettingsService->getDateFrom();
 				// Date To
 				$dateTo = $this->listSettingsService->getDateTo();
-				
+
 				$additionalFilters[] = [
 					"field_id" => "RECORD.crdate",
 					"filter_condition" => "gte",
@@ -843,7 +795,7 @@ class RecordController extends AbstractController
 					"filter_combination" => "AND",
 					"filter_field" => "search",
 				];
-				
+
 				$additionalFilters[] = [
 					"field_id" => "RECORD.crdate",
 					"filter_condition" => "lte",
@@ -879,31 +831,31 @@ class RecordController extends AbstractController
 			case ListSettingsService::SELECTION_TYPE_ALL_RECORDS:
 				break;
 		}
-		
+
 		return $additionalFilters;
 	}
 
 	/**
-	 * Checks if there is a sort plugin, that is 
+	 * Checks if there is a sort plugin, that is
 	 * targeting to this element
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function _hasTargetSortPlugin()
 	{
 		if($this->listSettingsService->isForcedSorting())
 			return false;
-	
+
 		$cObj = $this->configurationManager->getContentObject();
 		$data = $cObj->data;
 		$uid = (int)$data["uid"];
-	
+
 		$res = $GLOBALS["TYPO3_DB"]->exec_SELECTgetRows(
 			"uid",				// SELECT
 			"tt_content",		// FROM
 			"list_type = 'dataviewer_sort' AND pi_flexform RLIKE '<field index=\"settings.target_plugin\">.*<value index=\"vDEF\">{$uid}</value>.*</field>'"	// WHERE
 		);
-	
+
 		return (count($res)>0);
 	}
 
@@ -934,7 +886,26 @@ class RecordController extends AbstractController
 		$ids = $this->listSettingsService->getSelectedVariableIds();
 		$variables = $this->prepareVariables($ids);
 		$this->view->assignMultiple($variables);
-		
+
+		if($this->listSettingsService->isCustomFluidCode())
+		{
+			// Assigning the custom view model as general
+			$this->view = $this->getStandaloneView(true);
+
+			$templateSource = $this->listSettingsService->getFluidCode();
+			
+			// Checking Debug
+			if($this->listSettingsService->isDebug())
+				$templateSource = "<f:debug>{_all}</f:debug>".$templateSource;
+			
+			$templateSwitch = $this->getTemplateSwitch();
+			if($templateSwitch)
+				$this->view->setTemplatePathAndFilename($templateSwitch);
+			else
+				$this->view->setTemplateSource($templateSource);
+
+		}
+
 		// Parent
 		parent::initializeView($view);
 	}
@@ -964,7 +935,7 @@ class RecordController extends AbstractController
 
 	/**
 	 * Gets a standalone view instance
-	 * 
+	 *
 	 * @return \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
 	 */
 	protected function getStandaloneView($includeVariables = false)
@@ -982,7 +953,7 @@ class RecordController extends AbstractController
 			$variables = $this->prepareVariables($ids);
 			$view->assignMultiple($variables);
 		}
-		
-		return $view;	
+
+		return $view;
 	}
 }
