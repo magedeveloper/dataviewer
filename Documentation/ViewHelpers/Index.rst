@@ -67,7 +67,7 @@ The PartViewHelper renders different parts of the Records in case a template was
 | Value         | ``{record.*fieldname*}``    |
 +---------------+-----------------------------+
 
-Usage:
+**Usage:**
 
 .. code-block:: html
 	
@@ -115,3 +115,99 @@ is accessed.
 
    {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
    <dv:page.title part="{record}">{record.title}</dv:page.title>
+
+
+Filter-RecordsByConditionsViewHelper
+####################################
+
+This ViewHelpers fetches all records that match the conditions, that were added.
+
+**Condition Structure:**
+
++--------------------+----------------+------------------------------------------------------+
+| Parameter Name     | Parameter Type | Description                                          |
++====================+================+======================================================+
+| field_id           | int            | Id of the field that has to be filterd               |
++--------------------+----------------+------------------------------------------------------+
+| filter_condition   | string         | The **condition shorthand** for the filter.          |
+|                    |                | See below for available conditions.                  |
++--------------------+----------------+------------------------------------------------------+
+| field_value        | string|int     | The value that has to match                          |
++--------------------+----------------+------------------------------------------------------+
+| filter_combination | string         | AND/OR                                               |
++--------------------+----------------+------------------------------------------------------+
+
+
+**Example:**
+
+.. code-block:: html
+
+   {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+
+   <f:for each="{dv:filter.recordsByConditions(conditions:'{
+      0:{field_id:56,filter_condition:\'gte\',field_value:\'110\'filter_combination:\'AND\'},
+      1:{field_id:56,filter_condition:\'lte\',field_value:\'117\'filter_combination:\'AND\'}
+    }')}" as="record">
+	   {record.title} ({record.length.value})
+	   <br />
+    </f:for>
+
+
+
+Filter-RecordsByConditionsViewHelper
+####################################
+
+This ViewHelpers fetches all records that match the conditions, that were added.
+
++--------------------+----------------+------------------------------------------------------+
+| Parameter Name     | Parameter Type | Description                                          |
++====================+================+======================================================+
+| field              | string|int     | Name or Id of the field                              |
++--------------------+----------------+------------------------------------------------------+
+| value              | string         | The search value for the field                       |
++--------------------+----------------+------------------------------------------------------+
+| condition          | string         | The condition for the search                         |
++--------------------+----------------+------------------------------------------------------+
+
+
+Example:
+
+.. code-block:: html
+
+   {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+
+   <f:for each="{dv:filter.recordsByField(field:'length',value:'110',condition:'gte')}" as="record">
+      {record.title} (Length: {record.length.value})
+      <br />
+   </f:for>
+
+
+
+Conditions for filters
+======================
+
++--------------------------+----------------+-------------------------+-----------------------------+
+| Condition Shorthand      | SQL Operator   | SQL Variable            | Repository Condition        |
++==========================+================+=========================+=============================+
+| eq                       | =              | '{$var}'                | ->equals                    |
++--------------------------+----------------+-------------------------+-----------------------------+
+| neq                      | !=             | '{$var}'                | ->logicalNot->equals        |
++--------------------------+----------------+-------------------------+-----------------------------+
+| like                     | LIKE           | '%{$var}%'              | ->like                      |
++--------------------------+----------------+-------------------------+-----------------------------+
+| nlike                    | NOT LIKE       | '%{$var}%'              | ->logicalNot->like          |
++--------------------------+----------------+-------------------------+-----------------------------+
+| in                       | IN             | ([trimExplode]{$var})   | ->in                        |
++--------------------------+----------------+-------------------------+-----------------------------+
+| nin                      | NOT IN         | ([trimExplode]{$var})   | ->logicalNot->in            |
++--------------------------+----------------+-------------------------+-----------------------------+
+| gt                       | >              | {(int)$var}             | ->greaterThan               |
++--------------------------+----------------+-------------------------+-----------------------------+
+| lt                       | <              | {(int)$var}             | ->lessThan                  |
++--------------------------+----------------+-------------------------+-----------------------------+
+| gte                      | >=             | {(int)$var}             | ->greaterThanOrEqual        |
++--------------------------+----------------+-------------------------+-----------------------------+
+| lte                      | <=             | {(int)$var}             | ->lessThanOrEqual           |
++--------------------------+----------------+-------------------------+-----------------------------+
+| fis                      | FIND_IN_SET    | '{$var}'                |                             |
++--------------------------+----------------+-------------------------+-----------------------------+

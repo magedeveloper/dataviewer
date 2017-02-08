@@ -91,6 +91,11 @@ Template Selection
 Render this Template without Sitetemplate
 	If this option is set, the complete output of this plugin will showed without rendering the whole
 	site template.
+	
+Template Switch
+	This setting gives you the possibility to use different templates on conditions. The condition
+	is written in fluid. If a condition matches, the selected template will be used instead of the 
+	above selected template in 'Template Selection'.
 
 Variable Injection
    Select the variables, that will be injected into the fluid template.

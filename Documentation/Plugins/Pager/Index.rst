@@ -23,3 +23,7 @@ List of entries for 'Per Page'-Field (Comma separated)
 
 Show 'View All' selection
    This adds a selection for viewing all records to the 'Per Page'-Field.
+
+Clear on Page Load
+	Clears the current page and perPage-Setting from the session and reloads
+	the form with the default values.

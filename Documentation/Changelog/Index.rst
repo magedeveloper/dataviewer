@@ -11,7 +11,6 @@
 Changelog
 ---------
 
-
 **1.6.0**
 
 - [BUGFIX] Sort Settings-Tab is now correctly displayed in Records-Plugin
@@ -184,7 +183,7 @@ Changelog
 - (Filter with direct record selection)
 - Ajax Autocomplete functionality
 - Change Record DataHandler to use RecordFactory
-- Provide Delete link for records in ToolbarItem
+- Include MagicSuggest Into Filter Fields
 - Full Workspaces support
 - Record Validation as separate validation class
 - Add Records to other external records (e.g. a fe_user gets an additional tab with the form)
