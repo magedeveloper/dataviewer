@@ -18,13 +18,24 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 class RecordRepository extends AbstractRepository
 {
 	/**
+	 * Default Select Fields
+	 * 
+	 * @var array
+	 */
+	protected $defaultSelectFields = [
+		"RECORD.uid",
+		"RECORD.pid",
+		"RECORD.title",
+	];
+
+	/**
 	 * Default Orderings
 	 * 
 	 * @var array
 	 */
-	protected $defaultOrderings = array(
+	protected $defaultOrderings = [
 		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
-	);
+	];
 
 	/**
 	 * Find records by given uids
@@ -264,6 +275,36 @@ class RecordRepository extends AbstractRepository
 	}
 
 	/**
+	 * Counts records by conditions like
+	 * filters, limit
+	 *
+	 * @param array $filters
+	 * @param array $storagePids
+	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function countByConditions(array $filters = [], array $storagePids = [])
+	{
+		$query = $this->createQuery();
+		$querySettings = $query->getQuerySettings();
+
+		if(!empty($storagePids))
+			$querySettings->setStoragePageIds($storagePids);
+		else
+			$querySettings->setRespectStoragePage(false);
+
+		$query->setQuerySettings($querySettings);
+	
+		$defaultSelectFields = $this->defaultSelectFields;
+		$this->defaultSelectFields = ["COUNT(RECORD.uid)"];
+		$statement = $this->getStatementByAdvancedConditions($filters, "title", "ASC", null, $storagePids);
+		$this->defaultSelectFields = $defaultSelectFields;
+		
+		$query->statement($statement);
+		$result = $query->execute()->count();
+		return $result;
+	}
+
+	/**
 	 * Find records by advanced conditions like
 	 * filters, limit
 	 *
@@ -285,8 +326,10 @@ class RecordRepository extends AbstractRepository
 			$sortField = "sort";
 		}
 
+		$defaultSelectFields = implode(",", $this->defaultSelectFields);
+
 		$statement = "";
-		$statement .= "SELECT            RECORD.uid,RECORD.pid,RECORD.title{$subSelectOrdering}"."\r\n";
+		$statement .= "SELECT            {$defaultSelectFields}{$subSelectOrdering}"."\r\n";
 		$statement .= "FROM              tx_dataviewer_domain_model_record AS RECORD"."\r\n";
 		$statement .= "LEFT JOIN         tx_dataviewer_domain_model_recordvalue AS RECORDVALUE"."\r\n";
 		$statement .= "ON                RECORDVALUE.record = RECORD.uid"."\r\n";
