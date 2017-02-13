@@ -92,7 +92,10 @@ class RecordValueSessionService
 	 */
 	protected function restoreFromSession($key)
 	{
-		$sessionData = $this->sessionObject->getSessionData( $this->prefixKey );
+		$sessionData = null;
+		if($this->sessionObject)
+			$sessionData = $this->sessionObject->getSessionData( $this->prefixKey );
+		
 		return (is_array($sessionData) && array_key_exists($key, $sessionData))?unserialize($sessionData[$key]):null;
 	}
 
@@ -105,7 +108,11 @@ class RecordValueSessionService
 	 */
 	protected function writeToSession($object, $key)
 	{
+		if(!$this->sessionObject)
+			return $this;
+		
 		$sessionData = $this->sessionObject->getSessionData( $this->prefixKey );
+
 		if(!is_array($sessionData))	$sessionData = [];
 		
 		$sessionData[$key] = serialize($object);
@@ -121,7 +128,9 @@ class RecordValueSessionService
 	 */
 	protected function cleanUpSession($key)
 	{
-		$this->sessionObject->setAndSaveSessionData($this->prefixKey, []);
-		return $this;;
+		if($this->sessionObject)
+			$this->sessionObject->setAndSaveSessionData($this->prefixKey, []);
+			
+		return $this;
 	}
 }

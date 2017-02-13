@@ -5,6 +5,10 @@ plugin.tx_dataviewer {
 		singleRecordVariableName = {$plugin.tx_dataviewer.developer.singleRecordVariableName}
 		partVariableName = {$plugin.tx_dataviewer.developer.partVariableName}
 	}
+
+	developer {
+		cache_lifetime = {$plugin.tx_dataviewer.developer.cache_lifetime}
+	}
 	
 	view {
 		templateRootPaths {
@@ -253,6 +257,15 @@ plugin.tx_dataviewer.fieldtypes {
 		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/tca.gif
 		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Tca.xml
 		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.tca
+	}
+
+	# Fieldtype Declaration for a userFunc field #
+	userfunc {
+		fieldClass = MageDeveloper\Dataviewer\Form\Fieldtype\UserFunc
+		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\UserFunc
+		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/user.gif
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/UserFunc.xml
+		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.userfunc
 	}
      
    	# Fieldtype Declaration for a hidden value field #

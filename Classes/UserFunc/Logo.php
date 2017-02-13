@@ -4,6 +4,7 @@ namespace MageDeveloper\Dataviewer\UserFunc;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -18,6 +19,32 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Logo
 {
 	/**
+	 * Object Manager
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @inject
+	 */
+	protected $objectManager;
+
+	/**
+	 * Backend Access Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Backend\BackendAccessService
+	 * @inject
+	 */
+	protected $backendAccessService;
+
+	/**
+	 * Constructor
+	 *
+	 * @return Logo
+	 */
+	public function __construct()
+	{
+		$this->objectManager 			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+		$this->backendAccessService	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Backend\BackendAccessService::class);
+	}
+
+	/**
 	 * Displays the dataviewer logo in a field
 	 *
 	 * @param array $config
@@ -26,12 +53,17 @@ class Logo
 	 */
 	public function displayLogoText(array &$config, &$parentObject)
 	{
+		if($this->backendAccessService->disableDataViewerLogo())
+			return;
+	
+		$logoUrl = $this->backendAccessService->getLogoUrl();
+		$supportEmail = $this->backendAccessService->getSupportEmail();
+
 		$version = ExtensionManagementUtility::getExtensionVersion("dataviewer");
-		$logoUrl = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Images/logo_dataviewer_text.png";
 
 		$html = "";
-		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"MageDeveloper DataViewer {$version}\" class=\"dataviewer-logo\" />";
-		$html .= "<div style=\"margin-top:20px;\">Version <strong>{$version}</strong>&nbsp;| Mail:&nbsp;<a href=\"mailto:kontakt@magedeveloper.de\">kontakt@magedeveloper.de</a></div>";
+		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"DataViewer {$version}\" style=\"height:26px;\" />";
+		$html .= "<div style=\"margin-top:10px;\">Version <strong>{$version}</strong>&nbsp;| Mail:&nbsp;<a href=\"mailto:{$supportEmail}\">{$supportEmail}</a></div>";
 		
 		return $html;
 	}
@@ -45,10 +77,11 @@ class Logo
 	 */
 	public function displayLogoAndMessage(array &$config, &$parentObject)
 	{
+		$parameters = $config["parameters"];
+
 		$html = "";
 		$html .= $this->displayLogoText($config, $parentObject);
 
-		$parameters = $config["parameters"];
 		if(isset($parameters["message"])) 
 		{
 			$severity = (isset($parameters["severity"]))?$parameters["severity"]:"info";
@@ -89,9 +122,14 @@ class Logo
 	 */
 	public function displayLogo(array &$config, &$parentObject)
 	{
+		if($this->backendAccessService->disableDataViewerLogo())
+			return;
+	
 		$html = "";
 		$logoUrl = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Images/logo_dataviewer.png";
 		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"MageDeveloper DataViewer\" />";
 		return $html;
 	}
+
+
 }

@@ -32,10 +32,10 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Field.gif",
 	],
 	'interface' => [
-		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, exclude, type, field_conf, tab_name, frontend_label, variable_name, id, templatefile, description, css_class, column_width, unit, is_record_title, show_title, field_values, validation, display_cond, request_update, field_ids',
+		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, exclude, type, field_conf, frontend_label, variable_name, id, templatefile, description, css_class, column_width, unit, is_record_title, show_title, field_values, validation, request_update, display_cond, field_ids',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, exclude;;1, type, field_conf, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:frontend_settings, frontend_label, variable_name, id, templatefile, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:backend_settings, tab_name, is_record_title, show_title, description, column_width, css_class, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.field_values, field_values, unit, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validation, validation, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.display_cond, field_ids, display_cond, request_update, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, exclude;;1, type, field_conf, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:frontend_settings, frontend_label, variable_name, id, templatefile, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:backend_settings, is_record_title, show_title, description, column_width, css_class, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.field_values, field_values, unit, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validation, validation, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.display_cond, request_update, field_ids, display_cond, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -201,15 +201,6 @@ return [
 				'type' => 'flex',
 				'ds_pointerField' => 'type',
 				'ds' => \MageDeveloper\Dataviewer\Utility\FieldtypeConfigurationUtility::getDsConfig(),
-			],
-		],
-		'tab_name' => [
-			'exclude' => 1,
-			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.tab_name',
-			'config' => [
-				'type' => 'input',
-				'size' => 30,
-				'eval' => 'trim'
 			],
 		],
 		'frontend_label' => [

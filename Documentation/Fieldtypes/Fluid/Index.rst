@@ -20,6 +20,12 @@ This field can contain fluid and/or html code that will be displayed in the back
     
     ``{record.title.value} {record.firstname.value} {record.lastname.value}``
 
+.. note::
+
+    Since 1.6.0, the output can be rendered to the database. This helps you to generate custom content
+    or create search strings for the search/filter field.
+    
+
 
 Screenshot
 ~~~~~~~~~~
@@ -31,6 +37,14 @@ Additional Configuration Options
 
 Show in Backend
    Shows the rendered output in the backend
+   
+Generated Output as Record Value to the Database
+	If this checkbox is marked, the output of this field is rendered to the database and
+	is used as the value content for the field. 
+
+Variable Injection
+	You can inject variables to the fluid view to access different variables when the 
+	output is rendered.
 
 
 

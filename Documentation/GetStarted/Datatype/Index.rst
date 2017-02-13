@@ -32,6 +32,10 @@ Template File for Rendering (PartViewHelper)
 
 Fields
    The fields, that the Datatype contains. The ordering of the fields is used in displaying the record.
+   
+Create tabs and assign fields
+   You can create tabs and assign fields to them. There is also a possibility to put an Font Awesome Icon
+   to the Tab-Name.
 
 Tab "Appearance"
 ################
@@ -41,8 +45,16 @@ Icon
 
 Color
    Lets you change the background color, when you are creating/editing a record.
+   
+Title Divider Character
+   You can assign a divider, when you use fields as record title. The fields are bound
+   together and imploded by the selected character.   
 
 Hide Records of this type in list
    If this checkbox is enabled, all records of this type will be hidden in the backend lists.
    This option can be used, when a Datatype can have other Datatypes as Inline-Elements.
    These elements are not needed to be displayed in the backend.
+
+Hide Button to Add new Record
+   Hides the button in the toolbar to create a new record of a datatype that is found on
+   the selected page.

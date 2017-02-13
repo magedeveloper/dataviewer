@@ -56,15 +56,19 @@ class SortController extends AbstractController
 	{
 		$sortBy		= $this->sortSessionService->getSortField();
 		$sortOrder	= $this->sortSessionService->getSortOrder();
-		$perPage 	= $this->sortSessionService->getPerPage();
+		$sortByOptions = $this->_getSortByOptions();
 
 		$this->view->assign("sortBy", $sortBy);
 		$this->view->assign("sortOrder", $sortOrder);
-		$this->view->assign("perPage", $perPage);
 
-		$this->view->assign("perPageOptions", $this->sortSettingsService->getPerPageFields());
-		$this->view->assign("sortByOptions", $this->_getSortByOptions());
+		// Fetching the name of the current sort by option
+		$sortByName = null;
+		if(in_array($sortBy, array_keys($sortByOptions)))
+			$sortByName = $sortByOptions[$sortBy];
+
+		$this->view->assign("sortByOptions", $sortByOptions);
 		$this->view->assign("targetUid", $this->sortSettingsService->getTargetContentUid());
+		$this->view->assign("sortByName", $sortByName);
 	}
 
 
@@ -75,20 +79,18 @@ class SortController extends AbstractController
 	 *
 	 * @param string $sortBy Sort by
 	 * @param string $sortOrder Sort Order
-	 * @param int $perPage Per Page
 	 * @return void
 	 */
-	public function sortAction($sortBy = null, $sortOrder = null, $perPage = null)
+	public function sortAction($sortBy = null, $sortOrder = null)
 	{
 		if(!$this->_checkTargetUid())
 			$this->forward("index");
 	
-		if (is_null($sortBy) || is_null($sortOrder) || is_null($perPage))
+		if (is_null($sortBy) || is_null($sortOrder))
 			$this->forward("index");
 
 		$sortByOptions  = $this->sortSettingsService->getSortFields();
-		$perPageOptions = $this->sortSettingsService->getPerPageFields();
-
+		
 		/********************
 		 * Validate Sort By
 		 ********************/
@@ -101,13 +103,6 @@ class SortController extends AbstractController
 		if ($sortOrder != QueryInterface::ORDER_ASCENDING && $sortOrder != QueryInterface::ORDER_DESCENDING)
 			$sortOrder = QueryInterface::ORDER_DESCENDING;
 
-		/********************
-		 * Validate Per Page
-		 ********************/
-		if (!in_array($perPage, $perPageOptions))
-			$perPage = reset($perPageOptions);
-
-
 		////////////////////////////////////////////////////
 		// Signal-Slot for processing the sort parameters //
 		//////////////////////////////////////?/////////////
@@ -117,14 +112,12 @@ class SortController extends AbstractController
 			[
 				&$sortBy,
 				&$sortOrder,
-				&$perPage,
 				&$this,
 			]
 		);	
 
 		$this->sortSessionService->setSortField($sortBy);
 		$this->sortSessionService->setSortOrder($sortOrder);
-		$this->sortSessionService->setPerPage((int)$perPage);
 
 		$this->_redirectToPid();
 	}

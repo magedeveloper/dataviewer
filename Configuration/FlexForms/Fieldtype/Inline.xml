@@ -41,7 +41,7 @@
                         <type>input</type>
                         <size>50</size>
                         <placeholder><![CDATA[VendorName\ExtensionName\Domain\Model\Class]]></placeholder>
-                        <eval>required,trim,nospace</eval>
+                        <eval>trim,nospace</eval>
                     </config>
                 </TCEforms>
             </modelClass>

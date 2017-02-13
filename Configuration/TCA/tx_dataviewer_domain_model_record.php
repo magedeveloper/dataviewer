@@ -36,7 +36,7 @@ return [
 		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, datatype, record_content',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, datatype, record_content, --div--;LLL:EXT:lang/Resources/Private/Language/locallang.xlf:table.language, sys_language_uid, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo;;;;1-1-1, l10n_parent, l10n_diffsource;;1, datatype, record_content, --div--;LLL:EXT:lang/Resources/Private/Language/locallang.xlf:table.language, sys_language_uid, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -136,14 +136,6 @@ return [
 				'range' => [
 					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
 				],
-			],
-		],
-		'logo' => [
-			'exclude' => 1,
-			'label' => '',
-			'config' => [
-				'type' => 'user',
-				'userFunc' => 'MageDeveloper\Dataviewer\UserFunc\Logo->displayLogoText',
 			],
 		],
 		'datatype' => [

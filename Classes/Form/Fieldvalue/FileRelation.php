@@ -46,28 +46,48 @@ class FileRelation extends AbstractFieldvalue implements FieldvalueInterface
 		$value = $this->getValue();
 		$fileIds = GeneralUtility::trimExplode(",", $value, true);
 		$fileRelationStringValue = "";
+
 		foreach($fileIds as $_fileId)
 		{
-			if(!is_numeric($_fileId)) 
+			if(!is_numeric($_fileId))
 			{
-				$_fileId = reset($this->_getDirectPost($_fileId));
+				$fileValue = $this->_getDirectPost($_fileId);
+				$parts = GeneralUtility::trimExplode("_", $fileValue);
+				if (is_array($parts))
+				{
+					try {
+						$fileReferenceId = end($parts);
+						$fileReference   = $this->objectManager->get(\TYPO3\CMS\Core\Resource\FileReference::class,
+							["uid_local" => $fileReferenceId]);
+						$fileRelationStringValue .= $fileReference->getName() . ",";
+					} catch (\Exception $e) { }
+				}
+
 			}
-			
-			if($_fileId)
+			else
 			{
-				/* @var \TYPO3\CMS\Core\Resource\File $file */
-				$file = $this->fileRepository->findFileReferenceByUid($_fileId);
-				if ($file instanceof \TYPO3\CMS\Core\Resource\FileInterface)
-					$fileRelationStringValue .= $file->getName() . ",";
-					
+				if($_fileId)
+				{
+					try {
+						/* @var \TYPO3\CMS\Core\Resource\File $file */
+						$file = $this->fileRepository->findFileReferenceByUid($_fileId);
+
+						if ($file instanceof \TYPO3\CMS\Core\Resource\FileInterface)
+							$fileRelationStringValue .= $file->getName() . ",";
+
+					} catch (\Exception $e) { }
+				}
 			}
+
+
 		}
+
 		return trim($fileRelationStringValue, ",");
 	}
 
 	/**
 	 * Searches a file id in the posted form data
-	 * 
+	 *
 	 * @param string $fileId
 	 * @return array
 	 */
@@ -75,9 +95,22 @@ class FileRelation extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$uc = GeneralUtility::_POST("uc");
 		if(is_array($uc))
-			return ArrayUtility::recursiveFindKey($fileId, $uc);
-			
-		return [];	
+		{
+			$found = reset(ArrayUtility::recursiveFindKey($fileId, $uc));
+			if($found == 1)
+			{
+				// We need to fetch the id from the data of the form post
+				$formPostData = GeneralUtility::_POST("data");
+				if(isset($formPostData["sys_file_reference"][$fileId]) &&
+					isset($formPostData["sys_file_reference"][$fileId]["uid_local"]))
+				{
+					return $formPostData["sys_file_reference"][$fileId]["uid_local"];
+				}
+			}
+
+		}
+
+		return;
 	}
 
 	/**
@@ -96,40 +129,41 @@ class FileRelation extends AbstractFieldvalue implements FieldvalueInterface
 		$value 		= $this->getValue();
 		$fileIds 	= GeneralUtility::trimExplode(",", $value, true);
 		$files 		= [];
-		
+
 		foreach($fileIds as $_fileId)
 		{
 			/* @var \TYPO3\CMS\Core\Resource\File $file */
 			if(is_numeric($_fileId))
-            {
-                $file = $this->fileRepository->findFileReferenceByUid($_fileId);
-                if ($file instanceof \TYPO3\CMS\Core\Resource\FileInterface)
-                    $files[] = $file;
+			{
+				try {
+					$file = $this->fileRepository->findFileReferenceByUid($_fileId);
+					if ($file instanceof \TYPO3\CMS\Core\Resource\FileInterface)
+						$files[] = $file;
+				} catch (\Exception $e) { }
+			}
 
-            }
-				
 		}
-		
+
 		return $files;
 	}
 
-    /**
-     * Gets the value or values as a plain string-array for
-     * usage in different possitions to show
-     * and use it when needed as a string
-     *
-     * @return array
-     */
-    public function getValueArray()
-    {
-        $files = $this->getFrontendValue();
-        $stringArray = [];
+	/**
+	 * Gets the value or values as a plain string-array for
+	 * usage in different possitions to show
+	 * and use it when needed as a string
+	 *
+	 * @return array
+	 */
+	public function getValueArray()
+	{
+		$files = $this->getFrontendValue();
+		$stringArray = [];
 
-        foreach($files as $_file)
-        {
-            $stringArray[] = $_file->getName();
-        }
+		foreach($files as $_file)
+		{
+			$stringArray[] = $_file->getName();
+		}
 
-        return $stringArray;
-    }
+		return $stringArray;
+	}
 }

@@ -27,7 +27,7 @@ class ToolbarItem implements ToolbarItemInterface
 {
 	/**
 	 * Object Manager
-	 * 
+	 *
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 * @inject
 	 */
@@ -59,7 +59,7 @@ class ToolbarItem implements ToolbarItemInterface
 
 	/**
 	 * Icon Factory
-	 * 
+	 *
 	 * @var \TYPO3\CMS\Core\Imaging\IconFactory
 	 * @inject
 	 */
@@ -74,6 +74,14 @@ class ToolbarItem implements ToolbarItemInterface
 	protected $pluginSettingsService;
 
 	/**
+	 * Backend Access Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Backend\BackendAccessService
+	 * @inject
+	 */
+	protected $backendAccessService;
+
+	/**
 	 * Constructor
 	 *
 	 * @return ToolbarItem
@@ -86,6 +94,7 @@ class ToolbarItem implements ToolbarItemInterface
 		$this->datatypeRepository		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\DatatypeRepository::class);
 		$this->recordRepository 		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
 		$this->pluginSettingsService	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService::class);
+		$this->backendAccessService		= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Backend\BackendAccessService::class);
 
 		$this->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/Dataviewer/DataviewerMenu');
 		$languageService = $this->getLanguageService();
@@ -164,7 +173,7 @@ class ToolbarItem implements ToolbarItemInterface
 				$record->setHidden(false);
 			else if($record->getHidden() === false)
 				$record->setHidden(true);
-		
+
 			try {
 				$this->recordRepository->update($record);
 				$this->persistenceManager->persistAll();
@@ -180,31 +189,6 @@ class ToolbarItem implements ToolbarItemInterface
 	}
 
 	/**
-	 * Returns the current BE user.
-	 *
-	 * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
-	 */
-	protected function getBackendUser()
-	{
-		return $GLOBALS['BE_USER'];
-	}
-
-	/**
-	 * Checks whether the user has access to this toolbar item
-	 *
-	 * @return bool TRUE if user has access, FALSE if not
-	 */
-	public function checkAccess()
-	{
-		$disabled = $this->getBackendUser()->getTSConfigVal('options.disableDataViewerToolbarItem');
-		
-		if(is_null($disabled))
-			$disabled = false;
-			
-		return (bool)!$disabled;	
-	}
-
-	/**
 	 * Render "item" part of this toolbar
 	 *
 	 * @return string Toolbar item HTML
@@ -212,9 +196,9 @@ class ToolbarItem implements ToolbarItemInterface
 	public function getItem()
 	{
 		$title = "MageDeveloper DataViewer";
-		return '<span title="' . $title . '">' . 
-				$this->iconFactory->getIcon('extensions-dataviewer-default', Icon::SIZE_SMALL)->render('inline') . 
-				'</span>';
+		return '<span title="' . $title . '">' .
+			$this->iconFactory->getIcon('extensions-dataviewer-default', Icon::SIZE_SMALL)->render('inline') .
+			'</span>';
 	}
 
 	/**
@@ -235,6 +219,7 @@ class ToolbarItem implements ToolbarItemInterface
 	public function getDropDown()
 	{
 		$orderings = ["name" => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING];
+
 		$datatypes = $this->datatypeRepository->findAll(false, $orderings);
 		$latest = $this->recordRepository->findLatest(20);
 		
@@ -245,7 +230,12 @@ class ToolbarItem implements ToolbarItemInterface
 			$templateFile = $view->getFullTemplatePathForFile( "ToolbarItem/Index.html" );
 			$view->setTemplatePathAndFilename($templateFile);
 			$view->getRequest()->setControllerExtensionName( ExtensionConfiguration::EXTENSION_KEY );
+
+			$logoUrl = null;
+			if(!$this->backendAccessService->disableDataViewerLogo())
+				$logoUrl = $this->backendAccessService->getLogoUrl();
 			
+			$view->assign("logoUrl", $logoUrl);
 			$view->assign("datatypes", $datatypes);
 			$view->assign("latest", $latest);
 
@@ -255,7 +245,7 @@ class ToolbarItem implements ToolbarItemInterface
 		{
 			return Locale::translate("backend.no_datatypes_found");
 		}
-	
+
 	}
 
 	/**
@@ -273,6 +263,16 @@ class ToolbarItem implements ToolbarItemInterface
 	 */
 	public function getAdditionalAttributes()
 	{
+	}
+
+	/**
+	 * Checks whether the user has access to this toolbar item
+	 *
+	 * @return bool TRUE if user has access, FALSE if not
+	 */
+	public function checkAccess()
+	{
+		return $this->backendAccessService->disableToolbarItem();
 	}
 
 	/**

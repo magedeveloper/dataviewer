@@ -38,3 +38,4 @@ Detailed Information about the plugins:
    Filter/Index
    Select/Index
    Form/Index
+   Pager/Index

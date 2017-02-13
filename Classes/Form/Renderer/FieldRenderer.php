@@ -315,6 +315,9 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	protected function _wrapFieldDiv($html)
 	{
+		// Preparation for tooltip functionality
+		// data-toggle="tooltip" data-html="true" data-placement="top" data-title="{$this->getField()->getDescription()}"
+		
 		$wrapped = "";
 		$wrapped .= "<div class=\"dataviewer-field {$this->getField()->getColumnWidth()}\">";
 
@@ -334,6 +337,7 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 		$wrapped .= "</div>";
 
 		$wrapped .= "</div>";
+
 		return $wrapped;
 	}
 

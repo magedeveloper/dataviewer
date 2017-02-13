@@ -1,11 +1,15 @@
 <f:layout name="Default" />
 <f:section name="main">
+	<style type="text/css">
+		.dataviewer-letter-selection { padding:10px 0; }
+	</style>
+
     <div class="dataviewer-letter-selection">
-        <ul>
+		<div class="btn-group" role="group">
             <f:for each="{letters}" as="i" iteration="iterator">
-                <li class="{f:if(condition: iterator.isLast, then: 'last ')}{f:if(condition: iterator.isFirst, then: 'first ')}{f:if(condition: '{active}=={i}', then: 'letter active', else: 'letter')}"><f:link.action action="letter" arguments="{letter:i,targetUid:targetUid}">{i}</f:link.action></li>
+                <f:link.action class="btn btn-default{f:if(condition: '{active}=={i}', then: ' active disabled')}" action="letter" arguments="{letter:i,targetUid:targetUid}">{i}</f:link.action>
             </f:for>
-        </ul>
+        </div>
         <div class="clear"></div>
     </div>
 </f:section>

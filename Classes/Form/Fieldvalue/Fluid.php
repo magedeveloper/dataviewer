@@ -2,6 +2,7 @@
 namespace MageDeveloper\Dataviewer\Form\Fieldvalue;
 
 use MageDeveloper\Dataviewer\Domain\Model\Field;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -16,30 +17,52 @@ use MageDeveloper\Dataviewer\Domain\Model\Field;
 class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 {
 	/**
-	 * Standalone View for Rendering Fluid
+	 * Plugin Settings Service
 	 *
-	 * @var \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
+	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
 	 * @inject
 	 */
-	protected $standaloneView;
+	protected $pluginSettingsService;
+
+	/**
+	 * Variable Repository
+	 *
+	 * @var \MageDeveloper\Dataviewer\Domain\Repository\VariableRepository
+	 * @inject
+	 */
+	protected $variableRepository;
 
 	/**
 	 * Gets the view model
-	 * 
+	 *
 	 * @return \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
 	 */
 	protected function _getView()
 	{
+		$standaloneView = $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
+
 		// Check for a record and inject it to the view
 		if($this->getRecord() !== false)
-				$this->standaloneView->assign("record", $this->getRecord());
-		
-		return $this->standaloneView;
+		{
+			$variableIds = GeneralUtility::trimExplode(",", $this->getField()->getConfig("injectVariables"));
+			if(count($variableIds))
+			{
+				/* @var \MageDeveloper\Dataviewer\Controller\RecordController $controller */
+				$controller = $this->objectManager->get(\MageDeveloper\Dataviewer\Controller\RecordController::class);
+				$variables = $controller->prepareVariables($variableIds);
+				$standaloneView->assignMultiple($variables);
+			}
+
+			$recordVariableName = $this->pluginSettingsService->getRecordVarName();
+			$standaloneView->assign($recordVariableName, $this->getRecord());
+		}
+
+		return $standaloneView;
 	}
 
 	/**
 	 * Renders the source fluid code
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function _renderSource()
@@ -52,7 +75,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 			$rendered = $this->_getView()->renderSource($fluidSource);
 			$html .= $rendered;
 		}
-		
+
 		return $html;
 	}
 
@@ -63,7 +86,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getValueContent()
 	{
-		return $this->getValue();
+		return $this->getFrontendValue();
 	}
 
 	/**
@@ -73,7 +96,7 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function getSearch()
 	{
-		return $this->getValue();
+		return $this->getFrontendValue();
 	}
 
 	/**
@@ -92,15 +115,15 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 		return $this->_renderSource();
 	}
 
-    /**
-     * Gets the value or values as a plain string-array for
-     * usage in different possitions to show
-     * and use it when needed as a string
-     *
-     * @return array
-     */
-    public function getValueArray()
-    {
-        return [$this->getFrontendValue()];
-    }
+	/**
+	 * Gets the value or values as a plain string-array for
+	 * usage in different possitions to show
+	 * and use it when needed as a string
+	 *
+	 * @return array
+	 */
+	public function getValueArray()
+	{
+		return [$this->getFrontendValue()];
+	}
 }

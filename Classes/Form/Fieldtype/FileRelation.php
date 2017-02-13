@@ -87,7 +87,7 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 							"foreign_selector_fieldTcaOverride" => [
 								"config" => [
 									"appearance" => [
-										"elementBrowserType" => ($this->getField()->getConfig("showUpload") == "1")?"file":"",
+										"elementBrowserType" => "file",
 										"elementBrowserAllowed" => $this->getField()->getConfig("allowed"),
 									]
 								]
@@ -112,10 +112,10 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 								"showRemovedLocalizationRecords" => FALSE,
 								"showSynchronizationLink" => FALSE,
 								"showAllLocalizationLink" => FALSE,
-
+								"fileUploadAllowed" => (bool)$this->getField()->getConfig("fileUploadAllowed"), 
 								"enabledControls" => [
 									"info" => true,
-									"new" => true,
+									"new" => false,
 									"dragdrop" => true,
 									"sort" => true,
 									"hide" => true,

@@ -5,6 +5,7 @@ namespace MageDeveloper\Dataviewer\Form\Renderer;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use MageDeveloper\Dataviewer\Domain\Model\Field as Field;
 use MageDeveloper\Dataviewer\Domain\Model\Record as Record;
@@ -49,6 +50,14 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	 * @inject
 	 */
 	protected $recordValueSessionService;
+
+	/**
+	 * Backend Access Service
+	 * 
+	 * @var \MageDeveloper\Dataviewer\Service\Backend\BackendAccessService
+	 * @inject
+	 */
+	protected $backendAccessService;
 	
 	/**
 	 * Constructor
@@ -61,6 +70,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$this->formResultCompiler 			= $this->objectManager->get(\TYPO3\CMS\Backend\Form\FormResultCompiler::class);
 		$this->fieldRenderer 				= $this->objectManager->get(\MageDeveloper\Dataviewer\Form\Renderer\FieldRenderer::class);
 		$this->recordValueSessionService 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Session\RecordValueSessionService::class);
+		$this->backendAccessService			= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Backend\BackendAccessService::class);
 	}
 
 	/**
@@ -164,7 +174,13 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		
 		// Assign the datatype to the record
 		$record->setDatatype($datatype);
+
+		/* @var PageRenderer $pageRenderer */
+		$pageRenderer = $this->objectManager->get(PageRenderer::class);
 		
+		// Add tooltip possibility to the page
+		$pageRenderer->loadRequireJsModule("TYPO3/CMS/Recordlist/Tooltip");
+
 		// Adding the current record to the field renderer
 		$this->fieldRenderer->setRecord($record)
 							->setParameterArray($params);
@@ -175,7 +191,8 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		///////////////////////////////////////////////////////////////////////
 		// FIELD RENDERING
 		///////////////////////////////////////////////////////////////////////
-		$menuItems = []; $bottomParts = []; $topParts = [];
+		$tabConfigurationArray = $datatype->getTabConfigurationArray();
+		$renderedFields = []; $bottomParts = []; $topParts = [];
 		foreach($datatype->getFields() as $_field)
 		{
 			$this->fieldRenderer->setField($_field);
@@ -211,35 +228,43 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 				$message = Locale::translate("field_has_no_field_values", $_field->getFrontendLabel());
 				$fieldHtml .= "<br /><div class=\"alert alert-danger field-error\" role=\"alert\">{$message}</div>";
 			}
-			
-			// Tab Information
-			$tabName = $_field->getTabName();
-			$matches = [];
-			preg_match('/^((?P<id>[0-9]{1,5})[\:.\-_])?(?P<label>.*)$/', $tabName, $matches);
-			
-			$tabId 	 = $matches["id"];
-			$label	 = $matches["label"];
-			$tabId	= ($tabId>0)?$tabId:$label;
-			
-			$menuItems[$tabId]["label"] = $label;
-			$menuItems[$tabId]["content"] .= $fieldHtml;
-			
-			//$menuItems[$tabId]["description"] = "dsafdsa";
-			
+
+			$renderedFields[$_field->getUid()] = $fieldHtml;
 			$this->resetFormResultCompiler();
 
 		} // END FOREACH
 
-		// Sorting
-		ksort($menuItems);
+		// Prepare Tabs
+		foreach($tabConfigurationArray as $i=>$_tabConfigArr)
+		{
+			foreach($tabConfigurationArray[$i]["content"] as $_id=>$content)
+				if(array_key_exists($_id, $renderedFields))
+					$tabConfigurationArray[$i]["content"][$_id] = $renderedFields[$_id];
+				else
+					unset($tabConfigurationArray[$i]["content"][$_id]);
 
-		// Remove empty menuItems
-		foreach($menuItems as $_tI=>$_mI) {
-			if ($_mI["content"] == "")
-				unset($menuItems[$_tI]);
-			else				
-				$menuItems[$_tI]["content"] .= "<div class=\"clear\"></div>";
+			$content = implode("", $tabConfigurationArray[$i]["content"]);
+			
+			if($content)
+			{
+				$tabConfigurationArray[$i]["content"] = $content;
+				$tabConfigurationArray[$i]["content"].="<div style=\"clear:both;\"></div>";
+			}
+			else
+			{
+				// No content, so we remove the tab here
+				unset($tabConfigurationArray[$i]);
+			}
+				
 		}
+
+		// Backward compatibility
+		if(empty($tabConfigurationArray))
+		{
+			$message = Locale::translate("please_configure_tabs_and_assign_fields");
+			return $this->getMessageHtml($message, null, FlashMessage::WARNING);
+		}
+		
 		///////////////////////////////////////////////////////////////////////
 
 		$backgroundColor = ($record->getDatatype() && $record->getDatatype()->getColor())?"style=\"background-color:{$record->getDatatype()->getColor()};\"":"";
@@ -252,7 +277,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			implode("\r\n", $topParts)							.
 			"<div class=\"dataviewer-content\">"				.
 			$contentHtml 										.
-			$this->renderTabMenu($menuItems, "dataviewer-tabs")	.
+			$this->renderTabMenu($tabConfigurationArray, "dataviewer-tabs")	.
 			"</div>"											.
 			implode("\r\n", $bottomParts)						.
 			//$this->formResultCompiler->printNeededJSFunctions()	.
@@ -335,14 +360,17 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		);
 		
 		$header = "";
-		$header .= "<div class=\"dataviewer-header\" title=\"Datatype: {$datatype->getUid()}\">";
+		$header .= "<div class=\"dataviewer-header\">";
+		$header .= $this->_getExtensionInformationHtml();
 
 		$iconIdentifier = "extensions-dataviewer-{$datatype->getIcon()}";
 		$icon = $this->iconFactory->getIcon($iconIdentifier);
 		$icon->setSize(Icon::SIZE_SMALL);
 		
+		$header .= "<div id=\"datatype-title\" title=\"Datatype: {$datatype->getUid()}\">";
 		$header .= $icon->render();
 		$header .= "<h1>{$datatype->getName()}</h1>";
+		$header .= "</div>";
 
 		// Information Message
 		if (strlen($datatype->getDescription()) > 0)
@@ -354,6 +382,34 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		return $header;
 	}
 
+	/**
+	 * Gets the html for the extension information
+	 * 
+	 * @return string
+	 */
+	protected function _getExtensionInformationHtml()
+	{
+		if($this->backendAccessService->disableDataViewerLogo())
+			return "";
+			
+		$tooltipMessage = Locale::translate("support_information");	
+			
+	
+		$version = ExtensionManagementUtility::getExtensionVersion("dataviewer");
+		$logoUrl = $this->backendAccessService->getLogoUrl();
+		$supportEmail = $this->backendAccessService->getSupportEmail();
+	
+		$html = "";
+		$html .= "<div style=\"float:right\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"top\" data-title=\"{$tooltipMessage}\">";
+		$html .= "<div style=\"font-family:Share, Verdana, Arial, Helvetica, sans-serif; float:left; text-align:right; font-size:13px; margin-right:10px; line-height:1.2; margin-top:-3px;\">";
+		$html .= "<strong>v{$version}</strong><br /><a href=\"mailto:{$supportEmail}\">{$supportEmail}</a>";
+		$html .= "</div>";
+		$html .= "<img src=\"{$logoUrl}\" border=\"0\" title=\"DataViewer {$version}\" style=\"height:22px; float:right;\" />";
+		
+		$html .= "</div>";
+		return $html;
+	}
+	
 	/**
 	 * Renders the title input field
 	 *
@@ -367,14 +423,14 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$title .= "<div class=\"dataviewer-record-title\">";
 
 		$recordTitle = $record->getTitle();
-		$titleLabel = Locale::translate("record_title");
+		$titleLabel = Locale::translate("LLL:EXT:lang/locallang_general.xlf:LGL.title");
 
 		$placeholder = "";
 		
 		if ($record->getDatatype())
 			$placeholder = Locale::translate("entry", $record->getDatatype()->getName());
 
-		$title .= "<label for=\"{$fieldName}[title]\">{$titleLabel}:</label>";
+		$title .= "<label for=\"{$fieldName}[title]\">{$titleLabel}</label>";
 		$title .= "<input name=\"{$fieldName}[title]\" value=\"{$recordTitle}\" placeholder=\"{$placeholder}\" class=\"dataviewer-record-title-input\" />";
 
 		$title .= "</div>";
@@ -404,5 +460,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		]);
 		return $view->render();
 	}
+	
 
 }

@@ -2,11 +2,14 @@
 {namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
 {namespace be=TYPO3\CMS\Beuser\ViewHelpers}
 
-<div style="position:absolute; top:7px; right:10px;">
-	<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_mini.png" height="16" title="MageDeveloper DataViewer Extension" />
-</div>
+<f:if condition="{logoUrl}">
+	<div style="position:absolute; top:7px; right:10px;">
+		<f:image src="{logoUrl}" height="16" title="DataViewer Extension" />
+	</div>
+</f:if>
+
 <div class="row" style="min-width:50em;">
-	<div class="col-md-4" style="border-right:1px solid #000; /*min-height:420px;*/ padding-bottom:10px; overflow-x:hidden; overflow-y: auto;">
+	<div class="col-md-4" style="padding-bottom:10px; overflow-x:hidden; overflow-y: auto;">
 		<ul class="dropdown-list">
 			<li><core:icon identifier="actions-add" size="small" alternativeMarkupIdentifier="inline" />&nbsp;<strong><f:translate key="module.create_record" /></strong></li>
 			<li role="separator" class="divider"></li>
@@ -80,4 +83,14 @@
 	</div>
 </div>
 
+<f:comment>
+	<div class="" style="">
+		<ul class="dropdown-list">
+			<li role="separator" class="divider" style="margin-top:0 !important;"></li>
+			<li style="margin-top:8px;">
+				If you like this extension, please <a style="color:orange; font-weight:bold;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HQP7AJZXJEWMQ&item_name=Support%20for%20Extension%20Development%20DataViewer" target="_blank">donate</a>!
+			</li>
+		</ul>
+	</div>
+</f:comment>
 

@@ -273,7 +273,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
-
+		
 		// Storing the fieldArray to the session to prefill form values for easier modifying
 		$this->recordValueSessionService->store($id, $incomingFieldArray);
 		
@@ -315,7 +315,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 			// Storing the fieldArray to the session to prefill form values for easier modifying
 			//$this->recordValueSessionService->store("NEW", $incomingFieldArray);
-			
 			$this->_redirectCurrentUrl(["datatype" => $datatypeId]);
 			return;
 		}
@@ -325,6 +324,13 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$this->saveData[$id] = [
 			$incomingFieldArray,
 		];
+
+		// We need to remove all elements from the array where the key is an integer,
+		// so we can remove our custom fields in order to let the save procedure
+		// in combination with the added GLOBALS (for the suggest wizard) removed
+		foreach($incomingFieldArray as $_k=>$_v)
+			if(is_numeric($_k))
+				unset($incomingFieldArray[$_k]);
 	}
 
 	/**
@@ -662,7 +668,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					$_value = $parseHTML->RTE_transform($_value, $specConf, 'db', []);
 				}
 			}
-		
+			
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
@@ -735,6 +741,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			// We need to initialize the fieldvalue with the plain value
 			$fieldvalue->init($field, $value);
+			$fieldvalue->setRecordValue($recordValue);
 
 			////////////////////////////////////////////////////////////////////////////////////////////////
 			// This is the place where we will later pre-render the value through each fieldValue

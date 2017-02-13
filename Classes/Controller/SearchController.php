@@ -2,6 +2,7 @@
 namespace MageDeveloper\Dataviewer\Controller;
 
 use MageDeveloper\Dataviewer\Service\Session\SearchSessionService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 
@@ -46,10 +47,19 @@ class SearchController extends AbstractController
 	 */
 	public function indexAction($searchString = '')
 	{
-		if($this->searchSessionService->getSearchString() && $this->searchSettingsService->getClearOnPageLoad() && $searchString == "")
-			$this->searchSessionService->reset();
-	
 		$searchString 		= ($searchString != "")?$searchString:$this->searchSessionService->getSearchString();
+
+		// We redirect to the current page and reset the service if we have to
+		// and no arguments aswell as a searchstring were given
+		if($this->searchSettingsService->getClearOnPageLoad() && 
+		   !$this->_hasDataviewerArguments() &&
+		   $searchString != ''
+			)
+		{
+			$this->searchSessionService->reset();
+			$this->_redirectToPid();
+		}
+	
 		$min 				= $this->searchSettingsService->getMinimumChars();
 		$searchStringLen 	= strlen($searchString);
 
@@ -81,7 +91,7 @@ class SearchController extends AbstractController
 	{
 		if(!$this->_checkTargetUid())
 			$this->redirect("index");
-	
+			
 		$searchType 	= $this->searchSettingsService->getSearchType();
 		$searchFields	= $this->searchSettingsService->getSearchFields();
 
@@ -103,24 +113,22 @@ class SearchController extends AbstractController
 		$this->searchSessionService->setSearchString($searchString);
 		$this->searchSessionService->setSearchType($searchType);
 		
-		if($this->searchSettingsService->getClearOnPageLoad())
-			$this->redirect("index", null, null, ["searchString" => $searchString]);
-		else
-			$this->redirect("index");
-			
-		exit();
+		//$this->request->setArgument("searchString", $searchString);
+		//$arguments = $this->request->getArguments();
+		
+		$this->redirect("index");
 	}
 
 	/**
 	 * Action for resetting the search
-	 * 
+	 *
 	 * @return void
 	 */
 	public function resetAction()
 	{
 		if(!$this->_checkTargetUid())
 			$this->redirect("index");
-	
+
 		$this->searchSessionService->reset();
 		$this->redirect("index");
 	}

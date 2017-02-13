@@ -36,6 +36,7 @@ CREATE TABLE tx_dataviewer_domain_model_datatype (
 	icon varchar(255) DEFAULT '' NOT NULL,
 	templatefile varchar(255) DEFAULT '' NOT NULL,
 	fields int(11) unsigned DEFAULT '0' NOT NULL,
+  tab_config text,
 	color varchar(255) DEFAULT '' NOT NULL,
 	hide_records tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	hide_add tinyint(1) unsigned DEFAULT '0' NOT NULL,
@@ -81,7 +82,6 @@ CREATE TABLE tx_dataviewer_domain_model_field (
 
 	id varchar(255) DEFAULT '' NOT NULL,
 	type varchar(255) DEFAULT 'input' NOT NULL,
-  tab_name varchar(255) DEFAULT '' NOT NULL,
   field_conf text,
 	description text,
 	frontend_label varchar(255) DEFAULT '' NOT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE tx_dataviewer_domain_model_fieldvalue (
 
 	field int(11) unsigned DEFAULT '0' NOT NULL,
 
-	type int(11) DEFAULT '0' NOT NULL,
+	type varchar(30) DEFAULT '0' NOT NULL,
 	value_content text,
 	field_content int(11) unsigned DEFAULT '0',
 	table_content varchar(255) DEFAULT '' NOT NULL,

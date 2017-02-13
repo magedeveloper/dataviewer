@@ -16,10 +16,14 @@ to the [DataViewer Extension Page in the TER](https://typo3.org/extensions/repos
 
 ## Highlights
 + Create customized records on the fly
-+ Plugins for List, Detail, Sort, Filter, Selection and Search
++ Plugins for List, Detail, Sort, Filter, Pagination, Selection and Search
 + Dynamic Configuration of the Plugins to get nearly every solution
++ No extension programming needed
 + Inject records to other extensions with a InjectViewHelper
 + Inject dynamic variables of different types to the fluid templates
 + Easy fluid templating with intuitive variable naming
++ Signal/Slot Usage for manipulating data if needed
++ Backend Toolbar Item for easy record management
 + Import CSV Files
+
 

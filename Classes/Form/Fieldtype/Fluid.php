@@ -63,6 +63,13 @@ class Fluid extends AbstractFieldtype
 			}
 		}
 
+		if($this->getField()->getConfig("generateOutput"))
+		{
+			// We add an empty field here to let this thing going to be generated in the record datahandling
+			$row = $this->getDatabaseRow();
+			$html .= "<input type=\"hidden\" name=\"data[tx_dataviewer_domain_model_record][{$row["uid"]}][{$this->getField()->getUid()}]\" value=\"\" />";
+		}
+		
 		return [
 			'additionalJavaScriptPost' => [],
 			'additionalJavaScriptSubmit' => [],

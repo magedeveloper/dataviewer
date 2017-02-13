@@ -118,6 +118,7 @@ class Record extends AbstractModel
 		else	
 			$this->values = new \MageDeveloper\Dataviewer\Domain\Repository\ValueRepository();
 			
+			
 		$objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 		/* @var \MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService $fieldtypeSettingsService */
 		$fieldtypeSettingsService = $objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService::class);

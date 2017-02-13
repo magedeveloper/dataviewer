@@ -35,7 +35,11 @@ Class Name of the according model
 foreign_table_where
    The WHERE Clause for the foreign table
 
-
+Add Suggest Wizard
+	Adds the suggest wizard for searching within available records as autocomplete.
+	
+Adopt Field Values as additional options
+	Adds all field values as additional options to the field.
 
 
 

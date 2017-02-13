@@ -2,8 +2,43 @@
 
 .. image:: ../Images/logo_dataviewer.png
 
+.. note::
+        If you like the Extension and want to support the development, please `donate now`_.
+        
+        .. _donate now: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HQP7AJZXJEWMQ&item_name=DataViewer-Support
+
+
 Changelog
 ---------
+
+**1.6.0**
+
+- [BUGFIX] Sort Settings-Tab is now correctly displayed in Records-Plugin
+- [FEATURE] Adopt Field Values into Select/Multiselect with foreign_table
+- [TASK] Changed TSconfig command to disable the toolbar item
+- [FEATURE] Suggest Wizard is now usable in Select/Multiselect
+- [BUGFIX] fileUploadAllowed on FileRelation-Field is now correctly supported
+- [BUGFIX] File Reference in FileRelation-Field is now stored correctly on first usage
+- [TASK] Improved Record Layout for showing only the record in General-Tab
+- [TASK] Improved Tab Handling and added configuration for Font Awesome Icons
+- [TASK] requestUpdate-Checkbox moved to top in field configuration
+- [TASK] Complete Record/Field selection of all existing in Template Variables
+- [FEATURE] ViewHelpers for Filtering records in View
+- [FEATURE] Search through value or search field
+- [TASK] Inject Template Variables to fluid field
+- [FEATURE] Possibility to enter custom fluid code instead of selecting templates in records plugin
+- [TASK] New Signal/Slot in Csv-Import for manipulating input and/or output
+- [FEATURE] Pager-Plugin for paging records
+- [TASK] Corrected sorting by fields
+- [FEATURE] Bootstrap CSS Compatibility for all plugins
+- [TASK] Fields are now sorted by PID in selector boxes
+- [FEATURE] Save Value from generated fluid to the database (e.g. for custom search values)
+- [BUGFIX] Fallback Path for Standalone View Template suggestion
+- [FEATURE] Caching for Records Plugin
+- [BUGFIX] Unconfigured Record-Field Variable is no more causing Exceptions
+- [FEATURE] New UserFunc Fieldtype for including your own PHP Scripts with a userFunc
+- [BUGFIX] Removed requirement of a modelClass on inline,select,multiselect fields
+- [DOC] Documentation update
 
 **1.5.0**
 
@@ -142,13 +177,19 @@ Changelog
 
 **To-Do-/Wish- List**
 
-- Fieldtype for implementing a fixed record (Visible or Hidden in Backend)
 - Different Data-Sources for a Datatype/or Field (Webservice, XML, External Database)
+- Record Injector Service for Extensions
+- Access Rights for Datatypes
 - Fluid Field as UserFunc for displayCond compatibility
 - (Filter with direct record selection)
 - Ajax Autocomplete functionality
-- Field for merging different record values (e.g. search)
 - Change Record DataHandler to use RecordFactory
-- Provide Delete link for records in ToolbarItem
+- Include MagicSuggest Into Filter Fields
 - Full Workspaces support
+- Fluid Fieldtype - Selectable Template File
+- New Fieldtype UserFunc with Parameters Flex
 - Record Validation as separate validation class
+- FieldValue Type for different data sources
+- UserFunc Field for running PHP Scripts
+- Add Records to other external records (e.g. a fe_user gets an additional tab with the form)
+

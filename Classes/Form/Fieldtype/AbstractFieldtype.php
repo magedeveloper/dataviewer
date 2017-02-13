@@ -115,7 +115,7 @@ abstract class AbstractFieldtype
 	 *
 	 * @var array
 	 */
-	protected $formDataProviders = [];
+	public $formDataProviders = [];
 
 	/**
 	 * Constructor
@@ -141,6 +141,9 @@ abstract class AbstractFieldtype
 	 */
 	public function getRecordId()
 	{
+		if(!$this->recordId && $this->record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
+			$this->recordId = $this->record->getUid();
+		
 		return $this->recordId;
 	}
 
@@ -540,6 +543,7 @@ abstract class AbstractFieldtype
 
 		$databaseRow["uid"] = $this->getRecordId();
 		$databaseRow["pid"] = $this->getPid();
+		
 		$recordValues = $this->getRecord()->getRecordValues();
 
 		foreach($recordValues as $_rV)

@@ -81,6 +81,14 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	 * @inject
 	 */
 	protected $sessionService;
+
+	/**
+	 * Plugin Cache Service
+	 * 
+	 * @var \MageDeveloper\Dataviewer\Service\Cache\PluginCacheService
+	 * @inject
+	 */
+	protected $pluginCacheService;
 	
 	/**
 	 * Gets the extension name
@@ -220,9 +228,14 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						break;
 					case Variable::VARIABLE_TYPE_RECORD_FIELD:
 						$field = $variable->getField();
-						$record = $variable->getRecord();
-						$value = $record->getValueByField($field);
-						$variables[$name] = $value;
+						
+						if(!is_null($field))
+						{
+							$record = $variable->getRecord();
+							$value = $record->getValueByField($field);
+							$variables[$name] = $value;
+						}
+						
 						break;
 					case Variable::VARIABLE_TYPE_DATABASE:
 						$fields = GeneralUtility::trimExplode(",", $variable->getColumnName());
@@ -305,5 +318,23 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 		$this->view->assign("baseUrl", $GLOBALS["TSFE"]->baseURL);
 
 		parent::initializeView($view); 
+	}
+
+	/**
+	 * Checks if the request has dataviewer arguments
+	 * at all
+	 * 
+	 * @return bool
+	 */
+	protected function _hasDataviewerArguments()
+	{
+		$get = $_GET;
+		$keys = array_keys($get);
+		
+		foreach($keys as $_key)
+			if(strpos($_key, "tx_dataviewer") !== false)
+				return true;
+		
+		return false;
 	}
 }

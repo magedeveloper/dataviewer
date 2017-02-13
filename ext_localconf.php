@@ -14,6 +14,17 @@ if (!defined("TYPO3_MODE")) {
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig("mod.web_list.tableDisplayOrder.tx_dataviewer_domain_model_record.before = pages, fe_groups, fe_users, tx_dataviewer_domain_model_datatype");
 
 /***********************************
+ * Register Cache for the plugins
+ ***********************************/
+if (!is_array($TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["dataviewer_cache"]))
+{
+	$TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["dataviewer_cache"] 							= array();
+	$TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["dataviewer_cache"]["frontend"] 				= \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class;
+	$TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["dataviewer_cache"]["backend"] 				= \TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend::class;
+	$TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["dataviewer_cache"]["options"]["compression"] = 1;
+}
+
+/***********************************
  * Dataviewer Plugins
  * =================================
  * 
@@ -70,6 +81,12 @@ if (!defined("TYPO3_MODE")) {
  * for creating new records in the 
  * backend.
  * 
+ * #8 - Pager
+ * ---------------------------------
+ * Adds a page to your site for 
+ * paging the records of the 
+ * connected records plugin.
+ * 
  * 
  ***********************************/
 // #1 - Display Records
@@ -77,7 +94,8 @@ if (!defined("TYPO3_MODE")) {
 	'MageDeveloper.'.$_EXTKEY,
 	"Record",
 	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // Cached
-	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // UnCached
+	["Record" => "index, list, ajaxRequest, ajaxResponse"], // UnCached
+//	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
@@ -132,5 +150,14 @@ if (!defined("TYPO3_MODE")) {
 	"Form",
 	["Form" => "index, post, delete, error"], // Cached
 	["Form" => "index, post, delete, error"], // UnCached
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
+);
+
+// #8 - Pager
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'MageDeveloper.'.$_EXTKEY,
+	"Pager",
+	["Pager" => "index, page"], // Cached
+	["Pager" => "index, page"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );

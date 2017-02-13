@@ -274,8 +274,39 @@ class BackendCsvAssistantController extends BackendController
 			$log[$i]["recordId"] = null;
 			$log[$i]["hasErrors"] = null;
 
+			/////////////////////////////////////////////////////////////////////
+			// We need a Signal/Slot here to modify the input field array for  //
+			// preparing custom input data that needs to be compatible to the  //
+			// records fields                                                  //
+			//                                                                 //
+			// For example to modify an email address into the according       //
+			// frontend user uid                                               //
+			/////////////////////////////////////////////////////////////////////
+			// Signal-Slot for hooking the field array that generated a record //
+			/////////////////////////////////////////////////////////////////////
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				"csvImportPreCreateRecord",
+				[
+					&$_fieldArr,
+					&$datatype,
+				]
+			);
+
+			// Main Record Creation from the source of a field array
 			$record = $this->recordFactory->create($_fieldArr, $datatype, false, $importValidationFailed);
-			
+
+			/////////////////////////////////////////////////////////////////////
+			// Signal-Slot for hooking the field array that generated a record //
+			/////////////////////////////////////////////////////////////////////
+			$this->signalSlotDispatcher->dispatch(
+				__CLASS__,
+				"csvImportPostCreateRecord",
+				[
+					&$record,
+				]
+			);
+
 			if(empty($this->recordFactory->getValidationErrors()))
 			{
 				$this->recordRepository->add($record);

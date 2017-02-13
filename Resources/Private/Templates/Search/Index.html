@@ -1,13 +1,29 @@
 <f:layout name="Default" />
 <f:section name="main">
+
+	<style type="text/css">
+		.button-reset { margin-right:15px; }
+		.dataviewer-search-additional { padding:5px 0; }
+	</style>
+
     <div class="dataviewer-search" id="dataviewer-search-{cObj.uid}">
         <f:form action="search">
-            <f:form.textfield name="searchString" value="{searchString}" id="tx-dataviewer-searchstring" />
-            <f:form.submit name="submitSearch" value="{f:translate(key:'LLL:EXT:lang/locallang_common.xlf:search')}" />
-            <f:link.action class="button button-primary button-reset" action="reset" arguments="{targetUid:targetUid}">{f:translate(key:'LLL:EXT:lang/locallang_wizards.xlf:imwizard.reset')}</f:link.action>
-        	<f:form.hidden name="targetUid" value="{targetUid}" />
-        </f:form>
-        <f:if condition="{message}"><div class="dataviewer-searchstring">{message}</div></f:if>
-        <f:if condition="{searchString}"><div class="dataviewer-searchstring"><f:translate key="searching_for" arguments="{0:searchString}" /></div></f:if>
+			<div class="input-group">
+				<span class="input-group-addon" id="sizing-addon2"><i class="glyphicon glyphicon-search"></i></span>
+				<f:form.textfield name="searchString" value="{searchString}" id="tx-dataviewer-searchstring" class="form-control" placeholder="{f:translate(key:'LLL:EXT:lang/locallang_misc.xlf:shortcut_searchFor')}" />
+				<span class="input-group-btn">
+        			<button class="btn btn-default" type="submit" name="submitSearch">{f:translate(key:'LLL:EXT:lang/locallang_common.xlf:search')}</button>
+      			</span>
+			</div>
+			
+			<f:form.hidden name="targetUid" value="{targetUid}" />
+
+			<div class="dataviewer-search-additional">
+				<f:link.action class="button button-primary button-reset pull-right" action="reset" arguments="{targetUid:targetUid}">{f:translate(key:'LLL:EXT:lang/locallang_wizards.xlf:imwizard.reset')}</f:link.action>
+				<f:if condition="{message}"><div class="dataviewer-searchstring">{message}</div></f:if>
+				<f:if condition="{searchString}"><div class="dataviewer-searchstring"><f:translate key="searching_for" arguments="{0:searchString}" /></div></f:if>
+				<div class="clear"></div>
+			</div>
+		</f:form>
     </div>
 </f:section>

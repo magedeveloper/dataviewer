@@ -16,14 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Field extends AbstractModel
 {
 	/**
-	 * FlexForm Service
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Service\FlexFormService
-	 * @inject
-	 */
-	protected $flexFormService;
-
-	/**
 	 * Display Field in Backend
 	 * 
 	 * @var boolean
@@ -434,6 +426,16 @@ class Field extends AbstractModel
 	 * @return string $unit
 	 */
 	public function getUnit() 
+	{
+		return $this->unit;
+	}
+
+	/**
+	 * Returns the unit including a trailing space
+	 *
+	 * @return string $unit
+	 */
+	public function getUnitSpace()
 	{
 		return ($this->unit)?" {$this->unit}":"";
 	}

@@ -57,9 +57,9 @@ class Field
 			if ($field instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
 			{
 				$pid = $field->getPid();
-				$tabName = ($field->getTabName())?"".$field->getTabName().">":"";
+				$code = $field->getCode();
 				$label = ($field->getFrontendLabel())?$field->getFrontendLabel():"[".Locale::translate("no_label")."]";
-				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $tabName . $label;
+				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $label . "";
 			}
 
 		}

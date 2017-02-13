@@ -38,17 +38,4 @@ class SortSettingsService extends PluginSettingsService
 		return \MageDeveloper\Dataviewer\Utility\StringUtility::explodeSeparatedString($setting, [","]);
 	}
 
-	/**
-	 * Gets the fields for the per page
-	 * 
-	 * @return array
-	 */	
-	public function getPerPageFields()
-	{
-		$setting = $this->getSettingByCode("per_page");
-		$perPage = \MageDeveloper\Dataviewer\Utility\StringUtility::explodeSeparatedString($setting);
-		
-		return array_combine(array_values($perPage), array_values($perPage));
-	}
-
 }

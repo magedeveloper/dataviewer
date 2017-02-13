@@ -28,12 +28,11 @@ class ListSettingsService extends PluginSettingsService
 	const SELECTION_TYPE_ALL_RECORDS		= "SELECTION_ALL";
 
 	/**
-	 * Divide Records Types
+	 * Template Selection
 	 * @var string
 	 */
-	const DIVIDE_TYPE_FLUENT				= "FLUENT";
-	const DIVIDE_TYPE_DATATYPES				= "DIVIDE_DATATYPES";
-	const DIVIDE_TYPE_FIELDS				= "DIVIDE_FIELDS";
+	const TEMPLATE_SELECTION_CUSTOM			= "CUSTOM";
+	const TEMPLATE_SELECTION_FLUID			= "FLUID";
 
 	/**
 	 * Gets the record selection type
@@ -119,7 +118,7 @@ class ListSettingsService extends PluginSettingsService
 		$templateSelection = $this->getTemplateSelection();
 		$templateOverride  = $this->getTemplateOverride();
 		
-		if($templateSelection == "CUSTOM" && $templateOverride)
+		if($templateSelection == self::TEMPLATE_SELECTION_CUSTOM && $templateOverride)
 			return $templateOverride;
 		
 		return $this->getPredefinedTemplateById($templateSelection);
@@ -136,7 +135,7 @@ class ListSettingsService extends PluginSettingsService
 		$templateSelection = $this->getTemplateSelection();
 		$templateOverride  = $this->getTemplateOverride();
 		
-		if($templateSelection == "CUSTOM")
+		if($templateSelection == self::TEMPLATE_SELECTION_CUSTOM)
 			if($templateOverride)
 				return true;
 			else
@@ -146,6 +145,17 @@ class ListSettingsService extends PluginSettingsService
 			return true;
 			
 		return false;	
+	}
+
+	/**
+	 * Checks if the plugin wants to render custom
+	 * fluid code
+	 * 
+	 * @return bool
+	 */
+	public function isCustomFluidCode()
+	{
+		return ($this->getTemplateSelection() == self::TEMPLATE_SELECTION_FLUID);
 	}
 
 	/**
@@ -228,11 +238,16 @@ class ListSettingsService extends PluginSettingsService
 	/**
 	 * Gets the limitation value for records to show
 	 *
-	 * @return int
+	 * @return int|null
 	 */
 	public function getLimitation()
 	{
-		return (int)$this->getSettingByCode("number_of_records");
+		$limit = (int)$this->getSettingByCode("number_of_records");
+		
+		if($limit > 0)
+			return $limit;
+			
+		return null;	
 	}
 
 	/**
@@ -343,5 +358,36 @@ class ListSettingsService extends PluginSettingsService
 	public function renderOnlyTemplate()
 	{
 		return (bool)$this->getSettingByCode("render_only_template");
+	}
+
+	/**
+	 * Gets the entered fluid code
+	 * 
+	 * @return null|string
+	 */
+	public function getFluidCode()
+	{
+		return $this->getSettingByCode("fluid_code");
+	}
+
+	/**
+	 * Gets the cache lifetime from the plugin
+	 * settings or the configuration
+	 * 
+	 * @return int|null
+	 */
+	public function getCacheLifetime()
+	{
+		$pluginSetting = $this->getSettingByCode("cache_lifetime");
+		
+		if($pluginSetting != "")
+			return (int)$pluginSetting;
+
+		$configuration = $this->getConfiguration("developer.cache_lifetime");
+		
+		if($configuration != "")
+			return (int)$configuration;
+
+		return null;
 	}
 }

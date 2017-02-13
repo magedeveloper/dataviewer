@@ -1,38 +1,45 @@
 <f:layout name="Default" />
 <f:section name="main">
+
+	<style type="text/css">
+		.dataviewer-sorting { padding:10px 0; }
+	</style>
+
     <div class="dataviewer-sorting">
-
-        <f:form action="sort">
-			<div class="dataviewer-sortby">
-				<label for="sortBy"><f:translate key="sort.sort_by" /></label>
-				<f:form.select name="sortBy" id="sort_by" options="{sortByOptions}" additionalAttributes="{onChange:'this.form.submit()'}" value="{sortBy}" />
+			<div class="btn-group" role="group">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<f:if condition="{sortBy}">
+							<f:then>
+								<f:translate key="sort.sort_by_value" arguments="{0:sortByName}" />
+							</f:then>
+							<f:else>
+								<f:translate key="sort.sort_by" />
+							</f:else>
+						</f:if>
+						
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<f:for each="{sortByOptions}" as="option" key="sortByValue" iteration="i">
+							<li class="{f:if(condition:'{sortByValue} == {sortBy}',then:'active')}"><f:link.action action="sort" arguments="{sortBy:sortByValue,sortOrder:sortOrder,targetUid:targetUid}">{option}</f:link.action></li>
+						</f:for>
+					</ul>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<f:if condition="{sortOrder} == 'ASC'">
+							<f:then><f:translate key="sort.asc" /></f:then>
+							<f:else><f:translate key="sort.desc" /></f:else>
+						</f:if>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li class="{f:if(condition:'{sortOrder} == \'ASC\'',then:'active')}"><f:link.action action="sort" arguments="{sortBy:sortBy,sortOrder:'ASC',targetUid:targetUid}"><f:translate key="sort.asc" /></f:link.action></li>
+						<li class="{f:if(condition:'{sortOrder} == \'DESC\'',then:'active')}"><f:link.action action="sort" arguments="{sortBy:sortBy,sortOrder:'DESC',targetUid:targetUid}"><f:translate key="sort.desc" /></f:link.action></li>
+					</ul>
+				</div>
 			</div>
-
-            <div class="dataviewer-sortorder">
-                <label for="sortOrder"><f:translate key="sort.sort_order" /></label>
-                <f:form.select name="sortOrder" id="sort_order" options="{
-                    ASC:'{f:translate(key:\'sort.asc\')}',
-                    DESC:'{f:translate(key:\'sort.desc\')}'
-                }" additionalAttributes="{onChange:'this.form.submit()'}" value="{sortOrder}" />
-            </div>
-
-			<f:if condition="{perPageOptions->f:count()} > 0">
-				<f:then>
-					<div class="dataviewer-perpage">
-						<label for="perPage"><f:translate key="sort.per_page" /></label>
-						<f:form.select name="perPage" id="per_page" options="{perPageOptions}" additionalAttributes="{onChange:'this.form.submit()'}" value="{perPage}" />
-					</div>
-				</f:then>
-				<f:else>
-					<f:form.hidden name="perPage" value="{perPage}" />
-				</f:else>
-			</f:if>
-
-			<f:form.hidden name="targetUid" value="{targetUid}" />
-
-        </f:form>
-
-
         <div class="clear"></div>
     </div>
 </f:section>

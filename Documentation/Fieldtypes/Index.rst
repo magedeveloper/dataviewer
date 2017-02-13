@@ -46,6 +46,7 @@ to create a form as you need it.
    Tca/Index
    Textarea/Index
    TypoScript/Index
+   UserFunc/Index
 
 
 ----------------------

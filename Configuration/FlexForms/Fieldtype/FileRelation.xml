@@ -33,15 +33,15 @@
                     </config>
                 </TCEforms>
             </disallowed>
-            <showUpload>
+            <fileUploadAllowed>
                 <TCEforms>
-                    <label>showUpload</label>
+                    <label>fileUploadAllowed</label>
                     <config>
                         <checkbox>1</checkbox>
                         <type>check</type>
                     </config>
                 </TCEforms>
-            </showUpload>
+            </fileUploadAllowed>
             <minitems>
                 <TCEforms>
                     <label>minitems</label>

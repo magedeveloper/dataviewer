@@ -5,10 +5,15 @@
 
 .. include:: ../Includes.txt
 
-
 .. _introduction:
 
 .. image:: ../Images/logo_dataviewer.png
+
+.. note::
+        If you like the Extension and want to support the development, please `donate now`_.
+        
+        .. _donate now: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HQP7AJZXJEWMQ&item_name=DataViewer-Support
+
 
 Introduction
 ------------

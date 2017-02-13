@@ -13,5 +13,11 @@ namespace MageDeveloper\Dataviewer\Domain\Model;
  */
 abstract class AbstractModel extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
+	/**
+	 * FlexForm Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\FlexFormService
+	 * @inject
+	 */
+	protected $flexFormService;
 }

@@ -59,6 +59,7 @@
                                                 <type>select</type>
                                                 <multiple>0</multiple>
                                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                                <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
                                                 <items type="array"></items>
                                                 <maxitems>1</maxitems>
                                                 <minitems>1</minitems>
@@ -147,6 +148,7 @@
                                                 <type>select</type>
                                                 <multiple>0</multiple>
                                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
+                                                <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
                                                 <items type="array"></items>
                                                 <maxitems>1</maxitems>
                                                 <minitems>1</minitems>
@@ -233,6 +235,27 @@
                                             </config>
                                         </TCEforms>
                                     </field_value>
+                                    <filter_field>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field</label>
+                                            <config>
+                                                <type>select</type>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_search</numIndex>
+                                                        <numIndex index="1">search</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_value</numIndex>
+                                                        <numIndex index="1">value_content</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <minitems>0</minitems>
+                                                <maxitems>1</maxitems>
+                                                <size>1</size>
+                                            </config>
+                                        </TCEforms>
+                                    </filter_field>
                                 </el>
                             </fields>
                         </el>

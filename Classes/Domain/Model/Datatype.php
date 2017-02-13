@@ -1,6 +1,8 @@
 <?php
 namespace MageDeveloper\Dataviewer\Domain\Model;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * MageDeveloper Dataviewer Extension
  * -----------------------------------
@@ -76,6 +78,13 @@ class Datatype extends AbstractModel
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\MageDeveloper\Dataviewer\Domain\Model\Field>
 	 */
 	protected $fields = NULL;
+
+	/**
+	 * Tab Configuration
+	 *
+	 * @var string
+	 */
+	protected $tabConfig = '';
 
 	/**
 	 * Title Divider
@@ -455,5 +464,68 @@ class Datatype extends AbstractModel
 		}
 	
 		return false;
+	}
+
+	/**
+	 * Sets the tab configuration
+	 * 
+	 * @param string $tabConfig
+	 * @return void
+	 */
+	public function setTabConfig($tabConfig)
+	{
+		$this->tabConfig = $tabConfig;
+	}
+
+	/**
+	 * Gets the tab configuration
+	 * 
+	 * @return string
+	 */
+	public function getTabConfig()
+	{
+		return $this->tabConfig;
+	}
+
+	/**
+	 * Gets the complete tab configuration array
+	 * 
+	 * @return array
+	 */
+	public function getTabConfigurationArray()
+	{
+		$tabConfig = $this->getTabConfig();
+		$flexformConfig = $this->flexFormService->convertFlexFormContentToArray($tabConfig);
+		
+		$configArray = [];
+		if(isset($flexformConfig["field"]) && is_array($flexformConfig["field"]))
+			foreach($flexformConfig["field"] as $_id=>$_tab)
+			{
+				$tab = $_tab["tab"];
+				
+				$label = $tab["tab_name"];
+				
+				if(GeneralUtility::isFirstPartOfStr($label, "LLL:"))
+					$label = \MageDeveloper\Dataviewer\Utility\LocalizationUtility::translate($label);
+				
+				$icon = $tab["tab_icon"];
+				$colorCss = (isset($tab["tab_icon_color"]))?" style=\"color:{$tab["tab_icon_color"]}\"":"";
+
+				if($icon)
+					$icon = "<span class=\"icon-unify\"{$colorCss}><i class=\"fa {$icon}\"></i></span>";
+				
+				$fields = GeneralUtility::trimExplode(",", $tab["tab_fields"]);
+				
+				if(count($fields))
+				{
+					$configArray[$_id] = [
+						"label" => $label,
+						"icon" => $icon,
+						"content" => array_flip($fields),
+					];
+				}
+			}
+
+		return $configArray;
 	}
 }

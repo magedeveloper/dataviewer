@@ -3,20 +3,22 @@
 
 	<f:form action="select">
 		<f:if condition="{records -> f:count()} > 0">
-			<ul>
+			<div class="form-group">
 			<f:for each="{records}" as="record" iteration="i">
-				<li>
-					<f:if condition="{autoSubmit}">
-						<f:then><f:form.checkbox id="selection_{i.cycle}" value="{record.record.uid}" name="selection[]" checked="{record.selected}" onclick="this.form.submit()" /></f:then>
-						<f:else><f:form.checkbox id="selection_{i.cycle}" value="{record.record.uid}" name="selection[]" checked="{record.selected}" /></f:else>
-					</f:if>
-					<label for="selection_{i.cycle}">{record.label}</label>
-				</li>
+				<div class="checkbox">
+					<label for="selection_{i.cycle}">
+						<f:if condition="{autoSubmit}">
+							<f:then><f:form.checkbox id="selection_{i.cycle}" value="{record.record.uid}" name="selection[]" checked="{record.selected}" onclick="this.form.submit()" /></f:then>
+							<f:else><f:form.checkbox id="selection_{i.cycle}" value="{record.record.uid}" name="selection[]" checked="{record.selected}" /></f:else>
+						</f:if>
+						{record.label}
+					</label>
+				</div>
 			</f:for>
-			</ul>
+			</div>
 			<f:if condition="{autoSubmit}">
 				<f:then></f:then>
-				<f:else><f:form.submit name="submit" value="{f:translate(key:'select')}" /></f:else>
+				<f:else><f:form.submit class="btn btn-default" name="submit" value="{f:translate(key:'select')}" /></f:else>
 			</f:if>
 		</f:if>
 	</f:form>

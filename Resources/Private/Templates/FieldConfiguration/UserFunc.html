@@ -1,0 +1,41 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+
+<div style="margin-top: -37px">
+
+	<h3 style="color:red;">Important Information</h3>
+	If you want to use this field, please note that frontend and backend parameters
+	of your userFunc are different!<br />
+	So, please only use the '<strong style="color:#ff8700;">parameters</strong>' key in the $config Array from the first argument 
+	of your called userFunc. 
+	<br /><br />
+	See:
+	<br /><br />
+	<pre>
+namespace VendorName\ExtensionName\UserFunc;
+
+class YourUserFunc
+{  
+    /**
+     * The custom userFunc Method that only consists
+     * of $config["parameters"] as set up in the
+     * field configuration
+     *
+     * @param array $config Configuration and Parameters Array
+     * @param mixed $funcRef Parent Object Reference
+     * @return mixed
+     */
+    public function userFuncMethod($config, &$funcRef)
+    {
+        <span style="color:#000;">// The following parameters are the same between backend
+        // and frontend and always deliver the parameters, that
+        // you've set up in the field configuration</span>
+        <strong style="color:#000;">$parameters = $config["<span style="color:#ff8700;">parameters</span>"];</strong>
+    }
+}
+	</pre>
+	
+	
+	
+	
+	
+</div>
