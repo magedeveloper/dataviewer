@@ -264,10 +264,13 @@ class RecordRepository extends AbstractRepository
 		$result = $query->execute(true);
 		
 		// Apply Sorting
-		usort($result, function ($a, $b) {
-			return $a['sort'] - $b['sort'];
-		});
-
+		if(is_numeric($sortField))
+		{
+			usort($result, function ($a, $b) {
+				return $a['sort'] - $b['sort'];
+			});
+		}
+		
 		if(is_numeric($sortField) && $sortOrder == QueryInterface::ORDER_DESCENDING)
 			$result=array_reverse($result, true);
 
@@ -295,13 +298,12 @@ class RecordRepository extends AbstractRepository
 		$query->setQuerySettings($querySettings);
 	
 		$defaultSelectFields = $this->defaultSelectFields;
-		$this->defaultSelectFields = ["COUNT(RECORD.uid)"];
+		$this->defaultSelectFields = ["RECORD.uid"];
 		$statement = $this->getStatementByAdvancedConditions($filters, "title", "ASC", null, $storagePids);
 		$this->defaultSelectFields = $defaultSelectFields;
-		
 		$query->statement($statement);
-		$result = $query->execute()->count();
-		return $result;
+		$result = $query->execute(true);
+		return (is_array($result))?count($result):0;
 	}
 
 	/**

@@ -131,6 +131,7 @@ return [
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.2', 2], // TypoScript
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.3', 3], // Field Content
 				],
+				//'itemsProcFunc' => "MageDeveloper\\Dataviewer\\UserFunc\\Fieldvalue->populateFieldvalueTypes",
 				"default" => "0",
 				'size' => 1,
 				'maxitems' => 1,
