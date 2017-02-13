@@ -34,6 +34,10 @@ Changelog
 - [TASK] Fields are now sorted by PID in selector boxes
 - [FEATURE] Save Value from generated fluid to the database (e.g. for custom search values)
 - [BUGFIX] Fallback Path for Standalone View Template suggestion
+- [FEATURE] Caching for Records Plugin
+- [BUGFIX] Unconfigured Record-Field Variable is no more causing Exceptions
+- [FEATURE] New UserFunc Fieldtype for including your own PHP Scripts with a userFunc
+- [BUGFIX] Removed requirement of a modelClass on inline,select,multiselect fields
 - [DOC] Documentation update
 
 **1.5.0**
@@ -171,9 +175,6 @@ Changelog
 
 
 
-
-
-
 **To-Do-/Wish- List**
 
 - Different Data-Sources for a Datatype/or Field (Webservice, XML, External Database)
@@ -185,6 +186,10 @@ Changelog
 - Change Record DataHandler to use RecordFactory
 - Include MagicSuggest Into Filter Fields
 - Full Workspaces support
+- Fluid Fieldtype - Selectable Template File
+- New Fieldtype UserFunc with Parameters Flex
 - Record Validation as separate validation class
+- FieldValue Type for different data sources
+- UserFunc Field for running PHP Scripts
 - Add Records to other external records (e.g. a fe_user gets an additional tab with the form)
 
