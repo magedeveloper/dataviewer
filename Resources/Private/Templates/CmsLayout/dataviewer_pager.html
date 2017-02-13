@@ -13,7 +13,7 @@
 	<strong><f:translate key="flexform.per_page_entries" />:</strong><br />
 	<f:if condition="{flexform.settings.per_page}">
 		<f:then>
-			{flexform.settings.per_page}
+			{flexform.settings.per_page}<f:if condition="{flexform.settings.show_view_all}">,<f:translate key="LLL:EXT:lang/locallang_misc.xlf:liveSearch_showAllResults" /></f:if>
 		</f:then>
 	</f:if>
 </div>
