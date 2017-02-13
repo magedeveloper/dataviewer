@@ -59,14 +59,14 @@
 	
 							<f:for each="{perPageOptions}" as="option" iteration="p">
 								<li>
-									<f:link.action action="page" arguments="{perPage:option,targetUid:targetUid}"><f:translate key="per_page" arguments="{0:option}" /></f:link.action>
+									<f:link.action action="page" addQueryString="1" arguments="{perPage:option,targetUid:targetUid}"><f:translate key="per_page" arguments="{0:option}" /></f:link.action>
 								</li>
 							</f:for>
 							
 							<f:if condition="{showViewAll}">
 								<li role="presentation" class="divider"></li>
 								<li role="presentation">
-									<f:link.action action="page" arguments="{perPage:0,targetUid:targetUid}">View All</f:link.action>
+									<f:link.action action="page" addQueryString="1" arguments="{perPage:0,targetUid:targetUid}">View All</f:link.action>
 								</li>
 							</f:if>
 
@@ -77,15 +77,15 @@
 			<div class="col col-xs-8">
 				<ul class="pagination pull-right dataviewer-pagination">
 						<li class="pager-item-left{f:if(condition:'{previousPage} < 1',then:' disabled')}">
-							<f:link.action action="page" arguments="{page:previousPage,targetUid:targetUid}">&laquo;</f:link.action>
+							<f:link.action action="page" addQueryString="1" arguments="{page:previousPage,targetUid:targetUid}">&laquo;</f:link.action>
 						</li>
 					<f:for each="{pages}" as="page" iteration="i">
 						<li class="pager-item-{i.cycle}{f:if(condition:'{i.cycle} == {selectedPage}',then: ' active')}">
-							<f:link.action action="page" arguments="{page:page,targetUid:targetUid}">{page}</f:link.action>
+							<f:link.action action="page" addQueryString="1" arguments="{page:page,targetUid:targetUid}">{page}</f:link.action>
 						</li>
 					</f:for>
 					<li class="pager-item-right{f:if(condition:'{nextPage} == \'\'',then:' disabled')}">
-						<f:link.action action="page" arguments="{page:nextPage,targetUid:targetUid}">&raquo;</f:link.action>
+						<f:link.action action="page" addQueryString="1" arguments="{page:nextPage,targetUid:targetUid}">&raquo;</f:link.action>
 					</li>
 				</ul>
 			</div>

@@ -29,6 +29,7 @@ class PagerSessionService extends SessionService
 	 */
 	const SESSION_KEY_PAGE			= "tx-dataviewer-page-selection";
 	const SESSION_KEY_PER_PAGE	 	= "tx-dataviewer-page-per-page";
+	const SESSION_KEY_RECORD_COUNT	= "tx-dataviewer-record-count";
 
 
 	/**
@@ -49,11 +50,7 @@ class PagerSessionService extends SessionService
 	 */
 	public function getSelectedPage()
 	{
-		$page = (int)$this->restoreFromSession(self::SESSION_KEY_PAGE);
-		
-		if($page <= 0) $page = 1;
-		
-		return $page;
+		return $this->restoreFromSession(self::SESSION_KEY_PAGE);
 	}
 
 	/**
@@ -79,13 +76,34 @@ class PagerSessionService extends SessionService
 	}
 
 	/**
+	 * Sets the record count
+	 * 
+	 * @param int $count
+	 * @return void
+	 */
+	public function setRecordCount($count)
+	{
+		$this->writeToSession($count, self::SESSION_KEY_RECORD_COUNT);
+	}
+
+	/**
+	 * Gets the record count
+	 * 
+	 * @return int|null
+	 */
+	public function getRecordCount()
+	{
+		return $this->restoreFromSession(self::SESSION_KEY_RECORD_COUNT);
+	}
+
+	/**
 	 * Resets all pager settings
 	 *
 	 * @return PagerSessionService
 	 */
 	public function reset()
 	{
-		$this->setSelectedPage(1);
+		$this->setSelectedPage(null);
 		$this->setPerPage(null);
 		return $this;
 	}

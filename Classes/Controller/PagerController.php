@@ -65,14 +65,16 @@ class PagerController extends RecordController
 		$perPage 		= $this->pagerSessionService->getPerPage();
 		$selectedPage	= $this->pagerSessionService->getSelectedPage();
 		
-		// We clear the pager if we reload the page manually
-		if($this->pagerSettingsService->getClearOnPageLoad() && 
-		   empty($this->request->getArguments()))
+		if($this->pagerSettingsService->getClearOnPageLoad() &&
+			!$this->_hasDataviewerArguments() &&
+			!is_null($selectedPage)
+		)
 		{
-			$this->forward("reset");
+			$this->pagerSessionService->reset();
+			$this->_redirectToPid();
 		}
-	
-		if(!$selectedPage) $selectedPage = 1;
+		
+		if(!$selectedPage <= $selectedPage == 0) $selectedPage = 1;
 		
 		if(!is_int($perPage))
 			$perPage = $this->_getTargetSetting("per_page");
@@ -83,7 +85,8 @@ class PagerController extends RecordController
 		// Get the overall records count of the selected
 		// records plugin
 		$recordCount = $this->_getRecordsCount();
-		
+		$this->pagerSessionService->setRecordCount($recordCount);
+
 		$pagesCount = 1;
 		if($perPage != 0)
 			$pagesCount = ceil($recordCount / $perPage);
@@ -92,6 +95,14 @@ class PagerController extends RecordController
 		
 		if($selectedPage < $pagesCount)
 			$nextPage = $selectedPage+1;
+		
+		if($selectedPage > $pagesCount){
+			// We need to reset the page to the first one
+			// because someone tried to access a page that
+			// does not exist
+			$this->pagerSessionService->setSelectedPage(1);
+			$this->redirect("index");
+		}	
 			
 		if($selectedPage > 1)
 			$previousPage = $selectedPage-1;
@@ -107,7 +118,6 @@ class PagerController extends RecordController
 			
 		if($endRecordNumber == 0 && $perPage == 0)
 			$endRecordNumber = $recordCount;
-			
 			
 		$this->view->assign("selectedPage", $selectedPage);
 		$this->view->assign("nextPage", $nextPage);
@@ -164,17 +174,6 @@ class PagerController extends RecordController
 	}
 
 	/**
-	 * Action for resetting the pager
-	 * 
-	 * @return void
-	 */
-	public function resetAction()
-	{
-		$this->pagerSessionService->reset();
-		$this->redirect("index");
-	}
-
-	/**
 	 * Gets the overall records count
 	 * 
 	 * @return int
@@ -200,14 +199,13 @@ class PagerController extends RecordController
 			
 			// Retrieve filters from different sources like in the normal records plugin
 			$filters = $this->_getFilters();
-
+			
 			// Replace markers in the filters
 			$this->_replaceMarkersInFilters($filters);
 
 			// We do nearly the same request to observe the records count but with a COUNT()
 			// for faster access
 			$count = $this->recordRepository->countByConditions($filters, $this->storagePids);
-			
 			return (int)$count;
 		}
 
