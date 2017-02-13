@@ -254,7 +254,10 @@
                 <source>Redirect after successful deletion</source>
                 <target>Weiterleitung nach erfolgreicher Löschung</target>
             </trans-unit>
-
+            <trans-unit id="flexform.cache_lifetime">
+                <source>Cache Lifetime in Seconds</source>
+                <target>Cache Lebensdauer in Sekunden</target>
+            </trans-unit>
 
             <trans-unit id="active_filters">
                 <source>Active Filters</source>
@@ -1365,6 +1368,10 @@
             <trans-unit id="type.tca">
                 <source>TCA XML</source>
                 <target>TCA XML</target>
+            </trans-unit>
+            <trans-unit id="type.userfunc">
+                <source>UserFunc</source>
+                <target>UserFunc</target>
             </trans-unit>
             <trans-unit id="type.datetime">
                 <source>Date and Time Field</source>

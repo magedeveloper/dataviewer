@@ -196,6 +196,9 @@
             <trans-unit id="flexform.redirect_success_delete">
                 <source>Redirect after successful deletion</source>
             </trans-unit>
+            <trans-unit id="flexform.cache_lifetime">
+                <source>Cache Lifetime in Seconds</source>
+            </trans-unit>
             
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>
@@ -1035,6 +1038,9 @@
             </trans-unit>
             <trans-unit id="type.tca">
                 <source>TCA XML</source>
+            </trans-unit>
+            <trans-unit id="type.userfunc">
+                <source>UserFunc</source>
             </trans-unit>
             <trans-unit id="type.datetime">
                 <source>Date and Time Field</source>
