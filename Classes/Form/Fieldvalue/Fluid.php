@@ -17,6 +17,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 {
 	/**
+	 * Plugin Settings Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
+	 * @inject
+	 */
+	protected $pluginSettingsService;
+
+	/**
 	 * Variable Repository
 	 *
 	 * @var \MageDeveloper\Dataviewer\Domain\Repository\VariableRepository
@@ -45,7 +53,8 @@ class Fluid extends AbstractFieldvalue implements FieldvalueInterface
 				$standaloneView->assignMultiple($variables);
 			}
 
-			$standaloneView->assign("record", $this->getRecord());
+			$recordVariableName = $this->pluginSettingsService->getRecordVarName();
+			$standaloneView->assign($recordVariableName, $this->getRecord());
 		}
 
 		return $standaloneView;
