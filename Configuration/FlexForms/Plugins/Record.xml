@@ -821,6 +821,18 @@
                             </headers>
                         </el>
                     </settings.custom_headers>
+                    <settings.cache_lifetime>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.cache_lifetime</label>
+                            <config>
+                                <checkbox></checkbox>
+                                <type>input</type>
+                                <default></default>
+                                <eval>int</eval>
+                                <placeholder>86400</placeholder>
+                            </config>
+                        </TCEforms>
+                    </settings.cache_lifetime>
                 </el>
             </ROOT>
         </developer_settings>

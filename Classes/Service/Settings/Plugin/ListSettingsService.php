@@ -369,4 +369,25 @@ class ListSettingsService extends PluginSettingsService
 	{
 		return $this->getSettingByCode("fluid_code");
 	}
+
+	/**
+	 * Gets the cache lifetime from the plugin
+	 * settings or the configuration
+	 * 
+	 * @return int|null
+	 */
+	public function getCacheLifetime()
+	{
+		$pluginSetting = $this->getSettingByCode("cache_lifetime");
+		
+		if($pluginSetting != "")
+			return (int)$pluginSetting;
+
+		$configuration = $this->getConfiguration("developer.cache_lifetime");
+		
+		if($configuration != "")
+			return (int)$configuration;
+
+		return null;
+	}
 }
