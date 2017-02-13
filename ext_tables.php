@@ -41,6 +41,8 @@ $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamel
 
 /***********************************
  * Table Configuration "RecordValue"
+ * No configuration here, we
+ * don't need to use this
  ***********************************/
 //\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr("tx_dataviewer_domain_model_recordvalue", "EXT:dataviewer/Resources/Private/Language/locallang_csh_tx_dataviewer_domain_model_recordvalue.xlf");
 
@@ -212,7 +214,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['extTablesInclusion-PostProc
 $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][] = 'MageDeveloper\\Dataviewer\\Hooks\\ToolbarItem';
 
 /***********************************
- * Backend Module
+ * Backend Stuff
  ***********************************/
 if (TYPO3_MODE === "BE")
 {
@@ -271,6 +273,9 @@ if (TYPO3_MODE === "BE")
 
 	}
 
+	/**
+	 * Backend Module Registration
+	 */
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		"MageDeveloper.".$_EXTKEY,
 		"web",          			// Main area
