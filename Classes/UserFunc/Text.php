@@ -97,7 +97,12 @@ class Text
 	public function displayAvailableMarkers(array &$config, &$parentObject)
 	{
 		$row = $config["row"];
-		$pages = GeneralUtility::trimExplode(",", $row["pages"]);
+		
+		if(isset($row["pages"]))
+			$pages = GeneralUtility::trimExplode(",", $row["pages"]);
+		else
+			$pages = ["tt_content_".$row["pid"]];	
+			
 		$pids = [];
 		$markers = [];
 		
