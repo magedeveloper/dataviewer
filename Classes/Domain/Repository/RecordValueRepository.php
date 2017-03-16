@@ -121,4 +121,21 @@ class RecordValueRepository extends AbstractRepository
 
 		return $query->matching($query->equals("field_value", $fieldValueId))->execute();
 	}
+
+	/**
+	 * Finds record values by record id
+	 *
+	 * @param int $recordId
+	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByRecordId($recordId)
+	{
+		$query = $this->createQuery();
+		$querySettings = $query->getQuerySettings();
+		$querySettings->setRespectStoragePage(false);
+		$querySettings->setIgnoreEnableFields(true);
+		$querySettings->setRespectSysLanguage(false);
+
+		return $query->matching($query->equals("record", $recordId))->execute();
+	}
 }

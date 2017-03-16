@@ -93,7 +93,7 @@ class Inline extends AbstractFieldtype implements FieldtypeInterface
 				],
 			],
 			"inlineStructure" => [],
-			"inlineFirstPid" => $this->getRecord()->getPid(),
+			"inlineFirstPid" => ($this->getField()->getConfig("pid_config") > 0)?(int)$this->getField()->getConfig("pid_config"):$this->getRecord()->getPid(),
 			"inlineResolveExistingChildren" => true,
 			"inlineCompileExistingChildren"=> true,
 		];

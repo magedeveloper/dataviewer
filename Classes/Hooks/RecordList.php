@@ -3,6 +3,7 @@ namespace MageDeveloper\Dataviewer\Hooks;
 
 use TYPO3\CMS\Backend\RecordList\RecordListGetTableHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -73,7 +74,7 @@ class RecordList implements RecordListGetTableHookInterface
 			$datatypeIdsStr = implode(",",$datatypeIds);	
 				
 			if(!empty($datatypeIds))
-				$additionalWhereClause .= "AND datatype NOT IN ({$datatypeIdsStr}) ";	
+				$additionalWhereClause .= " AND (`tx_dataviewer_domain_model_record`.`datatype` NOT IN ({$datatypeIdsStr}) ) ";	
 				
 		}
 		

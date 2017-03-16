@@ -185,7 +185,12 @@ $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["t3lib/class.t3lib_tcemain.php"]["proc
 /***********************************
  * Hook for Record List
  ***********************************/
+// This is to modify the list to render without hidden datatypes
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["typo3/class.db_list_extra.inc"]["getTable"][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\RecordList";
+// This is to modify the list to select query with sorting by a selected field
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list.inc']['makeQueryArray'][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\MakeQueryArray";
+// This is to modify the list header of records and to add a selectable box for the sorting
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['actions'][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\RecordListHeader";
 
 /***********************************
  * Hook for adding datatype buttons

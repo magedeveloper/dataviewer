@@ -48,7 +48,8 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	public function getValueContent()
 	{
 		$value = $this->getValue();
-		return $this->parseRTE($value);
+		return $value;
+		//return $this->parseRTE($value);
 	}
 
 	/**
@@ -77,7 +78,8 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$value = $this->getValue();
-		return $this->parseRTE($value);
+		return $value;
+		//return $this->parseRTE($value);
 	}
 
     /**

@@ -90,6 +90,8 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	public function render(&$params, &$userElement)
 	{
+	    $start = microtime(true);
+	
 		$contentHtml = "";
 
 		$row = $params["row"];
@@ -269,6 +271,8 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 
 		$backgroundColor = ($record->getDatatype() && $record->getDatatype()->getColor())?"style=\"background-color:{$record->getDatatype()->getColor()};\"":"";
 
+        $end = microtime(true) - $start;
+
 		// Finalization
 		$html =
 			"<div class=\"dataviewer-record dataviewer-record-{$record->getUid()}\" $backgroundColor>" .
@@ -283,7 +287,8 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			//$this->formResultCompiler->printNeededJSFunctions()	.
 			"<input type=\"hidden\" name=\"{$baseRecordFormName}[datatype]\" value=\"{$datatype->getUid()}\" />".
 			"<div class=\"clear\"></div>"						.
-			"</div>"
+			"</div>" 
+			."<!-- Rendering Time: " . $end . "-->"
 		;
 
 		// Fix for Datatype Selection when creating a new record
@@ -295,7 +300,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		// Resetting the stored record values for cleaing up the
 		// form on the end
 		$this->recordValueSessionService->resetForRecordId($recordUid);
-
+		//$html = "";
 		return $html;
 	}
 
@@ -405,8 +410,11 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$html .= "<strong>v{$version}</strong><br /><a href=\"mailto:{$supportEmail}\">{$supportEmail}</a>";
 		$html .= "</div>";
 		$html .= "<img src=\"{$logoUrl}\" border=\"0\" title=\"DataViewer {$version}\" style=\"height:22px; float:right;\" />";
-		
+       
 		$html .= "</div>";
+		
+		
+
 		return $html;
 	}
 	

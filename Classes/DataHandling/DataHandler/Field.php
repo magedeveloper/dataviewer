@@ -118,6 +118,13 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_field") return;
+		
+		$frontendLabel = $incomingFieldArray["frontend_label"];
+        $code = \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($frontendLabel);
+
+        if($incomingFieldArray["variable_name"] == "")
+		    $incomingFieldArray["variable_name"] = $code;
+		
 	}
 
 	/**
@@ -137,17 +144,20 @@ class Field extends AbstractDataHandler implements DataHandlerInterface
 			$id = $parentObj->substNEWwithIDs[$id];
 
 		$field = $this->getFieldById($id);
-		
-		// Assign generated code to the field
-		$code = $field->getCode();
-		$field->setVariableName($code);
-		$this->fieldRepository->update($field);
 
 		$name = '-';	
 		if(isset($fieldArray["frontend_label"])) 
 			$name = $fieldArray["frontend_label"];
 		else
 			$name = $field->getFrontendLabel();
+
+        $field->setFrontendLabel($name);
+        
+        // Assign generated code to the field
+        $code = $field->getCode();
+        $field->setVariableName($code);
+        $this->fieldRepository->update($field);
+        
 		
 		if($name == "")
         {

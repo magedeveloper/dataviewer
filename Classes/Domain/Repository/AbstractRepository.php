@@ -64,15 +64,20 @@ abstract class AbstractRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
 	 * @param bool $ignoreEnableFields
 	 * @param bool $respectStoragePage
 	 * @param array $storagePids
+	 * @param int $languageUid
 	 *
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
 	 */
-	public function createQueryWithSettings($respectSysLanguage = true, $ignoreEnableFields = true, $respectStoragePage = false, array $storagePids = [])
+	public function createQueryWithSettings($respectSysLanguage = true, $ignoreEnableFields = true, $respectStoragePage = false, array $storagePids = [], $languageUid = null)
 	{
 		$query = $this->createQuery();
+		
 		$query->getQuerySettings()->setRespectSysLanguage($respectSysLanguage);
 		$query->getQuerySettings()->setIgnoreEnableFields($ignoreEnableFields);
 		$query->getQuerySettings()->setRespectStoragePage($respectStoragePage);
+		
+		if(!is_null($languageUid))
+			$query->getQuerySettings()->setLanguageUid($languageUid);
 		
 		if (!empty($storagePids))
 			$query->getQuerySettings()->setStoragePageIds($storagePids);
@@ -87,15 +92,18 @@ abstract class AbstractRepository extends \TYPO3\CMS\Extbase\Persistence\Reposit
 	 *
 	 * @param int $uid Uid
 	 * @param bool $onlyEnabled  Only Enabled category
+	 * @param int $languageUid
 	 * @return \MageDeveloper\Dataviewer\Domain\Model\AbstractModel
 	 */
-	public function findByUid($uid, $onlyEnabled = true)
+	public function findByUid($uid, $onlyEnabled = true, $languageUid = null)
 	{
-		$query = $this->createQueryWithSettings(false, !$onlyEnabled, false);
+		$query = $this->createQueryWithSettings(false, !$onlyEnabled, false, [], $languageUid);
 
-		return $query->matching(
-				$query->equals("uid", $uid)
+		$record = $query->matching(
+			$query->equals("uid", $uid)
 		)->execute()->getFirst();
+
+		return $record;
 	}
 
 }

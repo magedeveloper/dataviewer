@@ -17,7 +17,15 @@ class ExtensionConfiguration
 {
 	/**
 	 * Extension Key
+     * 
 	 * @var string
 	 */
 	const EXTENSION_KEY = "dataviewer";
+
+    /**
+     * Tables
+     * 
+     * @var string
+     */
+	const EXTENSION_RECORD_TABLE = "tx_dataviewer_domain_model_record";
 }

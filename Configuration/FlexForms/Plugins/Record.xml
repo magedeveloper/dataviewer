@@ -151,12 +151,11 @@
                             <config>
                                 <type>select</type>
                                 <multiple>1</multiple>
-                                <autosizemax>10</autosizemax>
                                 <items type="array"></items>
                                 <foreign_table>tx_dataviewer_domain_model_record</foreign_table>
                                 <foreign_table_where><![CDATA[AND 0 < FIND_IN_SET(tx_dataviewer_domain_model_record.pid, (SELECT pages FROM tt_content WHERE uid=###THIS_UID###))]]></foreign_table_where>
                                 <maxitems>99999</maxitems>
-                                <minitems>0</minitems>
+                                <minitems>1</minitems>
                                 <size>5</size>
                                 <wizards>
                                     <suggest>
@@ -272,7 +271,7 @@
                         <TCEforms>
                             <exclude>1</exclude>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.detail_page_id</label>
-                            <displayCond>FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->ajaxRequest</displayCond>
+                            <displayCond>FIELD:switchableControllerActions:IN:Record->list;Record->detail;,Record->ajaxRequest,Record->part</displayCond>
                             <config>
                                 <type>group</type>
                                 <internal_type>db</internal_type>
@@ -329,12 +328,36 @@
                                                 <type>select</type>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
-                                                        <numIndex index="0">AND</numIndex>
+                                                        <numIndex index="0">AND ...</numIndex>
                                                         <numIndex index="1">AND</numIndex>
                                                     </numIndex>
                                                     <numIndex index="1" type="array">
-                                                        <numIndex index="0">OR</numIndex>
+                                                        <numIndex index="0">OR ...</numIndex>
                                                         <numIndex index="1">OR</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="2" type="array">
+                                                        <numIndex index="0">AND (...)</numIndex>
+                                                        <numIndex index="1">AND (...)</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="3" type="array">
+                                                        <numIndex index="0">OR (...)</numIndex>
+                                                        <numIndex index="1">OR (...)</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="4" type="array">
+                                                        <numIndex index="0">AND (...</numIndex>
+                                                        <numIndex index="1">AND (...</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="5" type="array">
+                                                        <numIndex index="0">OR (...</numIndex>
+                                                        <numIndex index="1">OR (...</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="6" type="array">
+                                                        <numIndex index="0">AND ...)</numIndex>
+                                                        <numIndex index="1">AND ...)</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="7" type="array">
+                                                        <numIndex index="0">OR ...)</numIndex>
+                                                        <numIndex index="1">OR ...)</numIndex>
                                                     </numIndex>
                                                 </items>
                                                 <minitems>0</minitems>
@@ -481,6 +504,18 @@
                             </filters>
                         </el>
                     </settings.field_value_filter>
+					 <query_preview>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.query_preview</label>
+                            <config>
+                                <type>user</type>
+                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayQueryPreview</userFunc>
+                                <parameters>
+                                    <template>EXT:dataviewer/Resources/Private/Templates/CmsLayout/query_preview.html</template>
+                                </parameters>
+                            </config>
+                        </TCEforms>
+                    </query_preview>
                 </el>
             </ROOT>
         </field_value_filter_setting>
@@ -500,7 +535,7 @@
                                 <type>input</type>
                                 <size>4</size>
                                 <placeholder>10</placeholder>
-                                <default>9999</default>
+                                <default>0</default>
                                 <eval>required,int</eval>
                             </config>
                         </TCEforms>
@@ -825,14 +860,25 @@
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.cache_lifetime</label>
                             <config>
-                                <checkbox></checkbox>
                                 <type>input</type>
                                 <default></default>
-                                <eval>int</eval>
+                                <eval></eval>
                                 <placeholder>86400</placeholder>
                             </config>
                         </TCEforms>
                     </settings.cache_lifetime>
+                    <cache_info>
+                        <TCEforms>
+                            <label></label>
+                            <config>
+                                <type>user</type>
+                                <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                                <parameters>
+                                    <template>EXT:dataviewer/Resources/Private/Templates/Record/CacheInfo.html</template>
+                                </parameters>
+                            </config>
+                        </TCEforms>
+                    </cache_info>
                 </el>
             </ROOT>
         </developer_settings>

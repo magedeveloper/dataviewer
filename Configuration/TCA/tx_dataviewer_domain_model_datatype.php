@@ -209,7 +209,7 @@ return [
 					['+', 					"+"],
 					['(space)+(space)', 	"X+X"],
 					['>', 					">"],
-					['(space)>(space)', 	">"],
+					['(space)>(space)', 	"X>X"],
 					['*', 					"*"],
 					['(space)*(space)',		"X*X"],
 					['~', 					"~"],

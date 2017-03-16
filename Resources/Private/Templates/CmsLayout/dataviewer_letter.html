@@ -1,4 +1,6 @@
 {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+
 
 <img src="{imageUrl}" border="0" style="float:left;margin-right: 5px;"/>
 <strong><f:translate key="tx_dataviewer" /></strong>
@@ -28,3 +30,19 @@
 		<f:else><f:translate key="no_preselection" /></f:else>
 	</f:if>
 </div>
+
+<div style="font-size: smaller; margin-top:10px;">
+	<core:icon identifier="apps-pagetree-page-shortcut-external-hideinmenu" size="small" />&nbsp;
+	<strong><f:translate key="flexform.target_uid" />:</strong>&nbsp;
+	<f:if condition="{flexform.settings.target_plugin}">
+		<f:then>
+			{flexform.settings.target_plugin}
+		</f:then>
+		<f:else>
+			<strong style="color:red;"><f:translate key="no_configuration" /></strong>
+		</f:else>
+	</f:if>
+</div>
+
+
+

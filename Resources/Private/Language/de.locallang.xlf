@@ -26,6 +26,14 @@
                 <source>Debug</source>
                 <target>Debug</target>
             </trans-unit>
+            <trans-unit id="flexform.pid_with_tsconfig">
+                <source>Page with the Page TSConfig</source>
+                <target>Seite mit Page TSConfig</target>
+            </trans-unit>
+            <trans-unit id="flexform.pid_with_tsconfig">
+                <source>Page with the Page TSConfig</source>
+                <target>Seite mit Page TSConfig</target>
+            </trans-unit>
             <trans-unit id="flexform.display_settings">
                 <source>Display Settings</source>
                 <target>Anzeigeeinstellungen</target>
@@ -49,6 +57,10 @@
             <trans-unit id="flexform.available_markers">
                 <source>Available Markers</source>
                 <target>Verfügbare Marker</target>
+            </trans-unit>
+            <trans-unit id="flexform.query_preview">
+                <source>Query Preview</source>
+                <target>Query Voransicht</target>
             </trans-unit>
             <trans-unit id="flexform.record_selection_type">
                 <source>Record Selection Type / Allow or Show records by selection type</source>
@@ -113,6 +125,10 @@
             <trans-unit id="flexform.target_plugin">
                 <source>Target record display plugin, which will follow this plugin</source>
                 <target>Zielplugin der Datensatz-Anzeige, welches diesem Plugin folgt</target>
+            </trans-unit>
+            <trans-unit id="flexform.target_uid">
+                <source>Target Uid</source>
+                <target>Ziel Uid</target>
             </trans-unit>
             <trans-unit id="flexform.field_value_filter_setting">
                 <source>Field/Value Filter Settings</source>
@@ -205,6 +221,10 @@
             <trans-unit id="flexform.filter_field_value">
                 <source>Value (value_content)</source>
                 <target>Wert (value_content)</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field_none">
+                <source>No filtering. Resets the filter on selection.</source>
+                <target>Kein Filter. Entfernt aktiven Filter bei Auswahl.</target>
             </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
@@ -407,6 +427,14 @@
             <trans-unit id="flexform.selected_per_page">
                 <source>Default Selected 'Items per Page'-Value</source>
                 <target>Standardauswahl für 'pro Seite'</target>
+            </trans-unit>
+            <trans-unit id="flexform.compact_pages">
+                <source>Compact Page Selection</source>
+                <target>Kompakte Seitenauswahl</target>
+            </trans-unit>
+            <trans-unit id="flexform.left_right_pages">
+                <source>Pages Count to Left and Right</source>
+                <target>Anzahl Seiten nach Links/Rechts</target>
             </trans-unit>
 
 
@@ -663,6 +691,11 @@
                 <source>The DataViewer Extension had to clear the cache to reload all fieldtypes. If there are no fieldtypes available, please try to clear the caches manually.</source>
                 <target>Die DataViewer Extension hat alle Caches geleert um die Feldtypen neu zu laden. Sollten keine Feldtypen verfügbar sein, leeren Sie bitte die Caches manuell.</target>
             </trans-unit>
+            <trans-unit id="message.no_markers_found_on_storage_pids">
+                <source>No markers were found on the configured storage page(s).</source>
+                <target>Es wurden keine Marker auf den konfigurierten Datensatzsammlungen gefunden.</target>
+            </trans-unit>
+
 
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
@@ -1252,6 +1285,14 @@
             <trans-unit id="sort.desc">
                 <source>Descending</source>
                 <target>Absteigend</target>
+            </trans-unit>
+            <trans-unit id="sort.short_asc">
+                <source>Asc</source>
+                <target>Auf</target>
+            </trans-unit>
+            <trans-unit id="sort.short_desc">
+                <source>Desc</source>
+                <target>Ab</target>
             </trans-unit>
             <trans-unit id="sort.sort_by">
                 <source>Sort by</source>
@@ -1894,7 +1935,14 @@
                 <source>No description available</source>
                 <target>Keine Beschreibung verfügbar</target>
             </trans-unit>
-
+            <trans-unit id="donate.if_you_like">
+                <source>If you like this extension,</source>
+                <target>Wenn Sie diese Extension mögen,</target>
+            </trans-unit>
+            <trans-unit id="donate.please_donate">
+                <source>please donate</source>
+                <target>spenden Sie bitte</target>
+            </trans-unit>
 
 
         </body>

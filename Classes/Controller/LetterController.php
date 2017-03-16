@@ -45,9 +45,20 @@ class LetterController extends AbstractController
 	 */
 	public function indexAction()
 	{
+        $active = $this->_getSelectedLetter();
+        $preselectedLetter = $this->letterSettingsService->getPreselectedLetter();
+
+        if($this->letterSettingsService->getClearOnPageLoad() &&
+            !$this->_hasDataviewerArguments() &&
+            ($active != $preselectedLetter)
+        )
+        {
+            $this->letterSessionService->setSelectedLetter($preselectedLetter);
+            $this->_redirectToPid();
+        }
+	
 		// Get all letters
 		$letters = $this->letterSettingsService->getLetters();
-		$active = $this->_getSelectedLetter();
 		
 		// Add letter selection field to the session
 		$field = $this->letterSettingsService->getLetterSelectionField();
@@ -55,7 +66,6 @@ class LetterController extends AbstractController
 		// Set active letter selection field
 		$this->letterSessionService->setLetterSelectionField($field);
 		$this->letterSessionService->setSelectedLetter($active);
-
 
 		///////////////////////////////////////////////////////////////////////////////
 		// Signal-Slot for the handling of the letters and the current active letter //
@@ -111,6 +121,9 @@ class LetterController extends AbstractController
 	 */
 	public function letterAction()
 	{
+        if(!$this->_checkTargetUid())
+            $this->redirect("index");
+	
 		$active = $this->_getSelectedLetter();
 		
 		// Add letter selection field to the session

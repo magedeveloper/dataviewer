@@ -21,6 +21,12 @@
             <trans-unit id="flexform.debug">
                 <source>Debug</source>
             </trans-unit>
+            <trans-unit id="flexform.pid_with_tsconfig">
+                <source>Page with the Page TSConfig</source>
+            </trans-unit>
+            <trans-unit id="flexform.pid_with_tsconfig">
+                <source>Page with the Page TSConfig</source>
+            </trans-unit>
             <trans-unit id="flexform.display_settings">
                 <source>Display Settings</source>
             </trans-unit>
@@ -38,6 +44,9 @@
             </trans-unit>
             <trans-unit id="flexform.available_markers">
                 <source>Available Markers</source>
+            </trans-unit>
+            <trans-unit id="flexform.query_preview">
+                <source>Query Preview</source>
             </trans-unit>
             <trans-unit id="flexform.record_selection_type">
                 <source>Record Selection Type / Allow or Show records by selection type</source>
@@ -86,6 +95,9 @@
             </trans-unit>
             <trans-unit id="flexform.target_plugin">
                 <source>Target record display plugin, which will follow this plugin</source>
+            </trans-unit>
+            <trans-unit id="flexform.target_uid">
+                <source>Target Uid</source>
             </trans-unit>
             <trans-unit id="flexform.field_value_filter_setting">
                 <source>Field/Value Filter Settings</source>
@@ -159,6 +171,9 @@
             </trans-unit>
             <trans-unit id="flexform.filter_field_value">
                 <source>Value (value_content)</source>
+            </trans-unit>
+            <trans-unit id="flexform.filter_field_none">
+                <source>No filtering. Resets the filter on selection.</source>
             </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
@@ -310,7 +325,12 @@
             <trans-unit id="flexform.selected_per_page">
                 <source>Default Selected 'Items per Page'-Value</source>
             </trans-unit>
-
+            <trans-unit id="flexform.compact_pages">
+                <source>Compact Page Selection</source>
+            </trans-unit>
+            <trans-unit id="flexform.left_right_pages">
+                <source>Pages Count to Left and Right</source>
+            </trans-unit>
 
 
 
@@ -503,6 +523,9 @@
             </trans-unit>
             <trans-unit id="message.caches_cleared">
                 <source>The DataViewer Extension had to clear the cache to reload all fieldtypes. If there are no fieldtypes available, please try to clear the caches manually.</source>
+            </trans-unit>
+            <trans-unit id="message.no_markers_found_on_storage_pids">
+                <source>No markers were found on the configured storage page(s).</source>
             </trans-unit>
             
             <trans-unit id="no_configuration">
@@ -948,6 +971,12 @@
             </trans-unit>
             <trans-unit id="sort.desc">
                 <source>Descending</source>
+            </trans-unit>
+            <trans-unit id="sort.short_asc">
+                <source>Asc</source>
+            </trans-unit>
+            <trans-unit id="sort.short_desc">
+                <source>Desc</source>
             </trans-unit>
             <trans-unit id="sort.sort_by">
                 <source>Sort by</source>
@@ -1433,6 +1462,12 @@
             </trans-unit>
             <trans-unit id="module.no_description_available">
                 <source>No description available</source>
+            </trans-unit>
+            <trans-unit id="donate.if_you_like">
+                <source>If you like this extension,</source>
+            </trans-unit>
+            <trans-unit id="donate.please_donate">
+                <source>please donate</source>
             </trans-unit>
             
         </body>

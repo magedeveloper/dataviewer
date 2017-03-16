@@ -138,9 +138,10 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 
 					// Injecting the virtual tca into the globals for later usage
 					$GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"][$fieldId]["config"] = $config;
+					
 				}
 			}
-		
+
 		} catch (\Exception $e)
 		{
 			return;

@@ -132,49 +132,13 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 		// internal_type == db
 		if($this->getField()->getConfig("internal_type") == "db")
 		{
-
-			//$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"]['_VERTICAL'] = 1;
-			/*
-			$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"]["edit"] = array(
-				'type' => 'popup',
-				'title' => 'LLL:EXT:lang/locallang_tca.xlf:be_users.usergroup_edit_title',
-				'module' => array(
-					'name' => 'wizard_edit',
-				),
-				//'popup_onlyOpenIfSelected' => 1,
-				'icon' => 'actions-open',
-				//'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1'
-			);
-			*/
-			/*
-			$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"]["add"] = array(
-				'type' => 'script',
-				'title' => 'LLL:EXT:lang/locallang_tca.xlf:be_users.usergroup_add_title',
-				'icon' => 'actions-add',
-				'params' => array(
-					'table' => $this->getField()->getConfig("allowed"),
-					'pid' => $this->getRecord()->getPid(),
-					'setValue' => 'prepend',
-				),
-				'module' => array(
-					'name' => 'wizard_add'
-				),
-			);
-			*/
-			/*
-			$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"]["list"] = array(
-				'type' => 'script',
-				'title' => 'LLL:EXT:lang/locallang_tca.xlf:be_users.usergroup_list_title',
-				'icon' => 'actions-system-list-open',
-				'params' => array(
-					'table' => $this->getField()->getConfig("allowed"),
-					'pid' => $this->getRecord()->getPid(),
-				),
-				'module' => array(
-					'name' => 'wizard_list'
-				),
-			);
-			*/
+			// Suggest Wizard
+			if((bool)$this->getField()->getConfig("suggest_wizard") == true)
+				$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"] = [
+					"suggest" => [
+						"type" => "suggest",
+					],
+				];
 		}	
 
 		parent::prepareTca($tca);
