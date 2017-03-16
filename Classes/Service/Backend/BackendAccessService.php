@@ -78,6 +78,17 @@ class BackendAccessService
 		return (bool)!$disabled;
 	}
 
+    /**
+     * Checks for disabling a message
+     * 
+     * @return bool
+     */
+	public function disableDonationMessage()
+    {
+        $disabled = (bool)$this->_getBackendUser()->getTSConfigVal('options.dataviewer.disableDonationMessage');
+        return $disabled;
+    }
+
 	/**
 	 * Gets the storage pids of the accessible
 	 * mounts

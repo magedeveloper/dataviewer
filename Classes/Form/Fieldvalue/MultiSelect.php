@@ -43,6 +43,8 @@ class MultiSelect extends Select
 			
 			if($item instanceof Record || is_array($item))
 				$items[] = $item;
+			else
+			    $items[] = $_id;	
 		}
 				
 		return $items;

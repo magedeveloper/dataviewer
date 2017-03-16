@@ -65,6 +65,7 @@ class DatatypeRepository extends AbstractRepository
 	{
 		return $this->findAllOnPids([$storagePid], $orderings);
 	}
+	
 
 	/**
 	 * Gets the ids of all datatypes, where records of these
@@ -101,6 +102,56 @@ class DatatypeRepository extends AbstractRepository
 				$query->lessThanOrEqual("hide_add", (int)$hiddenAdd)
 			)
 		)->execute();
+	}
+
+	/**
+	 * Find records by given uids
+	 *
+	 * @param array $uids
+	 * @param array $storagePids
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByUids(array $uids, array $storagePids = [])
+	{
+		$query 			= $this->createQuery();
+		$querySettings 	= $query->getQuerySettings();
+		$querySettings->setRespectSysLanguage(true);
+
+		if(!empty($storagePids))
+		{
+			$querySettings->setStoragePageIds($storagePids);
+			$querySettings->setRespectStoragePage(true);
+		}
+
+		return $query->matching(
+			$query->in("uid", $uids)
+		)->execute();
+	}
+
+	/**
+	 * Find all datatypes of records that exists on 
+	 * given pids
+	 * 
+	 * @param array $storagePids
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findAllOfRecordsOnPid(array $storagePids)
+	{
+		$pids = implode(",", $storagePids);
+		$statement = "SELECT datatype FROM tx_dataviewer_domain_model_record WHERE pid IN ({$pids}) GROUP BY datatype";
+		$query = $this->createQuery();
+
+		$query->statement($statement);
+		$datatypes = $query->execute(true);
+		
+		$datatypeIds = [];
+		if (is_array($datatypes))
+		{
+			foreach($datatypes as $_datatype)
+				$datatypeIds[] = $_datatype["datatype"];	
+		}
+		
+		return $this->findByUids($datatypeIds);
 	}
 
 }

@@ -18,6 +18,20 @@ use TYPO3\CMS\Backend\Form\Container\SingleFieldContainer;
 class Rte extends Text
 {
 	/**
+	 * Initializes all form data providers to
+	 * $this->formDataProviders
+	 *
+	 * Will be executed in order of the added providers!
+	 *
+	 * @return void
+	 */
+	public function initializeFormDataProviders()
+	{
+		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\PageTsConfig::class;
+		parent::initializeFormDataProviders();
+	}
+	
+	/**
 	 * Gets built tca array
 	 *
 	 * @return array
@@ -34,6 +48,7 @@ class Rte extends Text
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
+            "effectivePid" => $this->getField()->getConfig("pid_config"),
 			"processedTca" => [
 				"columns" => [
 					$fieldName => [

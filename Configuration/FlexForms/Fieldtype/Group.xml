@@ -66,6 +66,16 @@
                     </config>
                 </TCEforms>
             </modelClass>
+            <suggest_wizard>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:add_suggest_wizard</label>
+                    <displayCond>FIELD:internal_type:=:db</displayCond>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </suggest_wizard>
             <minitems>
                 <TCEforms>
                     <label>minitems</label>

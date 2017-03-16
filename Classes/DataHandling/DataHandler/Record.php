@@ -74,6 +74,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	protected $fieldRepository;
 
 	/**
+	 * @var array
+	 */
+	protected $tempColumns = [];
+
+	/**
 	 * Constructor
 	 *
 	 * @return Record
@@ -190,30 +195,134 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			$parentRecord = $this->getRecordById($id);
 			$newRecordId = $parentObj->copyRecord($table, $id, $value, false, [], "record_values");
 			$newRecord = $this->getRecordById($newRecordId);
+			$pid = $newRecord->getPid();
 
 			// Original Record Values that need to be copied
 			$recordValues = $parentRecord->getRecordValues();
 
 			foreach($recordValues as $_recordValue)
 			{
-				/* @var RecordValue $_recordValue */
-				/* @var RecordValue $newRecordValue */
-				$newRecordValueId = $parentObj->copyRecord("tx_dataviewer_domain_model_recordvalue", $_recordValue->getUid(), $value, false, [], "field,field_value");
+				/* @var RecordValueModel $_recordValue */
+				/* @var RecordValueModel $newRecordValue */
+				$newRecordValueId = $parentObj->copyRecord("tx_dataviewer_domain_model_recordvalue", $_recordValue->getUid(), $pid, false, [], "field,field_value");
 				$newRecordValue = $this->getRecordValueById($newRecordValueId, false);
 
-				if ($newRecordValue)
+				if ($newRecordValue && $_recordValue->getField())
 				{
 					$newRecordValue->setRecord($newRecord);
 					$newRecordValue->setField($_recordValue->getField());
+					$newRecordValue->setPid($pid);
+
+					// We need to check the fieldtype to do certain copy behaviours here
+					switch ($_recordValue->getField()->getType())
+					{
+						case "relation":
+							/****************************************************************
+							 * File Relation
+							 * -------------------------------------------------------------
+							 * We need to copy the file and create a new file relation here
+							 * so everything can be kept for the new standalone record
+							 ****************************************************************/
+
+							/* @var \TYPO3\CMS\Core\Resource\FileRepository $fileRepository */
+							$fileRepository = $this->objectManager->get(\TYPO3\CMS\Core\Resource\FileRepository::class);
+							$relationFileId = $_recordValue->getValueContent();
+
+							if($relationFileId > 0)
+							{
+								/* @var \TYPO3\CMS\Core\Resource\FileReference $fileReference */
+								$fileReference = $fileRepository->findFileReferenceByUid($relationFileId);
+
+								$folder = $fileReference->getParentFolder();
+								$copiedFile = $fileReference->getOriginalFile()->copyTo($folder);
+
+								$newId = "NEW1234";
+								$data = [];
+								$data["sys_file_reference"][$newId] = array(
+									"table_local" 	=> "sys_file",
+									"uid_local" 	=> $copiedFile->getUid(),
+									"tablenames" 	=> "tx_dataviewer_domain_model_record",
+									"uid_foreign" 	=> $newRecord->getUid(),
+									"fieldname" 	=> $_recordValue->getField()->getUid(),
+									"pid" 			=> $newRecord->getPid(),
+								);
+								$data["tx_dataviewer_domain_model_record"][$newRecord->getUid()] = [
+									"tx_dataviewer_domain_model_record" => $newId,
+								];
+
+								$parentObj->start($data, []);
+								$parentObj->process_datamap();
+							}
+
+							break;
+						case "inline":
+							/****************************************************************
+							 * Regular Inline Elements
+							 * -------------------------------------------------------------
+							 * We need to copy all elements here and assign the copied to the
+							 * new value
+							 ****************************************************************/
+							$ids = GeneralUtility::trimExplode(",", $newRecordValue->getValueContent());
+
+							// Clearing the value content
+							$newRecordValue->setValueContent("");
+
+							$field = $newRecordValue->getField();
+							$table = $field->getConfig("foreign_table");
+							$destPid = ($field->getConfig("pid_config") > 0)?$field->getConfig("pid_config"):$pid;
+							$exclude = "";
+
+							$newIds = [];
+							foreach($ids as $_id)
+							{
+								$_newId = $parentObj->copyRecord($table, $_id, $destPid, false, [], $exclude);
+								if($_newId) $newIds[] = $_newId;
+							}
+
+							$newRecordValue->setValueContent(implode(",", $newIds));
+
+							break;
+						case "datatype":
+							/****************************************************************
+							 * Datatype Inline Elements
+							 * -------------------------------------------------------------
+							 * We need to copy all elements here and assign the copied to the
+							 * new value
+							 ****************************************************************/
+							$ids = GeneralUtility::trimExplode(",", $newRecordValue->getValueContent());
+
+							// Clearing the value content
+							$newRecordValue->setValueContent("");
+
+							$field = $newRecordValue->getField();
+							$table = "tx_dataviewer_domain_model_record";
+							$destPid = ($field->getConfig("pid_config") > 0)?$field->getConfig("pid_config"):$pid;
+							$exclude = "record_values";
+							
+							$newIds = [];
+							foreach($ids as $_id)
+							{
+								$_newId = $parentObj->copyRecord($table, $_id, $destPid, false, [], $exclude);
+								if($_newId) $newIds[] = $_newId;
+							}
+
+							$newRecordValue->setValueContent(implode(",", $newIds));
+
+							break;
+						default:
+							break;
+
+					}
+
 					$this->recordValueRepository->update($newRecordValue);
 				}
-
 			}
 
+			// persisting the copy
 			$this->persistenceManager->persistAll();
 
-			// We disable the normal processing of the command
-			$commandIsProcessed = true;
+			$commandIsProcessed = false;
+			// Do the normal action after this
 		}
 
 	}
@@ -229,29 +338,40 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
-		/* @var Record $record */
-		$record = $this->getRecordById($id);
-
-		if (!$record instanceof RecordModel)
+		$recordValues = $this->recordValueRepository->findByRecordId($id);
+		if ($recordValues && $recordValues->count())
 		{
-			$message = Locale::translate("could_not_delete_record", $id);
-			$this->addBackendFlashMessage($message, '', FlashMessage::OK);
-			return;
-		}
 
-		if ($record->getRecordValues() && $record->getRecordValues()->count())
-		{
 			// Remove each record value
-			/* @var RecordValue $_recordValue */
-			foreach ( $record->getRecordValues() as $_recordValue )
+			/* @var RecordValueModel $_recordValue */
+			foreach ( $recordValues as $_recordValue )
+			{
 				$_recordValue->setDeleted(true);
+				$this->recordValueRepository->update($_recordValue);
+
+				// We need to check the fieldtype to do certain delete behaviours here
+				switch ($_recordValue->getField()->getType())
+				{
+					case "datatype":
+						$ids = GeneralUtility::trimExplode(",", $_recordValue->getValueContent());
+
+						foreach($ids as $_id)
+						{
+							$_record = $this->getRecordById($_id);
+							if($_record)
+							{
+								$_record->setDeleted(true);
+								$this->recordRepository->update($_record);
+							}
+						}
+						break;
+					default:
+						break;
+				}
+			}
 
 		}
 
-		$record->setDeleted(true);
-		$this->recordRepository->update($record);
-
-		// Process changes to the database
 		$this->persistenceManager->persistAll();
 
 		// Hook
@@ -273,12 +393,12 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
-		
+
 		// Storing the fieldArray to the session to prefill form values for easier modifying
 		$this->recordValueSessionService->store($id, $incomingFieldArray);
-		
+
 		$record = $this->getRecordById($id);
-		
+
 		$datatype = null;
 		if ($record)
 			$datatype = $record->getDatatype();
@@ -286,8 +406,8 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if(!$datatype)
 			$datatype = $this->getDatatypeById($incomingFieldArray["datatype"]);
 
-        if(!$datatype)
-            return;
+		if(!$datatype)
+			return;
 
 		$datatypeId = $datatype->getUid();
 		if(GeneralUtility::_POST()["datatype"]) {
@@ -296,9 +416,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			$datatypeId = (int)GeneralUtility::_POST("datatype");
 			$this->_redirectCurrentUrl(["datatype" => $datatypeId]);
 		}
-		
+
 		$validationErrors = [];
-	
+
 		// Validate the POST data
 		$validationErrors = $this->validateFieldArray($incomingFieldArray, $datatype);
 
@@ -331,6 +451,33 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		foreach($incomingFieldArray as $_k=>$_v)
 			if(is_numeric($_k))
 				unset($incomingFieldArray[$_k]);
+
+		// We clear the GLOBALS 
+	}
+
+	/**
+	 * @param string $status
+	 * @param string $table
+	 * @param int $id
+	 * @param array $fieldArray
+	 * @param \TYPO3\CMS\Core\DataHandling\DataHandler $parentObj
+	 */
+	public function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, &$parentObj)
+	{
+		if ($table != "tx_dataviewer_domain_model_record") return;
+
+		// We need to clear the GLOBALS before database operations because we've injected
+		// a lot of TCA for our needs into them
+		// This is for saving compatibility and removes the 'mess' we've created!
+
+		$columns = $GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"];
+
+		foreach($columns as $_id=>$_column)
+			if(is_numeric($_id))
+			{
+				$this->tempColumns[$_id] = $_column;
+				unset($GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"][$_id]);
+			}
 	}
 
 	/**
@@ -361,6 +508,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$recordId = $this->_getPossibleSubstitutedId($id);
 		$record   = $this->getRecordById($recordId);
 
+		$globals = $GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"];
+		$GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"] = array_replace($globals, $this->tempColumns);
+
 		if(!$record instanceof RecordModel)
 		{
 			$message  = Locale::translate("record_not_found", $id);
@@ -371,14 +521,20 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if (isset($this->saveData[$id]) && is_array($this->saveData[$id]))
 		{
 			$recordSaveData = reset($this->saveData[$id]);
-			
+
 			$result 		= $this->processRecord($recordSaveData, $record);
 
 			$message  = Locale::translate("record_not_saved");
 			$severity = FlashMessage::ERROR;
+
 			if ($result)
 			{
+				// Language Selector Box compatibility
+				//if(array_key_exists("sys_language_uid", $fieldArray))
+				//	$record->_setProperty("_languageUid", $fieldArray["sys_language_uid"]);
+
 				// Save processed data
+				$this->recordRepository->update($record);
 				$this->persistenceManager->persistAll();
 
 				$message  = Locale::translate("record_was_successfully_saved", [$record->getTitle(), $recordId]);
@@ -397,15 +553,16 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				}
 			}
 
+
 			// We only deliver a message, when 
 			if(!$record->getDatatype()->getHideRecords() || $severity != FlashMessage::OK)
 				$this->addBackendFlashMessage($message, '', $severity);
 
-			return;
 		}
 
+		return;
 	}
-	
+
 	/**
 	 * Validates an field array that came with the
 	 * form post on the record editing
@@ -423,11 +580,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			$validColumns = $GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"];
 			$diff = array_diff_key($fieldArray, $validColumns);
-		
+
 			if(empty($diff))
 				return [];
 		}
-	
+
 		$fieldValidationErrors = [];
 
 		foreach($datatype->getFields() as $_field)
@@ -450,8 +607,8 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		return $fieldValidationErrors;
 	}
-	
-	
+
+
 
 	/**
 	 * Transforms the NEW-ID into the
@@ -516,9 +673,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			// We try loading the datatype by the recordSaveData Information
 			if(isset($recordSaveData["datatype"]))
 				$datatype = $this->datatypeRepository->findByUid((int)$recordSaveData["datatype"], false);
-		
+
 		}
-		
+
 		if(!$datatype)
 			return false;
 
@@ -527,7 +684,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		// Add icon
 		$record->setIcon($datatype->getIcon());
-		
+
 		//////////////////////
 		// RECORD SAVE DATA //
 		//////////////////////
@@ -552,7 +709,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		if($record->hasTitleField())
 			$record->setTitle("");
-	
+
 		if(isset($recordSaveData["title"]))
 			$record->setTitle($recordSaveData["title"]);
 
@@ -589,7 +746,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$_value = $this->dataHandler->getFlexformValue($_value, $record, $field);
 				$_value = $this->flexTools->flexArray2Xml($_value);
 			}
-			
+
 			// We need to check the field
 			// We get the tca from the fieldtype class
 			// We check agains checkValue_SW in the dataHandler
@@ -608,14 +765,14 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 				$fieldtypeModel->setRecord($record);
 
 				$tca = $fieldtypeModel->getFieldTca();
-				
+
 				$res = [];
 				$uploadedFiles = [];
 
 				if(isset($this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()]))
 					$uploadedFiles = $this->dataHandler->uploadedFileArray["tx_dataviewer_domain_model_record"][$record->getUid()][$field->getUid()];
 
-				$val = $this->dataHandler->checkValue_SW(	
+				$val = $this->dataHandler->checkValue_SW(
 					$res,
 					$_value,
 					$tca,
@@ -645,37 +802,27 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 					$_value = implode(",", $_value);
 				}
-				
-				// Conversion of fieldvalue is wrong (dbType date/datetime is not good enough for us)
-				if( ($field->getType() == "date" || $field->getType() == "datetime") )
-					$_value = $originalValue;
-				
+
 				if($field->getType() == "rte")
 				{
-					// nl2br
-					$_value = nl2br($_value);
-					
 					/* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtypeModel */
-					$defaultExtras = $fieldtypeModel->getDefaultExtras();
-					$specConf = BackendUtility::getSpecConfParts($defaultExtras);
-					
+
 					// Initialize transformation:
 					/* @var RteHtmlParser $parseHTML */
 					$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
 					$parseHTML->init("tt_content" . ':' . "bodytext", $record->getPid()); // We imitate a tt_content bodytext field
-					$parseHTML->setRelPath('');
 					// Perform transformation:
-					$_value = $parseHTML->RTE_transform($_value, $specConf, 'db', []);
+					//$_value = $parseHTML->RTE_transform($_value, [], 'db', []);
 				}
 			}
-			
+
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
 				$overallResult = false;
 
 		}
-		
+
 		if ($overallResult === false)
 		{
 			// We hide the record until it is ok
@@ -753,7 +900,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			$valueContent 	= $fieldvalue->getValueContent();
 			$search 		= $fieldvalue->getSearch();
 		}
-		
+
 		// Assign value to the recordValue
 		$recordValue->setValueContent($valueContent);
 		// Assign clean search string to the recordValue

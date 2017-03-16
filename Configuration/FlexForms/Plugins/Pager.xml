@@ -56,6 +56,32 @@
                         </TCEforms>
                     </settings.per_page>
 
+                    <settings.compact_pages>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.compact_pages</label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                        </TCEforms>
+                    </settings.compact_pages>
+
+                    <settings.left_right_pages>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.left_right_pages</label>
+                            <displayCond>FIELD:settings.compact_pages:=:1</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>20</size>
+                                <default>2</default>
+                                <placeholder>2</placeholder>
+                                <eval>trim,int</eval>
+                            </config>
+                        </TCEforms>
+                    </settings.left_right_pages>
+
                     <settings.show_view_all>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.show_view_all</label>

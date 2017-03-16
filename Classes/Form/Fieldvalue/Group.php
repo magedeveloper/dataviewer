@@ -60,6 +60,7 @@ class Group extends Select
 			}
 			else
 			{
+			
 				// Unique allowed with unique id
 				if(is_numeric($_value) && !strpos($this->getField()->getConfig("allowed"), ","))
 				{
@@ -68,6 +69,12 @@ class Group extends Select
 						"uid" => $_value,
 					];
 				}
+				else
+                {
+                    $solved[] = [
+                    
+                    ];
+                }
 			}
 		}
 		
@@ -120,6 +127,11 @@ class Group extends Select
 	public function getFrontendValue()
 	{
 		$solvedValues = $this->_getSolvedValues();
+		
+		// Fix for returning only plain selected values
+		if(in_array($this->getField()->getConfig("internal_type"), ["file","file_reference","folder"]))
+		    return GeneralUtility::trimExplode(",", $this->getValue(), true);
+		
 		$modelClass = $this->getField()->getConfig("modelClass");
 		$valueArr = [];
 		

@@ -70,6 +70,14 @@ class Record extends AbstractModel
 	protected $tstamp;
 
 	/**
+	 * Record Sorting
+	 *
+	 * @var int
+	 */
+	protected $sorting;
+
+
+	/**
 	 * Field is hidden
 	 *
 	 * @var boolean
@@ -435,6 +443,27 @@ class Record extends AbstractModel
 		$this->tstamp = $tstamp;
 	}
 
+	/**
+	 * Gets the sorting value
+	 * 
+	 * @return int
+	 */
+	public function getSorting()
+	{
+		return $this->sorting;
+	}
+
+	/**
+	 * Sets the sorting value
+	 * 
+	 * @param int $sorting
+	 * @return void
+	 */
+	public function setSorting($sorting)
+	{
+		$this->sorting = $sorting;
+	}
+	
 	/**
 	 * Checks if the fieldvalue is hidden
 	 *

@@ -30,10 +30,10 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/FieldValue.gif",
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, value_content, field_content, table_content, column_name, where_clause, result, is_default, pretends_empty, pass_to_fe',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, value_content, field_content, table_content, column_name, markers, where_clause, result, is_default, pretends_empty, pass_to_fe',
 	],
 	'types' => [
-		'1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:value_content, value_content, field_content, table_content, column_name, where_clause, result, is_default, pretends_empty, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:value_content, value_content, field_content, table_content, column_name, markers, where_clause, result, is_default, pretends_empty, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -195,6 +195,20 @@ return [
 				'eval' => ''
 			],
 		],
+		'markers' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers',
+            'displayCond' => 'FIELD:type:IN:1',
+            'config' => [
+                'type' => 'user',
+                'userFunc' => "MageDeveloper\\Dataviewer\\UserFunc\\Text->displayAvailableMarkers",
+                'eval' => '',
+                'parameters' => [
+                    'template' => "EXT:dataviewer/Resources/Private/Templates/CmsLayout/available_markers.html",
+                    'includeRecord' => 1,
+                ],
+            ],
+        ],
 		'where_clause' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_fieldvalue.where_clause',

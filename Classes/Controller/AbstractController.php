@@ -210,7 +210,18 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						if(isset($_GET[$name]))
 						{
 							$value = GeneralUtility::_GET($name);
-							$value = GeneralUtility::removeXSS($value);
+
+                            if(is_array($value))
+                            {
+                                $value = array_map(function($v) {
+                                    return GeneralUtility::removeXSS($v);
+                                }, $value);
+                            }
+                            else
+                            {
+                                $value = GeneralUtility::removeXSS($value);
+                            }
+
 							$variables[$name] = $value;
 						}
 						break;
@@ -219,7 +230,18 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						if(isset($_GET[$name]))
 						{
 							$value = GeneralUtility::_POST($name);
-							$value = GeneralUtility::removeXSS($value);
+
+                            if(is_array($value))
+                            {
+                                $value = array_map(function($v) {
+                                    return GeneralUtility::removeXSS($v);
+                                }, $value);
+                            }
+                            else
+                            {
+                                $value = GeneralUtility::removeXSS($value);
+                            }
+                            
 							$variables[$name] = $value;
 						}
 						break;

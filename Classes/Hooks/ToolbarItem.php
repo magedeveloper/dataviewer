@@ -197,7 +197,7 @@ class ToolbarItem implements ToolbarItemInterface
 	{
 		$title = "MageDeveloper DataViewer";
 		return '<span title="' . $title . '">' .
-			$this->iconFactory->getIcon('extensions-dataviewer-default', Icon::SIZE_SMALL)->render('inline') .
+			$this->iconFactory->getIcon('extensions-dataviewer-default', Icon::SIZE_SMALL)->render() .
 			'</span>';
 	}
 
@@ -238,6 +238,7 @@ class ToolbarItem implements ToolbarItemInterface
 			$view->assign("logoUrl", $logoUrl);
 			$view->assign("datatypes", $datatypes);
 			$view->assign("latest", $latest);
+            $view->assign("donation", $this->backendAccessService->disableDonationMessage());
 
 			return $view->render();
 		}
@@ -263,6 +264,9 @@ class ToolbarItem implements ToolbarItemInterface
 	 */
 	public function getAdditionalAttributes()
 	{
+		return [
+			"class" => "pull-right",
+		];
 	}
 
 	/**

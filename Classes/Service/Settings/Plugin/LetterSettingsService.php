@@ -61,4 +61,15 @@ class LetterSettingsService extends PluginSettingsService
 		$field = ($field == 0)?"title":$field;
 		return $field;
 	}
+
+    /**
+     * Get the setting to clear the search string
+     * on new page load
+     *
+     * @return bool
+     */
+    public function getClearOnPageLoad()
+    {
+        return (bool)$this->getSettingByCode("clear_on_page_load");
+    }
 }

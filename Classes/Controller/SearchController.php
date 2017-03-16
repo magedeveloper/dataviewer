@@ -116,7 +116,7 @@ class SearchController extends AbstractController
 		//$this->request->setArgument("searchString", $searchString);
 		//$arguments = $this->request->getArguments();
 		
-		$this->redirect("index");
+		$this->redirect("index", null, null);
 	}
 
 	/**
@@ -130,7 +130,7 @@ class SearchController extends AbstractController
 			$this->redirect("index");
 
 		$this->searchSessionService->reset();
-		$this->redirect("index");
+		$this->_redirectToPid();
 	}
 
 	/**

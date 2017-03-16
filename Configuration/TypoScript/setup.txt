@@ -133,6 +133,7 @@ plugin.tx_dataviewer.fieldtypes {
 		valueClass = MageDeveloper\Dataviewer\Form\Fieldvalue\Rte
 		icon = EXT:dataviewer/Resources/Public/Icons/Fieldtype/rte.gif
 		label = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:type.rte
+		flexConfiguration = EXT:dataviewer/Configuration/FlexForms/Fieldtype/Rte.xml
 	}
 
 	# Fieldtype Declaration for a Link Input Field #

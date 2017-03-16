@@ -50,6 +50,7 @@
                     <config>
                         <type>input</type>
                         <size>15</size>
+                        <placeholder>fileadmin/upload/</placeholder>
                     </config>
                 </TCEforms>
             </uploadfolder>

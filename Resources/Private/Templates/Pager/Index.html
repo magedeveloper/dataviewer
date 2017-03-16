@@ -18,7 +18,7 @@
 	</f:comment>
 
 	<style type="text/css">
-		.dataviewer-pager { border-top:1px solid #f2f2f2; padding:10px 0; }
+		.dataviewer-pager { border-top:1px solid #f2f2f2; border-bottom:1px solid #f2f2f2; padding:10px; margin:5px 0; }
 		.dataviewer-pagination { margin:0; }
 	</style>
 
@@ -76,16 +76,49 @@
 			</div>
 			<div class="col col-xs-8">
 				<ul class="pagination pull-right dataviewer-pagination">
-						<li class="pager-item-left{f:if(condition:'{previousPage} < 1',then:' disabled')}">
-							<f:link.action action="page" addQueryString="1" arguments="{page:previousPage,targetUid:targetUid}">&laquo;</f:link.action>
-						</li>
-					<f:for each="{pages}" as="page" iteration="i">
-						<li class="pager-item-{i.cycle}{f:if(condition:'{i.cycle} == {selectedPage}',then: ' active')}">
-							<f:link.action action="page" addQueryString="1" arguments="{page:page,targetUid:targetUid}">{page}</f:link.action>
-						</li>
-					</f:for>
+					<li class="pager-item-left{f:if(condition:'{previousPage} < 1',then:' disabled')}">
+						<f:link.action action="page" addQueryString="1" arguments="{page:1,targetUid:targetUid}">&laquo;</f:link.action>
+					</li>
+					<li class="pager-item-left{f:if(condition:'{previousPage} < 1',then:' disabled')}">
+						<f:link.action action="page" addQueryString="1" arguments="{page:previousPage,targetUid:targetUid}">&lt;</f:link.action>
+					</li>
+					<f:if condition="{compactMode}">
+						<f:then>
+							<f:comment>------------- COMPACT MODE -------------</f:comment>
+							<f:for each="{leftPages}" as="leftPage">
+								<f:if condition="{leftPage} > 0">
+									<li class="pager-item-left">
+										<f:link.action action="page" addQueryString="1" arguments="{page:leftPage,targetUid:targetUid}">{leftPage}</f:link.action>
+									</li>
+								</f:if>
+							</f:for>
+							<li class="pager-item-left active">
+								<f:link.action action="page" addQueryString="1" arguments="{page:selectedPage,targetUid:targetUid}">{selectedPage}</f:link.action>
+							</li>
+							
+							<f:for each="{rightPages}" as="rightPage">
+								<f:if condition="{rightPage} <= {pagesCount}">
+									<li class="pager-item-left">
+										<f:link.action action="page" addQueryString="1" arguments="{page:rightPage,targetUid:targetUid}">{rightPage}</f:link.action>
+									</li>
+								</f:if>
+							</f:for>
+							
+						</f:then>
+						<f:else>
+							<f:comment>------------- ALL PAGES MODE -------------</f:comment>
+							<f:for each="{pages}" as="page" iteration="i">
+								<li class="pager-item-{i.cycle}{f:if(condition:'{i.cycle} == {selectedPage}',then: ' active')}">
+									<f:link.action action="page" addQueryString="1" arguments="{page:page,targetUid:targetUid}">{page}</f:link.action>
+								</li>
+							</f:for>
+						</f:else>
+					</f:if>	
 					<li class="pager-item-right{f:if(condition:'{nextPage} == \'\'',then:' disabled')}">
-						<f:link.action action="page" addQueryString="1" arguments="{page:nextPage,targetUid:targetUid}">&raquo;</f:link.action>
+						<f:link.action action="page" addQueryString="1" arguments="{page:nextPage,targetUid:targetUid}">&gt;</f:link.action>
+					</li>
+					<li class="pager-item-right{f:if(condition:'{nextPage} == \'\'',then:' disabled')}">
+						<f:link.action action="page" addQueryString="1" arguments="{page:pagesCount,targetUid:targetUid}">&raquo;</f:link.action>
 					</li>
 				</ul>
 			</div>

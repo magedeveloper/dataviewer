@@ -28,7 +28,7 @@ class RecordViewHelper extends AbstractViewHelper
 	 * given uid
 	 *
 	 * @param int $uid Uid of the tt_content record
-	 * @return void
+	 * @return string
 	 */
 	public function render($uid)
 	{
@@ -39,7 +39,7 @@ class RecordViewHelper extends AbstractViewHelper
 			"source"		=> (int)$uid,
 			"dontCheckPid"	=> 1,
 		];
-		
+
 		return $cObj->cObjGetSingle('RECORDS', $conf);
 	}
 }

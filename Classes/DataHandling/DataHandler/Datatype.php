@@ -89,7 +89,7 @@ class Datatype extends AbstractDataHandler implements DataHandlerInterface
 	{
 		if ($table != "tx_dataviewer_domain_model_datatype") return;
 		
-		// If we think about it, we should delete
+		// If we think about it, we should delete the following
 		// - All according fields
 		// - All according records
 		// - All according recordValues
