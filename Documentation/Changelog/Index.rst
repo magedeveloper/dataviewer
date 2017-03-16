@@ -11,6 +11,32 @@
 Changelog
 ---------
 
+**1.7.0**
+
+- [TASK] Backported from a alpha dev-8 version; preparations for a later TYPO3 8 compatibility
+- [BUGFIX] Field Code is now correctly being generated after save when none is given
+- [BUGFIX] Radio Field Default Value works now
+- [BUGFIX] ToolbarItem alignment and width fixes
+- [TASK] Removed requirement in multiselect of fields in Tab-Configuration
+- [BUGFIX] Removed UnknownClassException; Returning arrays in Inline Fieldvalue
+- [BUFGIX] First Page with Pager is now correctly limited with fresh sessions
+- [TASK] Possibility to reset a filter on a selected option
+- [TASK] Better Filter Conditions with AND/OR (...)
+- [TASK] Query Preview Box on filters
+- [TASK] Rte TS Config Pid is now configurable
+- [TASK] Rte does not convert it's content anymore
+- [TASK] Searching directly in Record Lists in Backend List Module
+- [TASK] Cleaning up arguments on some actions for Search, Pager
+- [BUGFIX] Copying records with file relations now creates new relations for the new record
+- [BUGFIX] Copying records with inline relations now also creates new relations
+- [BUGFIX] Cache Lifetime 0 now completely disables caching
+- [TASK] Added cache configuration information in records plugin
+- [BUGFIX] GET/POST Template Variables are now Array-Compatible
+- [TASK] Configure a Page in Inline and Datatype Field for target storage pid
+- [BUGFIX] RecordValues are now flagged correctly 'deleted' when the according record is deleted
+- [TASK] Record-Plugin 'Part' has now the optional configuration option for a detail page
+- [TASK] A information is added when no markers (from variables) were found on configured storage pages
+
 **1.6.0**
 
 - [BUGFIX] Sort Settings-Tab is now correctly displayed in Records-Plugin
@@ -187,9 +213,6 @@ Changelog
 - Include MagicSuggest Into Filter Fields
 - Full Workspaces support
 - Fluid Fieldtype - Selectable Template File
-- New Fieldtype UserFunc with Parameters Flex
 - Record Validation as separate validation class
 - FieldValue Type for different data sources
-- UserFunc Field for running PHP Scripts
 - Add Records to other external records (e.g. a fe_user gets an additional tab with the form)
-

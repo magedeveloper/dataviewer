@@ -93,10 +93,11 @@
                     <label>foreign_table_where</label>
                     <displayCond>FIELD:foreign:=:1</displayCond>
                     <config>
-                        <type>input</type>
-                        <size>15</size>
+                        <type>text</type>
+                        <rows>3</rows>
+                        <cols>50</cols>
                         <eval>trim</eval>
-                        <placeholder>AND pid = X</placeholder>
+                        <placeholder>AND tablename.pid = X</placeholder>
                     </config>
                 </TCEforms>
             </foreign_table_where>

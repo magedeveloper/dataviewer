@@ -158,7 +158,7 @@ class Field
 		foreach($fields as $_field)
 		{
 			$pid = $_field->getPid();
-			$label = "[{$pid}] " . $_field->getFrontendLabel();
+			$label = $this->_getFieldLabel($_field);
 			$options[] = [$label, $_field->getUid()];
 		}
 
@@ -177,12 +177,12 @@ class Field
 		$pid = $config["flexParentDatabaseRow"]["pid"];
 		
 		$options = [];
-		$fields = $this->fieldRepository->findAllOnPids([$pid]);
+		$fields = $this->fieldRepository->findAllOnPids([$pid], true);
 
 		foreach($fields as $_field)
 		{
 			$pid = $_field->getPid();
-			$label = "[{$pid}] " . $_field->getFrontendLabel();
+			$label = $this->_getFieldLabel($_field);
 			$options[] = [$label, $_field->getUid()];
 		}
 
@@ -205,14 +205,13 @@ class Field
 			preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
 			$pids[] = $match["uid"];
 		}
-		
+
 		$options = [];
 		$fields = $this->fieldRepository->findAllOnPids($pids);
 
 		foreach($fields as $_field)
 		{
-			$pid = $_field->getPid();
-			$label = "[{$pid}] " . $_field->getFrontendLabel();
+			$label = $this->_getFieldLabel($_field);
 			$options[] = [$label, $_field->getUid()];
 		}
 
@@ -257,7 +256,7 @@ class Field
 					foreach($_fields as $_field)
 					{
 						/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
-						$label	 	= "[{$_field->getUid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
+						$label	 	= $this->_getFieldLabel($_field);
 						$options[] 	= [$label, $_field->getUid()];
 					}
 
@@ -270,4 +269,15 @@ class Field
 		$config["items"] = array_merge($config["items"], $options);
 
 	}
+
+    /**
+     * Transforms a label for a field
+     * 
+     * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
+     * @return string
+     */
+	protected function _getFieldLabel(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
+    {
+        return "[{$field->getPid()}] " . strtoupper($field->getType()) . ": " . $field->getFrontendLabel();
+    }
 }

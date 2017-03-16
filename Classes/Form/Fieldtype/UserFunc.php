@@ -117,7 +117,7 @@ implements FieldtypeInterface
 		$this->tca = $tca;
 		return $this->tca;
 	}
-
+	
 	/**
 	 * Gets the prepared parameters with the conversion of
 	 * all available template markers
@@ -146,4 +146,29 @@ implements FieldtypeInterface
 		
 		return $parameters;
 	}
+
+    /**
+     * Renders a field
+     *
+     * @return array
+     */
+    public function render()
+    {
+        if($this->getField()->getConfig("showInBackend"))
+        {
+           return parent::render();
+        }
+
+        return [
+            'additionalJavaScriptPost' => [],
+            'additionalJavaScriptSubmit' => [],
+            'additionalHiddenFields' => [],
+            'additionalInlineLanguageLabelFiles' => [],
+            'stylesheetFiles' => [],
+            'requireJsModules' => [],
+            'extJSCODE' => '',
+            'inlineData' => [],
+            'html' => "",
+        ];
+    }
 }

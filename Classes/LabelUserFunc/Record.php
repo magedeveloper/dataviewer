@@ -30,6 +30,14 @@ class Record
 	 */
 	protected $recordRepository;
 
+    /**
+     * Backend Session Service
+     *
+     * @var \MageDeveloper\Dataviewer\Service\Session\BackendSessionService
+     * @inject
+     */
+    protected $backendSessionService;
+
 	/**
 	 * Constructor
 	 *
@@ -39,7 +47,8 @@ class Record
 	{
 		$this->objectManager 	= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 		$this->recordRepository	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
-	}
+        $this->backendSessionService 	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Session\BackendSessionService::class);
+    }
 
 	/**
 	 * UserFunc for Field Label
@@ -52,7 +61,9 @@ class Record
 		if (isset($pObj["row"]))
 		{
 			$row = $pObj["row"];
-			$record = $this->recordRepository->findByUid($row["uid"], false);
+			
+			$this->backendSessionService->setAccordingPid($row["pid"]);
+			$record = $this->recordRepository->findByUid($row["uid"], false, $row["sys_language_uid"]);
 
 			if ($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
 			{
@@ -65,12 +76,34 @@ class Record
 
 				if ($record->getTitle())
 					$title = $record->getTitle();
+					
+				if($row["sys_language_uid"] > 0)
+					$title = $row["title"];	
+					
+                $sortBy = $this->backendSessionService->getSortBy();
+                $addInfo = (bool)$this->backendSessionService->getAddInfo();
+                $additional = "";
 
-				$pObj["title"] = $title;
+                if($sortBy && $addInfo) 
+                {
+                	if(is_numeric($sortBy))
+					{
+						$value = $record->getValueByFieldId($sortBy);
+						$plainValue = $value->getValue();
+
+						if(is_string($plainValue))
+							$additional = "[".$value->getField()->getFrontendLabel().": ".$plainValue."] ";					
+					}
+                	else
+					{
+						$additional = "[".$sortBy.": ".$record->_getCleanProperty($sortBy)."] ";
+					}
+
+                }
+                
+				$pObj["title"] = $additional . $title;
 			}
 		}
 	}
-	
-	
 
 }

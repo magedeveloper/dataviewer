@@ -33,7 +33,7 @@
                                             <renderType>selectMultipleSideBySide</renderType>
                                             <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Field->populateFieldsOnCurrentPid</itemsProcFunc>
                                             <maxitems>9999</maxitems>
-                                            <minitems>1</minitems>
+                                            <minitems>0</minitems>
                                             <multiple>1</multiple>
                                             <size>5</size>
                                             <iconsInOptionTags>1</iconsInOptionTags>

@@ -249,6 +249,9 @@ class BackendCsvAssistantController extends BackendController
 		{	
 			foreach($_values as $_rowId=>$_value)
 			{
+				// UTF-8 Encoding
+				$_value = utf8_encode($_value);
+				
 				foreach($assignedFields as $_fieldId=>$_assignedRowId)
 				{
 					if($_rowId == $_assignedRowId)
@@ -304,6 +307,7 @@ class BackendCsvAssistantController extends BackendController
 				"csvImportPostCreateRecord",
 				[
 					&$record,
+					&$_fieldArr,
 				]
 			);
 
@@ -321,6 +325,18 @@ class BackendCsvAssistantController extends BackendController
 				{
 					$this->recordRepository->add($record);
 					$this->persistenceManager->persistAll();
+
+					//////////////////////////////////////////////////////////////////
+					// Signal-Slot for hooking the record after it has been created //
+					//////////////////////////////////////////////////////////////////
+					$this->signalSlotDispatcher->dispatch(
+						__CLASS__,
+						"csvImportRecordCreated",
+						[
+							&$record,
+							&$_fieldArr,
+						]
+					);
 
 					// Record successfully created, we add the record id to the log
 					$log[$i]["recordId"] = $record->getUid();
@@ -446,7 +462,8 @@ class BackendCsvAssistantController extends BackendController
 				$csvArray[$i] = array_combine($header, $_item);
 
 		}
-		
+
+		$csvArray = \MageDeveloper\Dataviewer\Utility\ArrayUtility::utf8encode($csvArray);
 		return $csvArray;
 	}
 }

@@ -1,0 +1,39 @@
+<T3DataStructure>
+<ROOT>
+    <type>array</type>
+    <el>
+        <info>
+            <TCEforms>
+                <label></label>
+                <config>
+                    <type>user</type>
+                    <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
+                    <parameters>
+                        <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                    </parameters>
+                </config>
+            </TCEforms>
+        </info>
+        <pid_config>
+            <TCEforms>
+                <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pid_with_tsconfig</label>
+                <config>
+                    <type>select</type>
+                    <foreign_table>pages</foreign_table>
+                    <renderType>selectTree</renderType>
+                    <multiple>0</multiple>
+                    <minitems>0</minitems>
+                    <maxitems>1</maxitems>
+                    <treeConfig>
+                        <expandAll>1</expandAll>
+                        <parentField>pid</parentField>
+                        <appearance>
+                            <showHeader>1</showHeader>
+                        </appearance>
+                    </treeConfig>
+                </config>
+            </TCEforms>
+        </pid_config>
+    </el>
+</ROOT>
+</T3DataStructure>

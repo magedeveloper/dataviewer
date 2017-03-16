@@ -196,7 +196,7 @@ abstract class AbstractFieldvalue
 	 */
 	protected function _isXml($value)
 	{
-		if(is_string($value))
+		if(is_string($value) && $value != "")
 		{
 			libxml_use_internal_errors(true);
 			$doc = new \DOMDocument('1.0', 'utf-8');

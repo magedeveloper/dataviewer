@@ -27,7 +27,7 @@
 		<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation">
 			<div class="module-docheader-bar-column-left">
 				<f:be.buttons.csh />
-				<dv:backend.actionMenu>
+				<f:be.menus.actionMenu>
 					<f:be.menus.actionMenuItemGroup label="{f:translate(key:'module.create')}">
 						<f:be.menus.actionMenuItem label="{f:translate(key:'module.create_record')}" controller="BackendModule" action="createRecord" />
 					</f:be.menus.actionMenuItemGroup>
@@ -42,8 +42,7 @@
 					<f:be.menus.actionMenuItemGroup label="{f:translate(key:'module.import')}">
 						<f:be.menus.actionMenuItem label="{f:translate(key:'module.csv_import')}" controller="BackendCsvAssistant" action="index" />
 					</f:be.menus.actionMenuItemGroup>
-				
-				</dv:backend.actionMenu>
+				</f:be.menus.actionMenu>
 			</div>
 			<div class="module-docheader-bar-column-right">
 				<f:be.pagePath />

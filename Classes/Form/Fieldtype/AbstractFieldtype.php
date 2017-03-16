@@ -118,6 +118,14 @@ abstract class AbstractFieldtype
 	public $formDataProviders = [];
 
 	/**
+	 * Overrides value request and
+	 * returns nothing
+	 * 
+	 * @var bool
+	 */
+	public $overrideValue = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @return AbstractFieldtype
@@ -250,6 +258,11 @@ abstract class AbstractFieldtype
 	public function prepareTca(array &$tca)
 	{
 		$fieldName = $tca["fieldName"];
+
+        // We evaluate the command from our new or existing record
+        $tca["command"] = ($this->getRecordId()>0)?"edit":"new";
+        $tca["vanillaUid"] = (int)$this->getRecordId();
+        $tca["recordTypeValue"] = ($this->getRecord()->getDatatype())?$this->getRecord()->getDatatype()->getUid():(int)GeneralUtility::_GET("datatype");
 
 		// requestUpdate
 		if($requestUpdate = $this->getField()->getRequestUpdate())
@@ -565,6 +578,9 @@ abstract class AbstractFieldtype
 	 */
 	public function getValue($default = false, $noSessionValue = false)
 	{
+		if($this->overrideValue == true)
+			return;
+	
 		if(!$default && !$noSessionValue)
 		{
 			// We get a session value if it exists and if this method shall return the record value content
@@ -594,11 +610,15 @@ abstract class AbstractFieldtype
 			foreach($fieldValues as $_fieldValue)
 			{
 				$default = $this->_getDefaultValue($_fieldValue, 0, true);
-				if (is_array($default))
-					$values = array_merge($values, $default);
-				else
-					$values[] = $default;
-
+				
+				if($default != '')
+                {
+                    if (is_array($default))
+                        $values = array_merge($values, $default);
+                    else
+                        $values[] = $default;
+                }
+				
 			}
 			
 			$value = implode(", ", $values);
@@ -615,12 +635,26 @@ abstract class AbstractFieldtype
 	 */
 	public function render()
 	{
-		$tca                  = $this->buildTca();
-		
 		// We can inject our session values here
-		
+		$message = "";
+
+		try {
+
+			$tca                  = $this->buildTca();
+
+		} catch (\Exception $e)
+		{
+			// Exception is here
+			$this->overrideValue = true;
+			$tca = $this->buildTca();
+
+			$message = "<div class=\"alert alert-danger\" role=\"alert\">{$e->getMessage()}<br />{$e->getFile()}:{$e->getLine()}</div><br />";
+		}
+
 		$singleFieldContainer = $this->objectManager->get(SingleFieldContainer::class, $this->nodeFactory, $tca);
 		$resultArray          = $singleFieldContainer->render($tca);
+		$resultArray["html"]  = $message.$resultArray["html"];
+		
 		return $resultArray;
 	}
 

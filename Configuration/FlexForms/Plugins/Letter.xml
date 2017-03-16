@@ -83,7 +83,7 @@
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:no_preselection</numIndex>
-                                        <numIndex index="1">0</numIndex>
+                                        <numIndex index="1"></numIndex>
                                     </numIndex>
                                 </items>
                                 <maxitems>1</maxitems>
@@ -92,6 +92,16 @@
                             </config>
                         </TCEforms>
                     </settings.preselected_letter>
+
+                    <settings.clear_on_page_load>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.clear_on_page_load</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.clear_on_page_load>
 
                 </el>
             </ROOT>

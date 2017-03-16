@@ -90,6 +90,9 @@ class PagerController extends RecordController
 		$pagesCount = 1;
 		if($perPage != 0)
 			$pagesCount = ceil($recordCount / $perPage);
+			
+		if($pagesCount < 1)
+		    $pagesCount = 1;	
 	
 		$pages = range(1, $pagesCount);
 		
@@ -101,7 +104,7 @@ class PagerController extends RecordController
 			// because someone tried to access a page that
 			// does not exist
 			$this->pagerSessionService->setSelectedPage(1);
-			$this->redirect("index");
+            $this->_redirectToPid();
 		}	
 			
 		if($selectedPage > 1)
@@ -135,6 +138,33 @@ class PagerController extends RecordController
 
 		$this->view->assign("targetUid", $this->pagerSettingsService->getTargetContentUid());
 		$this->view->assign("showViewAll", $this->pagerSettingsService->showViewAll());
+		
+		$compactMode = $this->pagerSettingsService->isCompactMode();
+		$this->view->assign("compactMode", $compactMode);
+		
+		if($compactMode === true)
+		{
+			$leftRightPagesCount = $this->pagerSettingsService->getLeftRightPagesCount();
+		
+			$leftPages = [];
+			$rightPages = [];
+			for($i = 1;$i <= $leftRightPagesCount;$i++)
+			{
+				$aLeftPage = $selectedPage - $i;
+				$aRightPage = $selectedPage + $i;
+				
+				$leftPages[] = $aLeftPage;
+				$rightPages[] = $aRightPage;
+			}
+			
+			$leftPages = array_reverse($leftPages);
+		
+			$this->view->assign("leftPages", $leftPages);
+			$this->view->assign("rightPages", $rightPages);
+		
+			$this->view->assign("leftright", $leftRightPagesCount);
+		}
+		
 	}
 
 	/**
@@ -169,8 +199,6 @@ class PagerController extends RecordController
 		}
 
 		$this->redirect("index");
-
-		exit();
 	}
 
 	/**

@@ -111,23 +111,24 @@ class Inline extends AbstractFieldvalue implements FieldvalueInterface
 		$repoClassName 	= \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateModelNameToRepositoryName($modelClass);
 		$items 			= [];
 
-		if(!$this->objectManager->isRegistered($repoClassName))
-			throw new UnknownClassException("Class '{$repoClassName}' not found!");
+        $repository = null;
+		if($this->objectManager->isRegistered($repoClassName))
+        {
+            /* @var \TYPO3\CMS\Core\Resource\AbstractRepository $repository */
+            $repository = $this->objectManager->get($repoClassName);
+        }
 
-		/* @var \TYPO3\CMS\Core\Resource\AbstractRepository $repository */
-		$repository = $this->objectManager->get($repoClassName);
-
-		if ($repository instanceof \TYPO3\CMS\Extbase\Persistence\Repository)
-		{
-			foreach ($ids as $_id) 
-			{
-				$model = $repository->findByUid($_id);
-				if ($model instanceof $modelClass)
-				{
-					$items[] = $model;
-				}
-			}
-		}
+        if ($repository instanceof \TYPO3\CMS\Extbase\Persistence\Repository)
+        {
+            foreach ($ids as $_id)
+            {
+                $model = $repository->findByUid($_id);
+                if ($model instanceof $modelClass)
+                {
+                    $items[] = $model;
+                }
+            }
+        }
 		else
 		{
 			// This is not a normal item, so we just fetch the data from the database

@@ -60,4 +60,27 @@ class PagerSettingsService extends PluginSettingsService
 	{
 		return (bool)$this->getSettingByCode("clear_on_page_load");
 	}
+
+	/**
+	 * Get the setting for displaying a number of pages left
+	 * and right of the current selected page
+	 *
+	 * @return bool
+	 */
+	public function getLeftRightPagesCount()
+	{
+		return (int)$this->getSettingByCode("left_right_pages");
+	}
+
+	/**
+	 * Get the setting for the compact mode
+	 *
+	 * @return bool
+	 */
+	public function isCompactMode()
+	{
+		return (bool)$this->getSettingByCode("compact_pages");
+	}
+
+
 }

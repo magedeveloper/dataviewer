@@ -64,7 +64,19 @@ class Logo
 		$html = "";
 		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"DataViewer {$version}\" style=\"height:26px;\" />";
 		$html .= "<div style=\"margin-top:10px;\">Version <strong>{$version}</strong>&nbsp;| Mail:&nbsp;<a href=\"mailto:{$supportEmail}\">{$supportEmail}</a></div>";
-		
+
+        if(!$this->backendAccessService->disableDonationMessage())
+        {
+            $html .= "<small>"
+                . LocalizationUtility::translate("donate.if_you_like")
+                ."&nbsp;"
+                ."<a style=\"color:orange; font-weight:bold; display:inline;\" href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HQP7AJZXJEWMQ&item_name=Support%20for%20Extension%20Development%20DataViewer\" target=\"_blank\">"
+                . LocalizationUtility::translate("donate.please_donate")
+                . "</a>!"
+                . "</small>"
+            ;
+        }
+
 		return $html;
 	}
 
@@ -101,8 +113,8 @@ class Logo
 	public function displayLogoAndMessageOnEmptyRecordStoragePage(array &$config, &$parentObject)
 	{
 		$row = $config["row"];
-
-		if($row["pages"] == "")
+		
+		if(!isset($row["pages"]) && $row["pages"] != "")
 		{
 			$message = LocalizationUtility::translate("message.no_record_storage_page_configured");
 			$config["parameters"]["message"] = $message;

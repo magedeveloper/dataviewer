@@ -249,13 +249,19 @@ class FilterController extends AbstractController
 		foreach($previousSelectedOptions as $i=>$_prvOpt)
 			foreach($currentSelectedOptions as $j=>$_curOpt)
 			{
-				if($_prvOpt["field_id"] == $_curOpt["field_id"])
+				if($_prvOpt["field_id"] == $_curOpt["field_id"]
+				)
 				{
 					// Clean previous array
 					unset($previousSelectedOptions[$i]);
 				}
+				
+				if($_curOpt["filter_field"] == "") 
+                {
+                    // Resetting the filter 
+                    unset($currentSelectedOptions[$j]);
+                }
 			}
-			
 		
 		$selectedOptions = array_merge($previousSelectedOptions, $currentSelectedOptions);
 		return $selectedOptions;

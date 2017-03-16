@@ -143,22 +143,28 @@ class Database
 
 			if ($fieldValue instanceof \MageDeveloper\Dataviewer\Domain\Model\FieldValue)
 			{
-				if (($fieldValue->getType() == \MageDeveloper\Dataviewer\Domain\Model\FieldValue::TYPE_DATABASE)
-					&&
-					$fieldValue->getTableContent() &&
-					$fieldValue->getColumnName()
-				)
-				{
-					try {
-						$result = $this->fieldRepository->findEntriesForFieldValue($fieldValue);
+				$statement = "SELECT * FROM {$fieldValue->getTableContent()} {$fieldValue->getWhereClause()}";
+				
 
-						$html .= "<h4>".Locale::translate("items", [count($result)])."</h4>";
-						$html .= DebugUtility::debugVariable($result);
-						
-					} catch (\Exception $e) {
-						$statement = "SELECT * FROM {$fieldValue->getTableContent()} {$fieldValue->getWhereClause()}";
-						$html = "<div class=\"alert alert-danger\">{$e->getMessage()}<br />Statement: {$statement}</div>";
-					}
+                if (($fieldValue->getType() == \MageDeveloper\Dataviewer\Domain\Model\FieldValue::TYPE_DATABASE)
+                    &&
+                    $fieldValue->getTableContent() &&
+                    $fieldValue->getColumnName() &&
+                    strpos($statement, "{") === false
+                ) {
+                    try {
+                        $result = $this->fieldRepository->findEntriesForFieldValue($fieldValue);
+
+                        $html .= "<h4>".Locale::translate("items", [count($result)])."</h4>";
+                        $html .= DebugUtility::debugVariable($result);
+
+                    } catch (\Exception $e) {
+                        $html = "<div class=\"alert alert-danger\">{$e->getMessage()}<br /><br /><strong>Statement:</strong><br /><pre>{$statement}</pre></div>";
+                    }
+                }
+                else
+                {
+			        $html = "<strong>Statement</strong><br /><pre>{$statement}</pre>";		
 
 				}
 			}

@@ -122,7 +122,7 @@ class DataHandlingHook
 	 */
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
-		// Clearing the cache, when EXT:dataviewer Static was added to the template static
+		// Clearing the cache, when EXT:dataviewer Static was added or exists in the template static
 		if($table == "sys_template" && isset($incomingFieldArray["include_static_file"]))
 		{
 			$staticFileInclude = GeneralUtility::trimExplode(",",$incomingFieldArray["include_static_file"],true);
@@ -142,6 +142,18 @@ class DataHandlingHook
 		$this->recordHandling->processDatamap_preProcessFieldArray($incomingFieldArray, $table, $id, $parentObj);
 		$this->variableHandling->processDatamap_preProcessFieldArray($incomingFieldArray, $table, $id, $parentObj);
 	}
+
+    /**
+     * @param string $status
+     * @param string $table
+     * @param int $id
+     * @param array $fieldArray
+     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $parentObj
+     */
+    public function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, &$parentObj)
+    {
+        $this->recordHandling->processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, $parentObj);
+    }
 
 	/**
 	 * processCmdmap

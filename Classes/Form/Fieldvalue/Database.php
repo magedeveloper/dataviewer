@@ -24,6 +24,57 @@ class Database extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	protected $fieldRepository;
 
+    /**
+     * Plugin Settings Service
+     *
+     * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
+     * @inject
+     */
+    protected $pluginSettingsService;
+
+    /**
+     * Variable Repository
+     *
+     * @var \MageDeveloper\Dataviewer\Domain\Repository\VariableRepository
+     * @inject
+     */
+    protected $variableRepository;
+
+    /**
+     * Gets the view model
+     *
+     * @return \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
+     */
+    protected function _getView()
+    {
+        $standaloneView = $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
+
+        // Check for a record and inject it to the view
+        if($this->getRecord() !== false)
+        {
+            $record = $this->getRecord();
+            $pid = $this->getRecord()->getPid();
+            $variables = $this->variableRepository->findByStoragePids([$pid]);
+
+            $variableIds = [];
+            foreach($variables as $_var)
+                $variableIds[] = $_var->getUid();
+            
+            if(count($variableIds))
+            {
+                /* @var \MageDeveloper\Dataviewer\Controller\RecordController $controller */
+                $controller = $this->objectManager->get(\MageDeveloper\Dataviewer\Controller\RecordController::class);
+                $variables = $controller->prepareVariables($variableIds);
+                $standaloneView->assignMultiple($variables);
+            }
+        
+            $recordVariableName = $this->pluginSettingsService->getRecordVarName();
+            $standaloneView->assign($recordVariableName, $record);
+        }
+
+        return $standaloneView;
+    }
+
 	/**
 	 * Gets a solved field value
 	 * 
@@ -42,9 +93,23 @@ class Database extends AbstractFieldvalue implements FieldvalueInterface
 			{
 				if($_fieldValue->getType() == FieldValue::TYPE_DATABASE)
 				{
-					$items = $this->fieldRepository->findEntriesForFieldValue($_fieldValue);
-					$values = array_merge($values, $items);
-				}
+				    $plainWhereClause = $_fieldValue->getWhereClause();
+				    $plainWhereClause = str_replace("WHERE ", "", $plainWhereClause);
+				    $renderedWhereClause = $rendered = $this->_getView()->renderSource($plainWhereClause);;
+				    
+				    $_fieldValue->setWhereClause($renderedWhereClause);
+				
+                    try 
+                    {
+                        $items = $this->fieldRepository->findEntriesForFieldValue($_fieldValue);
+                    }
+                    catch (\Exception $e)
+                    {
+                        $items = [];
+                    }
+
+                    $values = array_merge($values, $items);
+                }
 			}
 
 		}

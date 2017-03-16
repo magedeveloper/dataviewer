@@ -1,4 +1,5 @@
 <?php
+
 namespace MageDeveloper\Dataviewer\Form\Fieldtype;
 
 use MageDeveloper\Dataviewer\Domain\Model\Field;
@@ -53,12 +54,7 @@ class Category extends Select
 		$sourcePids					= $this->getField()->getConfig("pids");
 		$foreignTableWhere			= ($sourcePids)?"AND sys_category.pid IN ({$sourcePids}) ":"";
 
-		$command = "new";
-		if(is_numeric($recordId) && $recordId > 0 && GeneralUtility::compat_version("8"))
-			$command = "edit";
-
 		$tca = [
-			"command" => $command,
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
 			"fieldName" => $fieldName,
@@ -92,9 +88,8 @@ class Category extends Select
 				],
 			],
 			"inlineStructure" => [],
-			"vanillaUid" => $this->getRecord()->getUid(),
 		];
-
+		
 		$this->prepareTca($tca);
 
 		$this->tca = $tca;

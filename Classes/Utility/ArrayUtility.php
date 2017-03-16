@@ -145,4 +145,21 @@ class ArrayUtility
 
 		return $xml_array;
 	}
+
+	/**
+	 * UTF-8 Encodes a multidimensional array
+	 *
+	 * @param array $array
+	 * @return array
+	 */
+	public static function utf8encode(array $array)
+	{
+		array_walk_recursive($array, function(&$item, $key){
+			if(!mb_detect_encoding($item, 'utf-8', true)){
+				$item = utf8_encode($item);
+			}
+		});
+
+		return $array;
+	}
 }

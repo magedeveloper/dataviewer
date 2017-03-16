@@ -48,6 +48,7 @@ class RecordRepository extends AbstractRepository
 	{
 		$query 			= $this->createQuery();
 		$querySettings 	= $query->getQuerySettings();
+		$querySettings->setRespectSysLanguage(true);
 		
 		if(!empty($storagePids))
 		{
@@ -73,6 +74,7 @@ class RecordRepository extends AbstractRepository
 
 		$querySettings->setRespectStoragePage(false);
 		$querySettings->setIgnoreEnableFields(true);
+		$querySettings->setRespectSysLanguage(true);
 		
 		$query->setOrderings(["crdate" => QueryInterface::ORDER_DESCENDING]);
 		$query->setLimit($limit);
@@ -114,6 +116,7 @@ class RecordRepository extends AbstractRepository
 		$querySettings 	= $query->getQuerySettings();
 
 		$querySettings->setRespectStoragePage(false);
+		$querySettings->setRespectSysLanguage(true);
 		if(!empty($storagePids))
 		{
 			$querySettings->setStoragePageIds($storagePids);
@@ -124,7 +127,6 @@ class RecordRepository extends AbstractRepository
 			$query->in("datatype", $datatypeIds)
 		)->execute();
 	}
-
 
 	/**
 	 * Find records by a list of record ids
@@ -139,16 +141,31 @@ class RecordRepository extends AbstractRepository
 		$querySettings 	= $query->getQuerySettings();
 		$querySettings->setStoragePageIds($storagePids);
 		$querySettings->setRespectStoragePage(true);
+		$querySettings->setRespectSysLanguage(true);
 		
 		$orderings = [];
 		foreach ($recordIds as $_id)
-			$orderings["uid={$_id}"] = QueryInterface::ORDER_DESCENDING;
+			$orderings["title={$_id}"] = QueryInterface::ORDER_DESCENDING;
 		
 		$query->setOrderings($orderings);
-
-		return $query->matching(
+		
+		$records = $query->matching(
 			$query->in("uid", $recordIds)
 		)->execute();
+		
+		
+		// THIS IS A DIRTY FIX FOR MANUAL SORTING THE RECORDS BY THE INPUT RECORD IDS
+		// I HOPE THIS IS CHANGED SOON BECAUSE IT COSTS A LOT OF SPEED HERE
+		// THANKS TO DOCTRINE THE OLD FIX ABOVE BECAME INVALID :(
+		//$result = [];
+		//foreach($recordIds as $_recordId)
+        //{
+        //    foreach($records as $_record)
+        //        if($_record->getUid() == $_recordId)
+        //          $result[] = $_record;
+        //}
+        
+        return $records;
 	}
 
 	/**
@@ -165,6 +182,7 @@ class RecordRepository extends AbstractRepository
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setStoragePageIds($storagePids);
 		$querySettings->setRespectStoragePage(true);
+		$querySettings->setRespectSysLanguage(true);
 
 		return $query->matching(
 			$query->logicalAnd(
@@ -188,6 +206,7 @@ class RecordRepository extends AbstractRepository
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setStoragePageIds($storagePids);
 		$querySettings->setRespectStoragePage(true);
+		$querySettings->setRespectSysLanguage(true);
 
 		return $query->matching(
 			$query->logicalAnd(
@@ -211,6 +230,7 @@ class RecordRepository extends AbstractRepository
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setRespectStoragePage(!empty($storagePids));
 		$querySettings->setIgnoreEnableFields($includeHidden);
+		$querySettings->setRespectSysLanguage(true);
 		$query->setQuerySettings($querySettings);
 
 		if(!empty($orderings))
@@ -250,6 +270,7 @@ class RecordRepository extends AbstractRepository
 	{	
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
+		$querySettings->setRespectSysLanguage(true);
 		
 		if(!empty($storagePids))
 			$querySettings->setStoragePageIds($storagePids);
@@ -289,6 +310,7 @@ class RecordRepository extends AbstractRepository
 	{
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
+		$querySettings->setRespectSysLanguage(true);
 
 		if(!empty($storagePids))
 			$querySettings->setStoragePageIds($storagePids);
@@ -393,21 +415,32 @@ class RecordRepository extends AbstractRepository
 	 */
 	protected function _getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination = "AND", $filterField = "search")
 	{
+	    $sql = "";
+	    $cond = "";
+
+	    if($filterCombination == "AND" || $filterCombination == "OR")
+	        $filterCombination .= " ...";
+	    
 		$filterCondition = strtolower($filterCondition);
-	
-		$searchField = $filterField;
-		$sql = "";
+        
+        if(is_numeric($fieldId))
+        {
+            $sub = $this->_getSqlCondition("search", $filterCondition, $filterValue, "AND");
+            $sub = preg_replace("/\s+/", " ",$sub); // Beauty
+            $fv = "SELECT record FROM tx_dataviewer_domain_model_recordvalue WHERE field = {$fieldId} {$sub}";
+
+            $searchField = "RECORD.uid";
+            $filterCondition = "in";
+            $filterCombination = "AND ...";
+            $filterValue = $fv;
+        }
+        else
+        {
+            $searchField = $fieldId;
+        }
 		
-		// A selected dataviewer field
-		if(is_numeric($fieldId)) 
-		{
-			$filterCombination = str_pad($filterCombination, 10, " ");
-			$sql .= "{$filterCombination}        RECORD.uid IN (SELECT record FROM tx_dataviewer_domain_model_recordvalue WHERE field = {$fieldId} AND ";
-		}
-		else
-		{
-			$searchField = "{$filterCombination}               ({$fieldId}";
-		}
+		
+		
 		/*
 		eq			=				'{$var}'					->equals
 		neq			!=				'{$var}'					->logicalNot->equals
@@ -427,49 +460,55 @@ class RecordRepository extends AbstractRepository
 		switch($filterCondition)
 		{
 			case "eq":
-				$sql .= "{$searchField} = '{$filterValue}'".")";
+				$cond = "{$searchField} = '{$filterValue}'"."";
 				break;
 			case "neq":
-				$sql .= "{$searchField} != '{$filterValue}'".")";
+                $cond = "{$searchField} != '{$filterValue}'"."";
 				break;
 			case "like":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
-				$sql .= "{$searchField} LIKE '{$filterValue}'".")";
+                $cond = "{$searchField} LIKE '{$filterValue}'"."";
 				break;
 			case "nlike":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
-				$sql .= "{$searchField} NOT LIKE '{$filterValue}'".")";
+                $cond = "{$searchField} NOT LIKE '{$filterValue}'"."";
 				break;
 			case "in":
-				$sql .= "{$searchField} IN ({$filterValue})".")";
+                $cond = "{$searchField} IN ({$filterValue})"."";
 				break;
 			case "nin":
-				$sql .= "{$searchField} NOT IN ({$filterValue})".")";
+                $cond = "{$searchField} NOT IN ({$filterValue})"."";
 				break;
 			case "gt":
 				$filterValue = (int)$filterValue;
-				$sql .= "{$searchField} > {$filterValue}".")";
+                $cond = "{$searchField} > {$filterValue}"."";
 				break;
 			case "lt":
 				$filterValue = (int)$filterValue;
-				$sql .= "{$searchField} < {$filterValue}".")";
+                $cond = "{$searchField} < {$filterValue}"."";
 				break;
 			case "gte":
 				$filterValue = (int)$filterValue;
-				$sql .= "{$searchField} >= {$filterValue}".")";
+                $cond = "{$searchField} >= {$filterValue}"."";
 				break;
 			case "lte":
 				$filterValue = (int)$filterValue;
-				$sql .= "{$searchField} <= {$filterValue}".")";
+                $cond = "{$searchField} <= {$filterValue}".")";
 				break;
 			case "fis":
-				$sql .= "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 ".")";
+                $cond = "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 "."";
 				break;
 						
 		}
+
+        $posOfDots = strpos($filterCombination, "...");
+        $simpleCond = substr($filterCombination, 0, $posOfDots);
+        $filterCombination = substr($filterCombination, $posOfDots);
+        $filterCombination = str_pad($simpleCond, 18, " ").$filterCombination;
 		
-		return $sql;
+		$cond = str_replace("...", $cond, $filterCombination);
 		
+		return $sql . $cond;
 	}
 
 }

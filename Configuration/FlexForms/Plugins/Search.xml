@@ -132,12 +132,36 @@
                                                 <type>select</type>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
-                                                        <numIndex index="0">AND</numIndex>
+                                                        <numIndex index="0">AND ...</numIndex>
                                                         <numIndex index="1">AND</numIndex>
                                                     </numIndex>
                                                     <numIndex index="1" type="array">
-                                                        <numIndex index="0">OR</numIndex>
+                                                        <numIndex index="0">OR ...</numIndex>
                                                         <numIndex index="1">OR</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="2" type="array">
+                                                        <numIndex index="0">AND (...)</numIndex>
+                                                        <numIndex index="1">AND (...)</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="3" type="array">
+                                                        <numIndex index="0">OR (...)</numIndex>
+                                                        <numIndex index="1">OR (...)</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="4" type="array">
+                                                        <numIndex index="0">AND (...</numIndex>
+                                                        <numIndex index="1">AND (...</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="5" type="array">
+                                                        <numIndex index="0">OR (...</numIndex>
+                                                        <numIndex index="1">OR (...</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="6" type="array">
+                                                        <numIndex index="0">AND ...)</numIndex>
+                                                        <numIndex index="1">AND ...)</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="7" type="array">
+                                                        <numIndex index="0">OR ...)</numIndex>
+                                                        <numIndex index="1">OR ...)</numIndex>
                                                     </numIndex>
                                                 </items>
                                                 <minitems>0</minitems>
