@@ -19,7 +19,7 @@ class RecordRepository extends AbstractRepository
 {
 	/**
 	 * Default Select Fields
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $defaultSelectFields = [
@@ -30,7 +30,7 @@ class RecordRepository extends AbstractRepository
 
 	/**
 	 * Default Orderings
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $defaultOrderings = [
@@ -49,7 +49,7 @@ class RecordRepository extends AbstractRepository
 		$query 			= $this->createQuery();
 		$querySettings 	= $query->getQuerySettings();
 		$querySettings->setRespectSysLanguage(true);
-		
+
 		if(!empty($storagePids))
 		{
 			$querySettings->setStoragePageIds($storagePids);
@@ -63,7 +63,7 @@ class RecordRepository extends AbstractRepository
 
 	/**
 	 * Find latest records
-	 * 
+	 *
 	 * @param int $limit
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
@@ -75,7 +75,7 @@ class RecordRepository extends AbstractRepository
 		$querySettings->setRespectStoragePage(false);
 		$querySettings->setIgnoreEnableFields(true);
 		$querySettings->setRespectSysLanguage(true);
-		
+
 		$query->setOrderings(["crdate" => QueryInterface::ORDER_DESCENDING]);
 		$query->setLimit($limit);
 
@@ -86,11 +86,11 @@ class RecordRepository extends AbstractRepository
 			)
 		)->execute();
 	}
-	
-	
+
+
 	/**
 	 * Find records by datatype
-	 * 
+	 *
 	 * @param \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
 	 */
@@ -105,7 +105,7 @@ class RecordRepository extends AbstractRepository
 
 	/**
 	 * Find record by a list of datatype ids
-	 * 
+	 *
 	 * @param array $datatypeIds
 	 * @param array $storagePids
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
@@ -122,7 +122,7 @@ class RecordRepository extends AbstractRepository
 			$querySettings->setStoragePageIds($storagePids);
 			$querySettings->setRespectStoragePage(true);
 		}
-		
+
 		return $query->matching(
 			$query->in("datatype", $datatypeIds)
 		)->execute();
@@ -130,7 +130,7 @@ class RecordRepository extends AbstractRepository
 
 	/**
 	 * Find records by a list of record ids
-	 * 
+	 *
 	 * @param array $recordIds
 	 * @param array $storagePids
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
@@ -142,30 +142,30 @@ class RecordRepository extends AbstractRepository
 		$querySettings->setStoragePageIds($storagePids);
 		$querySettings->setRespectStoragePage(true);
 		$querySettings->setRespectSysLanguage(true);
-		
+
 		$orderings = [];
 		foreach ($recordIds as $_id)
 			$orderings["title={$_id}"] = QueryInterface::ORDER_DESCENDING;
-		
+
 		$query->setOrderings($orderings);
-		
+
 		$records = $query->matching(
 			$query->in("uid", $recordIds)
 		)->execute();
-		
-		
+
+
 		// THIS IS A DIRTY FIX FOR MANUAL SORTING THE RECORDS BY THE INPUT RECORD IDS
 		// I HOPE THIS IS CHANGED SOON BECAUSE IT COSTS A LOT OF SPEED HERE
 		// THANKS TO DOCTRINE THE OLD FIX ABOVE BECAME INVALID :(
 		//$result = [];
 		//foreach($recordIds as $_recordId)
-        //{
-        //    foreach($records as $_record)
-        //        if($_record->getUid() == $_recordId)
-        //          $result[] = $_record;
-        //}
-        
-        return $records;
+		//{
+		//    foreach($records as $_record)
+		//        if($_record->getUid() == $_recordId)
+		//          $result[] = $_record;
+		//}
+
+		return $records;
 	}
 
 	/**
@@ -218,7 +218,7 @@ class RecordRepository extends AbstractRepository
 
 	/**
 	 * Find all records on a set of storage pids
-	 * 
+	 *
 	 * @param array $storagePids
 	 * @param bool $includeHidden
 	 * @param bool $respectHideRecordsSetting
@@ -242,7 +242,7 @@ class RecordRepository extends AbstractRepository
 		{
 			$querySettings->setStoragePageIds($storagePids);
 			$query->setQuerySettings($querySettings);
-			
+
 			if($respectHideRecordsSetting)
 			{
 				return $query->matching(
@@ -258,7 +258,7 @@ class RecordRepository extends AbstractRepository
 	/**
 	 * Find records by advanced conditions like
 	 * filters, limit
-	 * 
+	 *
 	 * @param array $filters
 	 * @param int|string $sortField
 	 * @param string $sortOrder
@@ -267,23 +267,23 @@ class RecordRepository extends AbstractRepository
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
 	public function findByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [])
-	{	
+	{
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setRespectSysLanguage(true);
-		
+
 		if(!empty($storagePids))
 			$querySettings->setStoragePageIds($storagePids);
 		else
 			$querySettings->setRespectStoragePage(false);
-		
+
 		$query->setQuerySettings($querySettings);
-		
+
 		$statement = $this->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $storagePids);
 
 		$query->statement($statement);
 		$result = $query->execute(true);
-		
+
 		// Apply Sorting
 		if(is_numeric($sortField))
 		{
@@ -291,7 +291,7 @@ class RecordRepository extends AbstractRepository
 				return $a['sort'] - $b['sort'];
 			});
 		}
-		
+
 		if(is_numeric($sortField) && $sortOrder == QueryInterface::ORDER_DESCENDING)
 			$result=array_reverse($result, true);
 
@@ -318,7 +318,7 @@ class RecordRepository extends AbstractRepository
 			$querySettings->setRespectStoragePage(false);
 
 		$query->setQuerySettings($querySettings);
-	
+
 		$defaultSelectFields = $this->defaultSelectFields;
 		$this->defaultSelectFields = ["RECORD.uid"];
 		$statement = $this->getStatementByAdvancedConditions($filters, "title", "ASC", null, $storagePids);
@@ -361,14 +361,14 @@ class RecordRepository extends AbstractRepository
 		$statement .= "AND               RECORD.hidden = '0'"."\r\n";
 		$statement .= "AND               RECORDVALUE.deleted = '0'"."\r\n";
 		$statement .= "AND               RECORDVALUE.hidden = '0'"."\r\n";
-		
+
 		if(!empty($storagePids))
 		{
 			$storagePids = implode(",", $storagePids);
 			$statement .= "AND               RECORD.pid IN ({$storagePids})"."\r\n";
 			$statement .= "AND               RECORDVALUE.pid IN ({$storagePids})"."\r\n";
 		}
-		
+
 
 		if(!empty($filters))
 			$statement .= $this->_createAdditionalWhereClauseByFilters($filters)."";
@@ -378,14 +378,14 @@ class RecordRepository extends AbstractRepository
 
 		if (!is_null($limit))
 			$statement .= "LIMIT             {$limit}"."\r\n";
-			
-		return $statement;	
+
+		return $statement;
 	}
-	
+
 	/**
 	 * Creates an additional where clause string by
 	 * given filters
-	 * 
+	 *
 	 * @param array $filters
 	 * @return string
 	 */
@@ -400,10 +400,10 @@ class RecordRepository extends AbstractRepository
 			$filterValue 		= $_filter["field_value"];
 			$filterCombination  = $_filter["filter_combination"];
 			$filterField		= (isset($_filter["filter_field"]))?$_filter["filter_field"]:"search";
-		
+
 			$additionalWhereClause .= $this->_getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination, $filterField)."\r\n";
 		}
-		
+
 		return $additionalWhereClause;
 	}
 
@@ -415,32 +415,32 @@ class RecordRepository extends AbstractRepository
 	 */
 	protected function _getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination = "AND", $filterField = "search")
 	{
-	    $sql = "";
-	    $cond = "";
+		$sql = "";
+		$cond = "";
 
-	    if($filterCombination == "AND" || $filterCombination == "OR")
-	        $filterCombination .= " ...";
-	    
+		if($filterCombination == "AND" || $filterCombination == "OR")
+			$filterCombination .= " ...";
+			
 		$filterCondition = strtolower($filterCondition);
-        
-        if(is_numeric($fieldId))
-        {
-            $sub = $this->_getSqlCondition("search", $filterCondition, $filterValue, "AND");
-            $sub = preg_replace("/\s+/", " ",$sub); // Beauty
-            $fv = "SELECT record FROM tx_dataviewer_domain_model_recordvalue WHERE field = {$fieldId} {$sub}";
 
-            $searchField = "RECORD.uid";
-            $filterCondition = "in";
-            $filterCombination = "AND ...";
-            $filterValue = $fv;
-        }
-        else
-        {
-            $searchField = $fieldId;
-        }
-		
-		
-		
+		if(is_numeric($fieldId))
+		{
+			$sub = $this->_getSqlCondition($filterField, $filterCondition, $filterValue, "AND");
+			$sub = preg_replace("/\s+/", " ",$sub); // Beauty
+			$fv = "SELECT record FROM tx_dataviewer_domain_model_recordvalue WHERE field = {$fieldId} {$sub}";
+
+			$searchField = "RECORD.uid";
+			$filterCondition = "in";
+			//$filterCombination = "AND ...";
+			$filterValue = $fv;
+		}
+		else
+		{
+			$searchField = $fieldId;
+		}
+
+
+
 		/*
 		eq			=				'{$var}'					->equals
 		neq			!=				'{$var}'					->logicalNot->equals
@@ -463,49 +463,59 @@ class RecordRepository extends AbstractRepository
 				$cond = "{$searchField} = '{$filterValue}'"."";
 				break;
 			case "neq":
-                $cond = "{$searchField} != '{$filterValue}'"."";
+				$cond = "{$searchField} != '{$filterValue}'"."";
 				break;
 			case "like":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
-                $cond = "{$searchField} LIKE '{$filterValue}'"."";
+				$cond = "{$searchField} LIKE '{$filterValue}'"."";
 				break;
 			case "nlike":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
-                $cond = "{$searchField} NOT LIKE '{$filterValue}'"."";
+				$cond = "{$searchField} NOT LIKE '{$filterValue}'"."";
 				break;
 			case "in":
-                $cond = "{$searchField} IN ({$filterValue})"."";
+				$cond = "{$searchField} IN ({$filterValue})"."";
 				break;
 			case "nin":
-                $cond = "{$searchField} NOT IN ({$filterValue})"."";
+				$cond = "{$searchField} NOT IN ({$filterValue})"."";
 				break;
 			case "gt":
 				$filterValue = (int)$filterValue;
-                $cond = "{$searchField} > {$filterValue}"."";
+				$cond = "{$searchField} > {$filterValue}"."";
 				break;
 			case "lt":
 				$filterValue = (int)$filterValue;
-                $cond = "{$searchField} < {$filterValue}"."";
+				$cond = "{$searchField} < {$filterValue}"."";
 				break;
 			case "gte":
 				$filterValue = (int)$filterValue;
-                $cond = "{$searchField} >= {$filterValue}"."";
+				$cond = "{$searchField} >= {$filterValue}"."";
 				break;
 			case "lte":
 				$filterValue = (int)$filterValue;
-                $cond = "{$searchField} <= {$filterValue}".")";
+				$cond = "{$searchField} <= {$filterValue}"."";
 				break;
 			case "fis":
-                $cond = "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 "."";
+				$cond = "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 "."";
 				break;
-						
+            case "between":
+                if(is_array($filterValue))
+                    $filterValue = implode(" AND ", $filterValue);
+
+                $cond = "{$searchField} BETWEEN {$filterValue}"."";
+                break;
+            case "nbetween":
+                if(is_array($filterValue))
+                    $filterValue = implode(" AND ", $filterValue);
+
+                $cond = "{$searchField} NOT BETWEEN {$filterValue}"."";
+                break;
 		}
 
-        $posOfDots = strpos($filterCombination, "...");
-        $simpleCond = substr($filterCombination, 0, $posOfDots);
-        $filterCombination = substr($filterCombination, $posOfDots);
-        $filterCombination = str_pad($simpleCond, 18, " ").$filterCombination;
-		
+		$posOfDots = strpos($filterCombination, "...");
+		$simpleCond = substr($filterCombination, 0, $posOfDots);
+		$filterCombination = substr($filterCombination, $posOfDots);
+		$filterCombination = str_pad($simpleCond, 18, " ").$filterCombination;
 		$cond = str_replace("...", $cond, $filterCombination);
 		
 		return $sql . $cond;
