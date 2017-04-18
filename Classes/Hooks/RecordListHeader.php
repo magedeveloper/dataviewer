@@ -122,7 +122,7 @@ class RecordListHeader implements RecordListHookInterface
 	 */
 	public function renderListHeader($table, $currentIdList, $headerColumns, &$parentObject)
 	{
-		if($table != "tx_dataviewer_domain_model_record") return;
+		if($table != "tx_dataviewer_domain_model_record" || $parentObject->searchString != "") return $headerColumns;
 		
 		$pid = $parentObject->id;
 		
