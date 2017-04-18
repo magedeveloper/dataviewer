@@ -11,6 +11,23 @@
 Changelog
 ---------
 
+**1.7.2**
+
+- [BUGFIX] LTE Conditions now creating correct sql condition
+- [BUGFIX] Sql Conditions for Fields will now create a correct filter_condition
+
+**1.7.2**
+
+- [TASK] Datatype can now return an approachable fields array for certain needs
+- [TASK] Record Factory is now able to update records through code with an array
+- [TASK] UserFunc for Template Variables
+- [BUGFIX] Fix for Record List Headers in List Module
+
+**1.7.1**
+
+- [BUGFIX] Backend Search is no more affected from Records-List Searchbar
+- [BUGFIX] Filter with field 'value_content' now working
+
 **1.7.0**
 
 - [TASK] Backported from a alpha dev-8 version; preparations for a later TYPO3 8 compatibility

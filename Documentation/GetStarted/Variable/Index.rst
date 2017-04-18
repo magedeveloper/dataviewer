@@ -39,6 +39,18 @@ Type
 +-----------------------+------------------------------------------------------------+
 | Server Variable       | A variable from the SERVER ($_SERVER)                      |
 +-----------------------+------------------------------------------------------------+
+| Dynamic Record        | Loads a record into the variable from the arguments of a   |
+|                       | dynamic detail page                                        |
++-----------------------+------------------------------------------------------------+
+| User Session Variable | Extracts a variable from the frontend user session         |
++-----------------------+------------------------------------------------------------+
+| Page                  | Adds the complete page information of the selected page    |
+|                       | to the variable                                            |
++-----------------------+------------------------------------------------------------+
+| UserFunc              | Calls the entered user function and puts the output to     |
+|                       | the variable                                               |
++-----------------------+------------------------------------------------------------+
+
 
 Name
    The variable name that can be used in the fluid template.

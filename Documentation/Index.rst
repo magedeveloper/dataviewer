@@ -19,7 +19,7 @@ DataViewer Documentation
         You can create new record-types in a lightning fast way with every advantage of TCA.
 
    :Keywords:  dataviewer, tca, records
-   :Copyright: 2016, MageDeveloper
+   :Copyright: 2017, MageDeveloper
    :Author:    Bastian Zagar
    :Email:     kontakt@magedeveloper.de
    :License:
