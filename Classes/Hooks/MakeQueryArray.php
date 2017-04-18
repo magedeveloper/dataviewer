@@ -101,7 +101,7 @@ class MakeQueryArray
 		// Panic reset, to show all records as it would do before
 		if($dbCount <= 0)
 		{
-			// Not sure if we should reset the search string here...
+			// Not sure if we should also reset the search string here...
 			//$this->backendSessionService->setSearch(null);
 			$queryParts["WHERE"] = $originalQueryWhereParts;
 		}
