@@ -31,6 +31,7 @@ class Variable extends AbstractModel
 	const VARIABLE_TYPE_DYNAMIC_RECORD	= 10;
 	const VARIABLE_TYPE_USER_SESSION	= 11;
 	const VARIABLE_TYPE_PAGE			= 12;
+	const VARIABLE_TYPE_USERFUNC		= 13;
 
 	/**
 	 * Variable Type
@@ -108,6 +109,13 @@ class Variable extends AbstractModel
 	 * @var int
 	 */
 	protected $page;
+
+	/**
+	 * User Func
+	 * 
+	 * @var string
+	 */
+	protected $userFunc;
 
 	/**
 	 * Gets the type
@@ -339,6 +347,27 @@ class Variable extends AbstractModel
 	public function setPage($page)
 	{
 		$this->page = $page;
+	}
+
+	/**
+	 * Gets the user func
+	 * 
+	 * @return string
+	 */
+	public function getUserFunc()
+	{
+		return $this->userFunc;
+	}
+
+	/**
+	 * Sets a user func
+	 * 
+	 * @param string $userFunc
+	 * @return void
+	 */
+	public function setUserFunc($userFunc)
+	{
+		$this->userFunc = $userFunc;
 	}
 
 }

@@ -977,6 +977,10 @@
                 <source>Page</source>
                 <target>Seite</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
+                <source>UserFunc</source>
+                <target>UserFunc</target>
+            </trans-unit>
 
 
             <!-- Messages -->
@@ -1511,6 +1515,10 @@
             <trans-unit id="variable_type.12">
                 <source>Page</source>
                 <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="variable_type.13">
+                <source>UserFunc</source>
+                <target>Eigene Benuzerfunktion (UserFunc)</target>
             </trans-unit>
 
             <!-- FieldValue Types -->

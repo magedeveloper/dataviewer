@@ -300,6 +300,29 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						$pageRepository = $this->objectManager->get(\TYPO3\CMS\Frontend\Page\PageRepository::class);
 						$variables[$name] = $pageRepository->getPage($variable->getPage());
 						break;
+					case Variable::VARIABLE_TYPE_USERFUNC:
+						$userFunc = $variable->getUserFunc();
+
+						$params = [
+							"parameters" => [
+								"variable" => $variable,
+							],
+						];
+
+						if ($this->request->hasArgument("record"))
+						{
+							$recordUid = $this->request->getArgument("record");
+							$record = $this->recordRepository->findByUid($recordUid, true);
+
+							if(!$record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
+								$record = $recordUid;
+								
+							$params["parameters"]["record"] = $record;	
+						}
+						//$variables[$name] =
+						$userFuncResult = GeneralUtility::callUserFunction($userFunc, $params, $this);
+						$variables[$name] = $userFuncResult;
+						break;
 					case Variable::VARIABLE_TYPE_FIXED:
 					default:
 						$variables[$name] = $variable->getVariableValue();

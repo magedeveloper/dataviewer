@@ -740,6 +740,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.page">
                 <source>Page</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
+                <source>UserFunc</source>
+            </trans-unit>
 
             <!-- Messages -->
             <trans-unit id="please_select_datatype">
@@ -1144,6 +1147,9 @@
             </trans-unit>
             <trans-unit id="variable_type.12">
                 <source>Page</source>
+            </trans-unit>
+            <trans-unit id="variable_type.13">
+                <source>UserFunc</source>
             </trans-unit>
 
             <!-- FieldValue Types -->

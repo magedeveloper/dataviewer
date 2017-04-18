@@ -207,6 +207,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.page">
                 <source>Page</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
+                <source>UserFunc</source>
+            </trans-unit>
 
         </body>
     </file>
