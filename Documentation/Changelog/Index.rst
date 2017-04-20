@@ -11,6 +11,18 @@
 Changelog
 ---------
 
+**1.7.4**
+
+- [BUGFIX] Deleting Records is now working correctly
+
+**1.7.3**
+
+- [TASK] Using BETWEEN in Filters is now possible
+- [TASK] UserFunc in Template Variables
+- [BUGFIX] Fix for Headers in List Module
+- [TASK] Updating Records in RecordFactory is now possible
+- [TASK] Retrieving clear array of fields from a datatype (for templating)
+
 **1.7.2**
 
 - [BUGFIX] LTE Conditions now creating correct sql condition
