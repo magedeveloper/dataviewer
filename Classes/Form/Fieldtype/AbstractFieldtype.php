@@ -640,7 +640,7 @@ abstract class AbstractFieldtype
 
 		try {
 
-			$tca                  = $this->buildTca();
+			$tca = $this->buildTca();
 
 		} catch (\Exception $e)
 		{

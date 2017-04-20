@@ -123,7 +123,7 @@ class RecordListHeader implements RecordListHookInterface
 	public function renderListHeader($table, $currentIdList, $headerColumns, &$parentObject)
 	{
 		if($table != "tx_dataviewer_domain_model_record" || $parentObject->searchString != "") return $headerColumns;
-		
+
 		$pid = $parentObject->id;
 		
 		// We set a pid here, so we can store/get only the information of the selected page
@@ -156,7 +156,9 @@ class RecordListHeader implements RecordListHookInterface
 				foreach($fields as $_field)
 				{
 					$label = "[{$_field->getPid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
-					$sortByOptions[$_field->getUid()] = $label;
+					// $sortByOptions[$_field->getUid()] = $label;
+					// We cant use this anymore, because of the restrictions on creating subselects
+					// See #80874
 				}
 			}
 		}
@@ -166,7 +168,7 @@ class RecordListHeader implements RecordListHookInterface
 		$addInfo 	= (bool)$this->backendSessionService->getAddInfo();
 		
 		if(isset($_POST["sort"]) && in_array($_POST["sort"], array_keys($sortByOptions)))
-		{
+		{	
 			$sortOrder = ($_POST["sortOrder"] == "asc")?"asc":"desc";
 			$this->backendSessionService->setSortOrder($sortOrder);
 			$this->backendSessionService->setSortBy($_POST["sort"]);

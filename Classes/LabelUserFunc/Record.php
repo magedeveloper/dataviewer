@@ -82,17 +82,23 @@ class Record
 					
                 $sortBy = $this->backendSessionService->getSortBy();
                 $addInfo = (bool)$this->backendSessionService->getAddInfo();
+                
                 $additional = "";
 
-                if($sortBy && $addInfo) 
+                if($addInfo) 
                 {
                 	if(is_numeric($sortBy))
 					{
 						$value = $record->getValueByFieldId($sortBy);
 						$plainValue = $value->getValue();
+						
+						if($value->getField() instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
+						{
+							if(!is_string($plainValue) && $value->getFieldvalue() instanceof \MageDeveloper\Dataviewer\Domain\Model\FieldValue)
+								$plainValue = $value->getFieldvalue()->getSearch();
 
-						if(is_string($plainValue))
-							$additional = "[".$value->getField()->getFrontendLabel().": ".$plainValue."] ";					
+							$additional = "[".$value->getField()->getFrontendLabel().": ".$plainValue."] ";
+						}
 					}
                 	else
 					{

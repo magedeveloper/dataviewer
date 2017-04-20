@@ -188,7 +188,7 @@ $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["t3lib/class.t3lib_tcemain.php"]["proc
 // This is to modify the list to render without hidden datatypes
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["typo3/class.db_list_extra.inc"]["getTable"][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\RecordList";
 // This is to modify the list to select query with sorting by a selected field
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list.inc']['makeQueryArray'][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\MakeQueryArray";
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']["TYPO3\\CMS\\Recordlist\\RecordList\\DatabaseRecordList"]['buildQueryParameters'][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\BuildQueryParameters";
 // This is to modify the list header of records and to add a selectable box for the sorting
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['actions'][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\RecordListHeader";
 
@@ -201,12 +201,67 @@ $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["Backend\\Template\\Components\\Button
 /**
  * We need to modify the inlineParentRecord Configuration in order to get the INLINE Elements to work
  */
+ /*out
 $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["inlineParentRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareInlineTca"] = [];
-
+ */
 /**
  * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to get the Category Element correctly to work
  */
-$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [];
+/* 
+$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [
+	"before" => [
+		\TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectTreeItems::class,
+	],
+];*/
+
+
+
+$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaSelectTreeAjaxFieldData"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [
+	"before" => [
+		\TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseEditRow::class,
+	],
+];
+
+/**
+ * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to get the flexform elements to work.
+ * Also, we have to set it before the TcaFlex stuff, to generate a valid TCA, that the following
+ * formDataGroups can use.
+ * 
+ * For this we build up the complete tca information of all custom fields and the databaseRow with
+ * all values of a record.
+ */
+ /*out*/
+$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareDataviewerTca"] = [
+	"before" => [
+		\TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class,
+	],
+];
+
+/**
+ * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to all elements to work.
+ * 
+ */
+/* 
+$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareDataviewerTca"] = [
+	"depends" => [
+		\MageDeveloper\Dataviewer\Form\FormDataProvider\DatatypeRecordTypeValue::class,
+	],
+];
+*/
+
+/**
+ * Passing the given datatype as recordTypeValue to its own datatype key in the result set
+ */
+$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\DatatypeRecordTypeValue"] = [
+	"before" => [
+		\TYPO3\CMS\Backend\Form\FormDataProvider\ReturnUrl::class,
+	],
+];
+
+/**
+ * Removing all fields from the GLOBALS that were generated
+ */
+//$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\RemoveGlobalFieldIds"] = [];
 
 /**
  * We need to inject the rendered tca of select/multiselect fields to the GLOBALS to restore compatibility to the suggest wizard
@@ -274,6 +329,39 @@ if (TYPO3_MODE === "BE")
 		} catch(\Exception $e)
 		{
 			// No exception printing here        
+		}
+
+		$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+
+		/////////////////////
+		// DataViewer Logo //
+		/////////////////////
+		$iconRegistry->registerIcon(
+			"dataviewer-icon-logo",
+			\TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+			["source" => "EXT:dataviewer/Resources/Public/Images/logo_dataviewer.png"]
+		);
+
+		//////////////////////////////////////////////////
+		// We add our plugin icons to the Icon Registry //
+		//////////////////////////////////////////////////
+		$iconIdentifiers = [
+			'dataviewer_filter',
+			'dataviewer_form',
+			'dataviewer_letter',
+			'dataviewer_pager',
+			'dataviewer_record',
+			'dataviewer_search',
+			'dataviewer_select',
+			'dataviewer_sort',
+		];
+		
+		foreach ($iconIdentifiers as $iconIdentifier) {
+			$iconRegistry->registerIcon(
+				"dataviewer-icon-" . $iconIdentifier,
+				\TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+				["source" => "EXT:dataviewer/Resources/Public/Icons/Plugins/" . $iconIdentifier . ".gif"]
+			);
 		}
 
 	}

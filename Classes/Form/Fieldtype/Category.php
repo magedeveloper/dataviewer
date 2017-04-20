@@ -53,7 +53,7 @@ class Category extends Select
 		$databaseRow[$fieldName] 	= $value;
 		$sourcePids					= $this->getField()->getConfig("pids");
 		$foreignTableWhere			= ($sourcePids)?"AND sys_category.pid IN ({$sourcePids}) ":"";
-
+		
 		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,

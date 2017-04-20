@@ -18,6 +18,47 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class MultiSelect extends Select
 {
 	/**
+	 * FlexForm Service
+	 *
+	 * @var \MageDeveloper\Dataviewer\Service\FlexFormService
+	 * @inject
+	 */
+	protected $flexFormService;
+
+	/**
+	 * Gets the value
+	 *
+	 * @return mixed
+	 */
+	public function getValue()
+	{
+		$value = $this->value;
+		
+		$renderType = $this->getField()->getConfig("renderType");
+		
+		switch($renderType)
+		{
+			case "selectSingleBox":
+			case "selectCheckBox":
+				// The render types will return flexform xml, that
+				// we need to split up to the selected values that we need to implode
+				// once again for the next step
+				if($this->_isXml($value))
+				{
+					$value = GeneralUtility::xml2array($value);
+					if(is_array($value) && !empty($value))
+						$value = implode(",", $value);
+				}
+				
+				break;
+			default:
+				break;
+		}
+		
+		return $value;
+	}
+
+	/**
 	 * Gets the final frontend value, that is
 	 * pushed in {record.field.value}
 	 *

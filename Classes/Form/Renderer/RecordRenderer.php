@@ -98,7 +98,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		
 		// Id of the record
 		$recordUid = $row["uid"];
-		
 		$datatypeUid = (int)reset($row["datatype"]);
 		
 		// For new record links with given datatype id

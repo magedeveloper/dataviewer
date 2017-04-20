@@ -11,9 +11,15 @@
 Changelog
 ---------
 
-**1.7.4**
+**2.0.0**
 
+- [TASK] Compatibilty to TYPO3 8 LTS
+- [TASK] Multiselect Configuration now with different render types
+- [TASK] Better handling for the FormDataProvider 'PrepareDataviewerTca'
 - [BUGFIX] Deleting Records is now working correctly
+- [BUGFIX] Fallback when no storage pids are selected in INLINE Field
+
+-------------------------
 
 **1.7.3**
 

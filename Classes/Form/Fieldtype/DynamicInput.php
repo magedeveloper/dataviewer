@@ -30,7 +30,7 @@ class DynamicInput extends Flex
 		$value 						= $this->getValue();
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
-
+		
 		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,

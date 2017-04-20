@@ -122,12 +122,8 @@ class Select extends AbstractFieldtype implements FieldtypeInterface
 
 			// Suggest Wizard
 			if((bool)$this->getField()->getConfig("suggest_wizard") == true)
-				$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"] = [
-					"suggest" => [
-						"type" => "suggest",
-					],
-				];
-        }
+				$tca["processedTca"]["columns"][$fieldName]["config"]["enableMultiSelectFilterTextfield"] = true;
+		}
 
 		parent::prepareTca($tca);
 	}

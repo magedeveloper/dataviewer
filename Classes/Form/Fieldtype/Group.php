@@ -133,12 +133,12 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 		if($this->getField()->getConfig("internal_type") == "db")
 		{
 			// Suggest Wizard
+			$tca["processedTca"]["columns"][$fieldName]["config"]["hideSuggest"] = true;
+
+			// Suggest Wizard
 			if((bool)$this->getField()->getConfig("suggest_wizard") == true)
-				$tca["processedTca"]["columns"][$fieldName]["config"]["wizards"] = [
-					"suggest" => [
-						"type" => "suggest",
-					],
-				];
+				$tca["processedTca"]["columns"][$fieldName]["config"]["hideSuggest"] = false;
+
 		}	
 
 		parent::prepareTca($tca);

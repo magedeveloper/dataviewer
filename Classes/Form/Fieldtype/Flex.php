@@ -29,7 +29,6 @@ class Flex extends AbstractFieldtype implements FieldtypeInterface
 	 */
 	public function initializeFormDataProviders()
 	{
-		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexFetch::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess::class;
 		parent::initializeFormDataProviders();
@@ -47,7 +46,6 @@ class Flex extends AbstractFieldtype implements FieldtypeInterface
 		$value 						= $this->getValue(true);
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $this->getValue(false);
-		
 		
 		if($value == "")
 		{
@@ -75,6 +73,7 @@ class Flex extends AbstractFieldtype implements FieldtypeInterface
 				],
 			],
 			"inlineStructure" => [],
+			"systemLanguageRows" => [],
 		];
 
 		$this->prepareTca($tca);

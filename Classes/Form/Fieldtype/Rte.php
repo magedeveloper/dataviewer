@@ -27,7 +27,9 @@ class Rte extends Text
 	 */
 	public function initializeFormDataProviders()
 	{
-		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\PageTsConfig::class;
+		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\PageTsConfig::class;
+		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseEffectivePid::class;
+		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaText::class;
 		parent::initializeFormDataProviders();
 	}
 	
@@ -38,7 +40,7 @@ class Rte extends Text
 	 */
 	public function buildTca()
 	{
-		$fieldName 					= $this->getField()->getUid();
+		$fieldName 					= $this->getField()->getUid()."_rte";
 		$tableName 					= "tx_dataviewer_domain_model_record";
 		$value 						= $this->getValue();
 		$databaseRow 				= $this->getDatabaseRow();
@@ -58,8 +60,8 @@ class Rte extends Text
 							"type" => "text",
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
+							"enableRichtext" => true,
 						],
-						'defaultExtras' => $this->getDefaultExtras(),
 					],
 				],
 			],
@@ -71,13 +73,4 @@ class Rte extends Text
 		return $this->tca;
 	}
 
-	/**
-	 * Gets the 'defaultExtras' Setting for the RTE
-	 * 
-	 * @return string
-	 */
-	public function getDefaultExtras()
-	{
-		return 'richtext:rte_transform[flag=rte_enabled|mode=ts]';
-	}
 }

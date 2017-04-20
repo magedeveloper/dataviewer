@@ -41,6 +41,7 @@ class DateTime extends Date
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "input",
+							"renderType" => "inputDateTime",
 							"size" => 30,
 							"eval" => "datetime,".$this->getField()->getConfig("eval"),
 							"placeholder" => $this->getField()->getConfig("placeholder"),

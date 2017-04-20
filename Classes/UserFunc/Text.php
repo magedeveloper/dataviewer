@@ -137,8 +137,8 @@ class Text
 		$pids = [];
 		foreach($pages as $_page)
 		{
-			preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
-			$pids[] = $match["uid"];
+			//preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
+			$pids[] = $_page["uid"];
 		}
 
         $variables = $this->variableRepository->findByStoragePids($pids);

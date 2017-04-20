@@ -339,37 +339,39 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
 		$recordValues = $this->recordValueRepository->findByRecordId($id);
+		
 		if ($recordValues && $recordValues->count())
 		{
-
 			// Remove each record value
 			/* @var RecordValueModel $_recordValue */
 			foreach ( $recordValues as $_recordValue )
 			{
-				$_recordValue->setDeleted(true);
-				$this->recordValueRepository->update($_recordValue);
-
-				// We need to check the fieldtype to do certain delete behaviours here
-				switch ($_recordValue->getField()->getType())
+				if($_recordValue->getField() instanceof FieldModel)
 				{
-					case "datatype":
-						$ids = GeneralUtility::trimExplode(",", $_recordValue->getValueContent());
+					// We need to check the fieldtype to do certain delete behaviours here
+					switch ($_recordValue->getField()->getType())
+					{
+						case "datatype":
+							$ids = GeneralUtility::trimExplode(",", $_recordValue->getValueContent());
 
-						foreach($ids as $_id)
-						{
-							$_record = $this->getRecordById($_id);
-							if($_record)
+							foreach($ids as $_id)
 							{
-								$_record->setDeleted(true);
-								$this->recordRepository->update($_record);
+								$_record = $this->getRecordById($_id);
+								if($_record)
+								{
+									$_record->setDeleted(true);
+									$this->recordRepository->update($_record);
+								}
 							}
-						}
-						break;
-					default:
-						break;
+							break;
+						default:
+							break;
+					}
+
+					$_recordValue->setDeleted(true);
+					$this->recordValueRepository->update($_recordValue);
 				}
 			}
-
 		}
 
 		// Deleting the main record
@@ -398,7 +400,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
-
+		
 		// Storing the fieldArray to the session to prefill form values for easier modifying
 		$this->recordValueSessionService->store($id, $incomingFieldArray);
 
@@ -526,7 +528,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if (isset($this->saveData[$id]) && is_array($this->saveData[$id]))
 		{
 			$recordSaveData = reset($this->saveData[$id]);
-
 			$result 		= $this->processRecord($recordSaveData, $record);
 
 			$message  = Locale::translate("record_not_saved");

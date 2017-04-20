@@ -32,7 +32,7 @@ return [
 		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, templatefile, icon, color, title_divider, hide_records, hide_add, fields, tab_config',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, tab_config, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, hide_add, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, tab_config, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, hide_add, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -51,7 +51,11 @@ return [
 					['LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0],
 				],
 				'default' => 0,
-				'showIconTable' => true,
+				'fieldWizard' => [
+					'selectIcons' => [
+						'disabled' => false,
+					],
+				],
 			]
 		],
 		'l10n_parent' => [

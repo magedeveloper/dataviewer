@@ -46,7 +46,7 @@
 
 									<small class="text-muted">
 										<f:alias map="{page:'{dv:page.get(id:datatype.pid)}'}">
-											<f:translate key="page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Partials/CmsLayout/DoktypeIcon.html" arguments="{doktype:page.doktype}" />&nbsp;[{page.uid}]&nbsp;{page.title}
+											<f:translate key="page" />:&nbsp;<f:format.html parseFuncTSPath=""><dv:render.template template="EXT:dataviewer/Resources/Private/Partials/CmsLayout/DoktypeIcon.html" arguments="{doktype:page.doktype}" /></f:format.html>&nbsp;[{page.uid}]&nbsp;{page.title}
 										</f:alias>
 									</small>
 

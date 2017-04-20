@@ -76,8 +76,14 @@ class Datatype extends AbstractFieldtype implements FieldtypeInterface
 						"config" => [
 							"type" => "inline",
 							"foreign_table" => "tx_dataviewer_domain_model_record",
-							"foreign_record_defaults" => [
-								"datatype" => $this->getField()->getConfig("datatype"),
+							"overrideChildTca" => [
+								"columns" => [
+									"datatype" => [
+										"config" => [
+											"default" => $this->getField()->getConfig("datatype"),
+										],
+									],		
+								],
 							],	
 							"maxitems"      => 9999,
 							"appearance" => [
@@ -99,6 +105,7 @@ class Datatype extends AbstractFieldtype implements FieldtypeInterface
 		];
 
 		$this->prepareTca($tca);
+		
 		$this->tca = $tca;
 		return $this->tca;
 	}

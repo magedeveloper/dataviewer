@@ -36,7 +36,7 @@ return [
 		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, datatype, record_content',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo;;;;1-1-1, l10n_parent, l10n_diffsource;;1, datatype, record_content, --div--;LLL:EXT:lang/Resources/Private/Language/locallang.xlf:table.language, sys_language_uid, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, hidden, starttime, endtime'],
+		'1' => ['showitem' => 'logo;;;;1-1-1, l10n_parent, l10n_diffsource;;1, datatype, record_content, --div--;LLL:EXT:lang/Resources/Private/Language/locallang.xlf:table.language, sys_language_uid, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, hidden, starttime, endtime'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -150,7 +150,7 @@ return [
 		'datatype' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_record.datatype',
-			'displayCond' => 'FIELD:datatype:REQ:0',
+			'displayCond' => 'FIELD:datatype:REQ:false',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',

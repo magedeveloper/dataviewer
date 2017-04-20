@@ -143,11 +143,11 @@ class RecordRepository extends AbstractRepository
 		$querySettings->setRespectStoragePage(true);
 		$querySettings->setRespectSysLanguage(true);
 
-		$orderings = [];
-		foreach ($recordIds as $_id)
-			$orderings["title={$_id}"] = QueryInterface::ORDER_DESCENDING;
+		//$orderings = [];
+		//foreach ($recordIds as $_id)
+		//	$orderings["title={$_id}"] = QueryInterface::ORDER_DESCENDING;
 
-		$query->setOrderings($orderings);
+		//$query->setOrderings($orderings);
 
 		$records = $query->matching(
 			$query->in("uid", $recordIds)
@@ -157,13 +157,13 @@ class RecordRepository extends AbstractRepository
 		// THIS IS A DIRTY FIX FOR MANUAL SORTING THE RECORDS BY THE INPUT RECORD IDS
 		// I HOPE THIS IS CHANGED SOON BECAUSE IT COSTS A LOT OF SPEED HERE
 		// THANKS TO DOCTRINE THE OLD FIX ABOVE BECAME INVALID :(
-		//$result = [];
-		//foreach($recordIds as $_recordId)
-		//{
-		//    foreach($records as $_record)
-		//        if($_record->getUid() == $_recordId)
-		//          $result[] = $_record;
-		//}
+		$result = [];
+		foreach($recordIds as $_recordId)
+		{
+		    foreach($records as $_record)
+		        if($_record->getUid() == $_recordId)
+		          $result[] = $_record;
+		}
 
 		return $records;
 	}

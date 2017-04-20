@@ -992,7 +992,8 @@ class RecordController extends AbstractController
 	 * Adds some variables to view that could always
 	 * be useful
 	 *
-	 * @param ViewInterface $view	 * @return void
+	 * @param ViewInterface $view
+	 * @return void
 	 */
 	protected function initializeView(ViewInterface $view)
 	{

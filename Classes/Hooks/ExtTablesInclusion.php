@@ -10,7 +10,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * This class processes select/multiselect fields with the suggest wizard active
  * to inject the field configuration into the GLOBALS.
- * 
+ *
  * This helps to run the default SuggestWizard without any additional configuration
  */
 
@@ -36,15 +36,23 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 
 	/**
 	 * Field Repository
-	 * 
+	 *
 	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
 	 * @inject
 	 */
 	protected $fieldRepository;
 
 	/**
+	 * Field Repository
+	 *
+	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordRepository
+	 * @inject
+	 */
+	protected $recordRepository;
+
+	/**
 	 * Fieldtype Settings Service
-	 * 
+	 *
 	 * @var \MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService
 	 * @inject
 	 */
@@ -52,7 +60,7 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 
 	/**
 	 * Field Configuration
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $fieldConfig = [];
@@ -66,7 +74,8 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 	{
 		$this->objectManager    = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
 		$this->fieldRepository	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-	
+		$this->recordRepository = $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
+
 		$this->fieldtypeSettingsService = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService::class);
 	}
 
@@ -78,23 +87,30 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 	 */
 	public function processData()
 	{
+		// Get all fields of type select/multiselect/group/dyninput/flex with the checkbox Suggest Wizard active
+		// Process the tca of all fields and inject the rendered tca
+		// into the globals
+		$types = ["dyninput", "flex", "category"];
+
+		// Check for an ajax request like the suggest wizard and generate tca only for suggest compatible fields
+		if ($_SERVER['HTTP_X_REQUESTED_WITH'] && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ) {
+			$types = array_merge($types, ["select","multiselect","group","page"]);
+		}
+
 		// We only need to modify the GLOBALS in backend environment
 		if (TYPO3_MODE !== "BE") {
-			return; 
+			return;
 		}
-		
+
 		if(!ExtensionManagementUtility::isLoaded("dataviewer"))
 			return;
 
-		// Get all fields of type select/multiselect with the checkbox Suggest Wizard active
-		// Process the tca of all fields and inject the rendered tca
-		// into the globals
-		$types = ["select","multiselect"];
-	
 		// We need to create a dirty try-catch here, since we have nothing better to check for existence of many different needs
 		try {
-			$fields = $this->fieldRepository->findByTypes($types);
-			
+			// TODO: Evaluate that dirty fix in later versions
+			$typesSqlRdy = array_map(function($i){return "'{$i}'";}, $types);
+			$fields = $this->fieldRepository->findByTypes($typesSqlRdy);
+
 			// We quick load the fieldtype configuration for these types to
 			// restore the information in our loop later
 			foreach($types as $_type)
@@ -110,9 +126,15 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 					}
 				}
 			}
-
-			// We need a blank record
+			
+			/* @var \MageDeveloper\Dataviewer\Domain\Model\Record $record */
 			$record = $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Model\Record::class);
+			/*if(GeneralUtility::_POST("databaseRowUid") && GeneralUtility::_POST("databaseRowUid") > 0)
+			{
+				$uid = (int)GeneralUtility::_POST("databaseRowUid");
+				$record = $this->recordRepository->findByUid($uid, false);
+			}*/
+			
 			foreach($fields as $_field)
 			{
 				/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
@@ -132,13 +154,13 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 					$_field->setType("");
 
 					$tca = $fieldtype->buildTca();
+					
 					$_field->setType($type);
 
 					$config = $tca["processedTca"]["columns"][$fieldId]["config"];
 
 					// Injecting the virtual tca into the globals for later usage
 					$GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"][$fieldId]["config"] = $config;
-					
 				}
 			}
 
@@ -146,7 +168,7 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 		{
 			return;
 		}
-		
+
 	}
 
 }
