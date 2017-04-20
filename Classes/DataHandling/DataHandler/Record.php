@@ -372,6 +372,11 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 		}
 
+		// Deleting the main record
+		$record = $this->getRecordById($id);
+		$record->setDeleted(true);
+		$this->recordRepository->update($record);
+
 		$this->persistenceManager->persistAll();
 
 		// Hook
