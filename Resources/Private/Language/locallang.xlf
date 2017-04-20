@@ -927,6 +927,12 @@
             <trans-unit id="flexform.fis">
                 <source>Single Value of a comma-separated List (FIND_IN_SET)</source>
             </trans-unit>
+            <trans-unit id="flexform.between">
+                <source>Value between two values (BETWEEN)</source>
+            </trans-unit>
+            <trans-unit id="flexform.nbetween">
+                <source>Value that is not between two values (BETWEEN)</source>
+            </trans-unit>
 
             <trans-unit id="showing_records_per_page">
                 <source>Showing %s Records per Page</source>
