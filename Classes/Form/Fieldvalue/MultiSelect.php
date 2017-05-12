@@ -73,21 +73,27 @@ class MultiSelect extends Select
 	{
 		$value = $this->getValue();
 		$ids = GeneralUtility::trimExplode(",", $value, true);
-		$table = $this->getField()->getConfig("foreign_table");
-		$modelClass = $this->getField()->getConfig("modelClass");
-			
+		$table = $this->getForeignTable();
+		$modelClass = $this->getModelClass();
+
 		$items = [];
-	
+
 		foreach($ids as $_id)
 		{
-			$item = $this->getItemById($_id, $table, $modelClass);
-			
-			if($item instanceof Record || is_array($item))
-				$items[] = $item;
+			if(!$table || $table == "") {
+				$items = $ids;
+				break;
+			}
 			else
-			    $items[] = $_id;	
+			{
+				$item = $this->getItemById($_id, $table, $modelClass);
+
+				if($item instanceof $modelClass || is_array($item))
+					$items[] = $item;
+
+			}
 		}
-				
+
 		return $items;
 	}
 
