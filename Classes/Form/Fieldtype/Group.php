@@ -115,7 +115,15 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 
 		//uploadfolder
 		if($uploadfolder = $this->getField()->getConfig("uploadfolder"))
+		{
+			// We need to prepare the uploadfolder variable for matching the correct value
+			// The value has to begin without a '/' and has to end with a '/'
+			$uploadfolder = rtrim($uploadfolder, '/');
+			$uploadfolder = trim($uploadfolder, '/');
+			$uploadfolder .= '/';
+			
 			$tca["processedTca"]["columns"][$fieldName]["config"]["uploadfolder"] = $uploadfolder;
+		}
 
 		//hideMoveIcons
 		if($hideMoveIcons = $this->getField()->getConfig("hideMoveIcons"))
@@ -130,16 +138,12 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 			$tca["processedTca"]["columns"][$fieldName]["config"]["foreign_table"] = $foreignTable;
 
 		// internal_type == db
-		if($this->getField()->getConfig("internal_type") == "db")
-		{
-			// Suggest Wizard
-			$tca["processedTca"]["columns"][$fieldName]["config"]["hideSuggest"] = true;
+		// Suggest Wizard
+		$tca["processedTca"]["columns"][$fieldName]["config"]["hideSuggest"] = true;
 
 			// Suggest Wizard
-			if((bool)$this->getField()->getConfig("suggest_wizard") == true)
-				$tca["processedTca"]["columns"][$fieldName]["config"]["hideSuggest"] = false;
-
-		}	
+		if((bool)$this->getField()->getConfig("suggest_wizard") == true)
+			$tca["processedTca"]["columns"][$fieldName]["config"]["hideSuggest"] = false;
 
 		parent::prepareTca($tca);
 	}
