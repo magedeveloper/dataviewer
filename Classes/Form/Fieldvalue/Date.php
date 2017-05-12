@@ -25,17 +25,17 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
 	public function getValueContent()
 	{
 		$value = $this->getValue();
-		
+
 		// Value convert to timestamp
 		if(!is_numeric($value))
 			$value = strtotime($value);
-		
+
 		return $value;
 	}
 
 	/**
 	 * Validates a date for the required format
-	 * 
+	 *
 	 * @param string $date
 	 * @return bool
 	 */
@@ -49,7 +49,7 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
 
 	/**
 	 * Gets the date format
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getFormat()
@@ -60,15 +60,36 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
 	/**
 	 * Gets a datetime model by a
 	 * given timestamp
-	 * 
+	 *
 	 * @param int $timestamp
 	 * @return \DateTime
 	 */
 	protected function _getDateTimeByTimestamp($timestamp)
 	{
 		$date = new \DateTime('@' . $timestamp);
-		$date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+		$date->setTimezone(new \DateTimeZone($this->getDefaultTimezone()));
 		return $date;
+	}
+
+	/**
+	 * Get default timezone
+	 *
+	 * @return string
+	 */
+	protected function getDefaultTimezone()
+	{
+		$timeZone = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'];
+		if (empty($timeZone))
+		{
+			// Time zone from the server environment (TZ env or OS query)
+			$defaultTimeZone = @date_default_timezone_get();
+			if ($defaultTimeZone !== '')
+				$timeZone = $defaultTimeZone;
+			else
+				$timeZone = 'UTC';
+		}
+
+		return $timeZone;
 	}
 
 	/**
@@ -97,25 +118,25 @@ class Date extends AbstractFieldvalue implements FieldvalueInterface
 		$value = $this->getValue();
 		if(!$value || !is_numeric($value))
 			return;
-		
+
 		return $this->_getDateTimeByTimestamp($value);
 	}
 
-    /**
-     * Gets the value or values as a plain string-array for
-     * usage in different possitions to show
-     * and use it when needed as a string
-     *
-     * @return array
-     */
-    public function getValueArray()
-    {
-        $dateTime = $this->getFrontendValue();
-        if($dateTime instanceof \DateTime)
-        {
-            return [$dateTime->format( $this->getFormat() )];
-        }
+	/**
+	 * Gets the value or values as a plain string-array for
+	 * usage in different possitions to show
+	 * and use it when needed as a string
+	 *
+	 * @return array
+	 */
+	public function getValueArray()
+	{
+		$dateTime = $this->getFrontendValue();
+		if($dateTime instanceof \DateTime)
+		{
+			return [$dateTime->format( $this->getFormat() )];
+		}
 
-        return [$this->getValue()];
-    }
+		return [$this->getValue()];
+	}
 }
