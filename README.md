@@ -28,4 +28,11 @@ For the 7 LTS compatibile version, please use the master-7/dev-7 branch.
 + Backend Toolbar Item for easy record management
 + Import CSV Files
 
+## Workflow
 
+1. Create Fields for your custom record that you will assign later to a datatype
+2. Create a datatype and assign the fields, that you've created before.
+3. Create your records
+4. Create fluid templates for the records. You can create lists or single views.
+5. Insert Record-Plugin to your site to display record(s)
+6. Add other plugins like Filter, Search or Sorting to your site
