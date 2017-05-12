@@ -31,9 +31,17 @@ class BackendAccessService
 			$logo = $customLogo;
 
 		$logo = GeneralUtility::getFileAbsFileName($logo);
-		$logoUrl = PathUtility::getAbsoluteWebPath($logo);
 
-		return $logoUrl;
+		if(file_exists($logo))
+		{
+			$filename = basename($logo);
+			$path = pathinfo($logo, PATHINFO_DIRNAME);
+			$path = PathUtility::getRelativePathTo($path);
+
+			return $path.$filename;
+		}
+
+		return "";
 	}
 
 	/**

@@ -138,7 +138,9 @@ class Logo
 			return;
 	
 		$html = "";
-		$logoUrl = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Images/logo_dataviewer.png";
+		$path = GeneralUtility::getFileAbsFileName("EXT:dataviewer/Resources/Public/Images/logo_dataviewer.png");
+		$logoUrl = PathUtility::getAbsoluteWebPath($path);
+		
 		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"MageDeveloper DataViewer\" />";
 		return $html;
 	}
