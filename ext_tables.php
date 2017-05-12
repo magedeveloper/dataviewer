@@ -2,7 +2,6 @@
 if (!defined("TYPO3_MODE")) {
 	die ("Access denied.");
 }
-
 $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
 
 /***********************************
@@ -198,23 +197,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['acti
  ***********************************/
 $GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["Backend\\Template\\Components\\ButtonBar"]["getButtonsHook"][$_EXTKEY] = "MageDeveloper\\Dataviewer\\Hooks\\DocHeaderButtons->getButtons";
 
-/**
- * We need to modify the inlineParentRecord Configuration in order to get the INLINE Elements to work
- */
- /*out
-$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["inlineParentRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareInlineTca"] = [];
- */
-/**
- * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to get the Category Element correctly to work
- */
-/* 
-$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [
-	"before" => [
-		\TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectTreeItems::class,
-	],
-];*/
-
-
 
 $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaSelectTreeAjaxFieldData"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareSelectTreeTca"] = [
 	"before" => [
@@ -230,24 +212,11 @@ $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaSelectTree
  * For this we build up the complete tca information of all custom fields and the databaseRow with
  * all values of a record.
  */
- /*out*/
 $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareDataviewerTca"] = [
 	"before" => [
 		\TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class,
 	],
 ];
-
-/**
- * We need to modify the formDataGroups for the TcaDatabaseRecord FormDataGroup to all elements to work.
- * 
- */
-/* 
-$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\PrepareDataviewerTca"] = [
-	"depends" => [
-		\MageDeveloper\Dataviewer\Form\FormDataProvider\DatatypeRecordTypeValue::class,
-	],
-];
-*/
 
 /**
  * Passing the given datatype as recordTypeValue to its own datatype key in the result set
@@ -257,11 +226,6 @@ $GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRe
 		\TYPO3\CMS\Backend\Form\FormDataProvider\ReturnUrl::class,
 	],
 ];
-
-/**
- * Removing all fields from the GLOBALS that were generated
- */
-//$GLOBALS["TYPO3_CONF_VARS"]["SYS"]["formEngine"]["formDataGroup"]["tcaDatabaseRecord"]["MageDeveloper\\Dataviewer\\Form\\FormDataProvider\\RemoveGlobalFieldIds"] = [];
 
 /**
  * We need to inject the rendered tca of select/multiselect fields to the GLOBALS to restore compatibility to the suggest wizard

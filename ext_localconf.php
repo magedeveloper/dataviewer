@@ -95,7 +95,6 @@ if (!is_array($TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["datavie
 	"Record",
 	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // Cached
 	["Record" => "index, list, ajaxRequest, ajaxResponse"], // UnCached
-//	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 

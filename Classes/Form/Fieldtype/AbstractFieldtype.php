@@ -596,6 +596,8 @@ abstract class AbstractFieldtype
 		// If no record values are found, we need all default values (field values with default setting) for this field
 		// Implode the content of the default values and return them as a string
 		$recordValue = $this->getRecord()->getRecordValueByField($this->getField());
+		
+		
 
 		if ($recordValue instanceof RecordValueModel && $default === false)
 		{

@@ -53,7 +53,6 @@ class Flex extends AbstractFieldtype implements FieldtypeInterface
 			return $this->getErrorTca($message);
 		}
 		
-		
 		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
@@ -75,7 +74,7 @@ class Flex extends AbstractFieldtype implements FieldtypeInterface
 			"inlineStructure" => [],
 			"systemLanguageRows" => [],
 		];
-
+		
 		$this->prepareTca($tca);
 		$this->tca = $tca;
 		return $this->tca;

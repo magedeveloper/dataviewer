@@ -54,7 +54,7 @@ class DynamicInput extends Flex
 			],
 			"inlineStructure" => [],
 		];
-
+		
 		$this->prepareTca($tca);
 		$this->tca = $tca;
 		return $this->tca;
