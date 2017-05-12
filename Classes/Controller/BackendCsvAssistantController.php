@@ -26,7 +26,7 @@ class BackendCsvAssistantController extends BackendController
 {
 	/**
 	 * Delimeters
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $delimeters = [
@@ -44,7 +44,7 @@ class BackendCsvAssistantController extends BackendController
 
 	/**
 	 * Field Enclosures
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $fieldEnclosures = [
@@ -53,13 +53,13 @@ class BackendCsvAssistantController extends BackendController
 		'"',
 	];
 
-    /**
-     * Record Factory
-     *
-     * @var \MageDeveloper\Dataviewer\Factory\RecordFactory
-     * @inject
-     */
-    protected $recordFactory;
+	/**
+	 * Record Factory
+	 *
+	 * @var \MageDeveloper\Dataviewer\Factory\RecordFactory
+	 * @inject
+	 */
+	protected $recordFactory;
 
 	/**
 	 * Initial CSV Import Assistant Method to
@@ -74,7 +74,7 @@ class BackendCsvAssistantController extends BackendController
 	public function indexAction()
 	{
 		$this->_storeLastAction();
-	
+
 		if($this->currentPageId > 0)
 			$this->forward("datatype");
 
@@ -83,7 +83,7 @@ class BackendCsvAssistantController extends BackendController
 	/**
 	 * Action for selecting a target datatype that
 	 * will be used for importing the csv data
-	 * 
+	 *
 	 * -------------------------------------------------------
 	 * Step 2 - Select Datatype
 	 * -------------------------------------------------------
@@ -93,7 +93,7 @@ class BackendCsvAssistantController extends BackendController
 	public function datatypeAction()
 	{
 		if(TYPO3_MODE != "BE") die();
-	
+
 		$datatypesRepository = $this->datatypeRepository->findAll(false);
 
 		$datatypes = [];
@@ -117,9 +117,9 @@ class BackendCsvAssistantController extends BackendController
 	public function fileAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype)
 	{
 		if(TYPO3_MODE != "BE") die();
-		
-        $this->view->assign("delimeters", $this->delimeters);
-        $this->view->assign("fieldEnclosures", $this->fieldEnclosures);
+
+		$this->view->assign("delimeters", $this->delimeters);
+		$this->view->assign("fieldEnclosures", $this->fieldEnclosures);
 		$this->view->assign("datatype", $datatype);
 	}
 
@@ -130,7 +130,7 @@ class BackendCsvAssistantController extends BackendController
 	 * -------------------------------------------------------
 	 * Step 4 - Assign csv columns to fields
 	 * -------------------------------------------------------
-	 * 
+	 *
 	 * @param \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype
 	 * @param array $file
 	 * @param int $delimeter
@@ -142,40 +142,40 @@ class BackendCsvAssistantController extends BackendController
 	public function assignAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype, array $file, $delimeter, $fieldEnclosure, $headerLine, $importValidationFailed)
 	{
 		if(TYPO3_MODE != "BE") die();
-		
+
 		$delimeter = $this->delimeters[$delimeter];
 		$fieldEnclosure = $this->fieldEnclosures[$fieldEnclosure];
-	
-        if(isset($file["tmp_name"]) && file_exists($file["tmp_name"]))
-        {
-        	$tmpFile = GeneralUtility::upload_to_tempfile($file["tmp_name"]);
+
+		if(isset($file["tmp_name"]) && file_exists($file["tmp_name"]))
+		{
+			$tmpFile = GeneralUtility::upload_to_tempfile($file["tmp_name"]);
 			$csvArray = $this->_generateArrayByCsv($tmpFile, $delimeter, $fieldEnclosure, (bool)$headerLine);
-			
+
 			if(empty($csvArray))
 			{
 				$message = Locale::translate("module.file_empty");
 				$this->addFlashMessage($message, "", FlashMessage::ERROR);
 				$this->forward("file");
 			}
-			
+
 			$columns = [];
 			$columns[""] = Locale::translate("module.csv_not_assigned");
-			
+
 			if($headerLine == "1")
 			{
 				$headerColumns = array_keys(reset($csvArray));
 				$headerColumns = array_combine(array_values($headerColumns), array_values($headerColumns));
-				
+
 				$columns = array_merge($columns, $headerColumns);
 			}
 			else
 			{
 				$columns = array_merge($columns, range(0, count(reset($csvArray))-1 ));
 			}
-			
+
 			$csvColumns = $columns;
 			unset($csvColumns[""]);
-			
+
 			$this->view->assign("csvColumns", $csvColumns);
 			$this->view->assign("columns", $columns);
 			$this->view->assign("datatype", $datatype);
@@ -186,7 +186,7 @@ class BackendCsvAssistantController extends BackendController
 			$this->view->assign("headerLine", $headerLine);
 			$this->view->assign("importValidationFailed", $importValidationFailed);
 			return;
-        }
+		}
 
 		$message = Locale::translate("module.no_file_given");
 		$this->addFlashMessage($message, "", FlashMessage::ERROR);
@@ -213,12 +213,12 @@ class BackendCsvAssistantController extends BackendController
 	public function importAction(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype, $file, $delimeter, $fieldEnclosure, $headerLine, $importValidationFailed)
 	{
 		if(TYPO3_MODE != "BE") die();
-		
+
 		if(!strpos($file, "/typo3temp/"))
 			throw new InvalidFileException("File not accessible!");
-		
+
 		$arguments = $this->request->getArguments();
-		
+
 		$assignedFields = []; $customValues = [];
 		foreach($arguments as $_argN=>$_argV)
 		{
@@ -237,21 +237,21 @@ class BackendCsvAssistantController extends BackendController
 				$fieldId = str_replace("custom_", "", $_argN);
 				$customValues[$fieldId] = $_argV;
 			}
-			
+
 		}
-		
-		
+
+
 		// Retrieve CSV File Contents
 		$csvArray = $this->_generateArrayByCsv($file, $delimeter, $fieldEnclosure, $headerLine);
 
 		$import = []; $i = 0;
 		foreach($csvArray as $_values)
-		{	
+		{
 			foreach($_values as $_rowId=>$_value)
 			{
 				// UTF-8 Encoding
-				$_value = utf8_encode($_value);
-				
+				//$_value = utf8_encode($_value);
+
 				foreach($assignedFields as $_fieldId=>$_assignedRowId)
 				{
 					if($_rowId == $_assignedRowId)
@@ -266,9 +266,9 @@ class BackendCsvAssistantController extends BackendController
 
 			$import[$i] = ArrayUtility::arrayMergeRecursiveOverrule($import[$i], $customValues);
 			$i++;
-			
+
 		}
-		
+
 		$log = []; $i = 0;
 		foreach($import as $_fieldArr)
 		{
@@ -316,6 +316,18 @@ class BackendCsvAssistantController extends BackendController
 				$this->recordRepository->add($record);
 				$this->persistenceManager->persistAll();
 
+				//////////////////////////////////////////////////////////////////
+				// Signal-Slot for hooking the record after it has been created //
+				//////////////////////////////////////////////////////////////////
+				$this->signalSlotDispatcher->dispatch(
+					__CLASS__,
+					"csvImportRecordCreated",
+					[
+						&$record,
+						&$_fieldArr,
+					]
+				);
+
 				// Record successfully created, we add the record id to the log
 				$log[$i]["recordId"] = $record->getUid();
 			}
@@ -341,7 +353,7 @@ class BackendCsvAssistantController extends BackendController
 					// Record successfully created, we add the record id to the log
 					$log[$i]["recordId"] = $record->getUid();
 				}
-			
+
 				$log[$i]["hasErrors"] = true;
 				if($importValidationFailed)
 					$log[$i]["messages"]["Import"][] = Locale::translate("module.import_error");
@@ -358,14 +370,14 @@ class BackendCsvAssistantController extends BackendController
 					}
 				}
 			}
-			
+
 			$i++;
-			
+
 		}
-		
+
 		// Remove the temporary file
 		//GeneralUtility::unlink_tempfile($file);
-		
+
 		// Redirect to the log viewer with the log information
 		$this->forward("review", null, null, ["log"=>$log]);
 	}
@@ -387,44 +399,44 @@ class BackendCsvAssistantController extends BackendController
 		$this->view->assign("log", $log);
 	}
 
-    /**
-     * Records Action
-     * for Backward Compatibility Issues
-     */
+	/**
+	 * Records Action
+	 * for Backward Compatibility Issues
+	 */
 	public function recordsAction()
-    {
-        $this->forward("index");
-    }
+	{
+		$this->forward("index");
+	}
 
-    /**
-     * Datatypes Action
-     * for Backward Compatibility Issues
-     */
-    public function datatypesAction()
-    {
-        $this->forward("index");
-    }
+	/**
+	 * Datatypes Action
+	 * for Backward Compatibility Issues
+	 */
+	public function datatypesAction()
+	{
+		$this->forward("index");
+	}
 
-    /**
-     * Datatype Details Action
-     * for Backward Compatibility Issues
-     */
-    public function datatypesDetailsAction()
-    {
-        $this->forward("index");
-    }
+	/**
+	 * Datatype Details Action
+	 * for Backward Compatibility Issues
+	 */
+	public function datatypesDetailsAction()
+	{
+		$this->forward("index");
+	}
 
-    /**
-     * Record Details Action
-     * for Backward Compatibility Issues
-     */
-    public function recordsDetailsAction()
-    {
-        $this->forward("index");
-    }
+	/**
+	 * Record Details Action
+	 * for Backward Compatibility Issues
+	 */
+	public function recordsDetailsAction()
+	{
+		$this->forward("index");
+	}
 
 
-    /**
+	/**
 	 * Generates an optimized array from csv file contents
 	 *
 	 * @param string $file
@@ -444,14 +456,14 @@ class BackendCsvAssistantController extends BackendController
 		{
 			throw new FileOperationErrorException($e->getMessage());
 		}
-		
+
 		if(!$fileContents)
 		{
 			return [];
 		}
-	
+
 		$csvArray = \TYPO3\CMS\Core\Utility\CsvUtility::csvToArray($fileContents, $delimeter, $fieldEnclosure);
-		
+
 		$header = [];
 		if($headerLine)
 		{
