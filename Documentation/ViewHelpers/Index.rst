@@ -114,7 +114,7 @@ is accessed.
 .. code-block:: html
 
    {namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
-   <dv:page.title part="{record}">{record.title}</dv:page.title>
+   <dv:page.title>{record.title}</dv:page.title>
 
 
 Filter-RecordsByConditionsViewHelper
