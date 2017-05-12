@@ -202,7 +202,7 @@ class RecordListHeader implements RecordListHookInterface
 		$html .= "<span class=\"input-group-btn\" style=\"display:table-cell;\">";
 
 		$iconInfo = ($addInfo === false)?"actions-edit-localize-status-high":"actions-edit-localize-status-low";
-		$html .= "<button type=\"submit\" title=\"".Locale::translate("LLL:EXT:lang/locallang_mod_web_list.xlf:largeControl")."\" value=\"1\" name=\"addInfo\" class=\"btn btn-default\" style=\"height: 33px; background-color: rgb(245, 245, 245); \">";
+		$html .= "<button type=\"submit\" title=\"".Locale::translate("EXT:lang/Resources/Private/Language/locallang_mod_web_list.xlf:largeControl")."\" value=\"1\" name=\"addInfo\" class=\"btn btn-default\" style=\"height: 33px; background-color: rgb(245, 245, 245); \">";
 		$html .= $this->iconFactory->getIcon($iconInfo, Icon::SIZE_SMALL)->render();;
 		$html .= "</button>";
 

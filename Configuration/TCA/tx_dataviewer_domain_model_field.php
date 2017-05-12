@@ -14,9 +14,7 @@ return [
 		"dividers2tabs" => TRUE,
 		"default_sortby" => "ORDER BY uid DESC",
 		//"sortby" => "sorting",
-		"versioningWS" => 2,
-		"versioning_followPages" => TRUE,
-		"requestUpdate" => "type,frontend_label",
+		"versioningWS" => true,
 		"typeicon_column" => "type",
 		"typeicon_classes" => \MageDeveloper\Dataviewer\Utility\IconUtility::getFieldtypeIconClasses(),
 		"languageField" => "sys_language_uid",
@@ -35,30 +33,50 @@ return [
 		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, exclude, type, field_conf, frontend_label, variable_name, id, templatefile, description, css_class, column_width, unit, is_record_title, show_title, field_values, validation, request_update, display_cond, field_ids',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden, exclude;;1, type, field_conf, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:frontend_settings, frontend_label, variable_name, id, templatefile, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:backend_settings, is_record_title, show_title, description, column_width, css_class, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.field_values, field_values, unit, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validation, validation, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.display_cond, request_update, field_ids, display_cond, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, starttime, endtime'],
+		'1' => [
+			'showitem' => '
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                    logo, type, field_conf,
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:frontend_settings,
+                  	frontend_label, variable_name, id, templatefile,
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:backend_settings,
+                  	is_record_title, show_title, description, column_width, css_class,
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.field_values,
+                  	field_values, unit,
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.validation,
+                	validation,
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.display_cond,
+                	 request_update, field_ids, display_cond,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                    --palette--;;language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                    hidden,--palette--;;timeRestriction
+            ',
+		],
 	],
 	'palettes' => [
-		'1' => ['showitem' => ''],
+		'timeRestriction' => ['showitem' => 'starttime, endtime'],
+		'language' => ['showitem' => 'sys_language_uid, l10n_parent'],
 	],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => [
-					['LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1],
-					['LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0],
 				],
 			],
 		],
 		'l10n_parent' => [
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -75,16 +93,16 @@ return [
 			],
 		],
 		't3ver_label' => [
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
-				'max' => 255,
-			],
+				'max' => 30
+			]
 		],
 		'hidden' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
 			'config' => [
 				'type' => 'check',
 			],
@@ -106,36 +124,33 @@ return [
 			],
 		],
 		'starttime' => [
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
 			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
-				'range' => [
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				],
-			],
+				'behaviour' => [
+					'allowLanguageSynchronization' => true,
+				]
+			]
 		],
 		'endtime' => [
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
 			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
 				'range' => [
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
+					'upper' => mktime(0, 0, 0, 1, 1, 2038),
 				],
-			],
+				'behaviour' => [
+					'allowLanguageSynchronization' => true,
+				]
+			]
 		],
 		'logo' => [
 			'exclude' => 1,
@@ -156,6 +171,7 @@ return [
 		'type' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.type',
+			'onChange' => 'reload',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -166,7 +182,11 @@ return [
 				'size' => 1,
 				'maxitems' => 1,
 				'eval' => '', 
-				'showIconTable' => true,
+				'fieldWizard' => [
+					'selectIcons' => [
+						'disabled' => false,
+					],
+				],
 			],
 		],
 		'column_width' => [
@@ -206,6 +226,7 @@ return [
 		'frontend_label' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_field.frontend_label',
+			'onChange' => 'reload',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
