@@ -11,6 +11,7 @@ use MageDeveloper\Dataviewer\Domain\Model\Field as Field;
 use MageDeveloper\Dataviewer\Domain\Model\Record as Record;
 use MageDeveloper\Dataviewer\Domain\Model\Datatype as Datatype;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 
@@ -189,6 +190,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		if (!$record->hasTitleField())
 			$contentHtml .= $this->renderRecordTitleField($record, str_replace("[record_content]", "", $baseFormName));
 
+
 		///////////////////////////////////////////////////////////////////////
 		// FIELD RENDERING
 		///////////////////////////////////////////////////////////////////////
@@ -219,7 +221,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 						$fieldHtml .= $renderResults["html"];
 					
 					$this->formResultCompiler->mergeResult($renderResults);
-					$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
+					//$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
 					$bottomParts[$_field->getUid()] = $this->formResultCompiler->printNeededJSFunctions();
 				
 				}
@@ -272,11 +274,23 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 
         $end = microtime(true) - $start;
 
+		// Add stylesheet file to the formResultCompiler
+		$path = GeneralUtility::getFileAbsFileName("EXT:dataviewer/Resources/Public/Css/dataviewer-backend.css");
+		$css = PathUtility::getAbsoluteWebPath($path);
+		$this->formResultCompiler->mergeResult(
+			["stylesheetFiles" => [$css],
+			 "additionalJavaScriptPost" => [],
+			 "additionalJavaScriptSubmit" => [],
+			 "additionalHiddenFields" => [],
+			]
+		);
+		$this->formResultCompiler->addCssFiles();
+
 		// Finalization
 		$html =
 			"<div class=\"dataviewer-record dataviewer-record-{$record->getUid()}\" $backgroundColor>" .
 			$this->renderHeader($datatype)						.
-			$this->formResultCompiler->JStop() 					.
+			//$this->formResultCompiler->JStop() 					.
 			implode("\r\n", $topParts)							.
 			"<div class=\"dataviewer-content\">"				.
 			$contentHtml 										.
@@ -353,16 +367,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	public function renderHeader(Datatype $datatype)
 	{
-		// Add stylesheet file to the formResultCompiler
-		$css = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Css/dataviewer-backend.css";
-		$this->formResultCompiler->mergeResult(
-			["stylesheetFiles" => [$css],
-				  "additionalJavaScriptPost" => [],
-				  "additionalJavaScriptSubmit" => [],
-				  "additionalHiddenFields" => [],
-			]
-		);
-		
 		$header = "";
 		$header .= "<div class=\"dataviewer-header\">";
 		$header .= $this->_getExtensionInformationHtml();
@@ -430,7 +434,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$title .= "<div class=\"dataviewer-record-title\">";
 
 		$recordTitle = $record->getTitle();
-		$titleLabel = Locale::translate("LLL:EXT:lang/locallang_general.xlf:LGL.title");
+		$titleLabel = Locale::translate("LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.title");
 
 		$placeholder = "";
 		
