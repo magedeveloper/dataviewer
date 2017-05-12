@@ -87,29 +87,29 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 	 */
 	public function processData()
 	{
+		// We only need to modify the GLOBALS in backend environment
+		if (TYPO3_MODE !== "BE") {
+			return;
+		}
+	
 		// Get all fields of type select/multiselect/group/dyninput/flex with the checkbox Suggest Wizard active
 		// Process the tca of all fields and inject the rendered tca
 		// into the globals
 		$types = ["dyninput", "flex", "category"];
-
+		
 		// Check for an ajax request like the suggest wizard and generate tca only for suggest compatible fields
 		if ($_SERVER['HTTP_X_REQUESTED_WITH'] && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ) {
 			$types = array_merge($types, ["select","multiselect","group","page"]);
-		}
-
-		// We only need to modify the GLOBALS in backend environment
-		if (TYPO3_MODE !== "BE") {
-			return;
 		}
 
 		if(!ExtensionManagementUtility::isLoaded("dataviewer"))
 			return;
 
 		// We need to create a dirty try-catch here, since we have nothing better to check for existence of many different needs
-		try {
-			// TODO: Evaluate that dirty fix in later versions
-			$typesSqlRdy = array_map(function($i){return "'{$i}'";}, $types);
-			$fields = $this->fieldRepository->findByTypes($typesSqlRdy);
+		try 
+		{
+			// We need to fetch all fields of the types, we have here, so we can pre-load the tca into the GLOBALS here
+			$fields = $this->fieldRepository->findByTypes($types);
 
 			// We quick load the fieldtype configuration for these types to
 			// restore the information in our loop later
@@ -158,6 +158,7 @@ class ExtTablesInclusion implements \TYPO3\CMS\Core\Database\TableConfigurationP
 					$_field->setType($type);
 
 					$config = $tca["processedTca"]["columns"][$fieldId]["config"];
+					
 
 					// Injecting the virtual tca into the globals for later usage
 					$GLOBALS["TCA"]["tx_dataviewer_domain_model_record"]["columns"][$fieldId]["config"] = $config;
