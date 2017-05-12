@@ -1,4 +1,4 @@
-#About TYPO3 DataViewer Extension
+# About TYPO3 DataViewer Extension
 
 Build easy and intuitive TCA-powered records with customizable backend forms on the fly without having to make a new extension. 
 Records and Variables are dynamically injected to fluid templates for easy usage.
@@ -6,13 +6,15 @@ Records and Variables are dynamically injected to fluid templates for easy usage
 This extension is a easy to use data handler that saves you a lot of time, because there is no more need of creating an extension for
 every need. Great solutions can be done by just a few clicks and fluid templating.
 
-###Documentation
+### Documentation
 For [documentation have a look at the TYPO3 Docs Page](https://docs.typo3.org/typo3cms/extensions/dataviewer/) or refer
 to the [DataViewer Extension Page in the TER](https://typo3.org/extensions/repository/view/dataviewer)
 
-##Compatibility
+## Compatibility
 
-+ TYPO3 CMS 7.6.5 - 8.3.X
++ TYPO3 CMS 8.7.X
+
+For the 7 LTS compatibile version, please use the master-7/dev-7 branch.
 
 ## Highlights
 + Create customized records on the fly
