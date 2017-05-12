@@ -3,7 +3,21 @@
 <f:if condition="{filter}">
 	<f:form action="add">
 		<div class="tx-dataviewer-filter tx-dataviewer-filter-{filter.field_id}">
-			<legend for="filter_{filter.field_id}">{filter.field.frontendLabel}</legend>
+			<f:if condition="{filter.name}">
+				<f:then>
+					<legend for="filter_{filter.field_id}">{filter.name}</legend>
+				</f:then>
+				<f:else>
+					<f:if condition="{filter.field.uid}">
+						<f:then>
+							<legend for="filter_{filter.field_id}">{filter.field.frontendLabel}</legend>
+						</f:then>
+						<f:else>
+							<legend for="filter_{filter.field_id}">{filter.field_id}</legend>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
 			<f:switch expression="{filter.filter_type}">
 				<f:case value="radio">
 					<f:for each="{filter.options}" as="option" iteration="i">
@@ -19,7 +33,7 @@
 					<f:for each="{filter.options}" as="option" iteration="i">
 						<div class="form-check">
 							<label class="form-check-label" for="filter_{filter.field_id}_{option.id}">
-								<input type="checkbox" class="form-check-input" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}_{option.id}" value="{option.id}" {f:if(condition:'{option.selected}',then:'checked')} onClick="this.form.submit()" />
+								<input type="checkbox" class="form-check-input" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}_{option.id}" value="{option.id}" {f:if(condition:'{option.selected}',then:'checked disabled="disabled"')} onClick="this.form.submit()" />
 								{option.option_name}
 							</label>
 						</div>
