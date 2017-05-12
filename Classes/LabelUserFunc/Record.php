@@ -61,9 +61,8 @@ class Record
 		if (isset($pObj["row"]))
 		{
 			$row = $pObj["row"];
-			
 			$this->backendSessionService->setAccordingPid($row["pid"]);
-			$record = $this->recordRepository->findByUid($row["uid"], false, $row["sys_language_uid"]);
+			$record = $this->recordRepository->findByUid($row["uid"], false);
 
 			if ($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
 			{
@@ -76,9 +75,6 @@ class Record
 
 				if ($record->getTitle())
 					$title = $record->getTitle();
-					
-				if($row["sys_language_uid"] > 0)
-					$title = $row["title"];	
 					
                 $sortBy = $this->backendSessionService->getSortBy();
                 $addInfo = (bool)$this->backendSessionService->getAddInfo();
