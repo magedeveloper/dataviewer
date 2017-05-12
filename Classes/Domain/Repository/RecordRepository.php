@@ -143,29 +143,21 @@ class RecordRepository extends AbstractRepository
 		$querySettings->setRespectStoragePage(true);
 		$querySettings->setRespectSysLanguage(true);
 
-		//$orderings = [];
-		//foreach ($recordIds as $_id)
-		//	$orderings["title={$_id}"] = QueryInterface::ORDER_DESCENDING;
-
-		//$query->setOrderings($orderings);
-
 		$records = $query->matching(
 			$query->in("uid", $recordIds)
 		)->execute();
 
-
 		// THIS IS A DIRTY FIX FOR MANUAL SORTING THE RECORDS BY THE INPUT RECORD IDS
 		// I HOPE THIS IS CHANGED SOON BECAUSE IT COSTS A LOT OF SPEED HERE
-		// THANKS TO DOCTRINE THE OLD FIX ABOVE BECAME INVALID :(
 		$result = [];
 		foreach($recordIds as $_recordId)
 		{
-		    foreach($records as $_record)
-		        if($_record->getUid() == $_recordId)
-		          $result[] = $_record;
+			foreach($records as $_record)
+				if($_record->getUid() == $_recordId)
+					$result[] = $_record;
 		}
 
-		return $records;
+		return $result;
 	}
 
 	/**
@@ -285,6 +277,7 @@ class RecordRepository extends AbstractRepository
 		$result = $query->execute(true);
 
 		// Apply Sorting
+		/*
 		if(is_numeric($sortField))
 		{
 			usort($result, function ($a, $b) {
@@ -294,6 +287,7 @@ class RecordRepository extends AbstractRepository
 
 		if(is_numeric($sortField) && $sortOrder == QueryInterface::ORDER_DESCENDING)
 			$result=array_reverse($result, true);
+		*/
 
 		return $result;
 	}
@@ -420,7 +414,7 @@ class RecordRepository extends AbstractRepository
 
 		if($filterCombination == "AND" || $filterCombination == "OR")
 			$filterCombination .= " ...";
-			
+
 		$filterCondition = strtolower($filterCondition);
 
 		if(is_numeric($fieldId))
@@ -454,9 +448,10 @@ class RecordRepository extends AbstractRepository
 		lte			<=				{(int)$var}					->lessThanOrEqual
 		fis			FIND_IN_SET		'{$var}'					->FIND_IN_SET
 		*/
-
-		//$filterValue =  $GLOBALS['TYPO3_DB']->quoteStr($filterValue, 'tx_dataviewer_domain_model_recordvalue');
-
+		
+		// Escaping the filter value
+		$filterValue =  $GLOBALS['TYPO3_DB']->quoteStr($filterValue, 'tx_dataviewer_domain_model_recordvalue');
+		
 		switch($filterCondition)
 		{
 			case "eq":
@@ -498,18 +493,18 @@ class RecordRepository extends AbstractRepository
 			case "fis":
 				$cond = "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 "."";
 				break;
-            case "between":
-                if(is_array($filterValue))
-                    $filterValue = implode(" AND ", $filterValue);
+			case "between":
+				if(is_array($filterValue))
+					$filterValue = implode(" AND ", $filterValue);
 
-                $cond = "{$searchField} BETWEEN {$filterValue}"."";
-                break;
-            case "nbetween":
-                if(is_array($filterValue))
-                    $filterValue = implode(" AND ", $filterValue);
+				$cond = "{$searchField} BETWEEN {$filterValue}"."";
+				break;
+			case "nbetween":
+				if(is_array($filterValue))
+					$filterValue = implode(" AND ", $filterValue);
 
-                $cond = "{$searchField} NOT BETWEEN {$filterValue}"."";
-                break;
+				$cond = "{$searchField} NOT BETWEEN {$filterValue}"."";
+				break;
 		}
 
 		$posOfDots = strpos($filterCombination, "...");
@@ -517,8 +512,20 @@ class RecordRepository extends AbstractRepository
 		$filterCombination = substr($filterCombination, $posOfDots);
 		$filterCombination = str_pad($simpleCond, 18, " ").$filterCombination;
 		$cond = str_replace("...", $cond, $filterCombination);
-		
+
 		return $sql . $cond;
+	}
+
+	/**
+	 * Escapes a string
+	 * 
+	 * @param string $str
+	 * @param string $table
+	 * @return string
+	 */
+	protected function escapeStr($str, $table)
+	{
+		return $GLOBALS["TYPO3_DB"]->quoteStr($str, $table);
 	}
 
 }
