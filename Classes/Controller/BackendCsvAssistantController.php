@@ -249,9 +249,6 @@ class BackendCsvAssistantController extends BackendController
 		{
 			foreach($_values as $_rowId=>$_value)
 			{
-				// UTF-8 Encoding
-				//$_value = utf8_encode($_value);
-
 				foreach($assignedFields as $_fieldId=>$_assignedRowId)
 				{
 					if($_rowId == $_assignedRowId)
@@ -434,7 +431,6 @@ class BackendCsvAssistantController extends BackendController
 	{
 		$this->forward("index");
 	}
-
 
 	/**
 	 * Generates an optimized array from csv file contents
