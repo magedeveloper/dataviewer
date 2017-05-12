@@ -90,11 +90,15 @@ class BuildQueryParameters
 			//$sortBy = "sort";
 			//$sortingSelect = "(SELECT search FROM tx_dataviewer_domain_model_recordvalue WHERE tx_dataviewer_domain_model_recordvalue.field = {$sortBy} AND tx_dataviewer_domain_model_recordvalue.record = tx_dataviewer_domain_model_record.uid AND tx_dataviewer_domain_model_recordvalue.hidden = 0 AND tx_dataviewer_domain_model_recordvalue.deleted = 0 LIMIT 1) AS {$sortBy}";
 			//$parameters["fields"][] = $sortingSelect;
-			//$parameters["orderBy"][0][0] = $sortBy;
 		}
+		
+		// Fallback to default 'sorting'
+		if($sortBy == "" || is_null($sortBy))
+			$sortBy = "sorting";
 
 		$originalQueryWhereParts = $parameters["where"];
 
+		$parameters["orderBy"][0][0] = $sortBy;
 		$parameters["orderBy"][0][1] = $sortOrder;
 		sort($parameters["where"]);
 
@@ -118,6 +122,7 @@ class BuildQueryParameters
 			//$this->backendSessionService->setSearch(null);
 			$parameters["where"] = $originalQueryWhereParts;
 		}
+		
 		
 		return;
 	}
