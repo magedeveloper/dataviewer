@@ -136,6 +136,9 @@
             <trans-unit id="active_filters">
                 <source>Active Filters</source>
             </trans-unit>
+            <trans-unit id="flexform.filter_custom_name">
+                <source>Custom Filter Name</source>
+            </trans-unit>
             <trans-unit id="flexform.field_filter">
                 <source>Field for filtering</source>
             </trans-unit>
@@ -214,7 +217,7 @@
             <trans-unit id="flexform.cache_lifetime">
                 <source>Cache Lifetime in Seconds</source>
             </trans-unit>
-            
+
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>
             </trans-unit>
@@ -296,8 +299,8 @@
             <trans-unit id="add_suggest_wizard">
                 <source>Add Suggest Wizard</source>
             </trans-unit>
-            
-            
+
+
             <trans-unit id="flexform.number_of_initial_records">
                 <source>Initial Number of records to show</source>
             </trans-unit>
@@ -511,7 +514,7 @@
             <trans-unit id="message.use_this_id_to_link">
                 <source>Use this id in the 'Target record display plugin'-Setting for Linking other DataViewer plugins to this!</source>
             </trans-unit>
-            
+
             <trans-unit id="message.creating_not_allowed">
                 <source>Sorry, creating new records is not allowed by this plugin!</source>
             </trans-unit>
@@ -527,7 +530,7 @@
             <trans-unit id="message.no_markers_found_on_storage_pids">
                 <source>No markers were found on the configured storage page(s).</source>
             </trans-unit>
-            
+
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
             </trans-unit>
@@ -1481,8 +1484,8 @@
             <trans-unit id="donate.please_donate">
                 <source>please donate</source>
             </trans-unit>
-            
+
         </body>
-        
+
     </file>
 </xliff>
