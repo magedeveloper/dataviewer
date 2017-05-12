@@ -394,11 +394,11 @@
                                                         <numIndex index="1">RECORD.crdate</numIndex>
                                                     </numIndex>
                                                     <numIndex index="5" type="array">
-                                                        <numIndex index="0">LLL:EXT:lang/locallang_core.xlf:labels.starttime</numIndex>
+                                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime</numIndex>
                                                         <numIndex index="1">RECORD.starttime</numIndex>
                                                     </numIndex>
                                                     <numIndex index="6" type="array">
-                                                        <numIndex index="0">LLL:EXT:lang/locallang_core.xlf:labels.endtime</numIndex>
+                                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime</numIndex>
                                                         <numIndex index="1">RECORD.endtime</numIndex>
                                                     </numIndex>
                                                     <numIndex index="7" type="array">
@@ -588,11 +588,11 @@
                                         <numIndex index="1">RECORD.crdate</numIndex>
                                     </numIndex>
                                     <numIndex index="5" type="array">
-                                        <numIndex index="0">LLL:EXT:lang/locallang_core.xlf:labels.starttime</numIndex>
+                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime</numIndex>
                                         <numIndex index="1">RECORD.starttime</numIndex>
                                     </numIndex>
                                     <numIndex index="6" type="array">
-                                        <numIndex index="0">LLL:EXT:lang/locallang_core.xlf:labels.endtime</numIndex>
+                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime</numIndex>
                                         <numIndex index="1">RECORD.endtime</numIndex>
                                     </numIndex>
                                     <numIndex index="6" type="array">
@@ -602,7 +602,7 @@
                                 </items>
                                 <default>RECORD.uid</default>
                                 <multiple>0</multiple>
-                                <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Field->populateFields</itemsProcFunc>
+                                <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Field->populateFieldsOnStoragePages</itemsProcFunc>
                                 <maxitems>1</maxitems>
                                 <minitems>1</minitems>
                                 <size>1</size>
@@ -781,14 +781,25 @@
                                 <maxitems>99999</maxitems>
                                 <minitems>0</minitems>
                                 <size>5</size>
-                                <wizards>
-                                    <suggest>
-                                        <type>suggest</type>
-                                    </suggest>
-                                </wizards>
+                                <enableMultiSelectFilterTextfield>1</enableMultiSelectFilterTextfield>
                             </config>
                         </TCEforms>
                     </settings.variable_injection>
+
+                    <settings.inline_variable_injection>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.inline_variable_injection</label>
+                            <config>
+                                <type>inline</type>
+                                <autosizemax>10</autosizemax>
+                                <items type="array"></items>
+                                <foreign_table>tx_dataviewer_domain_model_variable</foreign_table>
+                                <maxitems>99999</maxitems>
+                                <minitems>0</minitems>
+                            </config>
+                        </TCEforms>
+                    </settings.inline_variable_injection>
+                    
                 </el>
             </ROOT>
         </template_settings>

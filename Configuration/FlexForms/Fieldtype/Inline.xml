@@ -55,7 +55,7 @@
                         <el>
                             <field>
                                 <TCEforms>
-                                    <label>LLL:EXT:lang/locallang_core.xlf:show_item.php.field</label>
+                                    <label>LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:show_item.php.field</label>
                                     <config>
                                         <type>input</type>
                                         <size>15</size>
