@@ -221,9 +221,13 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 						$fieldHtml .= $renderResults["html"];
 					
 					$this->formResultCompiler->mergeResult($renderResults);
-					//$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
+
+					if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+						$this->formResultCompiler->addCssFiles();
+					else
+						$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
+
 					$bottomParts[$_field->getUid()] = $this->formResultCompiler->printNeededJSFunctions();
-				
 				}
 			}
 			else
@@ -231,12 +235,12 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 				$message = Locale::translate("field_has_no_field_values", $_field->getFrontendLabel());
 				$fieldHtml .= "<br /><div class=\"alert alert-danger field-error\" role=\"alert\">{$message}</div>";
 			}
-
+			
 			$renderedFields[$_field->getUid()] = $fieldHtml;
 			$this->resetFormResultCompiler();
 
 		} // END FOREACH
-
+		
 		// Prepare Tabs
 		foreach($tabConfigurationArray as $i=>$_tabConfigArr)
 		{
@@ -284,19 +288,25 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 			 "additionalHiddenFields" => [],
 			]
 		);
-		$this->formResultCompiler->addCssFiles();
+
+		$top = "";
+		if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+			$this->formResultCompiler->addCssFiles();
+		else
+			$top = $this->formResultCompiler->JStop();
+		
 
 		// Finalization
 		$html =
 			"<div class=\"dataviewer-record dataviewer-record-{$record->getUid()}\" $backgroundColor>" .
-			$this->renderHeader($datatype)						.
-			//$this->formResultCompiler->JStop() 					.
-			implode("\r\n", $topParts)							.
+			$this->renderHeader($datatype)				.
+			$top						 						.
+			implode("\r\n", $topParts)				.
 			"<div class=\"dataviewer-content\">"				.
 			$contentHtml 										.
 			$this->renderTabMenu($tabConfigurationArray, "dataviewer-tabs")	.
 			"</div>"											.
-			implode("\r\n", $bottomParts)						.
+			implode("\r\n", $bottomParts)			.
 			//$this->formResultCompiler->printNeededJSFunctions()	.
 			"<input type=\"hidden\" name=\"{$baseRecordFormName}[datatype]\" value=\"{$datatype->getUid()}\" />".
 			"<div class=\"clear\"></div>"						.

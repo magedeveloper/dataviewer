@@ -16,16 +16,6 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 class FieldRepository extends AbstractRepository
 {
 	/**
-	 * Returns the database connection
-	 *
-	 * @return DatabaseConnection
-	 */
-	protected function getDatabaseConnection()
-	{
-		return $GLOBALS['TYPO3_DB'];
-	}
-
-	/**
 	 * Finds entries for an field value
 	 * Executes an simple select query
 	 *
@@ -39,7 +29,6 @@ class FieldRepository extends AbstractRepository
 		$whereClause	= $fieldValue->getWhereClause();
 
 		$query = $this->createQuery();
-		$this->getDatabaseConnection()->debugOutput = false;
 		$statement = "SELECT {$columnname} FROM {$tablename} {$whereClause}";
 		$query->statement($statement);
 		$result = $query->execute(true);
