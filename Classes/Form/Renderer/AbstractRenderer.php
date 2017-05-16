@@ -123,7 +123,7 @@ abstract class AbstractRenderer
 		$flashMessage = GeneralUtility::makeInstance(
 			\TYPO3\CMS\Core\Messaging\FlashMessage::class,
 			$message,
-			$title,
+			(string)$title,
 			$severity,
 			TRUE
 		);
