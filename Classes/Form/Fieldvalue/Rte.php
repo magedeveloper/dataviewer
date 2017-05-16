@@ -55,6 +55,7 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$html = $this->getValue();
 		$html = html_entity_decode($html);
+		$html = trim($html);
 		return strip_tags($html);
 	}
 
