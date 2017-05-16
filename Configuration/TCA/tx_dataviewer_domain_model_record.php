@@ -216,6 +216,7 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
+				'enableMultiSelectFilterTextfield' => true,
 				'foreign_table' => 'tx_dataviewer_domain_model_recordvalue',
 				'foreign_field' => 'record',
 				'foreign_table_where' => 'AND tx_dataviewer_domain_model_recordvalue.pid=###CURRENT_PID###',

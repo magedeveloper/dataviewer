@@ -255,6 +255,7 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
+				'enableMultiSelectFilterTextfield' => true,
 				'foreign_table' => 'tx_dataviewer_domain_model_field',
 				'foreign_table_where' => 'AND tx_dataviewer_domain_model_field.pid=###CURRENT_PID###',
 				'MM' => 'tx_dataviewer_datatype_field_mm',
@@ -271,36 +272,6 @@ return [
 					],
 					'listModule' => [
 						'disabled' => false,
-					],
-				],
-				'wizards' => [
-					'_PADDING' => 4,
-					'_VERTICAL' => 1,
-					'suggest' => [
-						'type' => 'suggest'
-					],
-					'edit' => [
-						'type' => 'popup',
-						'title' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:cm.edit',
-						'module' => [
-							'name' => 'wizard_edit',
-						],
-						'icon' => 'actions-open',
-						'popup_onlyOpenIfSelected' => 1,
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-					],
-					'add' => [
-						'type' => 'script',
-						'title' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:cm.new',
-						'icon' => 'actions-add',
-						'params' => [
-							'table' => 'tx_dataviewer_domain_model_field',
-							'pid' => '###CURRENT_PID###',
-							'setValue' => 'prepend'
-						],
-						'module' => [
-							'name' => 'wizard_add'
-						],
 					],
 				],
 			],

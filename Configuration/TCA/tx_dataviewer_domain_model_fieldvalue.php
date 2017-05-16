@@ -35,7 +35,7 @@ return [
 			'showitem' => '
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     type,
-                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:value_content
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:value_content,
                   	value_content, field_content, table_content, column_name, markers, where_clause, result, is_default, pretends_empty,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                     --palette--;;language,
@@ -197,6 +197,7 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
+				'enableMultiSelectFilterTextfield' => true,
 				'itemsProcFunc' => "MageDeveloper\\Dataviewer\\UserFunc\\Database->populateColumnsAction",
 				'size' => 3,
 				'maxitems' => 999,
