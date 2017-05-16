@@ -96,6 +96,14 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	 * @inject
 	 */
 	protected $pluginCacheService;
+
+	/**
+	 * Cache Manager
+	 * 
+	 * @var \TYPO3\CMS\Core\Cache\CacheManager
+	 * @inject
+	 */
+	protected $cacheManager;
 	
 	/**
 	 * Gets the extension name
@@ -221,15 +229,15 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
                             if(is_array($value))
                             {
                                 $value = array_map(function($v) {
-                                    return GeneralUtility::removeXSS($v);
+                                    return \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariableGet($v);
                                 }, $value);
                             }
                             else
                             {
-                                $value = GeneralUtility::removeXSS($value);
+                                $value = \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariableGet($value);
                             }
 
-							$variables[$name] = $value;
+							$variables[$name] = $variable->castType($value);
 						}
 						break;
 					case Variable::VARIABLE_TYPE_POST:
@@ -241,15 +249,15 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
                             if(is_array($value))
                             {
                                 $value = array_map(function($v) {
-                                    return GeneralUtility::removeXSS($v);
+                                    return \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariablePost($v);
                                 }, $value);
                             }
                             else
                             {
-                                $value = GeneralUtility::removeXSS($value);
+                                $value = \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariablePost($value);
                             }
                             
-							$variables[$name] = $value;
+							$variables[$name] = $variable->castType($value);
 						}
 						break;
 					case Variable::VARIABLE_TYPE_RECORD:
@@ -335,8 +343,8 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						$variables[$name] = $variable->getVariableValue();
 						break;
 				}
-			}
-		}
+			} // EO IF
+		} // EO FOREACH
 
 		///////////////////////////////////////////////////////////////////////////
 		// Signal-Slot for manipulating the variables that are added to the view //
