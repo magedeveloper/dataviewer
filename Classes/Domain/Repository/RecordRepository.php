@@ -3,7 +3,10 @@ namespace MageDeveloper\Dataviewer\Domain\Repository;
 
 use MageDeveloper\Dataviewer\Domain\Model\Datatype;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\ListSettingsService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use \TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -17,6 +20,13 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class RecordRepository extends AbstractRepository
 {
+	/**
+	 * Database Connection
+	 * 
+	 * @var \TYPO3\CMS\Core\Database\Connection[]
+	 */
+	protected $connection = [];
+
 	/**
 	 * Default Select Fields
 	 *
@@ -36,6 +46,23 @@ class RecordRepository extends AbstractRepository
 	protected $defaultOrderings = [
 		'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
 	];
+
+	/**
+	 * Gets the database connection instance
+	 * 
+	 * @param string $table
+	 * @return \TYPO3\CMS\Core\Database\Connection
+	 */
+	protected function _getConnection($table)
+	{
+		if(isset($this->connection[$table])) 
+			return $this->connection[$table];
+
+		$connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+		$this->connection[$table] = $connectionPool->getConnectionForTable($table);
+		
+		return $this->connection[$table];
+	}
 
 	/**
 	 * Find records by given uids
@@ -139,9 +166,14 @@ class RecordRepository extends AbstractRepository
 	{
 		$query 			= $this->createQuery();
 		$querySettings 	= $query->getQuerySettings();
-		$querySettings->setStoragePageIds($storagePids);
-		$querySettings->setRespectStoragePage(true);
+		$querySettings->setRespectStoragePage(false);
 		$querySettings->setRespectSysLanguage(true);
+
+		if(!empty($storagePids))
+		{
+			$querySettings->setStoragePageIds($storagePids);
+			$querySettings->setRespectStoragePage(true);
+		}
 
 		$records = $query->matching(
 			$query->in("uid", $recordIds)
@@ -149,15 +181,47 @@ class RecordRepository extends AbstractRepository
 
 		// THIS IS A DIRTY FIX FOR MANUAL SORTING THE RECORDS BY THE INPUT RECORD IDS
 		// I HOPE THIS IS CHANGED SOON BECAUSE IT COSTS A LOT OF SPEED HERE
-		$result = [];
-		foreach($recordIds as $_recordId)
-		{
-			foreach($records as $_record)
-				if($_record->getUid() == $_recordId)
-					$result[] = $_record;
-		}
-
+		$result = $this->sortRecordsByDefinition($records, $recordIds);
 		return $result;
+	}
+
+	/**
+	 * Sorts records by an array definition
+	 * 
+	 * @param mixed $records
+	 * @param array $definitionArray
+	 * @return array
+	 */
+	public function sortRecordsByDefinition($records, $definitionArray)
+	{
+		$sortedRecords = array();
+		foreach($definitionArray as $_defId) 
+			$sortedRecords[] = $this->sortRecords($records, $_defId);
+		
+		return $sortedRecords;
+	}
+
+	/**
+	 * Sorts an record array
+	 * 
+	 * @param mixed $records
+	 * @param int $num
+	 * @return array
+	 */
+	protected function sortRecords($records, $num) 
+	{
+		foreach($records as $_record) 
+		{
+			if (is_array($_record)) 
+				$recordUid = $_record['uid'];
+			elseif ($_record instanceof AbstractDomainObject) 
+				$recordUid = $_record->getUid();
+			elseif (is_object($_record)) 
+				$recordUid = $_record->uid;
+			
+			if ((int)$recordUid === (int)$num) 
+				return $_record;
+		}
 	}
 
 	/**
@@ -241,7 +305,6 @@ class RecordRepository extends AbstractRepository
 					$sub->equals("datatype.hide_records", "0")
 				)->execute();
 			}
-
 		}
 
 		return $query->execute();
@@ -431,9 +494,8 @@ class RecordRepository extends AbstractRepository
 		else
 		{
 			$searchField = $fieldId;
+			$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 		}
-
-
 
 		/*
 		eq			=				'{$var}'					->equals
@@ -447,26 +509,28 @@ class RecordRepository extends AbstractRepository
 		gte			>=				{(int)$var}					->greaterThanOrEqual
 		lte			<=				{(int)$var}					->lessThanOrEqual
 		fis			FIND_IN_SET		'{$var}'					->FIND_IN_SET
+		between		BETWEEN			{$var}						
+		nbetween	NOT BETWEEN		{$var}
 		*/
 		
-		// Escaping the filter value
-		$filterValue =  $GLOBALS['TYPO3_DB']->quoteStr($filterValue, 'tx_dataviewer_domain_model_recordvalue');
+		// Escaping the filters
+		$searchField = 	$this->quoteIdentifier($searchField, "tx_dataviewer_domain_model_recordvalue");
 		
 		switch($filterCondition)
 		{
 			case "eq":
-				$cond = "{$searchField} = '{$filterValue}'"."";
+				$cond = "{$searchField} = {$filterValue}"."";
 				break;
 			case "neq":
-				$cond = "{$searchField} != '{$filterValue}'"."";
+				$cond = "{$searchField} != {$filterValue}"."";
 				break;
 			case "like":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
-				$cond = "{$searchField} LIKE '{$filterValue}'"."";
+				$cond = "{$searchField} LIKE {$filterValue}"."";
 				break;
 			case "nlike":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
-				$cond = "{$searchField} NOT LIKE '{$filterValue}'"."";
+				$cond = "{$searchField} NOT LIKE {$filterValue}"."";
 				break;
 			case "in":
 				$cond = "{$searchField} IN ({$filterValue})"."";
@@ -491,7 +555,7 @@ class RecordRepository extends AbstractRepository
 				$cond = "{$searchField} <= {$filterValue}"."";
 				break;
 			case "fis":
-				$cond = "FIND_IN_SET('{$filterValue}', {$searchField}) > 0 "."";
+				$cond = "FIND_IN_SET({$filterValue}, {$searchField}) > 0 "."";
 				break;
 			case "between":
 				if(is_array($filterValue))
@@ -512,20 +576,35 @@ class RecordRepository extends AbstractRepository
 		$filterCombination = substr($filterCombination, $posOfDots);
 		$filterCombination = str_pad($simpleCond, 18, " ").$filterCombination;
 		$cond = str_replace("...", $cond, $filterCombination);
-
+		
 		return $sql . $cond;
 	}
 
 	/**
 	 * Escapes a string
-	 * 
+	 *
 	 * @param string $str
 	 * @param string $table
 	 * @return string
 	 */
-	protected function escapeStr($str, $table)
+	protected function quote($str, $table)
 	{
-		return $GLOBALS["TYPO3_DB"]->quoteStr($str, $table);
+		$connection = $this->_getConnection($table);
+		return $connection->quote($str);
 	}
+
+	/**
+	 * Escapes a string
+	 *
+	 * @param string $str
+	 * @param string $table
+	 * @return string
+	 */
+	protected function quoteIdentifier($str, $table)
+	{
+		$connection = $this->_getConnection($table);
+		return $connection->quoteIdentifier($str);
+	}
+	
 
 }
