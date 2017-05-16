@@ -112,6 +112,7 @@ class RecordController extends AbstractController
 	public function listAction()
 	{
 		$cacheIdentifier = $this->getCacheIdentifier();
+		$cache = $this->cacheManager->getCache("cache_hash");
 
 		$lifetime = $this->listSettingsService->getCacheLifetime();
 		$this->pluginCacheService->setLifetime($lifetime);
@@ -119,8 +120,8 @@ class RecordController extends AbstractController
 
 		$cachedIds = null;
 		if($lifetime > 0)
-			$cachedIds = \TYPO3\CMS\Frontend\Page\PageRepository::getHash($cacheIdentifier);
-
+			$cachedIds = $cache->get($cacheIdentifier);
+			
 		if(is_array($cachedIds))
 		{
 			$cached = true;
@@ -138,7 +139,7 @@ class RecordController extends AbstractController
 			foreach($selectedRecords as $_s)
 				$ids[] = $_s->getUid();
 
-			\TYPO3\CMS\Frontend\Page\PageRepository::storeHash($cacheIdentifier, $ids, "records", $lifetime);
+			$cache->set($cacheIdentifier, $ids, ["records"], $lifetime);
 		}
 		
 		// We set these records as currently active and valid
