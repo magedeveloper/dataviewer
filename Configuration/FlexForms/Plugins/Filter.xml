@@ -11,7 +11,6 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-
                     <settings.logo>
                         <TCEforms>
                             <label></label>
@@ -21,7 +20,6 @@
                             </config>
                         </TCEforms>
                     </settings.logo>
-
                     <settings.target_plugin>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -42,8 +40,6 @@
                             </config>
                         </TCEforms>
                     </settings.target_plugin>
-
-
                     <settings.field_filter>
                         <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fields_filter</title>
                         <section>1</section>
@@ -57,6 +53,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_filter</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <multiple>0</multiple>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
@@ -104,6 +101,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_dropdown</numIndex>
@@ -166,6 +164,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_combination</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">AND ...</numIndex>
@@ -211,6 +210,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.according_filter_field</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <multiple>0</multiple>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
@@ -267,6 +267,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_option_condition</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0"></numIndex>
@@ -345,6 +346,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_search</numIndex>

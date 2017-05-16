@@ -3,7 +3,6 @@
         <langDisable>1</langDisable>
     </meta>
     <sheets>
-
         <general_settings>
             <ROOT>
                 <TCEforms>
@@ -11,7 +10,6 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-
                     <settings.logo>
                         <TCEforms>
                             <label></label>
@@ -21,7 +19,6 @@
                             </config>
                         </TCEforms>
                     </settings.logo>
-
                     <settings.target_plugin>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -42,7 +39,6 @@
                             </config>
                         </TCEforms>
                     </settings.target_plugin>
-
                     <settings.field_ids>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_fields</label>
@@ -50,6 +46,7 @@
                                 <type>select</type>
                                 <multiple>0</multiple>
                                 <allowNonIdValues>1</allowNonIdValues>
+                                <renderType>selectMultipleSideBySide</renderType>
                                 <default></default>
                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
                                 <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
@@ -97,12 +94,9 @@
                             </config>
                         </TCEforms>
                     </settings.field_ids>
-
                 </el>
             </ROOT>
         </general_settings>
-
-
     </sheets>
 </T3DataStructure> 
 

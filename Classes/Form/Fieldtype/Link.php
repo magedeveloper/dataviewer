@@ -44,13 +44,16 @@ class Link extends Text
 							"size" => 30,
 							"eval" => $this->getField()->getEval(),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
-							"renderType" => "inputLink",
 						],
 					],
 				],
 			],
 			"inlineStructure" => [],
 		];
+
+		// Compatibility
+		if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+			$tca["processedTca"]["columns"][$fieldName]["config"]["renderType"] = "inputLink";
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

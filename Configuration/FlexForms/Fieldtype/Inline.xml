@@ -19,7 +19,8 @@
                     <label>foreign_table</label>
                     <config>
                         <type>select</type>
-                        <multiple>1</multiple>
+                        <renderType>selectSingle</renderType>
+                        <multiple>0</multiple>
                         <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Database->populateTablesAction</itemsProcFunc>
                         <autosizemax>2</autosizemax>
                         <items type="array">

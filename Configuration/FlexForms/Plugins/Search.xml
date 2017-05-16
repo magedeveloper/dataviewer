@@ -3,7 +3,6 @@
         <langDisable>1</langDisable>
     </meta>
     <sheets>
-
         <general_settings>
             <ROOT>
                 <TCEforms>
@@ -11,7 +10,6 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-
                     <settings.logo>
                         <TCEforms>
                             <label></label>
@@ -21,7 +19,6 @@
                             </config>
                         </TCEforms>
                     </settings.logo>
-
                     <settings.target_plugin>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -42,13 +39,13 @@
                             </config>
                         </TCEforms>
                     </settings.target_plugin>
-
                     <settings.search_type>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.search_type</label>
                             <onChange>reload</onChange>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.search_type.title</numIndex>
@@ -69,7 +66,6 @@
                             </config>
                         </TCEforms>
                     </settings.search_type>
-
                     <settings.minimum_chars>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.minimum_chars</label>
@@ -82,7 +78,6 @@
                             </config>
                         </TCEforms>
                     </settings.minimum_chars>
-
                     <settings.clear_on_page_load>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.clear_on_page_load</label>
@@ -92,11 +87,9 @@
                             </config>
                         </TCEforms>
                     </settings.clear_on_page_load>
-                    
                 </el>
             </ROOT>
         </general_settings>
-
         <field_search_setting>
             <ROOT>
                 <TCEforms>
@@ -116,7 +109,6 @@
                             </config>
                         </TCEforms>
                     </settings.info>
-
                     <settings.search_fields>
                         <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.search_fields</title>
                         <section>1</section>
@@ -130,6 +122,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_combination</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">AND ...</numIndex>
@@ -175,6 +168,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_field</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <multiple>0</multiple>
                                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
                                                 <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
@@ -190,6 +184,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_condition</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.eq</numIndex>
@@ -255,6 +250,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_search</numIndex>
@@ -278,6 +274,5 @@
                 </el>
             </ROOT>
         </field_search_setting>
-
     </sheets>
 </T3DataStructure> 

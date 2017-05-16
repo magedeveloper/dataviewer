@@ -41,7 +41,6 @@ class DateTime extends Date
 						"label" => $this->getField()->getFrontendLabel(),
 						"config" => [
 							"type" => "input",
-							"renderType" => "inputDateTime",
 							"size" => 30,
 							"eval" => "datetime,".$this->getField()->getConfig("eval"),
 							"placeholder" => $this->getField()->getConfig("placeholder"),
@@ -52,6 +51,10 @@ class DateTime extends Date
 			],
 			"inlineStructure" => [],
 		];
+
+		// Compatibility
+		if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+			$tca["processedTca"]["columns"][$fieldName]["config"]["renderType"] = "inputDateTime";
 
 		$this->prepareTca($tca);
 		$this->tca = $tca;

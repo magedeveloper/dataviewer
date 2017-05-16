@@ -19,6 +19,7 @@
                     <label>renderType</label>
                     <config>
                         <type>select</type>
+                        <renderType>selectSingle</renderType>
                         <multiple>0</multiple>
                         <items type="array">
                             <numIndex index="0" type="array">
