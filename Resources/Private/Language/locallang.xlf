@@ -746,6 +746,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
                 <source>UserFunc</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+                <source>Type Definition</source>
+            </trans-unit>
 
             <!-- Messages -->
             <trans-unit id="please_select_datatype">
@@ -1110,6 +1113,9 @@
             <trans-unit id="type.rte">
                 <source>Rich-Text Editor (RTE)</source>
             </trans-unit>
+            <trans-unit id="type.editor">
+                <source>Code Editor</source>
+            </trans-unit>
             <trans-unit id="type.fluid">
                 <source>Fluid Code</source>
             </trans-unit>
@@ -1159,6 +1165,32 @@
             </trans-unit>
             <trans-unit id="variable_type.13">
                 <source>UserFunc</source>
+            </trans-unit>
+
+            <!-- Variable Type Cast -->
+            <trans-unit id="variable_type_cast.0">
+                <source>No type definition</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.1">
+                <source>BOOLEAN (Set true/false type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.2">
+                <source>INTEGER (Set numeric type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.3">
+                <source>FLOAT (Set floating number type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.4">
+                <source>STRING (Set alphanumeric type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.5">
+                <source>ARRAY (Set array type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.6">
+                <source>OBJECT (Set object type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.7">
+                <source>NULL (Set null for this variable)</source>
             </trans-unit>
 
             <!-- FieldValue Types -->

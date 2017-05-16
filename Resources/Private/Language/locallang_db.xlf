@@ -210,6 +210,9 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
                 <source>UserFunc</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+                <source>Type Definition</source>
+            </trans-unit>
 
         </body>
     </file>

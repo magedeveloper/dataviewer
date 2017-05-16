@@ -985,7 +985,12 @@
                 <source>UserFunc</source>
                 <target>UserFunc</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+                <source>Type Definition</source>
+                <target>Typ definieren</target>
+            </trans-unit>
 
+            
 
             <!-- Messages -->
             <trans-unit id="please_select_datatype">
@@ -1466,6 +1471,10 @@
                 <source>Rich-Text Editor (RTE)</source>
                 <target>Rich-Text HTML Editor (RTE)</target>
             </trans-unit>
+            <trans-unit id="type.editor">
+                <source>Code Editor</source>
+                <target>Code Editor</target>
+            </trans-unit>
             <trans-unit id="type.fluid">
                 <source>Fluid Code</source>
                 <target>Fluid Code</target>
@@ -1532,6 +1541,41 @@
                 <source>UserFunc</source>
                 <target>Eigene Benuzerfunktion (UserFunc)</target>
             </trans-unit>
+
+            <!-- Variable Type Cast -->
+            <trans-unit id="variable_type_cast.0">
+                <source>No type definition</source>
+                <target>Kein Typ definieren</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.1">
+                <source>BOOLEAN (Set true/false type for this variable)</source>
+                <target>BOOLEAN (Variable als Boolesch definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.2">
+                <source>INTEGER (Set numeric type for this variable)</source>
+                <target>INTEGER (Variable als Ganzzahl definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.3">
+                <source>FLOAT (Set floating number type for this variable)</source>
+                <target>FLOAT (Variable als Fliesskommazahl definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.4">
+                <source>STRING (Set alphanumeric type for this variable)</source>
+                <target>STRING (Variable als Alphanumerisch definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.5">
+                <source>ARRAY (Set array type for this variable)</source>
+                <target>ARRAY (Variable als Array definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.6">
+                <source>OBJECT (Set object type for this variable)</source>
+                <target>OBJEKT (Variable als Objekt definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.7">
+                <source>NULL (Set null for this variable)</source>
+                <target>NULL (Variable is null)</target>
+            </trans-unit>
+            
 
             <!-- FieldValue Types -->
             <trans-unit id="type.0">

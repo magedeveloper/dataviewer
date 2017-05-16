@@ -272,6 +272,10 @@
                 <source>UserFunc</source>
                 <target>UserFunc</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+                <source>Type Definition</source>
+                <target>Typ definieren</target>
+            </trans-unit>
             
         </body>
     </file>

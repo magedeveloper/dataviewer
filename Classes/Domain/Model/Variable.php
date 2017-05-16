@@ -34,6 +34,20 @@ class Variable extends AbstractModel
 	const VARIABLE_TYPE_USERFUNC		= 13;
 
 	/**
+	 * Type Casting
+	 * 
+	 * @var int
+	 */
+	const VARIABLE_TYPE_CAST_NONE		= 0;
+	const VARIABLE_TYPE_CAST_BOOLEAN 	= 1;
+	const VARIABLE_TYPE_CAST_INTEGER	= 2;
+	const VARIABLE_TYPE_CAST_FLOAT		= 3;
+	const VARIABLE_TYPE_CAST_STRING		= 4;
+	const VARIABLE_TYPE_CAST_ARRAY		= 5;
+	const VARIABLE_TYPE_CAST_OBJECT		= 6;
+	const VARIABLE_TYPE_CAST_NULL		= 7;
+
+	/**
 	 * Variable Type
 	 * 
 	 * @var int
@@ -60,6 +74,13 @@ class Variable extends AbstractModel
 	 * @var string
 	 */
 	protected $variableValue;
+
+	/**
+	 * Variable Type Cast
+	 *
+	 * @var int
+	 */
+	protected $typeCast = 0;
 
 	/**
 	 * Record
@@ -370,4 +391,69 @@ class Variable extends AbstractModel
 		$this->userFunc = $userFunc;
 	}
 
+	/**
+	 * Gets the type cast of the variable
+	 * 
+	 * @return int
+	 */
+	public function getTypeCast()
+	{
+		return $this->typeCast;
+	}
+
+	/**
+	 * Sets the type cast of the variable
+	 * 
+	 * @param int $typeCast
+	 * @return void
+	 */
+	public function setTypeCast($typeCast)
+	{
+		$this->typeCast = (int)$typeCast;
+	}
+
+	/**
+	 * Casts a type for a value
+	 * 
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public function castType($value)
+	{
+		$typeCast = $this->getTypeCast();
+		
+		switch($typeCast)
+		{
+			case self::VARIABLE_TYPE_CAST_BOOLEAN:
+				$success = settype($value, "boolean");
+				break;
+			case self::VARIABLE_TYPE_CAST_INTEGER:
+				$success = settype($value, "integer");
+				break;
+			case self::VARIABLE_TYPE_CAST_FLOAT:
+				$success = settype($value, "float");
+				break;
+			case self::VARIABLE_TYPE_CAST_STRING:
+				$success = settype($value, "string");
+				break;
+			case self::VARIABLE_TYPE_CAST_ARRAY:
+				$success = settype($value, "array");
+				break;
+			case self::VARIABLE_TYPE_CAST_OBJECT:
+				$success = settype($value, "object");
+				break;
+			case self::VARIABLE_TYPE_CAST_NULL:
+				$success = settype($value, "null");
+				break;
+			case self::VARIABLE_TYPE_CAST_NONE:
+			default:
+				$success = true;
+				break;
+		}
+		
+		if($success === false)
+			$value = NULL;
+		
+		return $value;
+	}
 }
