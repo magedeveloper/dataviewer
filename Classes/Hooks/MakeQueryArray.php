@@ -93,7 +93,7 @@ class MakeQueryArray
 		
 		if($sortBy)
 			$queryParts["ORDERBY"] = "{$sortBy} {$sortOrder}";
-
+		
 		// Original Count
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryParts);
 		$dbCount = $GLOBALS['TYPO3_DB']->sql_num_rows($result);

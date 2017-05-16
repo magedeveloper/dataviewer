@@ -546,7 +546,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 				$message  = Locale::translate("record_was_successfully_saved", [$record->getTitle(), $recordId]);
 				$severity = FlashMessage::OK;
-
+				
 				// We clear the according session data
 				$this->recordValueSessionService->resetForRecordId($id);
 			}
