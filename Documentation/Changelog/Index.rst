@@ -17,18 +17,17 @@ Changelog
 - [TASK] Compatibilty to TYPO3 8 LTS
 - [TASK] Multiselect Configuration now with different render types
 - [TASK] Better handling for the FormDataProvider 'PrepareDataviewerTca'
-- [BUGFIX] Deleting Records is now working correctly
-- [BUGFIX] Fallback when no storage pids are selected in INLINE Field
-- [BUGFIX] Installed extension without configuration caused errors in backend
+- [BUGFIX] Deleting Records in Record List is now working correctly
+- [BUGFIX] Fallback to current page id when no storage pids are selected in INLINE Field
+- [BUGFIX] Installed extension without configuration caused missing template errors in backend
 - [BUGFIX] DataViewer Logo in Toolbar Item was not shown under certain circumstances
 - [TASK] Rewriting uploadFolder values with correct structure
-- [TASK] Variables can now also created directly in the Record Plugin
-- [TASK] Escaping the value in filtering
-- [TASK] Remove deprecations for TYPO3 9
+- [TASK] Variables also can now be created directly in the Record Plugin
+- [TASK] Quoting in RecordRepository
+- [TASK] Removed usage of deprecated methods/settings
 - [TASK] Using ConnectionPool instead of GLOBALS['TYPO3_DB']
-
-
-
+- [TASK] New Editor Field for adding an editor to your forms. (Supports html,php,javascript,typoscript,css,sparql)
+- [TASK] Casting/Evaluating Variable Type for GET/POST Variables
 
 
 **To-Do-/Wish- List**
@@ -47,4 +46,3 @@ Changelog
 - FieldValue Type for different data sources
 - Add Records to other external records (e.g. a fe_user gets an additional tab with the form)
 - Generators, that run, when a record is saved to modify the information that is stored
-- Force Variable Type (e.g. int,bool) of Template Variable 'GET'
