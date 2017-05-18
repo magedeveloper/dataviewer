@@ -26,7 +26,6 @@ class GetPostUtility
 	{
 		$variable = htmlspecialchars($variable);
 		$variable = strip_tags($variable);
-		$variable = GeneralUtility::quoteJSvalue($variable);
 
 		return $variable;
 	}
@@ -41,7 +40,6 @@ class GetPostUtility
 	{
 		$variable = htmlspecialchars($variable);
 		$variable = strip_tags($variable);
-		$variable = GeneralUtility::quoteJSvalue($variable);
 
 		return $variable;
 	}
