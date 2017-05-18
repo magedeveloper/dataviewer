@@ -494,7 +494,6 @@ class RecordRepository extends AbstractRepository
 		else
 		{
 			$searchField = $fieldId;
-			$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 		}
 
 		/*
@@ -518,18 +517,22 @@ class RecordRepository extends AbstractRepository
 		
 		switch($filterCondition)
 		{
-			case "eq":
+			case "eq":	
+				$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 				$cond = "{$searchField} = {$filterValue}"."";
 				break;
 			case "neq":
+				$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 				$cond = "{$searchField} != {$filterValue}"."";
 				break;
 			case "like":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
+				$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 				$cond = "{$searchField} LIKE {$filterValue}"."";
 				break;
 			case "nlike":
 				if(strpos($filterValue, "%") === false) $filterValue = "%{$filterValue}%";
+				$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 				$cond = "{$searchField} NOT LIKE {$filterValue}"."";
 				break;
 			case "in":
@@ -555,6 +558,7 @@ class RecordRepository extends AbstractRepository
 				$cond = "{$searchField} <= {$filterValue}"."";
 				break;
 			case "fis":
+				$filterValue =  $this->quote($filterValue, "tx_dataviewer_domain_model_recordvalue");
 				$cond = "FIND_IN_SET({$filterValue}, {$searchField}) > 0 "."";
 				break;
 			case "between":
@@ -605,6 +609,5 @@ class RecordRepository extends AbstractRepository
 		$connection = $this->_getConnection($table);
 		return $connection->quoteIdentifier($str);
 	}
-	
 
 }
