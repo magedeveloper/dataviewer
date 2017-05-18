@@ -753,7 +753,7 @@ class RecordController extends AbstractController
 		gte			>=			{(int)$var}					->greaterThanOrEqual
 		lte			<=			{(int)$var}					->lessThanOrEqual
 		 ****************************************************************************************************/
-		if(true ||$this->settings["debug"] == 1)
+		if($this->settings["debug"] == 1)
 		{
 			$statement = $this->recordRepository->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 			$this->view->assign("statement", $statement);
@@ -1033,7 +1033,7 @@ class RecordController extends AbstractController
 		// Individual session key
 		$uid = $this->_getContentUid();
 		$this->sessionServiceContainer->setTargetUid($uid);
-
+		
 		$cObj = $this->configurationManager->getContentObject();
 		if ($cObj instanceof \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer)
 			$this->view->assign("cObj", $cObj->data);
