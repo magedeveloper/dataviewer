@@ -28,6 +28,11 @@ Changelog
 - [TASK] Using ConnectionPool instead of GLOBALS['TYPO3_DB']
 - [TASK] New Editor Field for adding an editor to your forms. (Supports html,php,javascript,typoscript,css,sparql)
 - [TASK] Casting/Evaluating Variable Type for GET/POST Variables
+- [TASK] Using DataMapper directly in the findByAdvancedConditions Method
+- [TASK] Created ValueFactory for faster generation of the value elements
+- [BUGFIX] Added correct indexes on tx_dataviewer_domain_model_recordvalue
+
+
 
 
 **To-Do-/Wish- List**
