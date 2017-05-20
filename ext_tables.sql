@@ -68,7 +68,7 @@ CREATE TABLE tx_dataviewer_domain_model_datatype (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -125,7 +125,7 @@ CREATE TABLE tx_dataviewer_domain_model_field (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -175,8 +175,9 @@ CREATE TABLE tx_dataviewer_domain_model_fieldvalue (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
+	KEY field (field),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -221,8 +222,9 @@ CREATE TABLE tx_dataviewer_domain_model_record (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
+	KEY datatype (datatype),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -263,7 +265,8 @@ CREATE TABLE tx_dataviewer_domain_model_recordvalue (
 	l10n_diffsource mediumblob,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid),
+	KEY record (record),
+	KEY field (field),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
   KEY language (l10n_parent,sys_language_uid)
 
