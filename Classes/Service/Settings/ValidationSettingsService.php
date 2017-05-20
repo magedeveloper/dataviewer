@@ -15,7 +15,7 @@ use TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException;
  * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ValidationSettingsService extends PluginSettingsService
+class ValidationSettingsService extends PluginSettingsService implements \TYPO3\CMS\Core\SingletonInterface
 {
 	/**
 	 * Gets all registered fieldtypes

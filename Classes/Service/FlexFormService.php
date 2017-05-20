@@ -11,7 +11,7 @@ namespace MageDeveloper\Dataviewer\Service;
  * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class FlexFormService extends \TYPO3\CMS\Extbase\Service\FlexFormService
+class FlexFormService extends \TYPO3\CMS\Extbase\Service\FlexFormService implements \TYPO3\CMS\Core\SingletonInterface
 {
 	/**
 	 * extractFlexformConfig
