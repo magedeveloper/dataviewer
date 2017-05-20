@@ -2,6 +2,7 @@
 namespace MageDeveloper\Dataviewer\Domain\Model;
 
 use MageDeveloper\Dataviewer\Utility\DebugUtility;
+use MageDeveloper\Dataviewer\Factory\ValueFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\UnknownClassException;
@@ -98,12 +99,13 @@ class Record extends AbstractModel
 	protected $values;
 
 	/**
-	 * Object Manager Instance
+	 * Value Factory
 	 *
-	 * @var ObjectManager
+	 * @var \MageDeveloper\Dataviewer\Factory\ValueFactory
+	 * @inject
 	 */
-	protected $objectManager;
-
+	protected $valueFactory;
+	
 	/**
 	 * __construct
 	 */
@@ -116,16 +118,16 @@ class Record extends AbstractModel
 	/**
 	 * Gets the object manager
 	 *
-	 * @return \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @return MageDeveloper\Dataviewer\Factory\ValueFactory
 	 */
-	public function getObjectManager()
+	public function getValueFactory()
 	{
-		if(!$this->objectManager)
-			$this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+		if(!$this->valueFactory)
+			$this->valueFactory = GeneralUtility::makeInstance(ValueFactory::class);
 
-		return $this->objectManager;
+		return $this->valueFactory;
 	}
-
+	
 	/**
 	 * Initializes all ObjectStorage properties
 	 * Do not modify this method!
@@ -581,49 +583,13 @@ class Record extends AbstractModel
 		if (!$this->getDatatype())
 			return;
 
-		// We initialize the object manager that is needed for building the value
-		$objectManager = $this->getObjectManager();
-
-		/* @var \MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService $fieldtypeSettingsService */
-		$fieldtypeSettingsService = $objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\FieldtypeSettingsService::class);
-
-		// We create a blank value model here that will be filled up in the later steps
-		$value  	= new \MageDeveloper\Dataviewer\Domain\Model\Value();
-		$config		= $fieldtypeSettingsService->getFieldtypeConfiguration($field->getType());
-		$valueClass	= $config->getValueClass();
-
-		// In case the value class doesn't exist, we fallback to our general value class
-		if(!$objectManager->isRegistered($valueClass))
-			$valueClass = \MageDeveloper\Dataviewer\Form\Fieldvalue\General::class;
-
-		/* @var \MageDeveloper\Dataviewer\Form\Fieldvalue\FieldvalueInterface $fieldvalue */
-		$fieldvalue = $objectManager->get($valueClass);
-		$fieldvalue->setField($field);
-		$value->setFieldvalue($fieldvalue);
-
-		$recordValue = $this->getRecordValueByField($field);
-
-		if($recordValue instanceof \MageDeveloper\Dataviewer\Domain\Model\RecordValue)
-		{
-			if($fieldvalue instanceof \MageDeveloper\Dataviewer\Form\Fieldvalue\FieldvalueInterface)
-			{
-				// We need to initialize the fieldvalue with the plain value
-				$fieldvalue->setValue($recordValue->getValueContent());
-			}
-
-		}
-		else
-		{
-			// Temporary RecordValue
-			/* @var \MageDeveloper\Dataviewer\Domain\Model\RecordValue $recordValue */
-			$recordValue = $objectManager->get(\MageDeveloper\Dataviewer\Domain\Model\RecordValue::class);
-			$recordValue->setRecord($this);
-		}
-
-		$value->setRecordValue($recordValue);
-		$value->setField($field);
+		// We can possibly reactivate this and remove it from the ValueFactory
+		// when we found out, what is the best for speed up the process
+		// $recordValue = $this->getRecordValueByField($field);
+		// TODO: evaluate
+		
+		$value 		 = $this->valueFactory->create($field, $this);
 		$this->getValues()->addValue($value);
-
 		return;
 	}
 

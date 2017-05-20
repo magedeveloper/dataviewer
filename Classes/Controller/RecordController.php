@@ -121,13 +121,13 @@ class RecordController extends AbstractController
 		$cachedIds = null;
 		if($lifetime > 0)
 			$cachedIds = $cache->get($cacheIdentifier);
-			
+
 		if(is_array($cachedIds))
 		{
 			$cached = true;
 			// We get the valid record ids from the cache
 			$ids = $cachedIds;
-			$selectedRecords = $this->recordRepository->findByRecordIds($ids, $this->storagePids);
+			$selectedRecords = $this->recordRepository->findByUids($ids);
 		}
 		else
 		{
@@ -141,7 +141,7 @@ class RecordController extends AbstractController
 
 			$cache->set($cacheIdentifier, $ids, ["records"], $lifetime);
 		}
-		
+
 		// We set these records as currently active and valid
 		$this->pluginCacheService->setValidRecordIds($cacheIdentifier, $ids);
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($ids);
@@ -150,7 +150,6 @@ class RecordController extends AbstractController
 		$templateSwitch = $this->getTemplateSwitch();
 		if($templateSwitch)
 			$this->view->setTemplatePathAndFilename($templateSwitch);
-
 
 		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
 		$this->view->assign("cached", $cached);
@@ -161,7 +160,7 @@ class RecordController extends AbstractController
 		$this->performCustomHeaders($customHeaders);
 
 		$rendered = $this->view->render();
-
+		
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
 			echo $rendered;
@@ -760,26 +759,6 @@ class RecordController extends AbstractController
 		}
 
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
-		$records = null;
-		$validRecordIds = array_column($validRecords, "uid");
-
-		if(!empty($validRecordIds))
-			$records = $this->recordRepository->findByRecordIds($validRecordIds, $this->storagePids);
-
-		/* @var \MageDeveloper\Dataviewer\Domain\Model\Record $_record */
-		$selectedRecordIds = [];
-		if($records)
-		{
-			foreach ($records as $_record)
-			{
-				//$_record->initializeValues();
-				$selectedRecordIds[] = $_record->getUid();
-			}
-		}
-		else
-		{
-			$records = [];
-		}
 
 		//////////////////////////////////////////////////////
 		// Signal-Slot for post-processing selected records //
@@ -788,12 +767,12 @@ class RecordController extends AbstractController
 			__CLASS__,
 			"postProcessSelectedRecords",
 			[
-				&$records,
+				&$validRecords,
 				&$this,
 			]
 		);
 
-		return $records;
+		return $validRecords;
 	}
 
 	/**
