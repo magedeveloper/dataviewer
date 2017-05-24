@@ -22,17 +22,16 @@ Changelog
 - [BUGFIX] Installed extension without configuration caused missing template errors in backend
 - [BUGFIX] DataViewer Logo in Toolbar Item was not shown under certain circumstances
 - [TASK] Rewriting uploadFolder values with correct structure
-- [TASK] Variables also can now be created directly in the Record Plugin
+- [FEATURE] Variables also can now be created directly in the Record Plugin
 - [TASK] Quoting in RecordRepository
 - [TASK] Removed usage of deprecated methods/settings
 - [TASK] Using ConnectionPool instead of GLOBALS['TYPO3_DB']
-- [TASK] New Editor Field for adding an editor to your forms. (Supports html,php,javascript,typoscript,css,sparql)
-- [TASK] Casting/Evaluating Variable Type for GET/POST Variables
+- [FEATURE] New Editor Field for adding an editor to your forms. (Supports html,php,javascript,typoscript,css,sparql)
+- [FEATURE] Casting/Evaluating Variable Type for GET/POST Variables
 - [TASK] Using DataMapper directly in the findByAdvancedConditions Method
 - [TASK] Created ValueFactory for faster generation of the value elements
 - [BUGFIX] Added correct indexes on tx_dataviewer_domain_model_recordvalue
-
-
+- [FEATURE] Filter-Plugin has now the option to show or hide active filters
 
 
 **To-Do-/Wish- List**
