@@ -178,6 +178,9 @@
             <trans-unit id="flexform.filter_field_none">
                 <source>No filtering. Resets the filter on selection.</source>
             </trans-unit>
+            <trans-unit id="flexform.show_active_filters">
+                <source>Show Active Filters</source>
+            </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
             </trans-unit>

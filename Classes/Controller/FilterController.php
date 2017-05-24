@@ -57,6 +57,7 @@ class FilterController extends AbstractController
 	{
 		$filters = $this->_getFilters();
 		$activeFilters = $this->filterSessionService->getSelectedOptions();
+		$showActiveFilters = $this->filterSettingsService->getShowActiveFilters();
 
 		// Inject fields
 		$this->_injectFields($filters);
@@ -71,6 +72,7 @@ class FilterController extends AbstractController
 
 		$this->view->assign("filters", $filters);
 		$this->view->assign("activeFilters", $activeFiltersGrouped);
+		$this->view->assign("showActiveFilters", $showActiveFilters);
 		$this->view->assign("targetUid", $this->filterSettingsService->getTargetContentUid());
 	}
 

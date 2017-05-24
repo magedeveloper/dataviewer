@@ -40,6 +40,16 @@
                             </config>
                         </TCEforms>
                     </settings.target_plugin>
+                    <settings.show_active_filters>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.show_active_filters</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.show_active_filters>
                     <settings.field_filter>
                         <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fields_filter</title>
                         <section>1</section>

@@ -230,6 +230,10 @@
                 <source>No filtering. Resets the filter on selection.</source>
                 <target>Kein Filter. Entfernt aktiven Filter bei Auswahl.</target>
             </trans-unit>
+            <trans-unit id="flexform.show_active_filters">
+                <source>Show Active Filters</source>
+                <target>Aktive Filter anzeigen</target>
+            </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
                 <target>Label</target>

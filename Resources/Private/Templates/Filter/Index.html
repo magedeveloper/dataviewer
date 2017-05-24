@@ -6,30 +6,33 @@
 		.tx-dataviewer-filter { padding:10px 0; }
 	</style>
 
-	<f:if condition="{activeFilters}">
-		<div class="tx-dataviewer-active-filters">
-			<f:for each="{activeFilters}" as="fieldGroup">
-				<legend>
-					<f:translate key="active_filters" />
+	<f:if condition="{showActiveFilters}">
+		<f:comment>-- Show Active Filters --</f:comment>
+		<f:if condition="{activeFilters}">
+			<div class="tx-dataviewer-active-filters">
+				<f:for each="{activeFilters}" as="fieldGroup">
+					<legend>
+						<f:translate key="active_filters" />
 						<div class="tx-dataviewer-filters-reset pull-right">
 							<f:link.action action="reset" class="btn btn-xs btn-default" arguments="{targetUid:targetUid}"><f:translate key="reset" /></f:link.action>
 						</div>
-				</legend>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">{fieldGroup.field.frontendLabel}</h3>
+					</legend>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">{fieldGroup.field.frontendLabel}</h3>
+						</div>
+						<ul class="list-group">
+							<f:for each="{fieldGroup.filters}" as="activeFilter">
+								<li class="list-group-item">
+									<f:render partial="Filter/ActiveFilterRenderer" arguments="{filter:activeFilter,targetUid:targetUid}" />
+								</li>
+							</f:for>
+						</ul>
 					</div>
-					<ul class="list-group">
-						<f:for each="{fieldGroup.filters}" as="activeFilter">
-							<li class="list-group-item">
-								<f:render partial="Filter/ActiveFilterRenderer" arguments="{filter:activeFilter,targetUid:targetUid}" />
-							</li>
-						</f:for>
-					</ul>
-				</div>
-			</f:for>
+				</f:for>
 
-		</div>
+			</div>
+		</f:if>
 	</f:if>
 	<f:if condition="{filters}">
 		<div class="tx-dataviewer-filters">
