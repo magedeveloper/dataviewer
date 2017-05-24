@@ -162,8 +162,8 @@ class Record extends AbstractModel
 	 */
 	public function getValueByFieldId($fieldId)
 	{
-		$values = $this->getValues();
-		return $values->getValueByFieldId($fieldId);
+		$field = $this->getFieldById($fieldId);
+		return $this->getValueByField($field);
 	}
 
 	/**
@@ -174,8 +174,32 @@ class Record extends AbstractModel
 	 */
 	public function getValueByField(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
 	{
-		$id = $field->getUid();
-		return $this->getValueByFieldId($id);
+		$this->initializeValue($field);
+
+		$values = $this->getValues();
+		$value = $values->getValueByFieldId($field->getUid());
+
+		return $value;
+	}
+
+	/**
+	 * Gets a field by id
+	 *
+	 * @param $fieldId
+	 * @return bool
+	 */
+	public function getFieldById($fieldId)
+	{
+		if ($this->fields)
+		{
+			foreach ($this->fields as $_field)
+			{
+				if($_field->getUid() == $fieldId)
+					return $_field;
+			}
+		}
+
+		return false;
 	}
 
 	/**
