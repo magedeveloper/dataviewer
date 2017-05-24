@@ -36,7 +36,7 @@ div.dataviewer-record .callout							{ border:0px !important; padding:10px; }
 div.dataviewer-record hr								{ color:#c0c0c0; background-color: #c0c0c0; }
 
 div.dataviewer-record .tab-content                      { border:1px solid transparent; background-color:#fafafa; border-top:0; padding: 10px;  }
-div.dataviewer-record .nav-tabs                         { background-color: #ffffff; border-bottom:1px solid #cecece; padding:0; }
+div.dataviewer-record .nav-tabs                         { background-color: transparent !important; border-bottom:1px solid #cecece; padding:0; }
 div.dataviewer-record .nav-tabs li.t3js-tabmenu-item    { margin-left:0px !important; margin-right:2px; margin-top: -2px; }
 div.dataviewer-record .nav-tabs li.t3js-tabmenu-item.active>a{ color:#000; background-color:#FAFAFA; border-bottom:1px solid #FAFAFA; }
 div.dataviewer-record .nav-tabs>li.t3js-tabmenu-item>a  { color:#666; border:1px solid #cecece; background-color: #f2f2f2; }
