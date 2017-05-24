@@ -3,7 +3,7 @@
 .. _multiselect:
 
 .. image:: ../../Images/Fieldtype/multiselect.gif
-   :align: left
+
 
 MultiSelect
 -----------
@@ -17,8 +17,13 @@ Screenshot
 
 .. image:: ../../Images/fieldtype_multiselect.jpg
 
+.. image:: ../../Images/multiselect_checkbox.jpg
+
 Additional Configuration Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+renderType
+   Select the render type of the field
 
 minitems
    Minimum of items that can be selected
