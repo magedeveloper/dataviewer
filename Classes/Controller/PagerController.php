@@ -121,7 +121,7 @@ class PagerController extends RecordController
 			
 		if($endRecordNumber == 0 && $perPage == 0)
 			$endRecordNumber = $recordCount;
-			
+
 		$this->view->assign("selectedPage", $selectedPage);
 		$this->view->assign("nextPage", $nextPage);
 		$this->view->assign("previousPage", $previousPage);
@@ -141,7 +141,7 @@ class PagerController extends RecordController
 		
 		$compactMode = $this->pagerSettingsService->isCompactMode();
 		$this->view->assign("compactMode", $compactMode);
-		
+
 		if($compactMode === true)
 		{
 			$leftRightPagesCount = $this->pagerSettingsService->getLeftRightPagesCount();
@@ -164,7 +164,6 @@ class PagerController extends RecordController
 		
 			$this->view->assign("leftright", $leftRightPagesCount);
 		}
-		
 	}
 
 	/**
@@ -183,7 +182,7 @@ class PagerController extends RecordController
 		{
 			$this->pagerSessionService->setSelectedPage((int)$page);
 		}
-		
+
 		if(!is_null($perPage))
 		{
 			$perPageOptions = $this->pagerSettingsService->getPerPageFields();
