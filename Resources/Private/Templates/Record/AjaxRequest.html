@@ -1,58 +1,23 @@
 {namespace dataviewer = MageDeveloper\Dataviewer\ViewHelpers}
 
-<f:layout name="Default" />
+<f:layout name="Blank" />
 <f:section name="main">
 
-	<f:if condition="{settings.debug} == 1">
-		<f:then>
-			<style type="text/css">
-				hr { color:#c0c0c0; background-color:#c0c0c0; height:1px; border:0; }
-				.extbase-debugger { margin:20px 0 !important; font-weight: normal !important; }
-				.extbase-debugger em { color:greenyellow; }
-				.extbase-debugger strong { font-weight:600 !important; }
-				.dv-logo { margin-top:20px; }
-			</style>
+	<script type="text/javascript">
+		jQuery(function($) {
+			var request{cObj.uid} = new DataViewerAjaxRequest({cObj.uid});
+			request{cObj.uid}.bindOn(window);
+			request{cObj.uid}.setLoader('div#dataviewer-loader-{cObj.uid}')
+			request{cObj.uid}.setTarget('div#dataviewer-result-{cObj.uid}');
+			request{cObj.uid}.setOnEvent('load');
+			request{cObj.uid}.setUrl('{f:uri.action(action:'ajaxResponse',arguments:'{uid:cObj.uid}',pageType:100444)->f:format.raw()}');
+			request{cObj.uid}.bind();
+		});
+	</script>
 
-			<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text.png" alt="MageDeveloper DataViewer" class="dv-logo" />
-
-			<div class="extbase-debugger extbase-debugger-inline">
-				<div class="extbase-debugger-top">Template Settings</div>
-				<div class="extbase-debugger-center">
-
-					This template has the following variables:
-					<br />
-					<br />
-					<strong>Main Usage:</strong>
-					<hr />
-					<span class="extbase-debug-type">&#123;records&#125;</span> to access the result with all records.<br />
-
-					<br />
-
-					<strong>Other Variables:</strong>
-					<hr />
-					<span class="extbase-debug-type">&#123;cObj&#125;</span> to get information about the current content object.<br />
-
-
-				</div>
-			</div>
-
-			<f:debug inline="1" title="Variable 'records'">{records}</f:debug>
-
-			<div class="extbase-debugger extbase-debugger-inline">
-				<div class="extbase-debugger-top">SQL Statement</div>
-				<div class="extbase-debugger-center">
-					<pre>{statement}</pre>
-				</div>
-			</div>
-
-			<f:debug inline="1" title="All Variables">{_all}</f:debug>
-		</f:then>
-		<f:else>
-			<f:comment>-- Ajax Request Handling --</f:comment>
-			<h2>dataviewer-result-{cObj.uid}:</h2>
-			<div id="dataviewer-result-{cObj.uid}">
-			</div>
-		</f:else>
-	</f:if>
-
+	<div id="dataviewer-loader-{cObj.uid}" style="display:none;">
+		<f:render partial="Ajax/Loading" arguments="{_all}" />
+	</div>
+	<div id="dataviewer-result-{cObj.uid}"></div>
+	
 </f:section>

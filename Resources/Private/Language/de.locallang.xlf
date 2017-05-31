@@ -162,6 +162,10 @@
                 <source>Variable Injection</source>
                 <target>Variablen hinzufügen</target>
             </trans-unit>
+            <trans-unit id="flexform.inline_variable_injection">
+                <source>Direct inject Variables</source>
+                <target>Variablen direkt hinzufügen</target>
+            </trans-unit>
             <trans-unit id="flexform.generate_output">
                 <source>Generated Output as Record Value to the Database</source>
                 <target>Generierte Ausgabe der Datenbank als Eintrag hinzufügen</target>
@@ -567,8 +571,8 @@
                 <target>Dynamische Einzelansicht</target>
             </trans-unit>
             <trans-unit id="plugin_type.ajax_request">
-                <source>Ajax Request Listener (alpha)</source>
-                <target>Ajax Abfrageempfänger (alpha)</target>
+                <source>Ajax Record List</source>
+                <target>Ajax Datensatzliste</target>
             </trans-unit>
             <trans-unit id="plugin_type.search">
                 <source>Search Form</source>
@@ -2011,7 +2015,10 @@
                 <source>please donate</source>
                 <target>spenden Sie bitte</target>
             </trans-unit>
-
+            <trans-unit id="ajax.loading">
+                <source>Loading ...</source>
+                <target>Wird geladen ...</target>
+            </trans-unit>
 
         </body>
     </file>

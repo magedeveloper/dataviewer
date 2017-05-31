@@ -529,8 +529,8 @@
                                 <type>input</type>
                                 <size>4</size>
                                 <placeholder>10</placeholder>
-                                <default>0</default>
-                                <eval>required,int</eval>
+                                <default></default>
+                                <eval></eval>
                             </config>
                         </TCEforms>
                     </settings.number_of_records>
@@ -694,6 +694,7 @@
                     <settings.render_only_template>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.render_only_template</label>
+                            <displayCond>FIELD:general_settings.switchableControllerActions:!=:Record->ajaxRequest</displayCond>
                             <config>
                                 <checkbox>1</checkbox>
                                 <type>check</type>

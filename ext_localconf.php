@@ -24,6 +24,7 @@ if (!is_array($TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["datavie
 	$TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["dataviewer_cache"]["options"]["compression"] = 1;
 }
 
+
 /***********************************
  * Dataviewer Plugins
  * =================================
@@ -94,7 +95,7 @@ if (!is_array($TYPO3_CONF_VARS["SYS"]["caching"]["cacheConfigurations"]["datavie
 	'MageDeveloper.'.$_EXTKEY,
 	"Record",
 	["Record" => "index, list, detail, dynamicDetail, part, ajaxRequest, ajaxResponse"], // Cached
-	["Record" => "index, list, ajaxRequest, ajaxResponse"], // UnCached
+	["Record" => "index, list"], // UnCached
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_PLUGIN
 );
 
