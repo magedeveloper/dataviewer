@@ -242,6 +242,16 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['GLOBAL']['extTablesInclusion-PostProc
  */
 $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][] = 'MageDeveloper\\Dataviewer\\Hooks\\ToolbarItem';
 
+
+
+/***********************************
+ * RealUrl Configuration
+ ***********************************/
+$GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["ext/realurl/class.tx_realurl_autoconfgen.php"]["extensionConfiguration"][$_EXTKEY] = \MageDeveloper\Dataviewer\RealUrl\RealUrlConfiguration::class ."->getRealUrlConfiguration";
+//$GLOBALS["TYPO3_CONF_VARS"]["SC_OPTIONS"]["ext/realurl/class.tx_realurl_autoconfgen.php"]["extensionConfiguration"][$_EXTKEY] = "EXT:dataviewer/Classes/RealUrl/RealUrlConfiguration.php:MageDeveloper\\Dataviewer\\RealUrl\\RealUrlConfiguration->getRealUrlConfiguration";
+
+
+
 /***********************************
  * Backend Stuff
  ***********************************/
