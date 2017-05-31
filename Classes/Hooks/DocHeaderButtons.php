@@ -4,6 +4,7 @@ namespace MageDeveloper\Dataviewer\Hooks;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -94,7 +95,7 @@ class DocHeaderButtons
 		/* @var \MageDeveloper\Dataviewer\Fluid\View\StandaloneView $view */
 		$view 		= $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
 
-		$datatypes = $this->datatypeRepository->findAllOnPid($currentPageId);
+		$datatypes = $this->datatypeRepository->findAllOnPid($currentPageId, ["sorting" => QueryInterface::ORDER_ASCENDING]);
 		if($datatypes)
 		{
 			foreach($datatypes as $_datatype)
