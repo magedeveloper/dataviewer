@@ -1,5 +1,0 @@
-<f:for each="{formValue.values}" as="value">
-    <f:if condition="{value.content}">
-        <f:link.external uri="{dv:request.baseUrl()}{value.content.publicUrl}" target="{formValue.field.linkTarget}"><f:render partial="Field/Format/Image/Value" arguments="{formValue:formValue,value:value}" /></f:link.external>
-    </f:if>
-</f:for>
