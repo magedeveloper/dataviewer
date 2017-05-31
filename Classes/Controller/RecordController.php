@@ -160,7 +160,7 @@ class RecordController extends AbstractController
 		$this->performCustomHeaders($customHeaders);
 
 		$rendered = $this->view->render();
-		
+
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
 			echo $rendered;
@@ -393,6 +393,7 @@ class RecordController extends AbstractController
 		// We obtain the cache lifetime from the configuration
 		$lifetime = $this->listSettingsService->getCacheLifetime();
 		$cachedIds = $this->pluginCacheService->getValidRecordIds($cacheIdentifier);
+		
 		if(is_array($cachedIds))
 		{
 			$ids = $cachedIds;	// We get the valid record ids from the cache
@@ -420,6 +421,7 @@ class RecordController extends AbstractController
 		$customHeaders = $this->getCustomHeaders();
 		$this->performCustomHeaders($customHeaders);
 
+	
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
 			echo $this->view->render();
@@ -437,18 +439,9 @@ class RecordController extends AbstractController
 	 */
 	public function ajaxRequestAction()
 	{
-		$contentUid = $this->_getContentUid();
-		$selectedRecords = $this->_getSelectedRecords();
-
-		$templateSwitch = $this->getTemplateSwitch();
-		if($templateSwitch)
-			$this->view->setTemplatePathAndFilename($templateSwitch);
-
-		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
-		$this->view->assign("ajax", false);
-		$rendered = $this->view->render();
-
-		return "<div id=\"dataviewer-ajax-{$contentUid}\">".$rendered."</div>";
+		// This is a plain forwarder to the first introduction
+		// of the ajax response action, so the initial records
+		// will also be loaded through ajax
 	}
 
 	/**
@@ -463,12 +456,6 @@ class RecordController extends AbstractController
 	 */
 	public function ajaxResponseAction()
 	{
-		// TODO: hookable method for evaluating records that will be
-		// injected to the selected templates as chosen in ajaxRequestAction.
-		// --------------------------------------------------------------------
-		// We need a ViewHelper that can run the Ajax Request by
-		// click, change, keyUp (all configurable) and adds parameters to
-		// the call
 		if($this->request->hasArgument("uid"))
 		{
 			/* @var \MageDeveloper\Dataviewer\Service\FlexFormService $flexFormService */
@@ -529,9 +516,10 @@ class RecordController extends AbstractController
 				]
 			);
 
-			$view->assign("records", $records);
+			$view->assign($this->listSettingsService->getRecordsVarName(), $records);
 			$view->assign("ajax", 1);
 			$view->assign("parameters", $parameters);
+			$view->assign("cObj", $cObj);
 
 			if(!empty($additionalVariables))
 				$view->assignMultiple($additionalVariables);
@@ -757,7 +745,7 @@ class RecordController extends AbstractController
 			$statement = $this->recordRepository->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 			$this->view->assign("statement", $statement);
 		}
-
+		
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $this->storagePids);
 
 		//////////////////////////////////////////////////////
@@ -979,21 +967,21 @@ class RecordController extends AbstractController
 		{
 			return false;
 		}
-		
+
 		/* @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
 		$query = GeneralUtility::makeInstance(ConnectionPool::class)
-						->getQueryBuilderForTable("tt_content");
-		
+			->getQueryBuilderForTable("tt_content");
+
 		$query->select("uid")
-			  ->from("tt_content")
-			  ->where("list_type = 'dataviewer_sort'")
-			  ->andWhere($query->expr()->eq("hidden", "0"))
-			  ->andWhere($query->expr()->eq("deleted", "0"))
-			  ->andWhere("pi_flexform RLIKE '<field index=\"settings.target_plugin\">.*<value index=\"vDEF\">{$uid}</value>.*</field>'")
+			->from("tt_content")
+			->where("list_type = 'dataviewer_sort'")
+			->andWhere($query->expr()->eq("hidden", "0"))
+			->andWhere($query->expr()->eq("deleted", "0"))
+			->andWhere("pi_flexform RLIKE '<field index=\"settings.target_plugin\">.*<value index=\"vDEF\">{$uid}</value>.*</field>'")
 		;
-		
+
 		$rows = $query->execute()->fetchAll();
-		
+
 		return (count($rows)>0);
 	}
 
@@ -1012,7 +1000,7 @@ class RecordController extends AbstractController
 		// Individual session key
 		$uid = $this->_getContentUid();
 		$this->sessionServiceContainer->setTargetUid($uid);
-		
+
 		$cObj = $this->configurationManager->getContentObject();
 		if ($cObj instanceof \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer)
 			$this->view->assign("cObj", $cObj->data);
@@ -1090,11 +1078,11 @@ class RecordController extends AbstractController
 		if($includeVariables === true)
 		{
 			$pids = $this->storagePids;
-		
+
 			// Merging with template variables from the current page
 			if(is_int($GLOBALS["TSFE"]->id))
 				$pids[] = $GLOBALS["TSFE"]->id;
-		
+
 			$variables = $this->variableRepository->findByStoragePids($pids);
 			$ids = [];
 
