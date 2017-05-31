@@ -32,7 +32,11 @@ Changelog
 - [TASK] Created ValueFactory for faster generation of the value elements
 - [BUGFIX] Added correct indexes on tx_dataviewer_domain_model_recordvalue
 - [FEATURE] Filter-Plugin has now the option to show or hide active filters
-
+- [BUGFIX] Initialization of language in FormController (#15)
+- [TASK] Limitation of records in Record Plugin is now numeric, 0 and <empty value for all records>
+- [TASK] Overhauled of the Ajax Request in Record Plugin
+- [BUGFIX] Form Plugin Redirects had a wrong record parameter
+- [TASK] Sorting of Datatype Icons in the Docheader is now made by sorting of Datatypes
 
 **To-Do-/Wish- List**
 
