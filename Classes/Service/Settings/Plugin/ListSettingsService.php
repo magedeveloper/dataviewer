@@ -242,12 +242,12 @@ class ListSettingsService extends PluginSettingsService
 	 */
 	public function getLimitation()
 	{
-		$limit = (int)$this->getSettingByCode("number_of_records");
+		$limit = $this->getSettingByCode("number_of_records");
 		
-		if($limit > 0)
-			return $limit;
-			
-		return null;	
+		if(!is_null($limit) && !is_numeric($limit))
+			$limit = null;
+		
+		return $limit;
 	}
 
 	/**
