@@ -127,4 +127,24 @@ class FieldRepository extends AbstractRepository
 			$query->equals("variable_name", $variableName)
 		)->execute()->getFirst();
 	}
+
+	/**
+	 * Finds fields by a given datatype
+	 *
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype
+	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByDatatype(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype)
+	{
+		$fields = $datatype->getFields();
+		$ids = [];
+		foreach($fields as $_field)
+			$ids[] = $_field->getUid();
+
+		$query = $this->createQueryWithSettings(true, true, false);
+		return $query->matching(
+			$query->in("uid", $ids)
+		)->execute();
+	}
+
 }

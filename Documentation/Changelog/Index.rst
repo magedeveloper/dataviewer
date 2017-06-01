@@ -37,6 +37,7 @@ Changelog
 - [TASK] Overhauled of the Ajax Request in Record Plugin
 - [BUGFIX] Form Plugin Redirects had a wrong record parameter
 - [TASK] Sorting of Datatype Icons in the Docheader is now made by sorting of Datatypes
+- [BUGFIX] Loading sequence of fields restricted rendering of fluid fields
 
 **To-Do-/Wish- List**
 

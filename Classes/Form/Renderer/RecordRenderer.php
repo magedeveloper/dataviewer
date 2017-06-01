@@ -194,9 +194,14 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		///////////////////////////////////////////////////////////////////////
 		// FIELD RENDERING
 		///////////////////////////////////////////////////////////////////////
+
+		// We need to do this to ignore the retrieval sequence for the fields in the datatype
+		// so fluid fields will work everywhere
+		$fields = $this->fieldRepository->findByDatatype($datatype);
+		
 		$tabConfigurationArray = $datatype->getTabConfigurationArray();
 		$renderedFields = []; $bottomParts = []; $topParts = [];
-		foreach($datatype->getFields() as $_field)
+		foreach($fields as $_field)
 		{
 			$this->fieldRenderer->setField($_field);
 		
