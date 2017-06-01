@@ -318,6 +318,6 @@ class Field
 	 */
 	protected function _getFieldLabel(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
 	{
-		return "[{$field->getPid()}] " . strtoupper($field->getType()) . ": " . $field->getFrontendLabel();
+		return "[{$field->getPid()}] " . strtoupper($field->getType()) . ": " . $field->getFrontendLabel() . " {".$field->getCode()."}";
 	}
 }

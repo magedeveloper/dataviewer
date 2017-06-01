@@ -59,7 +59,7 @@ class Field
 				$pid = $field->getPid();
 				$code = $field->getCode();
 				$label = ($field->getFrontendLabel())?$field->getFrontendLabel():"[".Locale::translate("no_label")."]";
-				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $label . "";
+				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $label . " {".$code."}";
 			}
 
 		}
