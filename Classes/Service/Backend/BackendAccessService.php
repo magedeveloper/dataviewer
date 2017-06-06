@@ -25,7 +25,7 @@ class BackendAccessService
 	public function getLogoUrl()
 	{
 		// Default Logo
-		$logo = "EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text.png";
+		$logo = "EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text_sm.png";
 
 		if($customLogo = $this->_getBackendUser()->getTSConfigVal('options.dataviewer.customLogo'))
 			$logo = $customLogo;
