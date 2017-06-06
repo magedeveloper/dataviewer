@@ -38,6 +38,7 @@ Changelog
 - [BUGFIX] Form Plugin Redirects had a wrong record parameter
 - [TASK] Sorting of Datatype Icons in the Docheader is now made by sorting of Datatypes
 - [BUGFIX] Loading sequence of fields restricted rendering of fluid fields
+- [BUGFIX] Saving values into RTE Field in Frontend Environment now works correctly
 
 **To-Do-/Wish- List**
 
