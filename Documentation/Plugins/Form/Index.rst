@@ -113,3 +113,11 @@ Link to Delete a Record
 
 	{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
 	<dv:record.link record="{record}" pid="{formPageId}" action="delete" controller="Form" extension="Dataviewer" plugin="Form">Delete {record.title}</dv:record.link>
+
+
+Displaying Flash Messages on redirected pages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: html
+
+	<f:flashMessages queueIdentifier="extbase.flashmessages.tx_dataviewer_form" />
