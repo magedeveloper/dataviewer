@@ -26,8 +26,10 @@ class Group extends AbstractFieldtype implements FieldtypeInterface
 	 */
 	public function initializeFormDataProviders()
 	{
+		$this->formDataProviders[] = \MageDeveloper\Dataviewer\Form\FormDataProvider\InitBackendUser::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaColumnsProcessFieldLabels::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaGroup::class;
+		$this->formDataProviders[] = \MageDeveloper\Dataviewer\Form\FormDataProvider\UnsetBackendUser::class;
 		parent::initializeFormDataProviders();
 	}
 
