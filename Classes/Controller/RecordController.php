@@ -636,8 +636,13 @@ class RecordController extends AbstractController
 				$additionalCacheParameters["pid"]=$contentObj->data["pid"];
 			}
 
+			$variableIds = implode("-", $this->listSettingsService->getSelectedVariableIds());
+			$get = md5(serialize(GeneralUtility::_GET()));
+
 			$key = json_encode($filters) .
 				json_encode($additionalCacheParameters) .
+				$variableIds .
+				$get .
 				$limit .
 				$perPage .
 				$selectedPage .
