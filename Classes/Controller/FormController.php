@@ -229,7 +229,7 @@ class FormController extends AbstractController
 		$this->persistenceManager->persistAll();
 
 		$actionName = "index";
-		$controllerName = "Record";
+		$controllerName = (is_null($redirectPid))?null:"Record";
 		$extensionName = null;
 		$arguments = ["record" => $record];
 		
@@ -292,7 +292,7 @@ class FormController extends AbstractController
 		$this->addFlashMessage($message, null, AbstractMessage::ERROR);
 
 		$actionName = "index";
-		$controllerName = null;
+		$controllerName = (is_null($redirectPid))?null:"Record";
 		$extensionName = null;
 		$arguments = ["record" => $record];
 		
