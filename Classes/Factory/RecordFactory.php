@@ -6,7 +6,11 @@ use MageDeveloper\Dataviewer\Domain\Model\Datatype;
 use MageDeveloper\Dataviewer\Domain\Model\RecordValue;
 use MageDeveloper\Dataviewer\Domain\Model\Field;
 use MageDeveloper\Dataviewer\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Charset\CharsetConverter;
+use TYPO3\CMS\Core\Resource\DuplicationBehavior;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Utility\EidUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -53,7 +57,7 @@ class RecordFactory implements SingletonInterface
 
 	/**
 	 * Record DataHandler
-	 * 
+	 *
 	 * @var \MageDeveloper\Dataviewer\DataHandling\DataHandler\Record
 	 * @inject
 	 */
@@ -61,14 +65,14 @@ class RecordFactory implements SingletonInterface
 
 	/**
 	 * Validation Errors
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $validationErrors = array();
 
 	/**
 	 * Gets the validation errors
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getValidationErrors()
@@ -99,25 +103,25 @@ class RecordFactory implements SingletonInterface
 
 		// Initiate a new record model
 		$record = $this->objectManager->get(Record::class);
-		
+
 		if(!$datatype instanceof Datatype)
 			$datatype = $this->datatypeRepository->findByUid($fieldArray["datatype"], false);
 
 		// Setting the datatype to the record
 		$record->setDatatype($datatype);
-		
+
 		if(isset($fieldArray["pid"]) && is_numeric($fieldArray["pid"]))
 		{
 			$record->setPid($fieldArray["pid"]);
-			unset($fieldArray["pid"]);		
+			unset($fieldArray["pid"]);
 		}
-		
+
 		// Traverse the data into the relevant fieldId=>value information
 		if ($traverse)
 			$traversedFieldArray = $this->traverseFieldArray($fieldArray, $datatype);
 		else
 			$traversedFieldArray = $fieldArray;
-			
+
 		// Check for validation errors
 		$this->validationErrors = $this->recordDataHandler->validateFieldArray($traversedFieldArray, $datatype);
 
@@ -127,7 +131,7 @@ class RecordFactory implements SingletonInterface
 
 		if(empty($this->validationErrors) || $forceCreation)
 			$result = $this->recordDataHandler->processRecord($traversedFieldArray, $record);
-		
+
 		return $record;
 	}
 
@@ -202,7 +206,8 @@ class RecordFactory implements SingletonInterface
 			"tablenames" 	=> "tx_dataviewer_domain_model_record",
 			"uid_foreign" 	=> $record->getUid,
 			"fieldname" 	=> $field->getUid(),
-			"pid" 			=> $record->getPid(),
+			"cruser_id"		=> 0, // No user
+			"pid" 			=> 0, // $record->getPid()
 		);
 
 		$data["tx_dataviewer_domain_model_record"][$record->getUid()] = [
@@ -210,6 +215,8 @@ class RecordFactory implements SingletonInterface
 		];
 
 		$dataHandler->start($data, []);
+		$dataHandler->admin = true;
+		$dataHandler->userid = 0;
 		$dataHandler->process_datamap();
 
 		$id = $dataHandler->substNEWwithIDs[$newId];
@@ -229,6 +236,8 @@ class RecordFactory implements SingletonInterface
 	 * Traverses a given fieldarray and combines the values with
 	 * the correct field ids
 	 *
+	 * @oaram array $fieldArray
+	 * @param Datatype $datatype
 	 * @return array
 	 */
 	public function traverseFieldArray(array $fieldArray = array(), Datatype $datatype)

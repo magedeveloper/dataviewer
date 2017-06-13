@@ -30,13 +30,11 @@ class Rte extends Text
 	{
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\PageTsConfig::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\InitializeProcessedTca::class;
-		$this->formDataProviders[] = \MageDeveloper\Dataviewer\Form\FormDataProvider\InitBackendUser::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseEffectivePid::class;
 
 		if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
 			$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaText::class;
 
-		$this->formDataProviders[] = \MageDeveloper\Dataviewer\Form\FormDataProvider\UnsetBackendUser::class;	
 		parent::initializeFormDataProviders();
 	}
 
