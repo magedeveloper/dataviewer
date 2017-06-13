@@ -140,25 +140,26 @@ class RecordListHeader implements RecordListHookInterface
 		];
 
 		$pid = $parentObject->pageRow["uid"];
-		
-		// We get all datatypes from records on this page and
-		// use their fields to fill the sort by options
-		$datatypes = $this->datatypeRepository->findAllOfRecordsOnPid([$pid]);
-		
-		foreach($datatypes as $_datatype)
-		{
-			/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
-			$fields = $_datatype->getFields();
 
-			// Adding the fields to the sortBy Options
-			if(count($fields))
+		if($pid > 0)
+		{
+			// We get all datatypes from records on this page and
+			// use their fields to fill the sort by options
+			$datatypes = $this->datatypeRepository->findAllOfRecordsOnPid([$pid]);
+
+			foreach($datatypes as $_datatype)
 			{
-				foreach($fields as $_field)
+				/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
+				$fields = $_datatype->getFields();
+
+				// Adding the fields to the sortBy Options
+				if(count($fields))
 				{
-					$label = "[{$_field->getPid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
-					// $sortByOptions[$_field->getUid()] = $label;
-					// We cant use this anymore, because of the restrictions on creating subselects
-					// See #80874
+					foreach($fields as $_field)
+					{
+						$label = "[{$_field->getPid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
+						$sortByOptions[$_field->getUid()] = $label;
+					}
 				}
 			}
 		}
