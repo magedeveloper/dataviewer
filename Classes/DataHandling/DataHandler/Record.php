@@ -79,6 +79,13 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	protected $tempColumns = [];
 
 	/**
+	 * Id of the main record
+	 *
+	 * @var int
+	 */
+	protected $mainRecordUid = 0;
+
+	/**
 	 * Constructor
 	 *
 	 * @return Record
@@ -401,6 +408,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
+
+		if(!$this->mainRecordUid)
+			$this->mainRecordUid = $id;
 		
 		// Storing the fieldArray to the session to prefill form values for easier modifying
 		$this->recordValueSessionService->store($id, $incomingFieldArray);
@@ -529,7 +539,12 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		if (isset($this->saveData[$id]) && is_array($this->saveData[$id]))
 		{
 			$recordSaveData = reset($this->saveData[$id]);
-			$result 		= $this->processRecord($recordSaveData, $record);
+
+			// Adding the parent id, if the record is not our main record
+			if($id != $this->mainRecordUid)
+				$recordSaveData["parent"] = $this->mainRecordUid;
+
+			$result   = $this->processRecord($recordSaveData, $record);
 			$message  = Locale::translate("record_not_saved");
 			$severity = FlashMessage::ERROR;
 

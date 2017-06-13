@@ -39,6 +39,7 @@ Changelog
 - [TASK] Sorting of Datatype Icons in the Docheader is now made by sorting of Datatypes
 - [BUGFIX] Loading sequence of fields restricted rendering of fluid fields
 - [BUGFIX] Saving values into RTE Field in Frontend Environment now works correctly
+- [FEATURE] Parent Record is now attached on inline records and is available through {record.parent}
 
 **To-Do-/Wish- List**
 

@@ -85,6 +85,13 @@ class Record extends AbstractModel
 	protected $hidden = FALSE;
 
 	/**
+	 * Parent Record
+	 *
+	 * @var \MageDeveloper\Dataviewer\Domain\Model\Record
+	 */
+	protected $parent = NULL;
+
+	/**
 	 * _languageUid
 	 * @var int
 	 */
@@ -479,6 +486,27 @@ class Record extends AbstractModel
 	public function getHidden()
 	{
 		return $this->hidden;
+	}
+
+	/**
+	 * Returns the parent record
+	 *
+	 * @return \MageDeveloper\Dataviewer\Domain\Model\Record $parent
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * Sets the parent record
+	 *
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $parent
+	 * @return void
+	 */
+	public function setParent(\MageDeveloper\Dataviewer\Domain\Model\Record $parent)
+	{
+		$this->parent = $parent;
 	}
 
 	/**

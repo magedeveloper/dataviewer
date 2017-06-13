@@ -1,4 +1,4 @@
-#
+
 # Table structure for table 'cf_dataviewer_cache'
 #
 CREATE TABLE cf_dataviewer_cache (
@@ -195,6 +195,7 @@ CREATE TABLE tx_dataviewer_domain_model_record (
   record_values int(11) unsigned DEFAULT '0' NOT NULL,
   icon varchar(255) DEFAULT '' NOT NULL,
   is_valid tinyint(1) unsigned DEFAULT '0' NOT NULL,
+  parent int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
