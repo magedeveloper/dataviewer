@@ -65,7 +65,7 @@ class FieldtypeSettingsService extends PluginSettingsService implements \TYPO3\C
 	 */
 	public function getFieldtypesConfiguration()
 	{
-		if($this->fieldtypesConfigRepository->count())
+		if($this->fieldtypesConfigRepository && $this->fieldtypesConfigRepository->count())
 			return $this->fieldtypesConfigRepository;
 	
 		$this->fieldtypesConfig = $this->getConfiguration("fieldtypes");
