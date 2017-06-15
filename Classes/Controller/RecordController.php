@@ -620,7 +620,7 @@ class RecordController extends AbstractController
 
 			if(is_null($perPage)) $perPage = $this->listSettingsService->getPerPage();
 
-			if(!$this->sessionServiceContainer->getSortSessionService()->hasOrderings() || !$this->_hasTargetSortPlugin())
+			if(!$this->sessionServiceContainer->getSortSessionService()->hasOrderings() || !$this->_hasTargetPlugin("dataviewer_sort"))
 			{
 				// We initally set orderings from our plugin settings and will use
 				// information from the sort plugin later, once it was used
@@ -673,6 +673,14 @@ class RecordController extends AbstractController
 
 		// Pager
 		$perPage		= $this->sessionServiceContainer->getPagerSessionService()->getPerPage();
+
+		// Session has no pager settings, so we take the default setting from the plugin settings
+		if(!$perPage)
+		{
+			$perPage	= $this->listSettingsService->getPerPage();
+			$this->sessionServiceContainer->getSortSessionService()->setPerPage($perPage);
+		}
+		
 		$selectedPage	= $this->sessionServiceContainer->getPagerSessionService()->getSelectedPage();
 		if(is_null($selectedPage) || !$selectedPage) $selectedPage = 1;
 
@@ -684,19 +692,17 @@ class RecordController extends AbstractController
 		if($perPage && $selectedPage > 0)
 			$limit = "$page,{$perPage}";
 
-		if(!$this->_hasTargetSortPlugin() || !$this->sessionServiceContainer->getSortSessionService()->hasOrderings())
+		if(!$this->_hasTargetPlugin("dataviewer_sort") || !$this->sessionServiceContainer->getSortSessionService()->hasOrderings())
 		{
 			// If this plugin has no sorting plugin that is targeting to this plugin,
 			// we can set the default sorting settings to the plugin settings
 			$sortField	= $this->listSettingsService->getSortField();
 			$sortOrder	= $this->listSettingsService->getSortOrder();
-			$perPage	= $this->listSettingsService->getPerPage();
 
 			$this->sessionServiceContainer->getSortSessionService()->setSortField($sortField);
 			$this->sessionServiceContainer->getSortSessionService()->setSortOrder($sortOrder);
-			$this->sessionServiceContainer->getSortSessionService()->setPerPage($perPage);
 		}
-
+		
 		$sortField		= $this->sessionServiceContainer->getSortSessionService()->getSortField();
 		$sortOrder		= $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
 
@@ -959,9 +965,10 @@ class RecordController extends AbstractController
 	 * Checks if there is a sort plugin, that is
 	 * targeting to this element and is active
 	 *
+	 * @param string $listType
 	 * @return bool
 	 */
-	protected function _hasTargetSortPlugin()
+	protected function _hasTargetPlugin($listType)
 	{
 		if($this->listSettingsService->isForcedSorting())
 			return false;
@@ -979,7 +986,7 @@ class RecordController extends AbstractController
 
 		$query->select("uid")
 			->from("tt_content")
-			->where("list_type = 'dataviewer_sort'")
+			->where("list_type = '{$listType}'")
 			->andWhere($query->expr()->eq("hidden", "0"))
 			->andWhere($query->expr()->eq("deleted", "0"))
 			->andWhere("pi_flexform RLIKE '<field index=\"settings.target_plugin\">.*<value index=\"vDEF\">{$uid}</value>.*</field>'")
