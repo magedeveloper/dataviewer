@@ -7,6 +7,13 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
+ * This ViewHelpers filters given records by a field value condition
+ * Usage:
+ *
+ * {dv:filter.records(records:movies,field:'length',value:'120',condition:'gte')}
+ */
+
+/**
  * MageDeveloper Dataviewer Extension
  * -----------------------------------
  *
@@ -24,12 +31,14 @@ class RecordsByFiltersViewHelper extends AbstractFilterViewHelper
 	 * @param array $filters Conditions
 	 * @param string $sortField The Sort Field
 	 * @param string $sortOrder Sort Order
+	 * @param string $limit Limit
+	 * @param array $storagePids Storage Pids
 	 * @throws \TYPO3\CMS\Extbase\Object\InvalidObjectException
 	 * @return array
 	 */
-	public function render(array $filters, $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING)
+	public function render(array $filters, $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [])
 	{
-		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, null, []);
+		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $storagePids);
 		return $validRecords;
 	}
 }
