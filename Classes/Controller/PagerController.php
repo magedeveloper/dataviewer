@@ -215,9 +215,11 @@ class PagerController extends RecordController
 			// Setting the storage pids of the target plugin
 			$storagePids = GeneralUtility::trimExplode(",", $record["pages"]);
 			$this->storagePids = $storagePids;
+
 			
 			// Retrieving the settings of the target plugin
-			$targetSettings = $this->_getSettingsOfTargetPlugin();
+			$targetUid = $this->pagerSettingsService->getTargetContentUid();
+			$targetSettings = $this->_getSettingsOfTargetPlugin($targetUid);
 			
 			// We need to create the List Settings Service here and inject the Target Plugin Settings
 			// to receive the correct settings
@@ -247,7 +249,8 @@ class PagerController extends RecordController
 	 */
 	protected function _getTargetSetting($setting)
 	{
-		$settings = $this->_getSettingsOfTargetPlugin();
+		$targetUid = $this->pagerSettingsService->getTargetContentUid();
+		$settings = $this->_getSettingsOfTargetPlugin($targetUid);
 		
 		if(isset($settings[$setting]))
 			return $settings[$setting];
@@ -258,11 +261,11 @@ class PagerController extends RecordController
 	/**
 	 * Gets the settings of the target plugin
 	 * 
+	 * @param int $targetUid Uid of the target plugin
 	 * @return array
 	 */
-	protected function _getSettingsOfTargetPlugin()
+	protected function _getSettingsOfTargetPlugin($targetUid)
 	{
-		$targetUid = $this->pagerSettingsService->getTargetContentUid();
 		$record = BackendUtility::getRecord("tt_content", $targetUid);
 		
 		if(is_array($record) && isset($record["uid"]))
