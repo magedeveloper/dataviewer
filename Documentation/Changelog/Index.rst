@@ -7,7 +7,6 @@
         
         .. _donate now: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HQP7AJZXJEWMQ&item_name=DataViewer-Support
 
-
 Changelog
 ---------
 
@@ -41,6 +40,7 @@ Changelog
 - [BUGFIX] Saving values into RTE Field in Frontend Environment now works correctly
 - [FEATURE] Parent Record is now attached on inline records and is available through {record.parent}
 - [BUGFIX] Backend User is now temporarily initialized in the FormController
+- [BUGFIX] Default PerPage Setting on initial session is now working
 
 **To-Do-/Wish- List**
 
