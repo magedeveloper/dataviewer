@@ -123,9 +123,9 @@ class Record extends AbstractModel
 	}
 
 	/**
-	 * Gets the object manager
+	 * Gets the value factory
 	 *
-	 * @return MageDeveloper\Dataviewer\Factory\ValueFactory
+	 * @return \MageDeveloper\Dataviewer\Factory\ValueFactory
 	 */
 	public function getValueFactory()
 	{
@@ -197,9 +197,10 @@ class Record extends AbstractModel
 	 */
 	public function getFieldById($fieldId)
 	{
-		if ($this->fields)
+		if ($this->getDatatype() && $this->getDatatype()->getFields())
 		{
-			foreach ($this->fields as $_field)
+			$fields = $this->getDatatype()->getFields();
+			foreach ($fields as $_field)
 			{
 				if($_field->getUid() == $fieldId)
 					return $_field;
