@@ -41,6 +41,7 @@ Changelog
 - [FEATURE] Parent Record is now attached on inline records and is available through {record.parent}
 - [BUGFIX] Backend User is now temporarily initialized in the FormController
 - [BUGFIX] Default PerPage Setting on initial session is now working
+- [FEATURE] Added UserFunc for manipulating TypoScript 
 
 **To-Do-/Wish- List**
 
