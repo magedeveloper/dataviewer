@@ -1,7 +1,6 @@
 <?php
 namespace MageDeveloper\Dataviewer\Service\Settings;
 
-use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService; 
 use MageDeveloper\Dataviewer\Domain\Repository\FieldtypeConfigurationRepository;
 use MageDeveloper\Dataviewer\Domain\Model\FieldtypeConfiguration;
@@ -16,8 +15,30 @@ use MageDeveloper\Dataviewer\Domain\Model\FieldtypeConfiguration;
  * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class FieldtypeSettingsService extends PluginSettingsService
+class FieldtypeSettingsService extends PluginSettingsService implements \TYPO3\CMS\Core\SingletonInterface
 {
+	/**
+	 * Registered Fieldtypes
+	 * 
+	 * @var array
+	 */
+	protected $registeredFieldtypes = [];
+
+	/**
+	 * Fieldtypes Configuration
+	 * 
+	 * @var array
+	 */
+	protected $fieldtypesConfig = [];
+
+	/**
+	 * Fieldtypes Configuration Repository
+	 * 
+	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldtypeConfigurationRepository
+	 * @inject
+	 */
+	protected $fieldtypesConfigRepository;
+
 	/**
 	 * Gets all registered fieldtypes
 	 *
@@ -25,13 +46,15 @@ class FieldtypeSettingsService extends PluginSettingsService
 	 */
 	public function getRegisteredFieldtypes()
 	{
-		$registeredFieldtypes = [];
-		$fieldtypesConfiguration = $this->getFieldtypesConfiguration();
+		if(empty($this->registeredFieldtypes))
+		{
+			$fieldtypesConfiguration = $this->getFieldtypesConfiguration();
+			foreach($fieldtypesConfiguration as $_ftC)
+				$this->registeredFieldtypes[] = $_ftC->getIdentifier();
+
+		}
 		
-		foreach($fieldtypesConfiguration as $_ftC)
-			$registeredFieldtypes[] = $_ftC->getIdentifier();
-		
-		return $registeredFieldtypes;
+		return $this->registeredFieldtypes;
 	}
 
 	/**
@@ -42,22 +65,25 @@ class FieldtypeSettingsService extends PluginSettingsService
 	 */
 	public function getFieldtypesConfiguration()
 	{
-		$fieldtypesConfiguration = $this->getConfiguration("fieldtypes");
-
-		$fieldtypesRepository = new FieldtypeConfigurationRepository();
-		if (is_array($fieldtypesConfiguration))
+		if($this->fieldtypesConfigRepository && $this->fieldtypesConfigRepository->count())
+			return $this->fieldtypesConfigRepository;
+	
+		$this->fieldtypesConfig = $this->getConfiguration("fieldtypes");
+		
+		$this->fieldtypesConfigRepository = new FieldtypeConfigurationRepository();
+		if (is_array($this->fieldtypesConfig))
 		{
-			foreach($fieldtypesConfiguration as $_fieldtypeIdentifier=>$_fieldtypeConfiguration)
+			foreach($this->fieldtypesConfig as $_fieldtypeIdentifier=>$_fieldtypeConfiguration)
 			{
 				/* @var FieldtypeConfiguration $item */
-				$item = $fieldtypesRepository->getNewItemWithData($_fieldtypeConfiguration);
+				$item = $this->fieldtypesConfigRepository->getNewItemWithData($_fieldtypeConfiguration);
 				$item->setIdentifier(trim($_fieldtypeIdentifier,"."));
-				$fieldtypesRepository->addItem( $item );
+				$this->fieldtypesConfigRepository->addItem( $item );
 			}
 
 		}
-
-		return $fieldtypesRepository;
+		
+		return $this->fieldtypesConfigRepository;
 	}
 
 	/**
@@ -69,8 +95,7 @@ class FieldtypeSettingsService extends PluginSettingsService
 	 */
 	public function getFieldtypeConfiguration($fieldtypeIdentifier)
 	{
-		$fieldtypesConfiguration = $this->getFieldtypesConfiguration();
-		return $fieldtypesConfiguration->findByIdentifier($fieldtypeIdentifier);
+		return $this->getFieldtypesConfiguration()->findByIdentifier($fieldtypeIdentifier);
 	}
-	
+
 }

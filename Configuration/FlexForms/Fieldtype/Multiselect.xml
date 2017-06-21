@@ -14,6 +14,33 @@
                     </config>
                 </TCEforms>
             </info>
+            <renderType>
+                <TCEforms>
+                    <label>renderType</label>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <multiple>0</multiple>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">selectMultipleSideBySide</numIndex>
+                                <numIndex index="1">selectMultipleSideBySide</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">selectCheckBox</numIndex>
+                                <numIndex index="1">selectCheckBox</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">selectSingleBox</numIndex>
+                                <numIndex index="1">selectSingleBox</numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </renderType>
             <minitems>
                 <TCEforms>
                     <label>minitems</label>

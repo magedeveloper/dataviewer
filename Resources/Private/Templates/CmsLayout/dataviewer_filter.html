@@ -15,12 +15,19 @@
 	<f:if condition="{flexform.settings.field_filter}">
 		<f:for each="{flexform.settings.field_filter}" as="fieldFilter" iteration="i">
 			<f:alias map="{field:'{dv:field.get(id:fieldFilter.fields.field_id)}'}">
-				<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}</a> => {fieldFilter.fields.filter_type}
+				<f:if condition="{field.uid}">
+					<f:then>
+						<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}</a> => {fieldFilter.fields.filter_type}
+					</f:then>
+					<f:else>
+						<core:icon identifier="actions-system-tree-search-open" size="small" />&nbsp;[{fieldFilter.fields.field_id}] {field.name}</a> => {fieldFilter.fields.filter_type}
+					</f:else>
+				</f:if>
 			</f:alias>
 			<f:if condition="{i.isLast} != 1">
 				<br />
 			</f:if>
-		</f:for>	
+		</f:for>
 	</f:if>
 </div>
 
@@ -28,12 +35,12 @@
 	<strong><f:translate key="flexform.filter_options" />:</strong><br />
 	<table style="margin-top:10px; word-break: break-word;">
 		<thead>
-			<tr style="border-bottom:1px solid #c0c0c0;">
-				<td width="35%"><strong><f:translate key="tx_dataviewer_domain_model_field" /></strong></td>
-				<td width="35%"><strong><f:translate key="flexform.label" /></strong></td>
-				<td width="25%;"><strong><f:translate key="flexform.value" /></strong></td>
-				<td width="5%"><strong><f:translate key="flexform.condition" /></strong></td>
-			</tr>
+		<tr style="border-bottom:1px solid #c0c0c0;">
+			<td width="35%"><strong><f:translate key="tx_dataviewer_domain_model_field" /></strong></td>
+			<td width="35%"><strong><f:translate key="flexform.label" /></strong></td>
+			<td width="25%;"><strong><f:translate key="flexform.value" /></strong></td>
+			<td width="5%"><strong><f:translate key="flexform.condition" /></strong></td>
+		</tr>
 		</thead>
 		<tbody>
 		<f:if condition="{flexform.settings.filter_options}">
@@ -41,7 +48,14 @@
 				<f:alias map="{field:'{dv:field.get(id:option.fields.field_id)}'}">
 					<tr>
 						<td>
-							<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}</a>
+							<f:if condition="{field.uid}">
+								<f:then>
+									<a href="{dv:backend.editLink(id:field.uid,table:'tx_dataviewer_domain_model_field')}" target="_self"><core:icon identifier="extensions-dataviewer-{field.type}" size="small" />&nbsp;[{field.uid}] {field.frontendLabel}</a>
+								</f:then>
+								<f:else>
+									{option.fields.field_id}</a>
+								</f:else>
+							</f:if>
 						</td>
 						<td>{option.fields.option_name}</td>
 						<td>{option.fields.field_value}</td>

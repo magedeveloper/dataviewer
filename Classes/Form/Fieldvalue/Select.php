@@ -20,15 +20,37 @@ use TYPO3\CMS\Extbase\Object\UnknownClassException;
 class Select extends AbstractFieldvalue implements FieldvalueInterface
 {
 	/**
+	 * Gets the model class for the according
+	 * inline elements
+	 *
+	 * @return string
+	 */
+	public function getModelClass()
+	{
+		return $this->getField()->getConfig("modelClass");
+	}
+
+	/**
+	 * Gets the foreign table for the
+	 * according inline elements
+	 *
+	 * @return string
+	 */
+	public function getForeignTable()
+	{
+		return $this->getField()->getConfig("foreign_table");
+	}
+
+	/**
 	 * Gets an field item by a given id
-	 * 
+	 *
 	 * @param int $id
-	 * @return Record|array
+	 * @return Record|array|null
 	 */
 	public function getItemById($id, $table, $modelClass = null)
 	{
-		$item = $id;
-		if(!is_null($modelClass))
+		$item = null;
+		if(!is_null($modelClass) && $modelClass !== "")
 		{
 			$repoClassName 	= \TYPO3\CMS\Core\Utility\ClassNamingUtility::translateModelNameToRepositoryName($modelClass);
 			if($this->objectManager->isRegistered($repoClassName))
@@ -38,22 +60,32 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 
 				if ($repository instanceof \TYPO3\CMS\Extbase\Persistence\Repository)
 				{
+					/* @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $model */
 					$model = $repository->findByUid($id);
+
 					if ($model instanceof $modelClass)
+					{
 						$item = $model;
-
+					}
 				}
-				
 			}
-
 		}
-		else
+
+		// Try to load an array item
+		if(!$item || is_null($item))
 		{
-			try
+			if($table)
 			{
-				$item = BackendUtility::getRecord($table, $id);
+				try
+				{
+					$item = BackendUtility::getRecord($table, $id, "*", BackendUtility::BEenableFields($table), true);
+				}
+				catch (\Exception $e) {	}
 			}
-			catch (\Exception $e) {	}
+			else
+			{
+				$item = $id;
+			}
 		}
 
 		return $item;
@@ -78,22 +110,22 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$value = $this->getValue();
 		$searchParams = [];
-		
+
 		// If the select box uses a foreign field
 		if($this->getField()->getConfig("foreign"))
 		{
-			$foreignTable = $this->getField()->getConfig("foreign_table");
-		
+			$foreignTable = $this->getForeignTable();
+
 			// We check the tca configuration, if we can find the searchFields field
-			if(isset($GLOBALS["TCA"][$foreignTable]["ctrl"]["searchFields"])) 
+			if(isset($GLOBALS["TCA"][$foreignTable]["ctrl"]["searchFields"]))
 			{
 				$ids = GeneralUtility::trimExplode(",", $value, true);
-				
+
 				foreach($ids as $_id)
 				{
 					$searchParams[] = $_id;
-					
-					$record = BackendUtility::getRecord($foreignTable, $_id);
+
+					$record = BackendUtility::getRecord($foreignTable, $_id, "*", BackendUtility::BEenableFields($foreignTable));
 					if(is_array($record))
 					{
 						$searchFields = $GLOBALS["TCA"][$foreignTable]["ctrl"]["searchFields"];
@@ -102,14 +134,14 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 						$searchParams[] = implode(" ", $searchData);
 					}
 				}
-				
+
 			}
 		}
 		else
 		{
 			$searchParams[] = $value;
 		}
-		
+
 		return implode(",", $searchParams);
 	}
 
@@ -127,14 +159,14 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$value = $this->getValue();
-		$table = $this->getField()->getConfig("foreign_table");
-		$modelClass = $this->getField()->getConfig("modelClass");
+		$table = $this->getForeignTable();
+		$modelClass = $this->getModelClass();
 		$item = $this->getItemById($value, $table, $modelClass);
-		
-		if($item)
-			return $item;
 
-		return $value;
+		if(!$table)
+			return $value;
+
+		return $item;
 	}
 
 	/**
@@ -156,7 +188,7 @@ class Select extends AbstractFieldvalue implements FieldvalueInterface
 			// We check the tca configuration, if we can find the searchFields field
 			if(isset($GLOBALS["TCA"][$foreignTable]["ctrl"]["searchFields"]))
 			{
-				$record = BackendUtility::getRecord($foreignTable, $value);
+				$record = BackendUtility::getRecord($foreignTable, $value, "*", BackendUtility::BEenableFields($foreignTable));
 				if(is_array($record))
 				{
 					$searchFields = $GLOBALS["TCA"][$foreignTable]["ctrl"]["searchFields"];

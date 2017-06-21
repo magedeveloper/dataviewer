@@ -11,6 +11,7 @@ use MageDeveloper\Dataviewer\Domain\Model\RecordValue as RecordValueModel;
 use TYPO3\CMS\Backend\Form\Element\AbstractFormElement as FormElement;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Object\InvalidClassException;
 
 /**
@@ -339,8 +340,8 @@ abstract class AbstractFieldtype
 	protected function _getFlexDefault($flex)
 	{
 		$extKey = \MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration::EXTENSION_KEY;
-		$extPath = ExtensionManagementUtility::extRelPath($extKey);
-
+		$extPath = PathUtility::getAbsoluteWebPath($extKey);
+		
 		$flexFile = $extPath . "Configuration/FlexForms/Defaults/".$flex.".xml";
 
 		if (file_exists($flexFile))
@@ -596,6 +597,8 @@ abstract class AbstractFieldtype
 		// If no record values are found, we need all default values (field values with default setting) for this field
 		// Implode the content of the default values and return them as a string
 		$recordValue = $this->getRecord()->getRecordValueByField($this->getField());
+		
+		
 
 		if ($recordValue instanceof RecordValueModel && $default === false)
 		{
@@ -640,7 +643,7 @@ abstract class AbstractFieldtype
 
 		try {
 
-			$tca                  = $this->buildTca();
+			$tca = $this->buildTca();
 
 		} catch (\Exception $e)
 		{

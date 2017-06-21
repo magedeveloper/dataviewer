@@ -319,7 +319,7 @@ class FieldRenderer extends AbstractRenderer implements RendererInterface
 		// data-toggle="tooltip" data-html="true" data-placement="top" data-title="{$this->getField()->getDescription()}"
 		
 		$wrapped = "";
-		$wrapped .= "<div class=\"dataviewer-field {$this->getField()->getColumnWidth()}\">";
+		$wrapped .= "<div class=\"dataviewer-field dataviewer-field-{$this->getField()->getCode()} {$this->getField()->getColumnWidth()}\">";
 
 		// Header
 		if ($this->getField()->getShowTitle())

@@ -121,7 +121,7 @@ class PagerController extends RecordController
 			
 		if($endRecordNumber == 0 && $perPage == 0)
 			$endRecordNumber = $recordCount;
-			
+
 		$this->view->assign("selectedPage", $selectedPage);
 		$this->view->assign("nextPage", $nextPage);
 		$this->view->assign("previousPage", $previousPage);
@@ -141,7 +141,7 @@ class PagerController extends RecordController
 		
 		$compactMode = $this->pagerSettingsService->isCompactMode();
 		$this->view->assign("compactMode", $compactMode);
-		
+
 		if($compactMode === true)
 		{
 			$leftRightPagesCount = $this->pagerSettingsService->getLeftRightPagesCount();
@@ -164,7 +164,6 @@ class PagerController extends RecordController
 		
 			$this->view->assign("leftright", $leftRightPagesCount);
 		}
-		
 	}
 
 	/**
@@ -183,7 +182,7 @@ class PagerController extends RecordController
 		{
 			$this->pagerSessionService->setSelectedPage((int)$page);
 		}
-		
+
 		if(!is_null($perPage))
 		{
 			$perPageOptions = $this->pagerSettingsService->getPerPageFields();
@@ -216,9 +215,11 @@ class PagerController extends RecordController
 			// Setting the storage pids of the target plugin
 			$storagePids = GeneralUtility::trimExplode(",", $record["pages"]);
 			$this->storagePids = $storagePids;
+
 			
 			// Retrieving the settings of the target plugin
-			$targetSettings = $this->_getSettingsOfTargetPlugin();
+			$targetUid = $this->pagerSettingsService->getTargetContentUid();
+			$targetSettings = $this->_getSettingsOfTargetPlugin($targetUid);
 			
 			// We need to create the List Settings Service here and inject the Target Plugin Settings
 			// to receive the correct settings
@@ -248,7 +249,8 @@ class PagerController extends RecordController
 	 */
 	protected function _getTargetSetting($setting)
 	{
-		$settings = $this->_getSettingsOfTargetPlugin();
+		$targetUid = $this->pagerSettingsService->getTargetContentUid();
+		$settings = $this->_getSettingsOfTargetPlugin($targetUid);
 		
 		if(isset($settings[$setting]))
 			return $settings[$setting];
@@ -259,11 +261,11 @@ class PagerController extends RecordController
 	/**
 	 * Gets the settings of the target plugin
 	 * 
+	 * @param int $targetUid Uid of the target plugin
 	 * @return array
 	 */
-	protected function _getSettingsOfTargetPlugin()
+	protected function _getSettingsOfTargetPlugin($targetUid)
 	{
-		$targetUid = $this->pagerSettingsService->getTargetContentUid();
 		$record = BackendUtility::getRecord("tt_content", $targetUid);
 		
 		if(is_array($record) && isset($record["uid"]))

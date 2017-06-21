@@ -34,7 +34,7 @@ class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 	/**
 	 * Render Method
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function render()
 	{

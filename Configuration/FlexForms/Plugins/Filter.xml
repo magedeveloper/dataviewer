@@ -11,7 +11,6 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-
                     <settings.logo>
                         <TCEforms>
                             <label></label>
@@ -21,7 +20,6 @@
                             </config>
                         </TCEforms>
                     </settings.logo>
-
                     <settings.target_plugin>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -42,8 +40,16 @@
                             </config>
                         </TCEforms>
                     </settings.target_plugin>
-
-
+                    <settings.show_active_filters>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.show_active_filters</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                                <default>1</default>
+                            </config>
+                        </TCEforms>
+                    </settings.show_active_filters>
                     <settings.field_filter>
                         <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fields_filter</title>
                         <section>1</section>
@@ -57,10 +63,43 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_filter</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <multiple>0</multiple>
-                                                <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
-                                                <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
-                                                <items type="array"></items>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_record.title</numIndex>
+                                                        <numIndex index="1">RECORD.title</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">ID (uid)</numIndex>
+                                                        <numIndex index="1">RECORD.uid</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="2" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sorting</numIndex>
+                                                        <numIndex index="1">RECORD.sorting</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="3" type="array">
+                                                        <numIndex index="0">LLL:EXT:lang/locallang_mod_file_list.xlf:c_tstamp</numIndex>
+                                                        <numIndex index="1">RECORD.tstamp</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="4" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.crdate</numIndex>
+                                                        <numIndex index="1">RECORD.crdate</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="5" type="array">
+                                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:labels.starttime</numIndex>
+                                                        <numIndex index="1">RECORD.starttime</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="6" type="array">
+                                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:labels.endtime</numIndex>
+                                                        <numIndex index="1">RECORD.endtime</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="7" type="array">
+                                                        <numIndex index="0"></numIndex>
+                                                        <numIndex index="1">--div--</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Field->populateFields</itemsProcFunc>
                                                 <maxitems>1</maxitems>
                                                 <minitems>1</minitems>
                                                 <size>1</size>
@@ -72,6 +111,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_type_dropdown</numIndex>
@@ -108,6 +148,15 @@
                                             </config>
                                         </TCEforms>
                                     </filter_type>
+                                    <name>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_custom_name</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>40</size>
+                                            </config>
+                                        </TCEforms>
+                                    </name>
                                 </el>
                             </fields>
                         </el>
@@ -125,6 +174,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_combination</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">AND ...</numIndex>
@@ -170,10 +220,43 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.according_filter_field</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <multiple>0</multiple>
-                                                <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
-                                                <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
-                                                <items type="array"></items>
+                                                <items type="array">
+                                                    <numIndex index="0" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_record.title</numIndex>
+                                                        <numIndex index="1">RECORD.title</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="1" type="array">
+                                                        <numIndex index="0">ID (uid)</numIndex>
+                                                        <numIndex index="1">RECORD.uid</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="2" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sorting</numIndex>
+                                                        <numIndex index="1">RECORD.sorting</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="3" type="array">
+                                                        <numIndex index="0">LLL:EXT:lang/locallang_mod_file_list.xlf:c_tstamp</numIndex>
+                                                        <numIndex index="1">RECORD.tstamp</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="4" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.crdate</numIndex>
+                                                        <numIndex index="1">RECORD.crdate</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="5" type="array">
+                                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:labels.starttime</numIndex>
+                                                        <numIndex index="1">RECORD.starttime</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="6" type="array">
+                                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:labels.endtime</numIndex>
+                                                        <numIndex index="1">RECORD.endtime</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="7" type="array">
+                                                        <numIndex index="0"></numIndex>
+                                                        <numIndex index="1">--div--</numIndex>
+                                                    </numIndex>
+                                                </items>
+                                                <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Field->populateFields</itemsProcFunc>
                                                 <maxitems>1</maxitems>
                                                 <minitems>1</minitems>
                                                 <size>1</size>
@@ -194,6 +277,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_option_condition</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0"></numIndex>
@@ -243,6 +327,14 @@
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fis</numIndex>
                                                         <numIndex index="1">fis</numIndex>
                                                     </numIndex>
+                                                    <numIndex index="12" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.between</numIndex>
+                                                        <numIndex index="1">between</numIndex>
+                                                    </numIndex>
+                                                    <numIndex index="13" type="array">
+                                                        <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.nbetween</numIndex>
+                                                        <numIndex index="1">nbetween</numIndex>
+                                                    </numIndex>
                                                 </items>
                                                 <minitems>0</minitems>
                                                 <maxitems>1</maxitems>
@@ -264,6 +356,7 @@
                                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field</label>
                                             <config>
                                                 <type>select</type>
+                                                <renderType>selectSingle</renderType>
                                                 <items type="array">
                                                     <numIndex index="0" type="array">
                                                         <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_field_search</numIndex>

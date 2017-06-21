@@ -19,6 +19,13 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 	/**
+	 * Current Content Uid
+	 *
+	 * @var int
+	 */
+	protected $uid = 0;
+	
+	/**
 	 * Plugin Settings Service
 	 *
 	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
@@ -89,6 +96,14 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	 * @inject
 	 */
 	protected $pluginCacheService;
+
+	/**
+	 * Cache Manager
+	 * 
+	 * @var \TYPO3\CMS\Core\Cache\CacheManager
+	 * @inject
+	 */
+	protected $cacheManager;
 	
 	/**
 	 * Gets the extension name
@@ -187,7 +202,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 			if($variable instanceof Variable)
 			{
 				$name = $variable->getVariableName();
-				
+			
 				if(in_array($name, $deniedVariableNames))
 					throw new InvalidArgumentNameException("Variable must not be named '".implode("' or '", $deniedVariableNames)."'!");
 
@@ -214,15 +229,15 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
                             if(is_array($value))
                             {
                                 $value = array_map(function($v) {
-                                    return GeneralUtility::removeXSS($v);
+                                    return \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariableGet($v);
                                 }, $value);
                             }
                             else
                             {
-                                $value = GeneralUtility::removeXSS($value);
+                                $value = \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariableGet($value);
                             }
 
-							$variables[$name] = $value;
+							$variables[$name] = $variable->castType($value);
 						}
 						break;
 					case Variable::VARIABLE_TYPE_POST:
@@ -234,15 +249,15 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
                             if(is_array($value))
                             {
                                 $value = array_map(function($v) {
-                                    return GeneralUtility::removeXSS($v);
+                                    return \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariablePost($v);
                                 }, $value);
                             }
                             else
                             {
-                                $value = GeneralUtility::removeXSS($value);
+                                $value = \MageDeveloper\Dataviewer\Utility\GetPostUtility::secureVariablePost($value);
                             }
                             
-							$variables[$name] = $value;
+							$variables[$name] = $variable->castType($value);
 						}
 						break;
 					case Variable::VARIABLE_TYPE_RECORD:
@@ -300,13 +315,36 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 						$pageRepository = $this->objectManager->get(\TYPO3\CMS\Frontend\Page\PageRepository::class);
 						$variables[$name] = $pageRepository->getPage($variable->getPage());
 						break;
+					case Variable::VARIABLE_TYPE_USERFUNC:
+						$userFunc = $variable->getUserFunc();
+
+						$params = [
+							"parameters" => [
+								"variable" => $variable,
+							],
+						];
+
+						if ($this->request->hasArgument("record"))
+						{
+							$recordUid = $this->request->getArgument("record");
+							$record = $this->recordRepository->findByUid($recordUid, true);
+
+							if(!$record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
+								$record = $recordUid;
+								
+							$params["parameters"]["record"] = $record;	
+						}
+						//$variables[$name] =
+						$userFuncResult = GeneralUtility::callUserFunction($userFunc, $params, $this);
+						$variables[$name] = $userFuncResult;
+						break;
 					case Variable::VARIABLE_TYPE_FIXED:
 					default:
 						$variables[$name] = $variable->getVariableValue();
 						break;
 				}
-			}
-		}
+			} // EO IF
+		} // EO FOREACH
 
 		///////////////////////////////////////////////////////////////////////////
 		// Signal-Slot for manipulating the variables that are added to the view //
@@ -335,10 +373,12 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 		$cObj = $this->configurationManager->getContentObject();
 			
 		if ($cObj instanceof \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer)
+		{
 			$this->view->assign("cObj", $cObj->data);
+			$this->uid = $cObj->data["uid"];
+		}
 
 		$this->view->assign("baseUrl", $GLOBALS["TSFE"]->baseURL);
-
 		parent::initializeView($view); 
 	}
 

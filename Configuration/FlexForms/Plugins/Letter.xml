@@ -3,7 +3,6 @@
         <langDisable>1</langDisable>
     </meta>
     <sheets>
-
         <general_settings>
             <ROOT>
                 <TCEforms>
@@ -11,7 +10,6 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
-
                     <settings.logo>
                         <TCEforms>
                             <label></label>
@@ -21,7 +19,6 @@
                             </config>
                         </TCEforms>
                     </settings.logo>
-
                     <settings.target_plugin>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -42,12 +39,12 @@
                             </config>
                         </TCEforms>
                     </settings.target_plugin>
-
                     <settings.field_id>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_field</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <multiple>0</multiple>
                                 <foreign_table>tx_dataviewer_domain_model_field</foreign_table>
                                 <foreign_table_where>ORDER BY tx_dataviewer_domain_model_field.pid ASC</foreign_table_where>
@@ -71,13 +68,13 @@
                             </config>
                         </TCEforms>
                     </settings.field_id>
-
                     <settings.preselected_letter>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.preselected_letter</label>
                             <config>
                                 <type>select</type>
-                                <multiple>1</multiple>
+                                <renderType>selectSingle</renderType>
+                                <multiple>0</multiple>
                                 <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Letter->populateLetters</itemsProcFunc>
                                 <autosizemax>10</autosizemax>
                                 <items type="array">
@@ -92,7 +89,6 @@
                             </config>
                         </TCEforms>
                     </settings.preselected_letter>
-
                     <settings.clear_on_page_load>
                         <TCEforms>
                             <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.clear_on_page_load</label>
@@ -102,11 +98,8 @@
                             </config>
                         </TCEforms>
                     </settings.clear_on_page_load>
-
                 </el>
             </ROOT>
         </general_settings>
-
-
     </sheets>
 </T3DataStructure> 

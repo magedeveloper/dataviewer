@@ -29,6 +29,7 @@ to create a form as you need it.
    Date/Index
    DateTime/Index
    DynamicInput/Index
+   Editor/Index
    File/Index
    FileRelation/Index
    Flex/Index

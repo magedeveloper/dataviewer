@@ -12,10 +12,8 @@ return [
 		"crdate" => "crdate",
 		"cruser_id" => "cruser_id",
 		"dividers2tabs" => TRUE,
-		"versioningWS" => 2,
+		"versioningWS" => true,
 		"hideTable" => false,
-		"requestUpdate" => "type,table_content,column_name,record",
-		"versioning_followPages" => TRUE,
 		"languageField" => "sys_language_uid",
 		"transOrigPointerField" => "l10n_parent",
 		"transOrigDiffSourceField" => "l10n_diffsource",
@@ -29,33 +27,43 @@ return [
 		"iconfile" => "EXT:dataviewer/Resources/Public/Icons/Domain/Model/Variable.gif",
 	],
 	'interface' => [
-		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, variable_name, session_key, server, page, variable_value, record, field, table_content, column_name, where_clause',
+		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, type, variable_name, session_key, server, page, variable_value, record, field, table_content, column_name, where_clause, user_func',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, type, variable_name, session_key, server, page, variable_value, record, field, table_content, column_name, where_clause, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => [
+			'showitem' => '
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                    logo, type, variable_name, session_key, server, page, variable_value, record, field, table_content, column_name, where_clause, user_func, type_cast,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                    --palette--;;language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                    hidden,--palette--;;timeRestriction
+            ',
+		],
 	],
 	'palettes' => [
-		'1' => ['showitem' => ''],
+		'timeRestriction' => ['showitem' => 'starttime, endtime'],
+		'language' => ['showitem' => 'sys_language_uid, l10n_parent'],
 	],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => [
-					['LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1],
-					['LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0],
 				],
 			],
 		],
 		'l10n_parent' => [
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -72,58 +80,55 @@ return [
 			],
 		],
 		't3ver_label' => [
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
-				'max' => 255,
-			],
+				'max' => 30
+			]
 		],
 		'deleted' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.deleted',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.deleted',
 			'config' => [
 				'type' => 'check',
 			],
 		],
 		'hidden' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
 			'config' => [
 				'type' => 'check',
 			],
 		],
 		'starttime' => [
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
 			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
-				'range' => [
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
-				],
-			],
+				'behaviour' => [
+					'allowLanguageSynchronization' => true,
+				]
+			]
 		],
 		'endtime' => [
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
 			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
 				'range' => [
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
+					'upper' => mktime(0, 0, 0, 1, 1, 2038),
 				],
-			],
+				'behaviour' => [
+					'allowLanguageSynchronization' => true,
+				]
+			]
 		],
 		'logo' => [
 			'exclude' => 1,
@@ -136,6 +141,7 @@ return [
 		'type' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.type',
+			'onChange' => 'reload',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -153,6 +159,7 @@ return [
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.10', 10], // Dynamic Record
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.11', 11], // User Session Variable
 					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.12', 12], // Page Id
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type.13', 13], // User Func
 				],
 				"default" => "0",
 				'size' => 1,
@@ -218,6 +225,17 @@ return [
 				'eval' => 'trim'
 			],
 		],
+		'user_func' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.user_func',
+			'displayCond' => 'FIELD:type:IN:13',
+			'config' => [
+				'type' => 'input',
+				'size' => 30,
+				'eval' => 'required,trim',
+				'placeholder' => 'VendorName\ExtensionName\UserFunc\YourUserFunc->userFuncMethod',
+			],
+		],
 		'page' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.page',
@@ -234,6 +252,7 @@ return [
 		'record' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.record',
+			'onChange' => 'reload',
 			'displayCond' => 'FIELD:type:IN:5,6',
 			'config' => [
 				'type' => 'select',
@@ -266,6 +285,7 @@ return [
 		'table_content' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.table_content',
+			'onChange' => 'reload',
 			'displayCond' => 'FIELD:type:=:7',
 			'config' => [
 				'type' => 'select',
@@ -279,10 +299,12 @@ return [
 		'column_name' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.column_name',
+			'onChange' => 'reload',
 			'displayCond' => 'FIELD:type:=:7',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
+				'enableMultiSelectFilterTextfield' => true,
 				'itemsProcFunc' => "MageDeveloper\\Dataviewer\\UserFunc\\Database->populateColumnsAction",
 				'size' => 3,
 				'maxitems' => 999,
@@ -300,6 +322,29 @@ return [
 				'rows' => 2,
 				'eval' => 'trim',
 				'placeholder' => 'x=\'y\' AND z=\'123\' ORDER BY z ASC',
+			],
+		],
+		'type_cast' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_variable.type_cast',
+			'displayCond' => 'FIELD:type:IN:3,4',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'items' => [
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.0', 0], // No type definition
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.1', 1], // Boolean
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.2', 2], // Integer
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.3', 3], // Float
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.4', 4], // String
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.5', 5], // Array
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.6', 6], // Object
+					['LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:variable_type_cast.7', 7], // NULL
+				],
+				"default" => "0",
+				'size' => 1,
+				'maxitems' => 1,
+				'eval' => 'required'
 			],
 		],
 	],

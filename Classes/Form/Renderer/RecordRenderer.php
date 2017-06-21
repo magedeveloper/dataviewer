@@ -11,6 +11,7 @@ use MageDeveloper\Dataviewer\Domain\Model\Field as Field;
 use MageDeveloper\Dataviewer\Domain\Model\Record as Record;
 use MageDeveloper\Dataviewer\Domain\Model\Datatype as Datatype;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 
@@ -98,7 +99,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		
 		// Id of the record
 		$recordUid = $row["uid"];
-		
 		$datatypeUid = (int)reset($row["datatype"]);
 		
 		// For new record links with given datatype id
@@ -190,12 +190,18 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		if (!$record->hasTitleField())
 			$contentHtml .= $this->renderRecordTitleField($record, str_replace("[record_content]", "", $baseFormName));
 
+
 		///////////////////////////////////////////////////////////////////////
 		// FIELD RENDERING
 		///////////////////////////////////////////////////////////////////////
+
+		// We need to do this to ignore the retrieval sequence for the fields in the datatype
+		// so fluid fields will work everywhere
+		$fields = $this->fieldRepository->findByDatatype($datatype);
+		
 		$tabConfigurationArray = $datatype->getTabConfigurationArray();
 		$renderedFields = []; $bottomParts = []; $topParts = [];
-		foreach($datatype->getFields() as $_field)
+		foreach($fields as $_field)
 		{
 			$this->fieldRenderer->setField($_field);
 		
@@ -220,9 +226,13 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 						$fieldHtml .= $renderResults["html"];
 					
 					$this->formResultCompiler->mergeResult($renderResults);
-					$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
+
+					if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+						$this->formResultCompiler->addCssFiles();
+					else
+						$topParts[$_field->getUid()] = $this->formResultCompiler->JStop();
+
 					$bottomParts[$_field->getUid()] = $this->formResultCompiler->printNeededJSFunctions();
-				
 				}
 			}
 			else
@@ -230,12 +240,12 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 				$message = Locale::translate("field_has_no_field_values", $_field->getFrontendLabel());
 				$fieldHtml .= "<br /><div class=\"alert alert-danger field-error\" role=\"alert\">{$message}</div>";
 			}
-
+			
 			$renderedFields[$_field->getUid()] = $fieldHtml;
 			$this->resetFormResultCompiler();
 
 		} // END FOREACH
-
+		
 		// Prepare Tabs
 		foreach($tabConfigurationArray as $i=>$_tabConfigArr)
 		{
@@ -273,17 +283,35 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 
         $end = microtime(true) - $start;
 
+		// Add stylesheet file to the formResultCompiler
+		$path = GeneralUtility::getFileAbsFileName("EXT:dataviewer/Resources/Public/Css/dataviewer-backend.css");
+		$css = PathUtility::getAbsoluteWebPath($path);
+		$this->formResultCompiler->mergeResult(
+			["stylesheetFiles" => [$css],
+			 "additionalJavaScriptPost" => [],
+			 "additionalJavaScriptSubmit" => [],
+			 "additionalHiddenFields" => [],
+			]
+		);
+
+		$top = "";
+		if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+			$this->formResultCompiler->addCssFiles();
+		else
+			$top = $this->formResultCompiler->JStop();
+		
+
 		// Finalization
 		$html =
 			"<div class=\"dataviewer-record dataviewer-record-{$record->getUid()}\" $backgroundColor>" .
-			$this->renderHeader($datatype)						.
-			$this->formResultCompiler->JStop() 					.
-			implode("\r\n", $topParts)							.
+			$this->renderHeader($datatype)				.
+			$top						 						.
+			implode("\r\n", $topParts)				.
 			"<div class=\"dataviewer-content\">"				.
 			$contentHtml 										.
 			$this->renderTabMenu($tabConfigurationArray, "dataviewer-tabs")	.
 			"</div>"											.
-			implode("\r\n", $bottomParts)						.
+			implode("\r\n", $bottomParts)			.
 			//$this->formResultCompiler->printNeededJSFunctions()	.
 			"<input type=\"hidden\" name=\"{$baseRecordFormName}[datatype]\" value=\"{$datatype->getUid()}\" />".
 			"<div class=\"clear\"></div>"						.
@@ -354,16 +382,6 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 	 */
 	public function renderHeader(Datatype $datatype)
 	{
-		// Add stylesheet file to the formResultCompiler
-		$css = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Css/dataviewer-backend.css";
-		$this->formResultCompiler->mergeResult(
-			["stylesheetFiles" => [$css],
-				  "additionalJavaScriptPost" => [],
-				  "additionalJavaScriptSubmit" => [],
-				  "additionalHiddenFields" => [],
-			]
-		);
-		
 		$header = "";
 		$header .= "<div class=\"dataviewer-header\">";
 		$header .= $this->_getExtensionInformationHtml();
@@ -431,7 +449,7 @@ class RecordRenderer extends AbstractRenderer implements RendererInterface
 		$title .= "<div class=\"dataviewer-record-title\">";
 
 		$recordTitle = $record->getTitle();
-		$titleLabel = Locale::translate("LLL:EXT:lang/locallang_general.xlf:LGL.title");
+		$titleLabel = Locale::translate("LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.title");
 
 		$placeholder = "";
 		

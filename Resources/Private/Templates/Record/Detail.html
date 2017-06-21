@@ -1,6 +1,6 @@
 {namespace dataviewer = MageDeveloper\Dataviewer\ViewHelpers}
 
-<f:layout name="Default" />
+<f:layout name="Blank" />
 <f:section name="main">
 
 	<f:if condition="{settings.debug} == 1">
@@ -14,35 +14,28 @@
 		</style>
 
 		<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text.png" alt="MageDeveloper DataViewer" class="dv-logo" />
-	
+
 		<div class="extbase-debugger extbase-debugger-inline">
 			<div class="extbase-debugger-top">Template Settings</div>
 			<div class="extbase-debugger-center">
-			
-				This template has the following variables:
-				<br />
-				<br />
-				<strong>Main Usage:</strong>
-				<hr />
-				<span class="extbase-debug-type">&#123;record&#125;</span> to access the result with the selected record.<br />
-				
-				<br />
-				
+
 				<strong>Single Record Context:</strong>
 				<hr />
+				<span class="extbase-debug-type">&#123;record.title&#125;</span> to retrieve the record's title.<br />
 				<span class="extbase-debug-type">&#123;record.<em>fieldname</em>.value&#125;</span> to get the direct result of the field.<br />
 				<span class="extbase-debug-type">&#123;record.values&#125;</span> to get an array of all the values (The key is the <em>fieldname</em>).<br />
-	
+
 				<br />
-	
+
 				<strong>Other Variables:</strong>
 				<hr />
+				<span class="extbase-debug-type">&#123;settings&#125;</span> to get an array of the plugin settings.<br />
 				<span class="extbase-debug-type">&#123;cObj&#125;</span> to get information about the current content object.<br />
-	
-	
+
+
 			</div>
 		</div>
-	
+
 		<f:debug inline="1" title="Variable 'record'">{record}</f:debug>
 
 		<div class="extbase-debugger extbase-debugger-inline">
@@ -51,7 +44,7 @@
 				<pre>{statement}</pre>
 			</div>
 		</div>
-		
+
 		<f:debug inline="1" title="All Variables">{_all}</f:debug>
 
 	</f:if>

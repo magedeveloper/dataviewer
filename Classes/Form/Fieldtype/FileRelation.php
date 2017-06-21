@@ -3,6 +3,7 @@ namespace MageDeveloper\Dataviewer\Form\Fieldtype;
 
 use MageDeveloper\Dataviewer\Domain\Model\Field;
 use MageDeveloper\Dataviewer\Domain\Model\RecordValue;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -84,6 +85,20 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 							],
 							"foreign_label" => "uid_local",
 							"foreign_selector" => "uid_local",
+							// New
+							"overrideChildTca" => [
+								"columns" => [
+									"uid_local" => [
+										"config" => [
+											"appearance" => [
+												"elementBrowserType" => "file",
+												"elementBrowserAllowed" => $this->getField()->getConfig("allowed"),
+											],
+										],
+									],
+								],
+							],
+							// Old
 							"foreign_selector_fieldTcaOverride" => [
 								"config" => [
 									"appearance" => [
@@ -138,7 +153,6 @@ class FileRelation extends AbstractFieldtype implements FieldtypeInterface
 		];
 		
 		$this->prepareTca($tca);
-		
 		$this->tca = $tca;
 		return $this->tca;
 	}

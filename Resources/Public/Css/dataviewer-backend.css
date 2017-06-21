@@ -3,7 +3,7 @@ div.clear                                               { clear:both; }
 img.dataviewer-logo										{ height:26px; margin-top:-20px; margin-bottom:-10px; }
 div.dataviewer-record                                   { margin-top:-20px; margin-bottom:-5px; background-color: #fff; padding: 20px; border: 1px solid #ddd; -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.34); }
 div.dataviewer-header h1								{ margin-bottom:0; font-size:22px; padding:0; }
-div.dataviewer-content h1								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:26px; padding: 10px 0 10px 0px; color:#999; }
+div.dataviewer-content h1								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:26px; padding: 0; color:#999; }
 div.dataviewer-content h2								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:22px; padding: 10px 0 10px 0px; color:#999; }
 div.dataviewer-content h3								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:20px; padding: 10px 0 10px 0px; color:#999; }
 div.dataviewer-content h4								{ font-family: Share, Verdana, Arial, Helvetica, sans-serif; margin:0 0 10px 0; font-size:20px; padding: 10px 0 10px 0px; color:#999; border-bottom:2px solid #ccc; }
@@ -36,7 +36,7 @@ div.dataviewer-record .callout							{ border:0px !important; padding:10px; }
 div.dataviewer-record hr								{ color:#c0c0c0; background-color: #c0c0c0; }
 
 div.dataviewer-record .tab-content                      { border:1px solid transparent; background-color:#fafafa; border-top:0; padding: 10px;  }
-div.dataviewer-record .nav-tabs                         { background-color: #ffffff; border-bottom:1px solid #cecece; padding:0; }
+div.dataviewer-record .nav-tabs                         { background-color: transparent !important; border-bottom:1px solid #cecece; padding:0; }
 div.dataviewer-record .nav-tabs li.t3js-tabmenu-item    { margin-left:0px !important; margin-right:2px; margin-top: -2px; }
 div.dataviewer-record .nav-tabs li.t3js-tabmenu-item.active>a{ color:#000; background-color:#FAFAFA; border-bottom:1px solid #FAFAFA; }
 div.dataviewer-record .nav-tabs>li.t3js-tabmenu-item>a  { color:#666; border:1px solid #cecece; background-color: #f2f2f2; }

@@ -9,7 +9,7 @@
                         <type>user</type>
                         <userFunc>MageDeveloper\Dataviewer\UserFunc\Text->displayTemplate</userFunc>
                         <parameters>
-                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Notice.html</template>
+                            <template>EXT:dataviewer/Resources/Private/Templates/FieldConfiguration/Fluid.html</template>
                         </parameters>
                     </config>
                 </TCEforms>
@@ -37,6 +37,7 @@
                     <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.variable_injection</label>
                     <config>
                         <type>select</type>
+                        <renderType>selectMultipleSideBySide</renderType>
                         <multiple>0</multiple>
                         <autosizemax>10</autosizemax>
                         <foreign_table>tx_dataviewer_domain_model_variable</foreign_table>

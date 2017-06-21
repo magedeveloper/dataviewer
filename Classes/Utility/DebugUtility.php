@@ -51,4 +51,25 @@ class DebugUtility
 		$rendered = $view->renderSource($source);
 		return $rendered;
 	}
+
+	/**
+	 * Logs content to a file that will be created in
+	 * the root of the instance and has the current date
+	 * in its name
+	 * 
+	 * @param string $content
+	 * @param bool $clear Clear the file before write
+	 * @return void
+	 */
+	public static function log($content, $clear = false)
+	{
+		$file = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName("".date("Y-m-d")."_dataviewer.log");
+
+		if($clear == true)
+			file_put_contents($file, "");
+	
+		$dateStr = date("Y-m-d H:i:s");
+		file_put_contents($file, "___[{$dateStr}]___".str_repeat("_", 20)."\r\n", FILE_APPEND);
+		file_put_contents($file, $content."\r\n", FILE_APPEND);
+	}
 }

@@ -51,8 +51,12 @@ class Date extends Text
 			],
 			"inlineStructure" => [],
 		];
+		
+		// Compatibility
+		if(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8007000)
+			$tca["processedTca"]["columns"][$fieldName]["config"]["renderType"] = "inputDateTime";
 
-		$this->prepareTca($tca);
+			$this->prepareTca($tca);
 		$this->tca = $tca;
 		return $this->tca;
 	}

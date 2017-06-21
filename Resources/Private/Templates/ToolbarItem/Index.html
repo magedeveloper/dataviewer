@@ -2,7 +2,11 @@
 {namespace dv=MageDeveloper\Dataviewer\ViewHelpers}
 {namespace be=TYPO3\CMS\Beuser\ViewHelpers}
 
-<div class="row" style="min-width:50em;">
+<style type="text/css">
+	li#magedeveloper-dataviewer-hooks-toolbaritem div.dropdown-menu { width:48em !important; }
+</style>
+
+<div class="row" style="margin-bottom:10px;">
 	<div class="col-md-4" style="padding-bottom:10px; overflow-x:hidden; overflow-y: auto;">
 		<ul class="dropdown-list">
 			<li><core:icon identifier="actions-add" size="small" alternativeMarkupIdentifier="inline" />&nbsp;<strong><f:translate key="module.create_record" /></strong></li>
@@ -11,23 +15,25 @@
 			<f:for each="{datatypes}" as="datatype" iteration="i">
 				<f:if condition="{datatype.hideAdd} == 0">
 					<li>
-						<a href="#" onclick="{dv:backend.jumpUrl(link:'{dv:backend.newLink(pid:datatype.pid,table:\'tx_dataviewer_domain_model_record\',datatype:datatype.uid,returnUrl:\'{dv:backend.listLink(id:datatype.pid)}\')}')}"  title="{datatype.name} / Uid: {datatype.uid}" class="dropdown-list-link" style="margin-right: -15px;">
-							<f:if condition="{datatype.icon}">
-								<f:then>
-									<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
-								</f:then>
-								<f:else>
-									<core:icon identifier="extensions-dataviewer-default" size="small" />
-								</f:else>
-							</f:if>
-							&nbsp;{datatype.name}
-						</a>
+						<f:alias map="{link:'{dv:backend.newLink(pid:datatype.pid,table:\'tx_dataviewer_domain_model_record\',datatype:datatype.uid,returnUrl:\'{dv:backend.listLink(id:datatype.pid)}\')}'}">
+							<a href="#" onclick="{dv:backend.jumpUrl(link:link)}" title="{datatype.name} / Uid: {datatype.uid}" class="dropdown-list-link" style="margin-right: -15px;">
+								<f:if condition="{datatype.icon}">
+									<f:then>
+										<core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small" />
+									</f:then>
+									<f:else>
+										<core:icon identifier="extensions-dataviewer-default" size="small" />
+									</f:else>
+								</f:if>
+								&nbsp;{datatype.name}
+							</a>
+						</f:alias>
 					</li>
 				</f:if>
 			</f:for>
 		</ul>
 	</div>
-	<div class="col-md-8" style="max-height: 438px; overflow: hidden;">
+	<div class="col-md-8" style="max-height: 430px; overflow: hidden;">
 		<ul class="dropdown-list">
 			<strong><core:icon identifier="actions-document-history-open" size="small" alternativeMarkupIdentifier="inline" />&nbsp;<f:translate key="backend.latest" /></strong>
 			<li role="separator" class="divider"></li>
@@ -36,35 +42,38 @@
 					<f:for each="{latest}" as="record" iteration="j">
 						<f:alias map="{page:'{dv:page.get(id:record.pid)}'}">
 							<li class="record" data-recordid="{record.uid}">
-								<a onclick="{dv:backend.jumpUrl(link:'{dv:backend.editLink(id:record.uid,table:\'tx_dataviewer_domain_model_record\',returnUrl:\'{dv:backend.listLink(id:record.pid)}\')}')}" class="dropdown-list-link" style="text-align: left; max-width:none !important;">
-									<f:if condition="{record.hidden}">
-										<f:then><core:icon identifier="extensions-dataviewer-{record.datatype.icon}" size="small" overlay="overlay-hidden" /></f:then>
-										<f:else><core:icon identifier="extensions-dataviewer-{record.datatype.icon}" size="small" /></f:else>
-									</f:if>
-									&nbsp;
-									[{record.uid}]&nbsp;{record.title}
-									<br />
-									<small class="text-muted">
-										<f:translate key="page" />:&nbsp;<dv:render.template template="EXT:dataviewer/Resources/Private/Partials/CmsLayout/DoktypeIcon.html" arguments="{doktype:page.doktype}" />&nbsp;[{page.pid}]&nbsp;{page.title}
-									</small>
+								<a href="#" class="pull-right dropdown-list-link-delete dv-record-delete" style="margin:3px;">
+									<core:icon identifier="actions-delete" size="small" alternativeMarkupIdentifier="inline" />
 								</a>
 								<f:if condition="{record.hidden}">
 									<f:then>
 										<f:comment>-- Record is hidden --</f:comment>
-										<a href="#" class="dropdown-list-link-edit dv-record-hide" title="{f:translate(key:'LLL:EXT:lang/locallang_core:labels.show')}">
+										<a href="#" class="pull-right dropdown-list-link-edit dv-record-hide" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:labels.show')}" style="margin:3px;">
 											<core:icon identifier="actions-edit-hide" size="small" alternativeMarkupIdentifier="inline" />
 										</a>
 									</f:then>
 									<f:else>
 										<f:comment>-- Record is visible --</f:comment>
-										<a href="#" class="dropdown-list-link-edit dv-record-hide" title="{f:translate(key:'LLL:EXT:lang/locallang_core:cm.hide')}">
+										<a href="#" class="pull-right dropdown-list-link-edit dv-record-hide" title="{f:translate(key:'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:cm.hide')}" style="margin:3px;">
 											<core:icon identifier="actions-edit-unhide" size="small" alternativeMarkupIdentifier="inline" />
 										</a>
 									</f:else>
 								</f:if>
-								<a href="#" class="dropdown-list-link-delete dv-record-delete">
-									<core:icon identifier="actions-delete" size="small" alternativeMarkupIdentifier="inline" />
-								</a>
+
+								<f:alias map="{link:'{dv:backend.editLink(id:record.uid,table:\'tx_dataviewer_domain_model_record\',returnUrl:\'{dv:backend.listLink(id:record.pid)}\')}'}">
+									<a onclick="{dv:backend.jumpUrl(link:link)}" class="dropdown-list-link" style="text-align: left; max-width:none !important; cursor:pointer;">
+										<f:if condition="{record.hidden}">
+											<f:then><core:icon identifier="extensions-dataviewer-{record.datatype.icon}" size="small" overlay="overlay-hidden" /></f:then>
+											<f:else><core:icon identifier="extensions-dataviewer-{record.datatype.icon}" size="small" /></f:else>
+										</f:if>
+										&nbsp;
+										[{record.uid}]&nbsp;{record.title}
+										<br />
+										<small class="text-muted">
+											<f:translate key="page" />:&nbsp;<f:format.html parseFuncTSPath=""><dv:render.template template="EXT:dataviewer/Resources/Private/Partials/CmsLayout/DoktypeIcon.html" arguments="{doktype:page.doktype}" /></f:format.html>&nbsp;[{page.pid}]&nbsp;{page.title}
+										</small>
+									</a>
+								</f:alias>
 							</li>
 						</f:alias>
 					</f:for>
@@ -89,10 +98,9 @@
 			</f:else>
 		</f:if>
 		<f:if condition="{logoUrl}">
-			<li style="float: right;">
+			<li style="float: right; width:auto !important;">
 				<f:image src="{logoUrl}" height="16" title="DataViewer Extension" />
 			</li>
 		</f:if>
 	</ul>
 </div>
-

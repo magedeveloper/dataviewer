@@ -367,6 +367,23 @@ class Datatype extends AbstractModel
 	}
 
 	/**
+	 * Gets the fields as an approachable
+	 * array
+	 *
+	 * @return array
+	 */
+	public function getApproachableFields()
+	{
+		$approachable = [];
+
+		$fields = $this->fields;
+		foreach($fields as $_field)
+			$approachable[$_field->getCode()] = $_field;
+
+		return $approachable;
+	}
+
+	/**
 	 * Sets the fields
 	 * 
 	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\MageDeveloper\Dataviewer\Domain\Model\Field> $fields

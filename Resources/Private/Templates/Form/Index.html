@@ -1,4 +1,4 @@
-{namespace dataviewer = MageDeveloper\Dataviewer\ViewHelpers}
+{namespace dv = MageDeveloper\Dataviewer\ViewHelpers}
 
 <f:layout name="Default" />
 <f:section name="main">
@@ -6,7 +6,7 @@
 	<f:if condition="{datatype}">
 		<f:then>
 			<f:form action="post" object="{record}" objectName="record" enctype="multipart/form-data">
-				<dataviewer:render.template template="{template}" arguments="{_all}" />
+				<f:format.html parseFuncTSPath=""><dv:render.template template="{template}" arguments="{_all}" /></f:format.html>
 			</f:form>
 		</f:then>
 		<f:else>

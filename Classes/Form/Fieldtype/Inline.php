@@ -40,12 +40,6 @@ class Inline extends AbstractFieldtype implements FieldtypeInterface
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaRecordTitle::class;
 		$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaInline::class;
 
-
-		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexFetch::class;
-		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class;
-		//$this->formDataProviders[] = \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess::class;
-
-		//$this->formDataProviders[] = \MageDeveloper\Dataviewer\Form\FormDataGroup\InlineParentRecord::class;
 		parent::initializeFormDataProviders();
 	}
 	
@@ -78,7 +72,7 @@ class Inline extends AbstractFieldtype implements FieldtypeInterface
 						"config" => [
 							"type" => "inline",
 							"foreign_table" => $this->getField()->getConfig("foreign_table"),
-							"foreign_record_defaults" => $this->getField()->getForeignRecordDefaults(),
+							"overrideChildTca" => $this->getField()->getForeignRecordDefaults(),
 							"maxitems"      => 9999,
 							"appearance" => [
 								"collapseAll" => 1,
@@ -86,19 +80,40 @@ class Inline extends AbstractFieldtype implements FieldtypeInterface
 								"showSynchronizationLink" => 1,
 								"showPossibleLocalizationRecords" => 1,
 								"useSortable" => 1,
-								"showAllLocalizationLink" => 1
+								"showAllLocalizationLink" => 1,
 							],
 						],
 					],
 				],
 			],
 			"inlineStructure" => [],
-			"inlineFirstPid" => ($this->getField()->getConfig("pid_config") > 0)?(int)$this->getField()->getConfig("pid_config"):$this->getRecord()->getPid(),
+			"inlineFirstPid" => $this->getInlineFirstPid(),
 			"inlineResolveExistingChildren" => true,
 			"inlineCompileExistingChildren"=> true,
 		];
+
 		$this->prepareTca($tca);
 		return $tca;
+	}
+
+	/**
+	 * Gets the inline first pid setting
+	 * for determe the pid of which the
+	 * records shall be stored
+	 * 
+	 * @return int
+	 */
+	protected function getInlineFirstPid()
+	{
+		if($this->getField()->getConfig("pid_config") > 0)
+			return (int)$this->getField()->getConfig("pid_config");
+	
+		if($this->getRecord()->getPid() > 0)
+			return $this->getRecord()->getPid();
+	
+		$edit = GeneralUtility::_GET("edit");
+		if(isset($edit["tx_dataviewer_domain_model_record"]))
+			return (int)key($edit["tx_dataviewer_domain_model_record"]);
 	}
 
 	/**

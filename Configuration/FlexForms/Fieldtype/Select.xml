@@ -30,7 +30,8 @@
                     <displayCond>FIELD:foreign:=:1</displayCond>
                     <config>
                         <type>select</type>
-                        <multiple>1</multiple>
+                        <renderType>selectSingle</renderType>
+                        <multiple>0</multiple>
                         <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Database->populateTablesAction</itemsProcFunc>
                         <autosizemax>2</autosizemax>
                         <items type="array">
@@ -70,16 +71,6 @@
                     </config>
                 </TCEforms>
             </foreign_table_where>
-            <suggest_wizard>
-                <TCEforms>
-                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:add_suggest_wizard</label>
-                    <displayCond>FIELD:foreign:=:1</displayCond>
-                    <config>
-                        <checkbox>1</checkbox>
-                        <type>check</type>
-                    </config>
-                </TCEforms>
-            </suggest_wizard>
             <include_field_values_as_options>
                 <TCEforms>
                     <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:include_field_values_as_options</label>

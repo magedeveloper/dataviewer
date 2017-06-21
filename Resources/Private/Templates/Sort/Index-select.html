@@ -1,0 +1,27 @@
+<f:layout name="Default" />
+<f:section name="main">
+
+	<style type="text/css">
+		.dataviewer-sorting { padding:10px 0; }
+	</style>
+
+	<div class="dataviewer-sorting">
+
+		<f:form action="sort">
+			<div class="sort-by">
+				<label for="sortBy"><f:translate key="sort.sort_by" /></label>
+				<f:form.select name="sortBy" id="sort_by" options="{sortByOptions}" additionalAttributes="{onChange:'this.form.submit()'}" value="{sortBy}" />
+			</div>
+			<div class="sort-dir">
+				<label for="tx_dataviewer_sort[sortOrder]"><f:translate key="sort.record_sorting" /></label>
+				<f:form.select name="sortOrder" id="sort_order" options="{
+                    ASC:'{f:translate(key:\'sort.asc\')}',
+                    DESC:'{f:translate(key:\'sort.desc\')}'
+                }" additionalAttributes="{onChange:'this.form.submit()'}" value="{sortOrder}" />
+			</div>
+			<f:form.hidden name="targetUid" value="{targetUid}" />
+		</f:form>
+
+		<div class="clear"></div>
+	</div>
+</f:section>

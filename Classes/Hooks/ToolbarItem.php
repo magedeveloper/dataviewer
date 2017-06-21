@@ -266,6 +266,7 @@ class ToolbarItem implements ToolbarItemInterface
 	{
 		return [
 			"class" => "pull-right",
+			"style" => "width:auto !important;"
 		];
 	}
 

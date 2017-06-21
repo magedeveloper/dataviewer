@@ -79,6 +79,13 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	protected $tempColumns = [];
 
 	/**
+	 * Id of the main record
+	 *
+	 * @var int
+	 */
+	protected $mainRecordUid = 0;
+
+	/**
 	 * Constructor
 	 *
 	 * @return Record
@@ -298,7 +305,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 							$table = "tx_dataviewer_domain_model_record";
 							$destPid = ($field->getConfig("pid_config") > 0)?$field->getConfig("pid_config"):$pid;
 							$exclude = "record_values";
-							
+
 							$newIds = [];
 							foreach($ids as $_id)
 							{
@@ -341,35 +348,43 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$recordValues = $this->recordValueRepository->findByRecordId($id);
 		if ($recordValues && $recordValues->count())
 		{
-
 			// Remove each record value
 			/* @var RecordValueModel $_recordValue */
 			foreach ( $recordValues as $_recordValue )
 			{
-				$_recordValue->setDeleted(true);
-				$this->recordValueRepository->update($_recordValue);
-
-				// We need to check the fieldtype to do certain delete behaviours here
-				switch ($_recordValue->getField()->getType())
+				if($_recordValue->getField() instanceof FieldModel)
 				{
-					case "datatype":
-						$ids = GeneralUtility::trimExplode(",", $_recordValue->getValueContent());
+					// We need to check the fieldtype to do certain delete behaviours here
+					switch ($_recordValue->getField()->getType()) {
+						case "datatype":
+							$ids = GeneralUtility::trimExplode(",", $_recordValue->getValueContent());
 
-						foreach($ids as $_id)
-						{
-							$_record = $this->getRecordById($_id);
-							if($_record)
-							{
-								$_record->setDeleted(true);
-								$this->recordRepository->update($_record);
+							foreach ($ids as $_id) {
+								$_record = $this->getRecordById($_id);
+								if ($_record) {
+									$_record->setDeleted(true);
+									$this->recordRepository->update($_record);
+								}
 							}
-						}
-						break;
-					default:
-						break;
+							break;
+						default:
+							break;
+					}
+
+					$_recordValue->setDeleted(true);
+					$this->recordValueRepository->update($_recordValue);
 				}
 			}
 
+		}
+
+		// Deleting the main record
+		// The record is possibly not existing here
+		$record = $this->getRecordById($id);
+		if($record)
+		{
+			$record->setDeleted(true);
+			$this->recordRepository->update($record);
 		}
 
 		$this->persistenceManager->persistAll();
@@ -394,6 +409,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
 
+		if(!$this->mainRecordUid)
+			$this->mainRecordUid = $id;
+		
 		// Storing the fieldArray to the session to prefill form values for easier modifying
 		$this->recordValueSessionService->store($id, $incomingFieldArray);
 
@@ -465,7 +483,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	public function processDatamap_postProcessFieldArray($status, $table, $id, $fieldArray, &$parentObj)
 	{
 		if ($table != "tx_dataviewer_domain_model_record") return;
-
+		
 		// We need to clear the GLOBALS before database operations because we've injected
 		// a lot of TCA for our needs into them
 		// This is for saving compatibility and removes the 'mess' we've created!
@@ -494,7 +512,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		$this->_substituteRecordValues();
 
 		if ($table != "tx_dataviewer_domain_model_record") return;
-
+		
 		// Disable Versioning
 		//$parentObj->bypassWorkspaceRestrictions = true;
 		//$parentObj->updateModeL10NdiffDataClear = true;
@@ -503,7 +521,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		// Substitute the NEW to Id on all record values and maybe in this array
 		// We need to transform the saved values (NEW<hash>) to already saved ids)
 		$this->_substituteRecordValues();
-
+		
 		// Retrieve clean id
 		$recordId = $this->_getPossibleSubstitutedId($id);
 		$record   = $this->getRecordById($recordId);
@@ -522,16 +540,20 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		{
 			$recordSaveData = reset($this->saveData[$id]);
 
-			$result 		= $this->processRecord($recordSaveData, $record);
+			// Adding the parent id, if the record is not our main record
+			if($id != $this->mainRecordUid)
+				$recordSaveData["parent"] = $this->mainRecordUid;
 
+			$result   = $this->processRecord($recordSaveData, $record);
 			$message  = Locale::translate("record_not_saved");
 			$severity = FlashMessage::ERROR;
 
 			if ($result)
 			{
 				// Language Selector Box compatibility
-				//if(array_key_exists("sys_language_uid", $fieldArray))
-				//	$record->_setProperty("_languageUid", $fieldArray["sys_language_uid"]);
+				// TODO: this has to be reviewed directly
+				if(array_key_exists("sys_language_uid", $fieldArray))
+					$record->_setProperty("_languageUid", $fieldArray["sys_language_uid"]);
 
 				// Save processed data
 				$this->recordRepository->update($record);
@@ -539,7 +561,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 				$message  = Locale::translate("record_was_successfully_saved", [$record->getTitle(), $recordId]);
 				$severity = FlashMessage::OK;
-
+				
 				// We clear the according session data
 				$this->recordValueSessionService->resetForRecordId($id);
 			}
@@ -552,7 +574,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					$this->persistenceManager->persistAll();
 				}
 			}
-
 
 			// We only deliver a message, when 
 			if(!$record->getDatatype()->getHideRecords() || $severity != FlashMessage::OK)
@@ -690,7 +711,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		//////////////////////
 		if(!is_array($recordSaveData))
 			return false;
-
+			
 		$this->_processRecordSaveData($record, $recordSaveData);
 
 		return true;
@@ -707,11 +728,9 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 	{
 		$datatype = $record->getDatatype();
 
-		if($record->hasTitleField())
-			$record->setTitle("");
-
-		if(isset($recordSaveData["title"]))
-			$record->setTitle($recordSaveData["title"]);
+		// Default reset the record title and store the previous title
+		$previousTitle = $record->getTitle(true);
+		$record->setTitle("");
 
 		if(isset($recordSaveData["hidden"]))
 			$record->setHidden((bool)$recordSaveData["hidden"]);
@@ -720,7 +739,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 		// process all uploads
 		///////////////////////////////////////////
 		$this->_processUploads($_FILES);
-
+		
 		///////////////////////////////////////////
 		// We go through all fields of the datatype
 		///////////////////////////////////////////
@@ -734,7 +753,7 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 			/* @var FieldModel $field */
 			$field = $datatype->getFieldById($_fieldId);
-
+			
 			if (!$field instanceof FieldModel)
 				continue;
 
@@ -805,21 +824,31 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 
 				if($field->getType() == "rte")
 				{
-					/* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtypeModel */
-
+				
 					// Initialize transformation:
 					/* @var RteHtmlParser $parseHTML */
 					$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
 					$parseHTML->init("tt_content" . ':' . "bodytext", $record->getPid()); // We imitate a tt_content bodytext field
-					// Perform transformation:
-					//$_value = $parseHTML->RTE_transform($_value, [], 'db', []);
+					// Perform transformation for value -> db:
+					$_value = $parseHTML->TS_transform_db($_value);
 				}
 			}
-
+			
 			$result = $this->_saveRecordValue($record, $field, $_value);
 
 			if (!$result)
 				$overallResult = false;
+
+		}
+
+		if($record->getTitle(true) == "")
+		{
+			// No title was set before, so we check, if a new title can be set from
+			// the recordSaveData
+			if(isset($recordSaveData["title"]))
+				$record->setTitle($recordSaveData["title"]);
+			else
+				$record->setTitle($previousTitle);
 
 		}
 
@@ -834,7 +863,6 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 			// Redirect back to form
 			$this->_redirectRecord($record->getUid());
 		}
-
 	}
 
 	/**

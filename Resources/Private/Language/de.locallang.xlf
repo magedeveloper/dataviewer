@@ -162,6 +162,10 @@
                 <source>Variable Injection</source>
                 <target>Variablen hinzufügen</target>
             </trans-unit>
+            <trans-unit id="flexform.inline_variable_injection">
+                <source>Direct inject Variables</source>
+                <target>Variablen direkt hinzufügen</target>
+            </trans-unit>
             <trans-unit id="flexform.generate_output">
                 <source>Generated Output as Record Value to the Database</source>
                 <target>Generierte Ausgabe der Datenbank als Eintrag hinzufügen</target>
@@ -173,6 +177,10 @@
             <trans-unit id="flexform.label_field">
                 <source>Field for Option Label</source>
                 <target>Feld für Option Label</target>
+            </trans-unit>
+            <trans-unit id="flexform.filter_custom_name">
+                <source>Custom Filter Name</source>
+                <target>Eigener Filtername</target>
             </trans-unit>
             <trans-unit id="flexform.field_filter">
                 <source>Field for filtering</source>
@@ -225,6 +233,10 @@
             <trans-unit id="flexform.filter_field_none">
                 <source>No filtering. Resets the filter on selection.</source>
                 <target>Kein Filter. Entfernt aktiven Filter bei Auswahl.</target>
+            </trans-unit>
+            <trans-unit id="flexform.show_active_filters">
+                <source>Show Active Filters</source>
+                <target>Aktive Filter anzeigen</target>
             </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
@@ -389,7 +401,7 @@
                 <source>Add Suggest Wizard</source>
                 <target>Suchfeld einblenden</target>
             </trans-unit>
-            
+
 
 
             <trans-unit id="flexform.number_of_initial_records">
@@ -454,7 +466,7 @@
                 <source>Fluid Input</source>
                 <target>Fluid Eingabe</target>
             </trans-unit>
-            
+
             <trans-unit id="flexform.predefined_templates">
                 <source>Predefined Templates</source>
                 <target>Vordefinierte Templates</target>
@@ -559,8 +571,8 @@
                 <target>Dynamische Einzelansicht</target>
             </trans-unit>
             <trans-unit id="plugin_type.ajax_request">
-                <source>Ajax Request Listener (alpha)</source>
-                <target>Ajax Abfrageempfänger (alpha)</target>
+                <source>Ajax Record List</source>
+                <target>Ajax Datensatzliste</target>
             </trans-unit>
             <trans-unit id="plugin_type.search">
                 <source>Search Form</source>
@@ -713,7 +725,7 @@
                 <source>If you need additional support, you can contact us by the show email address.</source>
                 <target>Für erweiterten Support können Sie uns unter angezeigter E-Mail Adresse kontaktieren.</target>
             </trans-unit>
-            
+
 
             <!-- Domain/Model/Datatype -->
             <trans-unit id="tx_dataviewer_domain_model_datatype">
@@ -977,7 +989,16 @@
                 <source>Page</source>
                 <target>Seite</target>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
+                <source>UserFunc</source>
+                <target>UserFunc</target>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+                <source>Type Definition</source>
+                <target>Typ definieren</target>
+            </trans-unit>
 
+            
 
             <!-- Messages -->
             <trans-unit id="please_select_datatype">
@@ -992,7 +1013,7 @@
                 <source>Please configure tabs and assign fields in the datatype</source>
                 <target>Bitte konfigurieren Sie Reiter und weisen Sie Felder zu in den Datentyp Einstellungen</target>
             </trans-unit>
-            
+
             <trans-unit id="datatype_not_found">
                 <source>Datatype not found</source>
                 <target>Datentyp nicht gefunden</target>
@@ -1223,6 +1244,14 @@
                 <source>Single Value of a comma-separated List (FIND_IN_SET)</source>
                 <target>Einzelner Wert einer komma-separierten Liste (FIND_IN_SET)</target>
             </trans-unit>
+            <trans-unit id="flexform.between">
+                <source>Value between two values (BETWEEN)</source>
+                <target>Wert zwischen zwei Werten (BETWEEN)</target>
+            </trans-unit>
+            <trans-unit id="flexform.nbetween">
+                <source>Value that is not between two values (BETWEEN)</source>
+                <target>Wert der nicht zwischen zwei Werten liegt (BETWEEN)</target>
+            </trans-unit>
 
             <trans-unit id="showing_records_per_page">
                 <source>Showing %s Records per Page</source>
@@ -1450,6 +1479,10 @@
                 <source>Rich-Text Editor (RTE)</source>
                 <target>Rich-Text HTML Editor (RTE)</target>
             </trans-unit>
+            <trans-unit id="type.editor">
+                <source>Code Editor</source>
+                <target>Code Editor</target>
+            </trans-unit>
             <trans-unit id="type.fluid">
                 <source>Fluid Code</source>
                 <target>Fluid Code</target>
@@ -1512,6 +1545,45 @@
                 <source>Page</source>
                 <target>Seite</target>
             </trans-unit>
+            <trans-unit id="variable_type.13">
+                <source>UserFunc</source>
+                <target>Eigene Benuzerfunktion (UserFunc)</target>
+            </trans-unit>
+
+            <!-- Variable Type Cast -->
+            <trans-unit id="variable_type_cast.0">
+                <source>No type definition</source>
+                <target>Kein Typ definieren</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.1">
+                <source>BOOLEAN (Set true/false type for this variable)</source>
+                <target>BOOLEAN (Variable als Boolesch definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.2">
+                <source>INTEGER (Set numeric type for this variable)</source>
+                <target>INTEGER (Variable als Ganzzahl definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.3">
+                <source>FLOAT (Set floating number type for this variable)</source>
+                <target>FLOAT (Variable als Fliesskommazahl definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.4">
+                <source>STRING (Set alphanumeric type for this variable)</source>
+                <target>STRING (Variable als Alphanumerisch definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.5">
+                <source>ARRAY (Set array type for this variable)</source>
+                <target>ARRAY (Variable als Array definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.6">
+                <source>OBJECT (Set object type for this variable)</source>
+                <target>OBJEKT (Variable als Objekt definieren)</target>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.7">
+                <source>NULL (Set null for this variable)</source>
+                <target>NULL (Variable is null)</target>
+            </trans-unit>
+            
 
             <!-- FieldValue Types -->
             <trans-unit id="type.0">
@@ -1556,7 +1628,7 @@
             <trans-unit id="flexform.tab_config">
                 <source>Tab Configuration</source>
                 <target>Reiter Konfiguration</target>
-            </trans-unit>    
+            </trans-unit>
             <trans-unit id="flexform.tabs_fields">
                 <source>Create tabs and assign fields</source>
                 <target>Reiter erstellen und Felder zuweisen</target>
@@ -1577,7 +1649,7 @@
                 <source>According Fields</source>
                 <target>Zugehörige Felder</target>
             </trans-unit>
-            
+
             <trans-unit id="flexform.validation">
                 <source>Validation</source>
                 <target>Validierung</target>
@@ -1943,7 +2015,10 @@
                 <source>please donate</source>
                 <target>spenden Sie bitte</target>
             </trans-unit>
-
+            <trans-unit id="ajax.loading">
+                <source>Loading ...</source>
+                <target>Wird geladen ...</target>
+            </trans-unit>
 
         </body>
     </file>

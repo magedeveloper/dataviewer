@@ -26,18 +26,13 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	 */
 	public function parseRTE($value)
 	{
-		/* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtype */
-		$defaultExtras = $this->getFieldtype()->getDefaultExtras();
-		$specConf = BackendUtility::getSpecConfParts($defaultExtras);
-
 		// Initialize transformation:
 		/* @var RteHtmlParser $parseHTML */
 		$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
 		$parseHTML->init("tt_content" . ':' . "bodytext"); // We imitate a tt_content bodytext field
-		$parseHTML->setRelPath('');
 		
-		// Perform transformation:
-		return $parseHTML->RTE_transform($value, $specConf, 'rte', []);
+		// Perform transformation from db -> rte:
+		return $parseHTML->TS_transform_rte($value);
 	}
 
 	/**
@@ -48,8 +43,7 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	public function getValueContent()
 	{
 		$value = $this->getValue();
-		return $value;
-		//return $this->parseRTE($value);
+		return $this->parseRTE($value);
 	}
 
 	/**
@@ -61,6 +55,7 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	{
 		$html = $this->getValue();
 		$html = html_entity_decode($html);
+		$html = trim($html);
 		return strip_tags($html);
 	}
 

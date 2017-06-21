@@ -83,7 +83,7 @@ class Field
 		$text = ($row["variable_name"] != "")?$row["variable_name"]:$row["frontend_label"];
 		$code = StringUtility::createCodeFromString($text);
 		$title = LocalizationUtility::translate("formvalue_access_to_hidden_field");
-		$recordName = $this->pluginSettingsService->getRecordVarName();	
+		$recordName = $this->pluginSettingsService->getRecordVarName();
 
 		if (!$code) $code = "<em>generated on save</em>";
 
@@ -110,12 +110,12 @@ class Field
 		$pid = $row["pid"];
 		$title = LocalizationUtility::translate("available_field_ids");
 		$fields = $this->fieldRepository->findAllOnPid($pid);
-		
+
 
 		$html = "";
 		$html .= "<strong>{$title}</strong>";
 		$html .= "<span style=\"font-family: Courier, Courier new, monospace; font-size:12px; float:left; width:100%;\" class='callout callout-info'>";
-		
+
 		if(count($fields))
 		{
 			foreach($fields as $_field)
@@ -124,19 +124,19 @@ class Field
 				$html .= "[ID: {$_field->getUid()}]\t\t";
 				$html .= "{$_field->getFrontendLabel()}";
 				$html .= "<br />";
-			
+
 			}
 
 			$html .= "<br />";
 			$html .= "Example: FIELD:2:=:Selected Value";
-		
+
 		}
 		else
 		{
 			$html .= "---<br />";
 		}
 
-		
+
 		$html .= "</span><br />";
 
 		return $html;
@@ -155,11 +155,22 @@ class Field
 
 		$fields = $this->fieldRepository->findAll(false);
 
+		$sorted = [];
 		foreach($fields as $_field)
 		{
 			$pid = $_field->getPid();
-			$label = $this->_getFieldLabel($_field);
-			$options[] = [$label, $_field->getUid()];
+			$sorted[$pid][] = $_field;
+		}
+
+		ksort($sorted);
+
+		foreach($sorted as $pid)
+		{
+			foreach($pid as $_field)
+			{
+				$label = $this->_getFieldLabel($_field);
+				$options[] = [$label, $_field->getUid()];
+			}
 		}
 
 		$config["items"] = array_merge($config["items"], $options);
@@ -175,15 +186,27 @@ class Field
 	public function populateFieldsOnCurrentPid(array &$config, &$parentObject)
 	{
 		$pid = $config["flexParentDatabaseRow"]["pid"];
-		
+
 		$options = [];
 		$fields = $this->fieldRepository->findAllOnPids([$pid], true);
 
+		$sortedFields = [];
+
 		foreach($fields as $_field)
 		{
-			$pid = $_field->getPid();
-			$label = $this->_getFieldLabel($_field);
-			$options[] = [$label, $_field->getUid()];
+			$type = $_field->getType();
+			$sortedFields[$type][] = $_field;
+		}
+
+		ksort($sortedFields);
+
+		foreach($sortedFields as $_type=>$_fields)
+		{
+			foreach($_fields as $_field)
+			{
+				$label = $this->_getFieldLabel($_field);
+				$options[] = [$label, $_field->getUid()];
+			}
 		}
 
 		$config["items"] = $options;
@@ -198,12 +221,29 @@ class Field
 	 */
 	public function populateFieldsOnStoragePages(array &$config, &$parentObject)
 	{
-		$pages = GeneralUtility::trimExplode(",", $config["flexParentDatabaseRow"]["pages"]);
+		$pages = $config["flexParentDatabaseRow"]["pages"];
+		
+		if(!is_array($pages))
+			$pages = GeneralUtility::trimExplode(",", $pages);
+			
 		$pids = [];
 		foreach($pages as $_page)
 		{
-			preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
-			$pids[] = $match["uid"];
+			if(is_array($_page)) {
+				$pids[] = $_page["uid"];
+			}
+			else {
+				preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
+				
+				if(is_array($match))
+				{
+					if(isset($match["uid"]))
+						$pids[] = $match["uid"];
+					else
+						$pids[] = $match[0];
+				}
+			}
+		
 		}
 
 		$options = [];
@@ -236,7 +276,7 @@ class Field
 			} else {
 				$singleRecordId = (int)$config["row"]["settings.single_record_selection"];
 			}
-		}		
+		}
 		else {
 			// Variable Configuration
 			$singleRecordId = (int)reset($config["row"]["record"]);
@@ -270,14 +310,14 @@ class Field
 
 	}
 
-    /**
-     * Transforms a label for a field
-     * 
-     * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
-     * @return string
-     */
+	/**
+	 * Transforms a label for a field
+	 *
+	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
+	 * @return string
+	 */
 	protected function _getFieldLabel(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
-    {
-        return "[{$field->getPid()}] " . strtoupper($field->getType()) . ": " . $field->getFrontendLabel();
-    }
+	{
+		return "[{$field->getPid()}] " . strtoupper($field->getType()) . ": " . $field->getFrontendLabel() . " {".$field->getCode()."}";
+	}
 }

@@ -23,7 +23,7 @@
                                         <onChange>reload</onChange>
                                         <config>
                                             <type>select</type>
-                                            <multiple>1</multiple>
+                                            <renderType>selectSingle</renderType>
                                             <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Validation->populateValidators</itemsProcFunc>
                                             <autosizemax>2</autosizemax>
                                             <items type="array">

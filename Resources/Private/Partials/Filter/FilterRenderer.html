@@ -3,7 +3,21 @@
 <f:if condition="{filter}">
 	<f:form action="add">
 		<div class="tx-dataviewer-filter tx-dataviewer-filter-{filter.field_id}">
-			<legend for="filter_{filter.field_id}">{filter.field.frontendLabel}</legend>
+			<f:if condition="{filter.name}">
+				<f:then>
+					<legend for="filter_{filter.field_id}">{filter.name}</legend>
+				</f:then>
+				<f:else>
+					<f:if condition="{filter.field.uid}">
+						<f:then>
+							<legend for="filter_{filter.field_id}">{filter.field.frontendLabel}</legend>
+						</f:then>
+						<f:else>
+							<legend for="filter_{filter.field_id}">{filter.field_id}</legend>
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
 			<f:switch expression="{filter.filter_type}">
 				<f:case value="radio">
 					<f:for each="{filter.options}" as="option" iteration="i">
@@ -19,7 +33,7 @@
 					<f:for each="{filter.options}" as="option" iteration="i">
 						<div class="form-check">
 							<label class="form-check-label" for="filter_{filter.field_id}_{option.id}">
-								<input type="checkbox" class="form-check-input" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}_{option.id}" value="{option.id}" {f:if(condition:'{option.selected}',then:'checked')} onClick="this.form.submit()" />
+								<input type="checkbox" class="form-check-input" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}_{option.id}" value="{option.id}" {f:if(condition:'{option.selected}',then:'checked disabled="disabled"')} onClick="this.form.submit()" />
 								{option.option_name}
 							</label>
 						</div>
@@ -55,7 +69,7 @@
 					</f:for>
 					<input type="submit" class="btn btn-default" name="from_to_submit" value="{f:translate(key:'filter')}" />
 				</f:case>
-				<f:case default="TRUE">
+				<f:defaultCase>
 					<f:comment>DEFAULT = dropdown</f:comment>
 					<div class="filter_{filter.field_id}">
 						<select class="form-control" name="tx_dataviewer_filter[filters][{filter.field_id}][]" id="filter_{filter.field_id}" class="select" onChange="this.form.submit()">
@@ -64,7 +78,7 @@
 							</f:for>
 						</select>
 					</div>
-				</f:case>
+				</f:defaultCase>
 			</f:switch>
 		</div>
 		<f:form.hidden name="targetUid" value="{targetUid}" />

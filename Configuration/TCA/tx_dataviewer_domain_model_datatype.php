@@ -12,8 +12,7 @@ return [
 		"cruser_id" => "cruser_id",
 		"dividers2tabs" => TRUE,
 		"sortby" => "sorting",
-		"versioningWS" => 2,
-		"versioning_followPages" => TRUE,
+		"versioningWS" => true,
 		"languageField" => "sys_language_uid",
 		"transOrigPointerField" => "l10n_parent",
 		"transOrigDiffSourceField" => "l10n_diffsource",
@@ -32,32 +31,48 @@ return [
 		'showRecordFieldList' => 'logo, sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, description, templatefile, icon, color, title_divider, hide_records, hide_add, fields, tab_config',
 	],
 	'types' => [
-		'1' => ['showitem' => 'logo, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, name, description, templatefile, fields, tab_config, --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance, icon, color, title_divider, hide_records, hide_add, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+		'1' => [
+			'showitem' => '
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                    logo, name, description, templatefile, fields, tab_config,
+                --div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:appearance,
+                  	icon, color, title_divider, hide_records, hide_add,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                    --palette--;;language,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                    hidden,--palette--;;timeRestriction
+            ',
+		],
 	],
 	'palettes' => [
-		'1' => ['showitem' => ''],
+		'timeRestriction' => ['showitem' => 'starttime, endtime'],
+		'language' => ['showitem' => 'sys_language_uid, l10n_parent'],
 	],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => [
-					['LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1],
-					['LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0],
 				],
 				'default' => 0,
-				'showIconTable' => true,
+				'fieldWizard' => [
+					'selectIcons' => [
+						'disabled' => false,
+					],
+				],
 			]
 		],
 		'l10n_parent' => [
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectSingle',
@@ -74,51 +89,48 @@ return [
 			],
 		],
 		't3ver_label' => [
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
-				'max' => 255,
-			],
+				'max' => 30
+			]
 		],
 		'hidden' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
 			'config' => [
 				'type' => 'check',
 			],
 		],
 		'starttime' => [
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
 			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
-				'range' => [
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
-				],
-			],
+				'behaviour' => [
+					'allowLanguageSynchronization' => true,
+				]
+			]
 		],
 		'endtime' => [
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
+			'exclude' => true,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
 			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
 				'range' => [
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
+					'upper' => mktime(0, 0, 0, 1, 1, 2038),
 				],
-			],
+				'behaviour' => [
+					'allowLanguageSynchronization' => true,
+				]
+			]
 		],
 		'logo' => [
 			'exclude' => 1,
@@ -175,18 +187,9 @@ return [
 			'label' => 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_datatype.color',
 			'config' => [
 				'type' => 'input',
+				'renderType' => 'colorpicker',
 				'size' => 30,
 				'eval' => 'trim',
-				'wizards' => [
-					'colorChoice' => [
-						'type' => 'colorbox',
-						'module' => [
-							'name' => 'wizard_colorpicker',
-						],
-						'JSopenParams' => 'height=600,width=500,status=0,menubar=0,scrollbars=1',
-						'exampleImg' => 'EXT:dataviewer/Resources/Public/Images/color_wheel.png',
-					],
-				],
 			],
 		],
 		'title_divider' => [
@@ -252,42 +255,23 @@ return [
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
+				'enableMultiSelectFilterTextfield' => true,
 				'foreign_table' => 'tx_dataviewer_domain_model_field',
 				'foreign_table_where' => 'AND tx_dataviewer_domain_model_field.pid=###CURRENT_PID###',
 				'MM' => 'tx_dataviewer_datatype_field_mm',
 				'size' => 10,
 				'autoSizeMax' => 30,
-				'iconsInOptionTags' => 1,
 				'maxitems' => 9999,
 				'multiple' => 0,
-				'wizards' => [
-					'_PADDING' => 4,
-					'_VERTICAL' => 1,
-					'suggest' => [
-						'type' => 'suggest'
+				'fieldControl' => [
+					'editPopup' => [
+						'disabled' => false,
 					],
-					'edit' => [
-						'type' => 'popup',
-						'title' => 'LLL:EXT:lang/locallang_core.xlf:cm.edit',
-						'module' => [
-							'name' => 'wizard_edit',
-						],
-						'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_edit.gif',
-						'popup_onlyOpenIfSelected' => 1,
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+					'addRecord' => [
+						'disabled' => false,
 					],
-					'add' => [
-						'type' => 'script',
-						'title' => 'LLL:EXT:lang/locallang_core.xlf:cm.new',
-						'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_add.gif',
-						'params' => [
-							'table' => 'tx_dataviewer_domain_model_field',
-							'pid' => '###CURRENT_PID###',
-							'setValue' => 'prepend'
-						],
-						'module' => [
-							'name' => 'wizard_add'
-						],
+					'listModule' => [
+						'disabled' => false,
 					],
 				],
 			],

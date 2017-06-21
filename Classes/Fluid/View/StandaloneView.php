@@ -44,15 +44,18 @@ class StandaloneView extends \TYPO3\CMS\Fluid\View\StandaloneView
 		$templatePaths = $this->pluginSettingsService->getTemplatePaths();
 		$templateFile = null;
 		
-		sort($templatePaths);
-
-		for($i = count($templatePaths) - 1; $i >= 0; $i--)
+		if(is_array($templatePaths))
 		{
-			$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templatePaths[$i]);
-			$templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templatePaths[$i].$file);
+			sort($templatePaths);
 
-			if (is_dir($templatePath) && file_exists($templateFile))
-				break;
+			for($i = count($templatePaths) - 1; $i >= 0; $i--)
+			{
+				$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templatePaths[$i]);
+				$templateFile = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templatePaths[$i].$file);
+
+				if (is_dir($templatePath) && file_exists($templateFile))
+					break;
+			}
 		}
 
 		// if we havent found any template that matches

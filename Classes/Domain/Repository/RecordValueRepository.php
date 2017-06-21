@@ -134,7 +134,7 @@ class RecordValueRepository extends AbstractRepository
 		$querySettings = $query->getQuerySettings();
 		$querySettings->setRespectStoragePage(false);
 		$querySettings->setIgnoreEnableFields(true);
-		$querySettings->setRespectSysLanguage(false);
+		$querySettings->setRespectSysLanguage(true);
 
 		return $query->matching($query->equals("record", $recordId))->execute();
 	}

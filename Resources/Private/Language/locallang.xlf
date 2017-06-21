@@ -123,6 +123,9 @@
             <trans-unit id="flexform.variable_injection">
                 <source>Variable Injection</source>
             </trans-unit>
+            <trans-unit id="flexform.inline_variable_injection">
+                <source>Direct inject Variables</source>
+            </trans-unit>
             <trans-unit id="flexform.generate_output">
                 <source>Generated Output as Record Value to the Database</source>
             </trans-unit>
@@ -135,6 +138,9 @@
 
             <trans-unit id="active_filters">
                 <source>Active Filters</source>
+            </trans-unit>
+            <trans-unit id="flexform.filter_custom_name">
+                <source>Custom Filter Name</source>
             </trans-unit>
             <trans-unit id="flexform.field_filter">
                 <source>Field for filtering</source>
@@ -175,6 +181,9 @@
             <trans-unit id="flexform.filter_field_none">
                 <source>No filtering. Resets the filter on selection.</source>
             </trans-unit>
+            <trans-unit id="flexform.show_active_filters">
+                <source>Show Active Filters</source>
+            </trans-unit>
             <trans-unit id="flexform.label">
                 <source>Label</source>
             </trans-unit>
@@ -214,7 +223,7 @@
             <trans-unit id="flexform.cache_lifetime">
                 <source>Cache Lifetime in Seconds</source>
             </trans-unit>
-            
+
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>
             </trans-unit>
@@ -296,8 +305,8 @@
             <trans-unit id="add_suggest_wizard">
                 <source>Add Suggest Wizard</source>
             </trans-unit>
-            
-            
+
+
             <trans-unit id="flexform.number_of_initial_records">
                 <source>Initial Number of records to show</source>
             </trans-unit>
@@ -424,7 +433,7 @@
                 <source>Dynamic Detail</source>
             </trans-unit>
             <trans-unit id="plugin_type.ajax_request">
-                <source>Ajax Request Listener (alpha)</source>
+                <source>Ajax Record List</source>
             </trans-unit>
             <trans-unit id="plugin_type.search">
                 <source>Search Form</source>
@@ -511,7 +520,7 @@
             <trans-unit id="message.use_this_id_to_link">
                 <source>Use this id in the 'Target record display plugin'-Setting for Linking other DataViewer plugins to this!</source>
             </trans-unit>
-            
+
             <trans-unit id="message.creating_not_allowed">
                 <source>Sorry, creating new records is not allowed by this plugin!</source>
             </trans-unit>
@@ -527,7 +536,7 @@
             <trans-unit id="message.no_markers_found_on_storage_pids">
                 <source>No markers were found on the configured storage page(s).</source>
             </trans-unit>
-            
+
             <trans-unit id="no_configuration">
                 <source>No configuration.</source>
             </trans-unit>
@@ -740,6 +749,12 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.page">
                 <source>Page</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
+                <source>UserFunc</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+                <source>Type Definition</source>
+            </trans-unit>
 
             <!-- Messages -->
             <trans-unit id="please_select_datatype">
@@ -924,6 +939,12 @@
             <trans-unit id="flexform.fis">
                 <source>Single Value of a comma-separated List (FIND_IN_SET)</source>
             </trans-unit>
+            <trans-unit id="flexform.between">
+                <source>Value between two values (BETWEEN)</source>
+            </trans-unit>
+            <trans-unit id="flexform.nbetween">
+                <source>Value that is not between two values (BETWEEN)</source>
+            </trans-unit>
 
             <trans-unit id="showing_records_per_page">
                 <source>Showing %s Records per Page</source>
@@ -1098,6 +1119,9 @@
             <trans-unit id="type.rte">
                 <source>Rich-Text Editor (RTE)</source>
             </trans-unit>
+            <trans-unit id="type.editor">
+                <source>Code Editor</source>
+            </trans-unit>
             <trans-unit id="type.fluid">
                 <source>Fluid Code</source>
             </trans-unit>
@@ -1144,6 +1168,35 @@
             </trans-unit>
             <trans-unit id="variable_type.12">
                 <source>Page</source>
+            </trans-unit>
+            <trans-unit id="variable_type.13">
+                <source>UserFunc</source>
+            </trans-unit>
+
+            <!-- Variable Type Cast -->
+            <trans-unit id="variable_type_cast.0">
+                <source>No type definition</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.1">
+                <source>BOOLEAN (Set true/false type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.2">
+                <source>INTEGER (Set numeric type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.3">
+                <source>FLOAT (Set floating number type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.4">
+                <source>STRING (Set alphanumeric type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.5">
+                <source>ARRAY (Set array type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.6">
+                <source>OBJECT (Set object type for this variable)</source>
+            </trans-unit>
+            <trans-unit id="variable_type_cast.7">
+                <source>NULL (Set null for this variable)</source>
             </trans-unit>
 
             <!-- FieldValue Types -->
@@ -1469,8 +1522,12 @@
             <trans-unit id="donate.please_donate">
                 <source>please donate</source>
             </trans-unit>
-            
+            <trans-unit id="ajax.loading">
+                <source>Loading ...</source>
+            </trans-unit>
+
+
         </body>
-        
+
     </file>
 </xliff>

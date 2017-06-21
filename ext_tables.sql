@@ -1,4 +1,4 @@
-#
+
 # Table structure for table 'cf_dataviewer_cache'
 #
 CREATE TABLE cf_dataviewer_cache (
@@ -68,7 +68,7 @@ CREATE TABLE tx_dataviewer_domain_model_datatype (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -125,7 +125,7 @@ CREATE TABLE tx_dataviewer_domain_model_field (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -175,8 +175,9 @@ CREATE TABLE tx_dataviewer_domain_model_fieldvalue (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
+	KEY field (field),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -194,6 +195,7 @@ CREATE TABLE tx_dataviewer_domain_model_record (
   record_values int(11) unsigned DEFAULT '0' NOT NULL,
   icon varchar(255) DEFAULT '' NOT NULL,
   is_valid tinyint(1) unsigned DEFAULT '0' NOT NULL,
+  parent int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -212,6 +214,7 @@ CREATE TABLE tx_dataviewer_domain_model_record (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	t3_origuid int(11) DEFAULT '0' NOT NULL,
 	sorting int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
@@ -220,8 +223,9 @@ CREATE TABLE tx_dataviewer_domain_model_record (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
+	KEY datatype (datatype),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
-    KEY language (l10n_parent,sys_language_uid)
+  KEY language (l10n_parent,sys_language_uid)
 
 );
 
@@ -255,13 +259,15 @@ CREATE TABLE tx_dataviewer_domain_model_recordvalue (
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
 	t3ver_move_id int(11) DEFAULT '0' NOT NULL,
+	t3_origuid int(11) DEFAULT '0' NOT NULL,
 
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid),
+	KEY record (record),
+	KEY field (field),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
   KEY language (l10n_parent,sys_language_uid)
 
@@ -286,6 +292,8 @@ CREATE TABLE tx_dataviewer_domain_model_variable (
 	where_clause text,
   server varchar(255) DEFAULT '' NOT NULL,
   page int(11) DEFAULT '0' NOT NULL,
+  user_func varchar(255) DEFAULT '' NOT NULL,
+  type_cast int(11) DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

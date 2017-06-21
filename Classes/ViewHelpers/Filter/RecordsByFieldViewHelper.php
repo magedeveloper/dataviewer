@@ -100,13 +100,6 @@ class RecordsByFieldViewHelper extends AbstractFilterViewHelper
 		];
 
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, null, $storagePids);
-		$validRecordIds = array_column($validRecords, "uid");
-		$storagePids = array_column($validRecords, "pid");
-
-		$records = [];
-		if(!empty($validRecordIds))
-			$records = $this->recordRepository->findByRecordIds($validRecordIds, $storagePids);
-		
-		return $records;
+		return $validRecords;
 	}
 }

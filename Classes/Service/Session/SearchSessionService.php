@@ -77,7 +77,6 @@ class SearchSessionService extends SessionService
 	public function getSearchString()
 	{
 		$string = (string)$this->restoreFromSession(self::SESSION_KEY_SEARCH_STRING);
-		$GLOBALS['TYPO3_DB']->quoteStr($string, 'tx_dataviewer_domain_model_recordvalue');
 		return $string;
 	}
 

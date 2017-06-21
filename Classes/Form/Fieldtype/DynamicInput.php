@@ -30,7 +30,7 @@ class DynamicInput extends Flex
 		$value 						= $this->getValue();
 		$databaseRow 				= $this->getDatabaseRow();
 		$databaseRow[$fieldName] 	= $value;
-
+		
 		$tca = [
 			"tableName" => $tableName,
 			"databaseRow" => $databaseRow,
@@ -54,7 +54,7 @@ class DynamicInput extends Flex
 			],
 			"inlineStructure" => [],
 		];
-
+		
 		$this->prepareTca($tca);
 		$this->tca = $tca;
 		return $this->tca;

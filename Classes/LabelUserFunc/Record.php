@@ -1,7 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\LabelUserFunc;
 
-use \MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 
 /**
  * MageDeveloper Dataviewer Extension
@@ -58,12 +58,14 @@ class Record
 	 */
 	public function displayLabel(&$pObj)
 	{
+		if(TYPO3_MODE != "BE")
+			return;
+			
 		if (isset($pObj["row"]))
 		{
 			$row = $pObj["row"];
-			
 			$this->backendSessionService->setAccordingPid($row["pid"]);
-			$record = $this->recordRepository->findByUid($row["uid"], false, $row["sys_language_uid"]);
+			$record = $this->recordRepository->findByUid($row["uid"], false);
 
 			if ($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
 			{
@@ -77,22 +79,25 @@ class Record
 				if ($record->getTitle())
 					$title = $record->getTitle();
 					
-				if($row["sys_language_uid"] > 0)
-					$title = $row["title"];	
-					
                 $sortBy = $this->backendSessionService->getSortBy();
                 $addInfo = (bool)$this->backendSessionService->getAddInfo();
+                
                 $additional = "";
 
-                if($sortBy && $addInfo) 
+                if($addInfo) 
                 {
                 	if(is_numeric($sortBy))
 					{
 						$value = $record->getValueByFieldId($sortBy);
 						$plainValue = $value->getValue();
+						
+						if($value->getField() instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
+						{
+							if(!is_string($plainValue) && $value->getFieldvalue() instanceof \MageDeveloper\Dataviewer\Domain\Model\FieldValue)
+								$plainValue = $value->getFieldvalue()->getSearch();
 
-						if(is_string($plainValue))
-							$additional = "[".$value->getField()->getFrontendLabel().": ".$plainValue."] ";					
+							$additional = "[".$value->getField()->getFrontendLabel().": ".$plainValue."] ";
+						}
 					}
                 	else
 					{

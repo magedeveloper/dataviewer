@@ -1,8 +1,0 @@
-<li>
-    <span class="dataviewer-category-title">{category.title}</span>
-    <f:if condition="{category.parent}">
-        <ul>
-            <f:render partial="Field/Format/Newline/ValueCategory" arguments="{formValue:formValue,category:category.parent}" />
-        </ul>
-    </f:if>
-</li>

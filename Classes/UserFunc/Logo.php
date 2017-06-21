@@ -62,7 +62,7 @@ class Logo
 		$version = ExtensionManagementUtility::getExtensionVersion("dataviewer");
 
 		$html = "";
-		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"DataViewer {$version}\" style=\"height:26px;\" />";
+		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"DataViewer {$version}\" />";
 		$html .= "<div style=\"margin-top:10px;\">Version <strong>{$version}</strong>&nbsp;| Mail:&nbsp;<a href=\"mailto:{$supportEmail}\">{$supportEmail}</a></div>";
 
         if(!$this->backendAccessService->disableDonationMessage())
@@ -138,7 +138,9 @@ class Logo
 			return;
 	
 		$html = "";
-		$logoUrl = ExtensionManagementUtility::extRelPath("dataviewer") . "Resources/Public/Images/logo_dataviewer.png";
+		$path = GeneralUtility::getFileAbsFileName("EXT:dataviewer/Resources/Public/Images/logo_dataviewer.png");
+		$logoUrl = PathUtility::getAbsoluteWebPath($path);
+		
 		$html .= "<img src=\"{$logoUrl}\" border=\"0\" alt=\"DataViewer\" title=\"MageDeveloper DataViewer\" />";
 		return $html;
 	}

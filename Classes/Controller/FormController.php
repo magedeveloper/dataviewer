@@ -9,6 +9,7 @@ use MageDeveloper\Dataviewer\Service\Settings\Plugin\SearchSettingsService;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\FormSettingsService;
 use MageDeveloper\Dataviewer\Utility\DebugUtility;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
@@ -138,13 +139,26 @@ class FormController extends AbstractController
 	 */
 	public function postAction(\MageDeveloper\Dataviewer\Domain\Model\Record $record = null)
 	{
+		// Initialization
+		\TYPO3\CMS\Frontend\Utility\EidUtility::initLanguage();
+		\TYPO3\CMS\Frontend\Utility\EidUtility::initTCA();
+
+		$GLOBALS['LANG']->csConvObj = $this->objectManager->get(CharsetConverter::class);
+		if(!$GLOBALS["BE_USER"])
+		{
+			/** @var $backendUser \TYPO3\CMS\Core\Authentication\BackendUserAuthentication */
+			$backendUser = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Authentication\BackendUserAuthentication::class);
+			$GLOBALS['BE_USER'] = $backendUser;
+			$backendUser->start();
+		}
+
 		$redirectPid = null;
 		if(!$record instanceof Record)
 		{
 			// We need to check here, if the 'new'-Action is allowed, so we can create a new record
 			if(!$this->formSettingsService->isAllowedAction(FormSettingsService::ACTION_NEW))
 				$this->_handleRestrictedAction(FormSettingsService::ACTION_NEW, $record);
-			
+
 			$record = $this->_getNewRecord();
 			$redirectPid = $this->formSettingsService->getRedirectAfterSuccessfulCreation();
 		}
@@ -174,24 +188,24 @@ class FormController extends AbstractController
 		// Signal-Slot 'postPrepareFieldArray' //
 		/////////////////////////////////////////
 		$this->signalSlotDispatcher->dispatch(__CLASS__,"postPrepareFieldArray",[&$fieldArray, &$this]);
-		
+
 		$datatype = $this->_getSelectedDatatype();
 		$validationErrors = $this->recordDataHandler->validateFieldArray($fieldArray, $datatype);
-		
+
 		/////////////////////////////////////////////////
 		// Signal-Slot 'postAfterFieldArrayValidation' //
 		/////////////////////////////////////////////////
 		$this->signalSlotDispatcher->dispatch(__CLASS__,"postAfterFieldArrayValidation",[&$fieldArray, &$validationErrors, &$this]);
-		
+
 		if(!empty($validationErrors))
 		{
 			foreach($validationErrors as $_title=>$_errors)
 				foreach($_errors as $_error)
 					$this->addFlashMessage($_error->getMessage(), $_title, AbstractMessage::ERROR);
-		
+
 			$this->forward("index", null, null, ["record" => $record]);
 		}
-		
+
 		////////////////////////////////////
 		// Signal-Slot 'preProcessRecord' //
 		////////////////////////////////////
@@ -206,7 +220,7 @@ class FormController extends AbstractController
 		$this->persistenceManager->persistAll();
 
 		$result = $this->recordDataHandler->processRecord($fieldArray, $record);
-		
+
 		if($result === true)
 		{
 			$message = Locale::translate("record_was_successfully_saved", array($record->getTitle(), $record->getUid()));
@@ -217,28 +231,32 @@ class FormController extends AbstractController
 			$message = Locale::translate("record_not_saved");
 			$this->addFlashMessage($message, null, AbstractMessage::ERROR);
 		}
-		
+
 		////////////////////////////////////
 		// Signal-Slot 'postProcessRecord' //
 		////////////////////////////////////
 		$this->signalSlotDispatcher->dispatch(__CLASS__,"postProcessRecord", [&$record, &$this]);
-		
+
 		$this->persistenceManager->persistAll();
 
+		// We remove the initialized backend user here
+		if(TYPO3_MODE === "FE" && !$GLOBALS["BE_USER"]->user)
+			unset($GLOBALS['BE_USER']);
+
 		$actionName = "index";
-		$controllerName = null;
+		$controllerName = (is_null($redirectPid))?null:"Record";
 		$extensionName = null;
 		$arguments = ["record" => $record];
 		/////////////////////////////////////
 		// Signal-Slot 'postFinalRedirect' //
 		/////////////////////////////////////
-		$this->signalSlotDispatcher->dispatch(__CLASS__,"postFinalRedirect",[	  &$actionName, 
-																				  &$controllerName,
-																				  &$extensionName,
-																				  &$arguments, 
-																				  &$redirectPid,
-																				  &$this]);
-		
+		$this->signalSlotDispatcher->dispatch(__CLASS__,"postFinalRedirect",[	  &$actionName,
+			&$controllerName,
+			&$extensionName,
+			&$arguments,
+			&$redirectPid,
+			&$this]);
+
 		// Validation was passed, final redirect now
 		$this->redirect($actionName, $controllerName, $extensionName, $arguments, $redirectPid);
 		exit();
@@ -288,7 +306,7 @@ class FormController extends AbstractController
 		$this->addFlashMessage($message, null, AbstractMessage::ERROR);
 
 		$actionName = "index";
-		$controllerName = null;
+		$controllerName = (is_null($redirectPid))?null:"Record";
 		$extensionName = null;
 		$arguments = ["record" => $record];
 		

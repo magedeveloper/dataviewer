@@ -19,7 +19,8 @@
                     <label>foreign_table</label>
                     <config>
                         <type>select</type>
-                        <multiple>1</multiple>
+                        <renderType>selectSingle</renderType>
+                        <multiple>0</multiple>
                         <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Database->populateTablesAction</itemsProcFunc>
                         <autosizemax>2</autosizemax>
                         <items type="array">
@@ -55,7 +56,7 @@
                         <el>
                             <field>
                                 <TCEforms>
-                                    <label>LLL:EXT:lang/locallang_core.xlf:show_item.php.field</label>
+                                    <label>LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:show_item.php.field</label>
                                     <config>
                                         <type>input</type>
                                         <size>15</size>

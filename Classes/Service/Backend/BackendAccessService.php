@@ -25,15 +25,23 @@ class BackendAccessService
 	public function getLogoUrl()
 	{
 		// Default Logo
-		$logo = "EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text.png";
+		$logo = "EXT:dataviewer/Resources/Public/Images/logo_dataviewer_text_sm.png";
 
 		if($customLogo = $this->_getBackendUser()->getTSConfigVal('options.dataviewer.customLogo'))
 			$logo = $customLogo;
 
 		$logo = GeneralUtility::getFileAbsFileName($logo);
-		$logoUrl = PathUtility::getAbsoluteWebPath($logo);
 
-		return $logoUrl;
+		if(file_exists($logo))
+		{
+			$filename = basename($logo);
+			$path = pathinfo($logo, PATHINFO_DIRNAME);
+			$path = PathUtility::getRelativePathTo($path);
+
+			return $path.$filename;
+		}
+
+		return "";
 	}
 
 	/**

@@ -892,8 +892,20 @@ class Field extends AbstractModel
 	{
 		$configuration = $this->getConfig("foreign_record_defaults");
 		$extracted = $this->flexFormService->extractConfiguration($configuration, "defaults", "field", "default");
-		if (is_array($extracted))
-			return $extracted;
+		if (is_array($extracted) && count($extracted))
+		{
+			$recordDefaults = [];
+			foreach($extracted as $_def=>$_defVal)
+			{
+				$recordDefaults["columns"][$_def] = [
+					"config" => [
+						"default" => $_defVal,
+					],
+				];
+			}
+			
+			return $recordDefaults;
+		}
 
 		return [];
 	}

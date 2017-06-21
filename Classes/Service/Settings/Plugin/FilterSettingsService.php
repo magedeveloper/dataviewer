@@ -95,4 +95,14 @@ class FilterSettingsService extends PluginSettingsService
 	{
 		return (int)$this->getSettingByCode("target_plugin");
 	}
+
+	/**
+	 * Gets the setting to show the active filters
+	 * 
+	 * @return bool
+	 */
+	public function getShowActiveFilters()
+	{
+		return (bool)$this->getSettingByCode("show_active_filters");
+	}
 }

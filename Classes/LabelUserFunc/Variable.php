@@ -1,7 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\LabelUserFunc;
 
-use \MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
 
 /**
  * MageDeveloper Dataviewer Extension

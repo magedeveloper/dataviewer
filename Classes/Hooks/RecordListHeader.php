@@ -122,8 +122,8 @@ class RecordListHeader implements RecordListHookInterface
 	 */
 	public function renderListHeader($table, $currentIdList, $headerColumns, &$parentObject)
 	{
-		if($table != "tx_dataviewer_domain_model_record") return;
-		
+		if($table != "tx_dataviewer_domain_model_record" || $parentObject->searchString != "") return $headerColumns;
+
 		$pid = $parentObject->id;
 		
 		// We set a pid here, so we can store/get only the information of the selected page
@@ -140,23 +140,26 @@ class RecordListHeader implements RecordListHookInterface
 		];
 
 		$pid = $parentObject->pageRow["uid"];
-		
-		// We get all datatypes from records on this page and
-		// use their fields to fill the sort by options
-		$datatypes = $this->datatypeRepository->findAllOfRecordsOnPid([$pid]);
-		
-		foreach($datatypes as $_datatype)
-		{
-			/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
-			$fields = $_datatype->getFields();
 
-			// Adding the fields to the sortBy Options
-			if(count($fields))
+		if($pid > 0)
+		{
+			// We get all datatypes from records on this page and
+			// use their fields to fill the sort by options
+			$datatypes = $this->datatypeRepository->findAllOfRecordsOnPid([$pid]);
+
+			foreach($datatypes as $_datatype)
 			{
-				foreach($fields as $_field)
+				/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
+				$fields = $_datatype->getFields();
+
+				// Adding the fields to the sortBy Options
+				if(count($fields))
 				{
-					$label = "[{$_field->getPid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
-					$sortByOptions[$_field->getUid()] = $label;
+					foreach($fields as $_field)
+					{
+						$label = "[{$_field->getPid()}] " . strtoupper($_field->getType()) . ": " . $_field->getFrontendLabel();
+						$sortByOptions[$_field->getUid()] = $label;
+					}
 				}
 			}
 		}
@@ -166,7 +169,7 @@ class RecordListHeader implements RecordListHookInterface
 		$addInfo 	= (bool)$this->backendSessionService->getAddInfo();
 		
 		if(isset($_POST["sort"]) && in_array($_POST["sort"], array_keys($sortByOptions)))
-		{
+		{	
 			$sortOrder = ($_POST["sortOrder"] == "asc")?"asc":"desc";
 			$this->backendSessionService->setSortOrder($sortOrder);
 			$this->backendSessionService->setSortBy($_POST["sort"]);
@@ -200,7 +203,7 @@ class RecordListHeader implements RecordListHookInterface
 		$html .= "<span class=\"input-group-btn\" style=\"display:table-cell;\">";
 
 		$iconInfo = ($addInfo === false)?"actions-edit-localize-status-high":"actions-edit-localize-status-low";
-		$html .= "<button type=\"submit\" title=\"".Locale::translate("LLL:EXT:lang/locallang_mod_web_list.xlf:largeControl")."\" value=\"1\" name=\"addInfo\" class=\"btn btn-default\" style=\"height: 33px; background-color: rgb(245, 245, 245); \">";
+		$html .= "<button type=\"submit\" title=\"".Locale::translate("EXT:lang/Resources/Private/Language/locallang_mod_web_list.xlf:largeControl")."\" value=\"1\" name=\"addInfo\" class=\"btn btn-default\" style=\"height: 33px; background-color: rgb(245, 245, 245); \">";
 		$html .= $this->iconFactory->getIcon($iconInfo, Icon::SIZE_SMALL)->render();;
 		$html .= "</button>";
 

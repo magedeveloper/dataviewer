@@ -123,7 +123,7 @@ abstract class AbstractRenderer
 		$flashMessage = GeneralUtility::makeInstance(
 			\TYPO3\CMS\Core\Messaging\FlashMessage::class,
 			$message,
-			$title,
+			(string)$title,
 			$severity,
 			TRUE
 		);
@@ -177,8 +177,7 @@ abstract class AbstractRenderer
 				"state" => $severity,
 			];
 
-			$html = \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::renderStatic($arguments, function(){}, new RenderingContext());
-
+			$html = \TYPO3\CMS\Fluid\ViewHelpers\Be\InfoboxViewHelper::renderStatic($arguments, function() use ($message){return $message;}, new RenderingContext());
 
 			return $html;
 		}

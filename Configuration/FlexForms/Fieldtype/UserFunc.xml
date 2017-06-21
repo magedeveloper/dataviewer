@@ -47,7 +47,7 @@
                 </TCEforms>
             </showInBackend>
             <parameters>
-                <title>LLL:EXT:lang/locallang_general.xlf:LGL.parameters</title>
+                <title>LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.parameters</title>
                 <section>1</section>
                 <type>array</type>
                 <el>

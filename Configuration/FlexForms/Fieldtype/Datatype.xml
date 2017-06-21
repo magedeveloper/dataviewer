@@ -19,6 +19,7 @@
                     <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.datatype_selection</label>
                     <config>
                         <type>select</type>
+                        <renderType>selectSingle</renderType>
                         <multiple>1</multiple>
                         <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Datatype->populateDatatypesAction</itemsProcFunc>
                         <autosizemax>2</autosizemax>

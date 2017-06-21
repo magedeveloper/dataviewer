@@ -72,10 +72,10 @@ class RecordList implements RecordListGetTableHookInterface
 		if(!empty($datatypeIds))
 		{
 			$datatypeIdsStr = implode(",",$datatypeIds);	
-				
+			
 			if(!empty($datatypeIds))
 				$additionalWhereClause .= " AND (`tx_dataviewer_domain_model_record`.`datatype` NOT IN ({$datatypeIdsStr}) ) ";	
-				
+			
 		}
 		
 	}

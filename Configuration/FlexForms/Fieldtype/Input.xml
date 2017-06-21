@@ -20,7 +20,8 @@
                     <onChange>reload</onChange>
                     <config>
                         <type>select</type>
-                        <multiple>1</multiple>
+                        <renderType>selectMultipleSideBySide</renderType>
+                        <multiple>0</multiple>
                         <autosizemax>5</autosizemax>
                         <items type="array">
                             <numIndex index="0" type="array">
