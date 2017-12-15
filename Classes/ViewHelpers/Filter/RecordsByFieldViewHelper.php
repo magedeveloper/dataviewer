@@ -86,7 +86,7 @@ class RecordsByFieldViewHelper extends AbstractFilterViewHelper
 				"filter_condition" => "in",
 				"field_value" => implode(",", $uids),
 				"filter_combination" => "AND",
-				"filter_field" => "search",
+				"filter_field" => "value_content",
 			];
 		}
 
@@ -96,7 +96,7 @@ class RecordsByFieldViewHelper extends AbstractFilterViewHelper
 				"filter_condition" => $condition,
 				"field_value" => $value,
 				"filter_combination" => "AND",
-				"filter_field" => "search",
+				"filter_field" => "value_content",
 		];
 
 		$validRecords = $this->recordRepository->findByAdvancedConditions($filters, $sortField, $sortOrder, null, $storagePids);
