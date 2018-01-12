@@ -133,7 +133,7 @@ class UserFunc
 						$type = $parameters[$_v];
 						$tsConf = $parameters[$_v."."];
 						// We found a qualified typoscript structure here
-						$variables[$_v] = $this->cObj->stdWrap($type, $tsConf);
+						$variables[$_v] = $this->cObj->cObjGetSingle($type, $tsConf);
 					} else {
 						// No typoscript structure, so we inject to content plain
 						$variables[$_v] = $parameters[$_v];
