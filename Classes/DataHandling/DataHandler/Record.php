@@ -836,10 +836,10 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
 					/* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtypeModel */
 					// Initialize transformation:
 					/* @var RteHtmlParser $parseHTML */
-					//$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
-					//$parseHTML->init("tt_content" . ':' . "bodytext", $record->getPid()); // We imitate a tt_content bodytext field
+					$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
+					$parseHTML->init("tt_content" . ':' . "bodytext", $record->getPid()); // We imitate a tt_content bodytext field
 					// Perform transformation:
-					//$_value = $parseHTML->RTE_transform($_value, [], 'db', []);
+					$_value = $parseHTML->RTE_transform($_value, [], 'rte', []);
 				}
 			}
 

@@ -35,9 +35,9 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 		$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
 		$parseHTML->init("tt_content" . ':' . "bodytext"); // We imitate a tt_content bodytext field
 		$parseHTML->setRelPath('');
-		
+
 		// Perform transformation:
-		return $parseHTML->RTE_transform($value, $specConf, 'rte', []);
+		return $parseHTML->RTE_transform($value, $specConf, 'db', []);
 	}
 
 	/**
@@ -77,8 +77,7 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$value = $this->getValue();
-		
-		return $value;
+		return $this->parseRTE($value);
 	}
 
     /**
