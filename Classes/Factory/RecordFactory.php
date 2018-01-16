@@ -280,6 +280,12 @@ class RecordFactory implements SingletonInterface
 	public function uploadFile(array $fileInfo, \MageDeveloper\Dataviewer\Domain\Model\Field $field, \MageDeveloper\Dataviewer\Domain\Model\Record $record)
 	{
 		$uploadFolder = $field->getConfig("uploadfolder");
+
+		// Upload folder fallback
+        if($uploadFolder == "") {
+            $uploadFolder = "fileadmin/user_upload/";
+        }
+
 		$uploadFolder = str_replace("fileadmin/", "", $uploadFolder);
 
 		/* @var \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory */
