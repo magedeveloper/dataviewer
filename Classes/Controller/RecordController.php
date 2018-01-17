@@ -436,18 +436,9 @@ class RecordController extends AbstractController
 	 */
 	public function ajaxRequestAction()
 	{
-		$contentUid = $this->_getContentUid();
-		$selectedRecords = $this->_getSelectedRecords();
-
-		$templateSwitch = $this->getTemplateSwitch();
-		if($templateSwitch)
-			$this->view->setTemplatePathAndFilename($templateSwitch);
-
-		$this->view->assign($this->listSettingsService->getRecordsVarName(), $selectedRecords);
-		$this->view->assign("ajax", false);
-		$rendered = $this->view->render();
-
-		return "<div id=\"dataviewer-ajax-{$contentUid}\">".$rendered."</div>";
+        // This is a plain forwarder to the first introduction
+        // of the ajax response action, so the initial records
+        // will also be loaded through ajax
 	}
 
 	/**
@@ -468,77 +459,78 @@ class RecordController extends AbstractController
 		// We need a ViewHelper that can run the Ajax Request by
 		// click, change, keyUp (all configurable) and adds parameters to
 		// the call
-		if($this->request->hasArgument("uid"))
-		{
-			/* @var \MageDeveloper\Dataviewer\Service\FlexFormService $flexFormService */
-			$flexFormService = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
-			$uid = $this->request->getArgument("uid");
-			$cObj = BackendUtility::getRecord("tt_content", $uid);
+        if($this->request->hasArgument("uid"))
+        {
+            /* @var \MageDeveloper\Dataviewer\Service\FlexFormService $flexFormService */
+            $flexFormService = $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
+            $uid = $this->request->getArgument("uid");
+            $cObj = BackendUtility::getRecord("tt_content", $uid);
 
-			// Storage Page Ids
-			$this->storagePids = GeneralUtility::trimExplode(",", $cObj["pages"]);
+            // Storage Page Ids
+            $this->storagePids = GeneralUtility::trimExplode(",", $cObj["pages"]);
 
-			// Settings Array
-			$flexArr = $flexFormService->convertFlexFormContentToArray($cObj["pi_flexform"]);
-			$this->settings = $flexArr["settings"];
-			$this->listSettingsService->setSettings($this->settings);
+            // Settings Array
+            $flexArr = $flexFormService->convertFlexFormContentToArray($cObj["pi_flexform"]);
+            $this->settings = $flexArr["settings"];
+            $this->listSettingsService->setSettings($this->settings);
 
-			// Session Container Connection
-			$this->sessionServiceContainer->setTargetUid($uid);
+            // Session Container Connection
+            $this->sessionServiceContainer->setTargetUid($uid);
 
-			$parameters = [];
-			if($this->request->hasArgument("parameters"))
-				$parameters = $this->request->getArgument("parameters");
+            $parameters = [];
+            if($this->request->hasArgument("parameters"))
+                $parameters = $this->request->getArgument("parameters");
 
-			$view = $this->getStandaloneView(true);
-			$additionalVariables = [];
+            $view = $this->getStandaloneView(true);
+            $additionalVariables = [];
 
-			/////////////////////////////////////////////
-			// Signal-Slot for hooking the ajax return //
-			/////////////////////////////////////////////
-			$this->signalSlotDispatcher->dispatch(
-				__CLASS__,
-				"ajaxResponsePreRecords",
-				[
-					&$parameters,
-					&$uid,
-					&$additionalVariables,
-					&$this,
-				]
-			);
+            /////////////////////////////////////////////
+            // Signal-Slot for hooking the ajax return //
+            /////////////////////////////////////////////
+            $this->signalSlotDispatcher->dispatch(
+                __CLASS__,
+                "ajaxResponsePreRecords",
+                [
+                    &$parameters,
+                    &$uid,
+                    &$additionalVariables,
+                    &$this,
+                ]
+            );
 
-			$records = $this->_getSelectedRecords();
+            $records = $this->_getSelectedRecords();
 
-			$templateSwitch = $this->getTemplateSwitch();
-			if($templateSwitch)
-				$view->setTemplatePathAndFilename($templateSwitch);
+            $templateSwitch = $this->getTemplateSwitch();
+            if($templateSwitch)
+                $view->setTemplatePathAndFilename($templateSwitch);
 
-			/////////////////////////////////////////////
-			// Signal-Slot for hooking the ajax return //
-			/////////////////////////////////////////////
-			$this->signalSlotDispatcher->dispatch(
-				__CLASS__,
-				"ajaxResponsePostRecords",
-				[
-					&$records,
-					&$parameters,
-					&$uid,
-					&$additionalVariables,
-					&$this,
-				]
-			);
+            /////////////////////////////////////////////
+            // Signal-Slot for hooking the ajax return //
+            /////////////////////////////////////////////
+            $this->signalSlotDispatcher->dispatch(
+                __CLASS__,
+                "ajaxResponsePostRecords",
+                [
+                    &$records,
+                    &$parameters,
+                    &$uid,
+                    &$additionalVariables,
+                    &$this,
+                ]
+            );
 
-			$view->assign($this->listSettingsService->getRecordsVarName(), $records);
-			$view->assign("ajax", 1);
-			$view->assign("parameters", $parameters);
+            $view->assign($this->listSettingsService->getRecordsVarName(), $records);
+            $view->assign("ajax", 1);
+            $view->assign("parameters", $parameters);
+            $view->assign("cObj", $cObj);
 
-			if(!empty($additionalVariables))
-				$view->assignMultiple($additionalVariables);
+            if(!empty($additionalVariables))
+                $view->assignMultiple($additionalVariables);
 
-			return $view->render();
-		}
+            return $view->render();
+        }
 
-		return "";
+        return "";
 	}
 
 	/**
@@ -709,7 +701,7 @@ class RecordController extends AbstractController
         // Pager
         $perPage		= $this->sessionServiceContainer->getPagerSessionService()->getPerPage();
 
-        if(!is_null($perPage)) {
+        if($perPage || $perPage == "0") {
             $sessionIsSet = true;
             if($perPage > 0) {
                 // The selectbox was used to select a count of records to limit

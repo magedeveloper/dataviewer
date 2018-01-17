@@ -543,8 +543,8 @@
                                 <type>input</type>
                                 <size>4</size>
                                 <placeholder>10</placeholder>
-                                <default>0</default>
-                                <eval>required,int</eval>
+                                <default></default>
+                                <eval></eval>
                             </config>
                         </TCEforms>
                     </settings.number_of_records>
