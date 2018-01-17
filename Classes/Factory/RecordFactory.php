@@ -230,7 +230,31 @@ class RecordFactory implements SingletonInterface
 
 		return $record;
 	}
-    
+
+    /**
+     * Deletes a record and its recordvalues
+     * This method should be used in general, when
+     * deleting records
+     *
+     * @param Record $record
+     * @return bool
+     * @throws InvalidUidException
+     */
+    public function delete(Record $record)
+    {
+        if(!$record->getUid())
+        {
+            throw new InvalidUidException(
+                "Record needs to be persisted before", 1516172672
+            );
+        }
+
+        $table = ExtensionConfiguration::EXTENSION_RECORD_TABLE;
+        $recordWasDeleted = false;
+        $this->recordDataHandler->processCmdmap_deleteAction($table, $record->getUid(),[], $recordWasDeleted, $this );
+
+        return $recordWasDeleted;
+    }
 
 	/**
 	 * Regenerates dynamic values from an existing record
