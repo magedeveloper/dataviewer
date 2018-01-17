@@ -701,7 +701,7 @@ class RecordController extends AbstractController
         // Pager
         $perPage		= $this->sessionServiceContainer->getPagerSessionService()->getPerPage();
 
-        if($perPage || $perPage == "0") {
+        if($perPage || $perPage === "0") {
             $sessionIsSet = true;
             if($perPage > 0) {
                 // The selectbox was used to select a count of records to limit
