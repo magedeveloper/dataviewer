@@ -37,11 +37,10 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
         $parseHTML->init(); // We imitate a tt_content bodytext field
 		$parseHTML->setRelPath('');
 
-		// Perform transformation:
-        $parsed = $parseHTML->RTE_transform($value, $specConf, 'rte', []);
-        $parsed = $parseHTML->TS_links_db($value);
+		$final = $parseHTML->RTE_transform($value, [], "rte", []);
+        $ending = $parseHTML->TS_links_rte($final);
 
-        return $parsed;
+        return $value;
 	}
 
 	/**
@@ -81,7 +80,7 @@ class Rte extends AbstractFieldvalue implements FieldvalueInterface
 	public function getFrontendValue()
 	{
 		$value = $this->getValue();
-		return $this->parseRTE($value);
+		return $value;
 	}
 
     /**
