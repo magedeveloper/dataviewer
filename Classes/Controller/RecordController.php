@@ -643,20 +643,20 @@ class RecordController extends AbstractController
                 $limit = $this->listSettingsService->getLimitation();
             }
 
-            if(!$this->_hasTargetPlugin("dataviewer_sort") || !$this->sessionServiceContainer->getSortSessionService()->hasOrderings())
-            {
-                // If this plugin has no sorting plugin that is targeting to this plugin,
-                // we can set the default sorting settings to the plugin settings
-                $sortField	= $this->listSettingsService->getSortField();
-                $sortOrder	= $this->listSettingsService->getSortOrder();
-                if(!$this->sessionServiceContainer->getSortSessionService()->getSortField())
-                    $this->sessionServiceContainer->getSortSessionService()->setSortField($sortField);
-                if(!$this->sessionServiceContainer->getSortSessionService()->getSortOrder())
-                    $this->sessionServiceContainer->getSortSessionService()->setSortOrder($sortOrder);
-            }
+            // If this plugin has no sorting plugin that is targeting to this plugin,
+            // we can set the default sorting settings to the plugin settings
+            $sortField	= $this->listSettingsService->getSortField();
+            $sortOrder	= $this->listSettingsService->getSortOrder();
 
-            $sortField		= $this->sessionServiceContainer->getSortSessionService()->getSortField();
-            $sortOrder		= $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
+            if($this->_hasTargetPlugin("dataviewer_sort") || $this->sessionServiceContainer->getSortSessionService()->hasOrderings()) {
+                // If sorting settings are found within the session,
+                // we need to use these settings instead of the settings from the plugin
+                if($this->sessionServiceContainer->getSortSessionService()->getSortField())
+                    $sortField = $this->sessionServiceContainer->getSortSessionService()->getSortField();
+                if($this->sessionServiceContainer->getSortSessionService()->getSortOrder())
+                    $sortOrder = $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
+
+            }
 
 			$contentObj = $this->configurationManager->getContentObject();
 			if($contentObj instanceof \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer &&
@@ -731,21 +731,22 @@ class RecordController extends AbstractController
             $limit = $this->listSettingsService->getLimitation();
         }
 
-        if(!$this->_hasTargetPlugin("dataviewer_sort") || !$this->sessionServiceContainer->getSortSessionService()->hasOrderings())
-        {
-            // If this plugin has no sorting plugin that is targeting to this plugin,
-            // we can set the default sorting settings to the plugin settings
-            $sortField	= $this->listSettingsService->getSortField();
-            $sortOrder	= $this->listSettingsService->getSortOrder();
-            if(!$this->sessionServiceContainer->getSortSessionService()->getSortField())
-                $this->sessionServiceContainer->getSortSessionService()->setSortField($sortField);
-            if(!$this->sessionServiceContainer->getSortSessionService()->getSortOrder())
-                $this->sessionServiceContainer->getSortSessionService()->setSortOrder($sortOrder);
-        }
-        $sortField		= $this->sessionServiceContainer->getSortSessionService()->getSortField();
-        $sortOrder		= $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
+        // If this plugin has no sorting plugin that is targeting to this plugin,
+        // we can set the default sorting settings to the plugin settings
+        $sortField	= $this->listSettingsService->getSortField();
+        $sortOrder	= $this->listSettingsService->getSortOrder();
 
-		// Assign the current stats to the view
+        if($this->_hasTargetPlugin("dataviewer_sort") || $this->sessionServiceContainer->getSortSessionService()->hasOrderings()) {
+            // If sorting settings are found within the session,
+            // we need to use these settings instead of the settings from the plugin
+            if($this->sessionServiceContainer->getSortSessionService()->getSortField())
+                $sortField = $this->sessionServiceContainer->getSortSessionService()->getSortField();
+            if($this->sessionServiceContainer->getSortSessionService()->getSortOrder())
+                $sortOrder = $this->sessionServiceContainer->getSortSessionService()->getSortOrder();
+
+        }
+
+        // Assign the current stats to the view
 		$this->view->assign("selectedPage", $selectedPage);
 		$this->view->assign("perPage", $perPage);
 		$this->view->assign("sortField", $sortField);
