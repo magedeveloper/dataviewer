@@ -832,14 +832,14 @@ class Record extends AbstractDataHandler implements DataHandlerInterface
                     // This is just for compatibility issues to parent saved records
                     if(trim($_value) == "<p>&nbsp;</p>" || trim($_value) == '')
                         $_value = "";
-				
-					/* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtypeModel */
-					// Initialize transformation:
-					/* @var RteHtmlParser $parseHTML */
-					$parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
-					$parseHTML->init("tt_content" . ':' . "bodytext", $record->getPid()); // We imitate a tt_content bodytext field
-					// Perform transformation:
-					$_value = $parseHTML->RTE_transform($_value, [], 'rte', []);
+
+                    /* @var \MageDeveloper\Dataviewer\Form\Fieldtype\Rte $fieldtypeModel */
+                    /* @var RteHtmlParser $parseHTML */
+                    $parseHTML = GeneralUtility::makeInstance(RteHtmlParser::class);
+                    $parseHTML->init(); // We imitate a tt_content bodytext field
+
+                    $_value = $parseHTML->RTE_transform($_value, [], 'db', []);
+                    $_value = $parseHTML->TS_links_db($_value);
 				}
 			}
 
