@@ -152,7 +152,7 @@ class UserFunc
 				$records[] = $this->recordRepository->findByUid($_uid, true);
 
 			// Assigning the record
-			$this->standaloneView->assign($recordsVariableName, $records);
+            $variables[$recordsVariableName] = $records;
 		}
 		else
 		{
@@ -162,7 +162,7 @@ class UserFunc
 				$record = $this->_getRecordFromParameters();
 
 			// Assigning the record
-			$this->standaloneView->assign($recordVariableName, $record);
+			$variables[$recordVariableName] = $record;
 		}
 
 		$this->standaloneView->assignMultiple($variables);
