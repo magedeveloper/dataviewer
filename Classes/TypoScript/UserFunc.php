@@ -143,10 +143,10 @@ class UserFunc
 
 		}
 
-		if(isset($parameters[$recordsVariableName]))
+		if(isset($variables[$recordsVariableName]))
 		{
 			$records = [];
-			$recordUids = GeneralUtility::trimExplode(",", $parameters[$recordsVariableName]);
+			$recordUids = GeneralUtility::trimExplode(",", $variables[$recordsVariableName]);
 
 			foreach($recordUids as $_uid)
 				$records[] = $this->recordRepository->findByUid($_uid, true);
@@ -156,8 +156,8 @@ class UserFunc
 		}
 		else
 		{
-			if(isset($parameters[$recordVariableName]))
-				$record = $this->recordRepository->findByUid($parameters[$recordVariableName]);
+			if(isset($variables[$recordVariableName]))
+				$record = $this->recordRepository->findByUid($variables[$recordVariableName]);
 			else
 				$record = $this->_getRecordFromParameters();
 
