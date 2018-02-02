@@ -93,8 +93,8 @@ class ValueFactory implements SingletonInterface
 	 */
 	public function getFieldvalueByType($type)
 	{
-		if(isset($this->fieldvalues[$type]))
-			return $this->fieldvalues[$type];
+		//if(isset($this->fieldvalues[$type]))
+		//	return $this->fieldvalues[$type];
 
 		$config		= $this->fieldtypeSettingsService->getFieldtypeConfiguration($type);
 
