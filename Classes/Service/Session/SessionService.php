@@ -61,6 +61,10 @@ class SessionService
 	protected function restoreFromSession($key) 
 	{
 		$sessionData = $this->sessionObject->getKey('ses', $this->prefixKey . $key);
+
+        if(is_array($sessionData))
+            return $sessionData;
+
 		return unserialize($sessionData);
 	}
 

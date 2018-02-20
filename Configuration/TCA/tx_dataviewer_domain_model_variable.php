@@ -221,7 +221,7 @@ return [
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
-				'eval' => 'nospace,required,trim'
+				'eval' => 'nospace,trim'
 			],
 		],
 		'variable_value' => [
