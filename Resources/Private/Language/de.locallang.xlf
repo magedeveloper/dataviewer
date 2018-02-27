@@ -286,6 +286,10 @@
                 <source>Cache Lifetime in Seconds</source>
                 <target>Cache Lebensdauer in Sekunden</target>
             </trans-unit>
+            <trans-unit id="flexform.static_cache">
+                <source>Static Cache HTML Output</source>
+                <target>Statischer Cache der HTML Ausgabe</target>
+            </trans-unit>
 
             <trans-unit id="active_filters">
                 <source>Active Filters</source>

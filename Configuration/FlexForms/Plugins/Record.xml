@@ -893,6 +893,15 @@
                             </config>
                         </TCEforms>
                     </settings.cache_lifetime>
+                    <settings.static_cache>
+                        <TCEforms>
+                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.static_cache</label>
+                            <config>
+                                <checkbox>1</checkbox>
+                                <type>check</type>
+                            </config>
+                        </TCEforms>
+                    </settings.static_cache>
                     <cache_info>
                         <TCEforms>
                             <label></label>

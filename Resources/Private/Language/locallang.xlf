@@ -220,6 +220,9 @@
             <trans-unit id="flexform.cache_lifetime">
                 <source>Cache Lifetime in Seconds</source>
             </trans-unit>
+            <trans-unit id="flexform.static_cache">
+                <source>Static Cache HTML Output</source>
+            </trans-unit>
             
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>

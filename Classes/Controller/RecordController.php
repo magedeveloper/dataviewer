@@ -110,11 +110,27 @@ class RecordController extends AbstractController
 	 */
 	public function listAction()
 	{
-		$cacheIdentifier = $this->getCacheIdentifier();
-		$cache = $this->cacheManager->getCache("cache_hash");
+        // Custom Headers
+        $customHeaders = $this->getCustomHeaders();
+        $this->performCustomHeaders($customHeaders);
 
-		$lifetime = $this->listSettingsService->getCacheLifetime();
-		$this->pluginCacheService->setLifetime($lifetime);
+        $cacheIdentifier = $this->getCacheIdentifier([__METHOD__]);
+        $cache = $this->cacheManager->getCache("cache_hash");
+        $lifetime = $this->listSettingsService->getCacheLifetime();
+        $this->pluginCacheService->setLifetime($lifetime);
+        if($this->settings["static_cache"] && $cache->has($cacheIdentifier)) {
+            $cachedContent = $cache->get($cacheIdentifier);
+            if(is_string($cachedContent)) {
+
+                if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug()) {
+                    echo $cachedContent;
+                    exit();
+                }
+
+                return $cachedContent;
+            }
+        }
+
 		$cached = false;
 
 		$cachedIds = null;
@@ -131,7 +147,6 @@ class RecordController extends AbstractController
 		else
 		{
 			// We obtain the cache lifetime from the configuration
-			$this->pluginCacheService->setLifetime($lifetime);
 			$selectedRecords = $this->_getSelectedRecords(); // We get the valid records ids
 
 			$ids = [];
@@ -145,7 +160,6 @@ class RecordController extends AbstractController
 		$this->pluginCacheService->setValidRecordIds($cacheIdentifier, $ids);
 		$this->sessionServiceContainer->getInjectorSessionService()->setActiveRecordIds($ids);
 
-
 		$templateSwitch = $this->getTemplateSwitch();
 		if($templateSwitch)
 			$this->view->setTemplatePathAndFilename($templateSwitch);
@@ -154,11 +168,11 @@ class RecordController extends AbstractController
 		$this->view->assign("cached", $cached);
 		$this->view->assign("cacheIdentifier", $cacheIdentifier);
 
-		// Custom Headers
-		$customHeaders = $this->getCustomHeaders();
-		$this->performCustomHeaders($customHeaders);
-
 		$rendered = $this->view->render();
+
+        if($this->settings["static_cache"]) {
+            $cache->set($cacheIdentifier, $rendered, [], $lifetime);
+        }
 
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
@@ -276,6 +290,10 @@ class RecordController extends AbstractController
 	 */
 	public function detailAction()
 	{
+        // Custom Headers
+        $customHeaders = $this->getCustomHeaders();
+        $this->performCustomHeaders($customHeaders);
+
 		$selectedRecordId 	= $this->listSettingsService->getSelectedRecordId();
 		$record 			= $this->recordRepository->findByUid($selectedRecordId, false);
 
@@ -299,10 +317,6 @@ class RecordController extends AbstractController
 
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $record);
 
-		// Custom Headers
-		$customHeaders = $this->getCustomHeaders();
-		$this->performCustomHeaders($customHeaders);
-
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
 			echo $this->view->render();
@@ -318,6 +332,10 @@ class RecordController extends AbstractController
 	 */
 	public function partAction()
 	{
+        // Custom Headers
+        $customHeaders = $this->getCustomHeaders();
+        $this->performCustomHeaders($customHeaders);
+
 		$selectedRecordId 	= $this->listSettingsService->getSelectedRecordId();
 		$selectedFieldId	= $this->listSettingsService->getSelectedFieldId();
 
@@ -338,10 +356,6 @@ class RecordController extends AbstractController
 			$this->view->assign($this->listSettingsService->getPartVarName(), $value);
 		}
 
-		// Custom Headers
-		$customHeaders = $this->getCustomHeaders();
-		$this->performCustomHeaders($customHeaders);
-
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
 			echo $this->view->render();
@@ -358,10 +372,29 @@ class RecordController extends AbstractController
 	 */
 	public function dynamicDetailAction($record = null)
 	{
-		if(is_null($record) && $this->request->hasArgument("record"))
-			$record = $this->request->getArgument("record");
+        // Custom Headers
+        $customHeaders = $this->getCustomHeaders();
+        $this->performCustomHeaders($customHeaders);
 
-		$cacheIdentifier = $this->getCacheIdentifier([$record]);
+        $cacheIdentifier = $this->getCacheIdentifier();
+        $cache = $this->cacheManager->getCache("cache_hash");
+        $lifetime = $this->listSettingsService->getCacheLifetime();
+        $this->pluginCacheService->setLifetime($lifetime);
+        if($this->settings["static_cache"] && $cache->has($cacheIdentifier)) {
+            $cachedContent = $cache->get($cacheIdentifier);
+            if(is_string($cachedContent)) {
+
+                if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug()) {
+                    echo $cachedContent;
+                    exit();
+                }
+
+                return $cachedContent;
+            }
+        }
+
+        if(is_null($record) && $this->request->hasArgument("record"))
+			$record = $this->request->getArgument("record");
 
 		/* @var Record $recordObj */
 		$recordObj = $this->recordRepository->findByUid($record, true);
@@ -390,7 +423,6 @@ class RecordController extends AbstractController
 		// allowed for this dynamic detail action
 		////////////////////////////////////////////////////
 		// We obtain the cache lifetime from the configuration
-		$lifetime = $this->listSettingsService->getCacheLifetime();
 		$cachedIds = $this->pluginCacheService->getValidRecordIds($cacheIdentifier);
 		if(is_array($cachedIds))
 		{
@@ -398,8 +430,6 @@ class RecordController extends AbstractController
 		}
 		else
 		{
-			$this->pluginCacheService->setLifetime($lifetime);
-
 			$selectedRecords = $this->_getSelectedRecords(); // We get the valid records ids
 
 			$ids = [];
@@ -415,15 +445,19 @@ class RecordController extends AbstractController
 		// Get selected records and check if the record is allowed
 		$this->view->assign($this->listSettingsService->getRecordVarName(), $recordObj);
 
-		// Custom Headers
-		$customHeaders = $this->getCustomHeaders();
-		$this->performCustomHeaders($customHeaders);
+        $rendered = $this->view->render();
+
+        if($this->settings["static_cache"]) {
+            $cache->set($cacheIdentifier, $rendered, [], $lifetime);
+        }
 
 		if($this->listSettingsService->renderOnlyTemplate() && !$this->listSettingsService->isDebug())
 		{
-			echo $this->view->render();
+			echo $rendered;
 			exit();
 		}
+
+		return $rendered;
 	}
 
 	/**
