@@ -5,7 +5,7 @@
 
 	<f:if condition="{datatype}">
 		<f:then>
-			<f:form action="post" object="{record}" objectName="record" enctype="multipart/form-data" addQuertString="1">
+			<f:form action="post" object="{record}" objectName="record" enctype="multipart/form-data" addQueryString="1" noCacheHash="1" argumentsToBeExcludedFromQueryString="{0:'cHash'}">
 				<dataviewer:render.template template="{template}" arguments="{_all}" />
 			</f:form>
 		</f:then>
