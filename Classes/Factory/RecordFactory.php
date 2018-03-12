@@ -370,29 +370,36 @@ class RecordFactory implements SingletonInterface
 		return null;
 	}
 
-	/**
-	 * Traverses a given fieldarray and combines the values with
-	 * the correct field ids
-	 *
-	 * @param array $fieldArray
-	 * @param Datatype $datatype
-	 * @return array
-	 */
-	public function traverseFieldArray(array $fieldArray = array(), Datatype $datatype)
-	{
-		foreach($fieldArray as $_fieldVar=>$_value)
-		{
-			/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
-			foreach($datatype->getFields() as $_field)
-			{
-				if($_field->getCode() == $_fieldVar)
-				{
-					$fieldArray[$_field->getUid()] = $_value;
-					unset($fieldArray[$_fieldVar]);
-				}
-			}
-		}
+    /**
+     * Traverses a given fieldarray and combines the values with
+     * the correct field ids
+     *
+     * @param array $fieldArray
+     * @param Datatype $datatype
+     * @return array
+     */
+    public function traverseFieldArray(array $fieldArray = array(), Datatype $datatype, $reverse = false)
+    {
+        foreach($fieldArray as $_fieldCodeOrId=>$_value) {
+            /* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
+            foreach($datatype->getFields() as $_field)	{
 
-		return $fieldArray;
-	}
+                if($reverse === true) {
+                    $comparer = $_field->getUid();
+                    $comparerOpposite = $_field->getCode();
+                } else {
+                    $comparer = $_field->getCode();
+                    $comparerOpposite = $_field->getUid();
+                }
+
+                if($comparer == $_fieldCodeOrId)
+                {
+                    $fieldArray[$comparerOpposite] = $_value;
+                    unset($fieldArray[$_fieldCodeOrId]);
+                }
+            }
+        }
+
+        return $fieldArray;
+    }
 }
