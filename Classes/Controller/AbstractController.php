@@ -87,7 +87,7 @@ abstract class AbstractController extends \TYPO3\CMS\Extbase\Mvc\Controller\Acti
 	 * @var \MageDeveloper\Dataviewer\Service\Session\SessionService
 	 * @inject
 	 */
-	protected $sessionService;
+	public $sessionService;
 
 	/**
 	 * Plugin Cache Service
