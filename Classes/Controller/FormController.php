@@ -230,10 +230,6 @@ class FormController extends AbstractController
 
 		$this->persistenceManager->persistAll();
 
-		// We remove the initialized backend user here
-		if(TYPO3_MODE === "FE" && !$GLOBALS["BE_USER"]->user)
-			unset($GLOBALS['BE_USER']);
-
 		$result = $this->recordDataHandler->processRecord($fieldArray, $record);
 		
 		if($result === true)
@@ -267,6 +263,10 @@ class FormController extends AbstractController
 																				  &$arguments, 
 																				  &$redirectPid,
 																				  &$this]);
+
+        // We remove the initialized backend user here
+        if(TYPO3_MODE === "FE" && !$GLOBALS["BE_USER"]->user)
+            unset($GLOBALS['BE_USER']);
 		
 		// Validation was passed, final redirect now
 		$this->redirect($actionName, $controllerName, $extensionName, $arguments, $redirectPid);
