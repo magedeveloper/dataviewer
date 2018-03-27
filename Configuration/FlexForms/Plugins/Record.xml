@@ -508,6 +508,15 @@
                                             </config>
                                         </TCEforms>
                                     </filter_field>
+                                    <activate_condition>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_activate_condition</label>
+                                            <config>
+                                                <type>input</type>
+                                                <size>50</size>
+                                            </config>
+                                        </TCEforms>
+                                    </activate_condition>
                                 </el>
                             </filters>
                         </el>

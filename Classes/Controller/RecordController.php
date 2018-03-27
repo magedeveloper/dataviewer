@@ -601,6 +601,22 @@ class RecordController extends AbstractController
 		/////////////////////////////////////////////////////////////////////////////////////////
 		$fieldFilter	= $this->listSettingsService->getFieldValueFilters();
 
+        // We need to check the filter for validity
+        foreach($fieldFilter as $i=>$_filter) {
+            if(isset($_filter["activate_condition"]) && $_filter["activate_condition"] != "") {
+                $view = $this->getStandaloneView(true);
+
+                // Since we yet do not know how to render the nodes separately, we
+                // just render a simple full fluid condition here
+                $conditionText = "<f:if condition=\"{$_filter["activate_condition"]}\">1</f:if>";
+                $isValid = (bool)$view->renderSource($conditionText);
+
+                if(!$isValid) {
+                    unset($fieldFilter[$i]);
+                }
+            }
+        }
+
 		/////////////////////////////////////////////////////////////////////////////////////////
 		// Search Filters
 		/////////////////////////////////////////////////////////////////////////////////////////

@@ -327,6 +327,10 @@
                 <source>Input Field</source>
                 <target>Eingabefeld</target>
             </trans-unit>
+            <trans-unit id="flexform.filter_activate_condition">
+                <source>Condition for activating the filter (Fluid)</source>
+                <target>Bedingung um Filter zu aktivieren (Fluid)</target>
+            </trans-unit>
             <trans-unit id="flexform.search_type">
                 <source>Search type configuration</source>
                 <target>Suchtyp Konfiguration</target>

@@ -248,6 +248,9 @@
             <trans-unit id="flexform.filter_type_input">
                 <source>Input Field</source>
             </trans-unit>
+            <trans-unit id="flexform.filter_activate_condition">
+                <source>Condition for activating the filter (Fluid)</source>
+            </trans-unit>
             <trans-unit id="flexform.search_type">
                 <source>Search type configuration</source>
             </trans-unit>
