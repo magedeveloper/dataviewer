@@ -1,6 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\Form\Fieldvalue;
 
+use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration;
 use MageDeveloper\Dataviewer\Domain\Model\Field;
 use MageDeveloper\Dataviewer\Utility\CheckboxUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -41,4 +42,21 @@ class Datatype extends Inline
 	{
 		return "tx_dataviewer_domain_model_record";
 	}
+
+    /**
+     * Gets the where clause for the
+     * foreign table
+     *
+     * @return string
+     */
+    public function getForeignTableWhere()
+    {
+        $datatypeUid = (int)$this->getField()->getConfig("datatype");
+
+        if($datatypeUid > 0) {
+            return ExtensionConfiguration::EXTENSION_RECORD_TABLE.".datatype = '{$datatypeUid}'";
+        }
+
+        return "";
+    }
 }

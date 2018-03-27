@@ -1,6 +1,7 @@
 <?php
 namespace MageDeveloper\Dataviewer\UserFunc;
 
+use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration;
 use MageDeveloper\Dataviewer\Utility\LocalizationUtility;
 use MageDeveloper\Dataviewer\Utility\StringUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -305,6 +306,73 @@ class Field
 		$config["items"] = array_merge($config["items"], $options);
 
 	}
+
+    /**
+     * Populate fields by a table name setting
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return void
+     */
+    public function populateFieldsFromDatatype(array &$config, &$parentObject)
+    {
+        $config["row"]["foreign_table"] = ExtensionConfiguration::EXTENSION_RECORD_TABLE;
+        $this->populateFieldsFromTable($config, $parentObject);
+    }
+
+    /**
+     * Populate fields by a table name setting
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return void
+     */
+    public function populateFieldsFromTable(array &$config, &$parentObject)
+    {
+        $row = $config["row"];
+        $table = (is_array($row["foreign_table"])) ? reset($row["foreign_table"]) : $row["foreign_table"];
+        $options = [];
+
+        // Retrieve all fields of the selected table
+        $res = $GLOBALS['TYPO3_DB']->sql_query("SHOW COLUMNS FROM {$table}");
+
+        if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
+            $options[] = [$table, "--div--"];
+            while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+                $field = $row["Field"];
+                $options[] = ["label" => $field,
+                    0 => $field,
+                    1 => $field];
+            }
+        }
+
+        if($table == ExtensionConfiguration::EXTENSION_RECORD_TABLE) {
+            // The default record table for dataviewer records is set, so
+            // we need to retrieve all fields
+            $fields = $this->fieldRepository->findAll(false);
+
+            $sortedFields = [];
+
+            foreach($fields as $_field) {
+                $type = $_field->getType();
+                $sortedFields[$type][] = $_field;
+            }
+
+            ksort($sortedFields);
+
+            foreach($sortedFields as $_type=>$_fields) {
+                $options[] = [strtoupper($_type), "--div--"];
+                foreach($_fields as $_field)
+                {
+                    $label = $this->_getFieldLabel($_field);
+                    $options[] = [$label, $_field->getUid()];
+                }
+            }
+
+        }
+
+        $config["items"] = array_merge($config["items"], $options);
+    }
 
     /**
      * Transforms a label for a field

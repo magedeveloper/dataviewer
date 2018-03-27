@@ -70,6 +70,7 @@
                 <TCEforms>
                     <label>foreign_table</label>
                     <displayCond>FIELD:foreign:=:1</displayCond>
+                    <onChange>reload</onChange>
                     <config>
                         <type>select</type>
                         <multiple>1</multiple>
@@ -112,6 +113,46 @@
                     </config>
                 </TCEforms>
             </foreign_table_where>
+            <sort_field>
+                <TCEforms>
+                    <label>sort_field</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>select</type>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>MageDeveloper\Dataviewer\UserFunc\Field->populateFieldsFromTable</itemsProcFunc>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </sort_field>
+            <sort_order>
+                <TCEforms>
+                    <label>sort_order</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>select</type>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_ascending</numIndex>
+                                <numIndex index="1">ASC</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_descending</numIndex>
+                                <numIndex index="1">DESC</numIndex>
+                            </numIndex>
+                        </items>
+                        <default>ASC</default>
+                    </config>
+                </TCEforms>
+            </sort_order>
             <suggest_wizard>
                 <TCEforms>
                     <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:add_suggest_wizard</label>
