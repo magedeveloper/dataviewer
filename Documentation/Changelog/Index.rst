@@ -24,6 +24,8 @@ Changelog
 - [TASK] Inline onChange compatibility
 - [TASK] Improved Filter Plugin
 - [TASK] Record LinkViewHelper: Added possibility to retrieve only link uri
+- [FEATURE] Fluid Conditions for activating filters
+- [FEATURE] Sorting by foreign data in following fieldtypes: Datatype, Inline, Multiselect
 
 
 **1.7.6**
