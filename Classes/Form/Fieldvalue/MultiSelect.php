@@ -135,7 +135,7 @@ class MultiSelect extends Select
                 $items = $this->_getDatabaseConnection()->exec_SELECTgetRows("*", $table, "uid IN ({$value}) {$foreignTableWhere}", "", $sorting,"");
 
                 // We try to add a datamap over the results
-                if ($canMapData === true) {
+                if ($canMapData === true && is_array($items)) {
                     $items = $dataMapper->map($modelClass, $items);
                 }
             }
