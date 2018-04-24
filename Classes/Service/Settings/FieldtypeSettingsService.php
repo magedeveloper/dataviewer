@@ -70,6 +70,17 @@ class FieldtypeSettingsService extends PluginSettingsService implements \TYPO3\C
 
 		$this->fieldtypesConfig = $this->getConfiguration("fieldtypes");
 
+        if(!$this->fieldtypesConfig) {
+            /* @var ObjectManager $objectManager */
+            /* @var ConfigurationManager $configurationManager */
+            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+            $configurationManager = $objectManager->get(ConfigurationManager::class);
+            $fullTypoScript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            if(isset($fullTypoScript["plugin."]["tx_dataviewer."]["fieldtypes."])) {
+                $this->fieldtypesConfig = $fullTypoScript["plugin."]["tx_dataviewer."]["fieldtypes."];
+            }
+        }
+
 		$this->fieldtypesConfigRepository = new FieldtypeConfigurationRepository();
 		if (is_array($this->fieldtypesConfig))
 		{
