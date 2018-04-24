@@ -16,6 +16,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractViewHelper
 {
+    /**
+     * Cache Manager
+     *
+     * @var \TYPO3\CMS\Core\Cache\CacheManager
+     * @inject
+     */
+    protected $cacheManager;
 
 	/**
 	 * Initialize arguments.
@@ -27,15 +34,18 @@ class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 	{
 		$this->registerArgument("arguments", "array", "The arguments for the template", false, []);
 		$this->registerArgument("template", "string", "The template file that has to be used", true, null);
-	
+	    $this->registerArgument("cache", "bool", "Enables or disables cache", false, false);
+	    $this->registerArgument("lifetime", "int", "Cache Lifetime", false, null);
+	    $this->registerArgument("cacheIdentifier", "string","Cache Identifier", false, null);
+
 		parent::initializeArguments();
 	}
 
-	/**
-	 * Render Method
-	 *
-	 * @return string
-	 */
+    /**
+     * Render Method
+     *
+     * @return string
+     */
 	public function render()
 	{
 		$template = $this->arguments["template"];
@@ -43,7 +53,19 @@ class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 		
 		if(!is_null($predefined))
 			$template = $predefined;
-		
+
+        $cache = $this->cacheManager->getCache("cache_hash");
+        if($this->hasArgument("cacheIdentifier")) {
+            $cacheIdentifier = $this->arguments["cacheIdentifier"];
+        } else {
+            $cacheIdentifier = md5(json_encode($this->arguments["arguments"]).$template);
+        }
+
+        if( ($this->arguments["cache"] == true || $this->arguments["cacheIdentifier"]) && $cache->has($cacheIdentifier)) {
+            // We try to load the output from the cache
+            return $cache->get($cacheIdentifier);
+        }
+
 		$templateFile = GeneralUtility::getFileAbsFileName($template);
 		
 		if (file_exists($templateFile))
@@ -53,8 +75,17 @@ class TemplateViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractV
 			$standaloneView->setTemplatePathAndFilename($templateFile);
 			$standaloneView->getRequest()->setControllerExtensionName( \MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration::EXTENSION_KEY );
 			$standaloneView->assignMultiple($this->arguments["arguments"]);
-		
-			return $standaloneView->render();
+			$standaloneView->assign("cacheIdentifier", $cacheIdentifier);
+
+			$output = $standaloneView->render();
+
+            $lifetime = $this->pluginSettingsService->getConfiguration("developer.cache_lifetime");
+            if($this->hasArgument("lifetime")) {
+                $lifetime = (int)$this->arguments["lifetime"];
+            }
+
+			$cache->set($cacheIdentifier, $output, [], $lifetime);
+			return $output;
 		}
 	
 		return "Template not found!";
