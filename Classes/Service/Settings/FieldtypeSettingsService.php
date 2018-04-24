@@ -4,6 +4,9 @@ namespace MageDeveloper\Dataviewer\Service\Settings;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService;
 use MageDeveloper\Dataviewer\Domain\Repository\FieldtypeConfigurationRepository;
 use MageDeveloper\Dataviewer\Domain\Model\FieldtypeConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * MageDeveloper Dataviewer Extension
