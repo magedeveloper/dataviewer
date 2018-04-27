@@ -54,7 +54,7 @@ class Datatype extends Inline
         $datatypeUid = (int)$this->getField()->getConfig("datatype");
 
         if($datatypeUid > 0) {
-            return ExtensionConfiguration::EXTENSION_RECORD_TABLE.".datatype = '{$datatypeUid}'";
+            return "AND"." ".ExtensionConfiguration::EXTENSION_RECORD_TABLE.".datatype = '{$datatypeUid}'";
         }
 
         return "";
