@@ -409,6 +409,19 @@ class RecordRepository extends AbstractRepository
 		}
 		else
 		{
+            // We try to find, if the FIELD.<code> has to be replaced by its according field id
+            if(strstr($fieldId, "FIELD:")) {
+                $code = str_replace("FIELD:", "", $fieldId);
+                $queryStr = "SELECT uid FROM tx_dataviewer_domain_model_field WHERE variable_name = '{$code}' LIMIT 1";
+                $query = $this->createQuery();
+                $query->statement($queryStr);
+
+                $res = $query->execute(true);
+                if(count($res)) {
+                    $fieldId = reset($res)["uid"];
+                }
+            }
+
 			$searchField = $fieldId;
 		}
 
