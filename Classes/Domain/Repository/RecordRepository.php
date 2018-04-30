@@ -419,6 +419,7 @@ class RecordRepository extends AbstractRepository
                 $res = $query->execute(true);
                 if(count($res)) {
                     $fieldId = reset($res)["uid"];
+                    return $this->_getSqlCondition($fieldId, $filterCondition, $filterValue, $filterCombination, $filterField);
                 }
             }
 
