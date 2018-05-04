@@ -341,7 +341,7 @@ class RecordRepository extends AbstractRepository
         if($ignoreEnableFields === false) {
             $ignoreWhere = "";
             $ignoreWhere .= trim(BackendUtility::BEenableFields("tx_dataviewer_domain_model_record", true))."\r\n";
-            $ignoreWhere .= trim(BackendUtility::BEenableFields("tx_dataviewer_domain_model_recordvalue", true))."\r\n";
+            //$ignoreWhere .= trim(BackendUtility::BEenableFields("tx_dataviewer_domain_model_recordvalue", true))."\r\n";
 
             $replace = [
                 "tx_dataviewer_domain_model_recordvalue." => "RECORDVALUE.",
