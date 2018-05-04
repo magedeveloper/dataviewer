@@ -3,6 +3,7 @@ namespace MageDeveloper\Dataviewer\Form\Fieldvalue;
 
 use MageDeveloper\Dataviewer\Domain\Model\Record;
 use MageDeveloper\Dataviewer\Domain\Model\Field;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 
@@ -132,7 +133,7 @@ class MultiSelect extends Select
                     $sorting = "FIELD(uid, {$value}) {$sortOrder}";
                 }
 
-                $items = $this->_getDatabaseConnection()->exec_SELECTgetRows("*", $table, "uid IN ({$value}) {$foreignTableWhere}", "", $sorting,"");
+                $items = $this->_getDatabaseConnection()->exec_SELECTgetRows("*", $table, "uid IN ({$value}) {$foreignTableWhere} ".BackendUtility::BEenableFields($table), "", $sorting,"");
 
                 // We try to add a datamap over the results
                 if ($canMapData === true && is_array($items)) {
