@@ -252,7 +252,7 @@ class RecordRepository extends AbstractRepository
 
 		$query->setQuerySettings($querySettings);
 
-		$statement = $this->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $storagePids);
+		$statement = $this->getStatementByAdvancedConditions($filters, $sortField, $sortOrder, $limit, $storagePids, $ignoreEnableFields);
 
 		$query->statement($statement);
 		$result = $query->execute(true);
@@ -334,9 +334,28 @@ class RecordRepository extends AbstractRepository
 		$statement .= "LEFT JOIN         tx_dataviewer_domain_model_recordvalue AS RECORDVALUE"."\r\n";
 		$statement .= "ON                RECORDVALUE.record = RECORD.uid"."\r\n";
 		$statement .= "WHERE             RECORD.deleted = '0'"."\r\n";
-		$statement .= "AND               RECORD.hidden = '".(int)$ignoreEnableFields."'"."\r\n";
 		$statement .= "AND               RECORDVALUE.deleted = '0'"."\r\n";
-		$statement .= "AND               RECORDVALUE.hidden = '".(int)$ignoreEnableFields."'"."\r\n";
+
+
+        if($ignoreEnableFields === false) {
+            $ignoreWhere = "";
+            $ignoreWhere .= trim(BackendUtility::BEenableFields("tx_dataviewer_domain_model_record", true))."\r\n";
+            $ignoreWhere .= trim(BackendUtility::BEenableFields("tx_dataviewer_domain_model_recordvalue", true))."\r\n";
+
+            $replace = [
+                "tx_dataviewer_domain_model_recordvalue." => "RECORDVALUE.",
+                "tx_dataviewer_domain_model_record." => "RECORD.",
+            ];
+
+            $ignoreWhere = str_replace(array_keys($replace), array_values($replace), $ignoreWhere);
+
+            $statement .= $ignoreWhere;
+
+            /*
+            $statement .= "AND               RECORD.hidden = '0'"."\r\n";
+            $statement .= "AND               RECORDVALUE.hidden = '0'"."\r\n";
+            */
+        }
 
 		if(!empty($storagePids))
 		{
