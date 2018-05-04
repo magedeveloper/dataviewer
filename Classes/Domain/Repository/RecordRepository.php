@@ -236,9 +236,10 @@ class RecordRepository extends AbstractRepository
 	 * @param string $sortOrder
 	 * @param null|int $limit
 	 * @param array $storagePids
+     * @param $ignoreEnableFields
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [])
+	public function findByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [], $ignoreEnableFields = false)
 	{
 		$query = $this->createQuery();
 		$querySettings = $query->getQuerySettings();
@@ -301,9 +302,10 @@ class RecordRepository extends AbstractRepository
 	 * @param string $sortOrder
 	 * @param null|int $limit
 	 * @param array $storagePids
+     * @param $ignoreEnableFields
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function getStatementByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [])
+	public function getStatementByAdvancedConditions(array $filters = [], $sortField = "title", $sortOrder = QueryInterface::ORDER_ASCENDING, $limit = null, array $storagePids = [], $ignoreEnableFields = false)
 	{
 		$subSelectOrdering = "";
 		if(is_numeric($sortField))
@@ -332,9 +334,9 @@ class RecordRepository extends AbstractRepository
 		$statement .= "LEFT JOIN         tx_dataviewer_domain_model_recordvalue AS RECORDVALUE"."\r\n";
 		$statement .= "ON                RECORDVALUE.record = RECORD.uid"."\r\n";
 		$statement .= "WHERE             RECORD.deleted = '0'"."\r\n";
-		$statement .= "AND               RECORD.hidden = '0'"."\r\n";
+		$statement .= "AND               RECORD.hidden = '".(int)$ignoreEnableFields."'"."\r\n";
 		$statement .= "AND               RECORDVALUE.deleted = '0'"."\r\n";
-		$statement .= "AND               RECORDVALUE.hidden = '0'"."\r\n";
+		$statement .= "AND               RECORDVALUE.hidden = '".(int)$ignoreEnableFields."'"."\r\n";
 
 		if(!empty($storagePids))
 		{
