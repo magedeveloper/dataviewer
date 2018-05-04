@@ -4,6 +4,7 @@ namespace MageDeveloper\Dataviewer\Domain\Repository;
 use MageDeveloper\Dataviewer\Domain\Model\Datatype;
 use MageDeveloper\Dataviewer\Domain\Model\Record;
 use MageDeveloper\Dataviewer\Service\Settings\Plugin\ListSettingsService;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
