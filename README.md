@@ -1,3 +1,8 @@
+# Attention!
+
+Extension 'dataviewer' is outdated. Please refer to the new successor ["TypoTonic"](https://github.com/typotonic/tonic)
+
+
 # About TYPO3 DataViewer Extension
 
 Build easy and intuitive TCA-powered records with customizable backend forms on the fly without having to make a new extension. 
