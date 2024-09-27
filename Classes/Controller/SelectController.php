@@ -54,15 +54,16 @@ class SelectController extends RecordController
 		{
 			$selectedRecordIds = $this->selectSettingsService->getPreselectedRecords();
 			
-			if(empty($selectedRecordIds))
+			if(empty($selectedRecordIds)) {
 				$selectedRecordIds = [0=>0];
-			
-			$this->selectSessionService->setSelectedRecords($selectedRecordIds);
-			
-			// We redirect to the current page in order to reload the selection and records
-			// with the current values (this is mainly for the possibility, that the
-			// display-records plugin is above the selection plugin
-			$this->_redirectToPid();
+				$this->selectSessionService->setSelectedRecords($selectedRecordIds);
+			} else {
+				$this->selectSessionService->setSelectedRecords($selectedRecordIds);
+				// We redirect to the current page in order to reload the selection and records
+				// with the current values (this is mainly for the possibility, that the
+				// display-records plugin is above the selection plugin
+				$this->_redirectToPid();
+			}
 		}
 		
 		foreach($selectedRecords as $_record)
