@@ -1,19 +1,9 @@
 <?php
-namespace MageDeveloper\Dataviewer\Service\Session;
+namespace Aix\Dataviewer\Service\Session;
 
-use \MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
+use \Aix\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
-
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class SortSessionService extends SessionService
 {
 	/**
@@ -32,7 +22,7 @@ class SortSessionService extends SessionService
 
 	/**
 	 * Checks if any orderings are set
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function hasOrderings()
@@ -74,12 +64,7 @@ class SortSessionService extends SessionService
 	 */
 	public function getSortOrder()
 	{
-		$sortOrder 		= $this->restoreFromSession(self::SESSION_KEY_SORT_ORDER);
-
-		if ($sortOrder && !is_null($sortOrder))
-			return $sortOrder;
-
-		return QueryInterface::ORDER_ASCENDING;
+		return $this->restoreFromSession(self::SESSION_KEY_SORT_ORDER);
 	}
 
 	/**

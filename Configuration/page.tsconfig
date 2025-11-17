@@ -1,0 +1,2 @@
+@import 'EXT:dataviewer/Configuration/TsConfig/mod_wizards.tsconfig'
+@import 'EXT:dataviewer/Configuration/TsConfig/mod_web_layout.tsconfig'

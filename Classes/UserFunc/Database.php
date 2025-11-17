@@ -1,86 +1,79 @@
 <?php
-namespace MageDeveloper\Dataviewer\UserFunc;
+declare(strict_types=1);
 
-use MageDeveloper\Dataviewer\Utility\DebugUtility;
-use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
-use MageDeveloper\Dataviewer\Utility\IconUtility;
+namespace Aix\Dataviewer\UserFunc;
+
+use Aix\Dataviewer\Domain\Model\FieldValue;
+use Aix\Dataviewer\Domain\Repository\FieldRepository;
+use Aix\Dataviewer\Domain\Repository\FieldValueRepository;
+use Aix\Dataviewer\Utility\DebugUtility;
+use Aix\Dataviewer\Utility\LocalizationUtility as Locale;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class Database
 {
-	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * Field Repository
+     *
+     * @var FieldRepository
+     */
+    protected $fieldRepository;
 
-	/**
-	 * Field Repository
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
-	 * @inject
-	 */
-	protected $fieldRepository;
+    /**
+     * FieldValue Repository
+     *
+     * @var FieldValueRepository
+     */
+    protected $fieldValueRepository;
 
-	/**
-	 * FieldValue Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldValueRepository
-	 * @inject
-	 */
-	protected $fieldValueRepository;
+    /**
+     * @param FieldRepository $fieldRepository
+     */
+    public function injectFieldRepository(FieldRepository $fieldRepository)
+    {
+        $this->fieldRepository = $fieldRepository;
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @return Database
-	 */
-	public function __construct()
-	{
-		$this->objectManager 		= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->fieldRepository		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-		$this->fieldValueRepository	= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldValueRepository::class);
-	}
-	
-	/**
+    /**
+     * @param FieldRepository $fieldValueRepository
+     */
+    public function injectFieldValueRepository(FieldRepository $fieldValueRepository)
+    {
+        $this->fieldValueRepository = $fieldValueRepository;
+    }
+
+    /**
 	 * Populate flexform tables
 	 *
 	 * @param array $config Configuration Array
 	 * @param array $parentObject Parent Object
 	 * @return array
 	 */
-	public function populateTablesAction(array &$config, &$parentObject)
+	public function populateTablesAction(array &$config, &$parentObject): array
 	{
-		$options = [];
+        $options = [
+            [
+                'label' => '',
+                'value' => ''
+            ]
+        ];
 
-		$label = Locale::translate("flexform.please_select", \MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration::EXTENSION_KEY);
-		$options[] = ["label" => $label, 0 => $label, 1 => ""];
+		/* @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
+		$query = GeneralUtility::makeInstance(ConnectionPool::class)
+			->getConnectionForTable("tt_content");
 
-		$res = $GLOBALS['TYPO3_DB']->sql_query("SHOW TABLES");
+		$tables = $query->fetchAllAssociative("SHOW TABLES");
 
-		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0)
-		{
-			while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
-			{
-				$tablename = end($row);
-				$options[] = ["label" => $tablename, 
-							  0 => $tablename, 
-							  1 => $tablename];
-			}
+		foreach ($tables as $_table) {
+			$tableName = reset($_table);
+			$options[] = [
+                'label' => $tableName,
+                'value' => $tableName,
+            ];
 		}
 
-		$config["items"] = $options;
+		$config['items'] = $options;
 
 		return $config;
 	}
@@ -89,33 +82,32 @@ class Database
 	 * Populate flexform tables
 	 *
 	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
+	 * @param mixed $parentObject Parent Object
 	 * @return array
 	 */
-	public function populateColumnsAction(array &$config, &$parentObject)
+	public function populateColumnsAction(array &$config, &$parentObject): array
 	{
-		$tablename = reset($config["row"]["table_content"]);
+		$tableName = reset($config['row']['table_content']);
 
 		$options = [];
+		if ($tableName) {
+			/* @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
+			$query = GeneralUtility::makeInstance(ConnectionPool::class)
+				->getConnectionForTable('tt_content');
 
-		if ($tablename)
-		{
-			$res = $GLOBALS['TYPO3_DB']->sql_query("SHOW COLUMNS FROM {$tablename}");
+			$columns = $query->fetchAllAssociative("SHOW COLUMNS FROM {$tableName}");
 
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0)
-			{
-				while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
-				{
-					$field = $row["Field"];
-					$options[] = ["label" => $field, 
-								  0 => $field, 
-								  1 => $field];
-				}
+			foreach ($columns as $_column) {
+				$field = $_column['Field'];
+				$options[] = [
+                    'label' => $field,
+                    'value' => $field,
+                ];
 			}
 
 		}
 
-		$config["items"] = $options;
+		$config['items'] = $options;
 
 		return $config;
 	}
@@ -126,51 +118,49 @@ class Database
 	 * @param array $config
 	 * @param array $parentObject
 	 * @return string
+     * @throws \Exception
 	 */
-	public function displayTableContentResult(array &$config, &$parentObject)
+	public function displayTableContentResult(array &$config, &$parentObject): string
 	{
 		$this->populateColumnsAction($config, $parentObject);
-		unset($config["items"][0]);
+		unset($config['items'][0]);
 
-		$html = "";
+		$html = '';
 
 		$options = [];
 
-		if (isset($config["row"]))
+		if (isset($config['row']))
 		{
-			$fieldValueUid = $config["row"]["uid"];
+			$fieldValueUid = $config['row']['uid'];
 			$fieldValue = $this->fieldValueRepository->findByUid($fieldValueUid);
 
-			if ($fieldValue instanceof \MageDeveloper\Dataviewer\Domain\Model\FieldValue)
-			{
+			if ($fieldValue instanceof FieldValue) {
 				$statement = "SELECT * FROM {$fieldValue->getTableContent()} {$fieldValue->getWhereClause()}";
-				
 
-                if (($fieldValue->getType() == \MageDeveloper\Dataviewer\Domain\Model\FieldValue::TYPE_DATABASE)
+
+                if (($fieldValue->getType() == FieldValue::TYPE_DATABASE)
                     &&
                     $fieldValue->getTableContent() &&
                     $fieldValue->getColumnName() &&
-                    strpos($statement, "{") === false
+                    strpos($statement, '{') === false
                 ) {
                     try {
                         $result = $this->fieldRepository->findEntriesForFieldValue($fieldValue);
 
-                        $html .= "<h4>".Locale::translate("items", [count($result)])."</h4>";
+                        $html .= '<h4>'.Locale::translate('items', [count($result)]).'</h4>';
                         $html .= DebugUtility::debugVariable($result);
 
                     } catch (\Exception $e) {
                         $html = "<div class=\"alert alert-danger\">{$e->getMessage()}<br /><br /><strong>Statement:</strong><br /><pre>{$statement}</pre></div>";
                     }
                 }
-                else
-                {
-			        $html = "<strong>Statement</strong><br /><pre>{$statement}</pre>";		
-
+                else {
+			        $html = "<strong>Statement</strong><br /><pre>{$statement}</pre>";
 				}
 			}
 
 		}
-		
+
 		return $html;
 	}
 }

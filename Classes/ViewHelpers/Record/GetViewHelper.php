@@ -1,37 +1,39 @@
 <?php
-namespace MageDeveloper\Dataviewer\ViewHelpers\Record;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-class GetViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractViewHelper
+namespace Aix\Dataviewer\ViewHelpers\Record;
+
+use Aix\Dataviewer\Domain\Model\AbstractRecordModel;
+use Aix\Dataviewer\Domain\Repository\AbstractRepository;
+use Aix\Dataviewer\ViewHelpers\AbstractViewHelper;
+
+
+class GetViewHelper extends AbstractViewHelper
 {
-	/**
-	 * Record Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordRepository
-	 * @inject
-	 */
-	protected $recordRepository;
+    /**
+     * Initialize arguments.
+     * @return void
+     * @api
+     */
+    public function initializeArguments(): void
+    {
+        $this->registerArgument('uid', 'int', 'Record Uid', true, '');
+        $this->registerArgument('datatype', '\\Aix\\Dataviewer\\Domain\\Model\\Datatype', 'Datatype of the according record', true, '');
+        $this->registerArgument('onlyEnabled', 'bool', 'Only enabled', false, true);
+        parent::initializeArguments();
+    }
 
-	/**
-	 * Fetch a record by id
-	 * 
-	 * @param int $id Id of the record to fetch
-	 * @param bool $includeHidden Include hidden records
-	 * @return \MageDeveloper\Dataviewer\Domain\Model\Record
-	 */
-	public function render($id, $includeHidden = false)
-	{
-		$record = $this->recordRepository->findByUid($id, !$includeHidden);
-		return $record;
-	}
+    /**
+     * @return AbstractRecordModel|null
+     */
+    public function render(): ?AbstractRecordModel
+    {
+        $datatype = $this->arguments['datatype'];
+        $repository = $datatype->getRepository();
+        if($repository instanceof AbstractRepository) {
+            return $repository->findByUid($this->arguments['uid'], $this->arguments['onlyEnabled'],false);
+        }
 
+        return null;
+    }
 }

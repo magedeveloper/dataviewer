@@ -1,191 +1,211 @@
 <?php
-namespace MageDeveloper\Dataviewer\Service\Session;
+declare(strict_types=1);
 
-use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
+namespace Aix\Dataviewer\Service\Session;
 
-use MageDeveloper\Dataviewer\Service\Session\FilterSessionService;
-use MageDeveloper\Dataviewer\Service\Session\LetterSessionService;
-use MageDeveloper\Dataviewer\Service\Session\PagerSessionService;
-use MageDeveloper\Dataviewer\Service\Session\SearchSessionService;
-use MageDeveloper\Dataviewer\Service\Session\SortSessionService;
-use MageDeveloper\Dataviewer\Service\Session\SessionService;
+use TYPO3\CMS\Core\SingletonInterface;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-class SessionServiceContainer
+class SessionServiceContainer implements SingletonInterface
 {
-	/**
-	 * Object Manager
-	 *
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * @var int
+     */
+    protected $targetUid;
 
-	/**
-	 * Target Uid
-	 * 
-	 * @var int
-	 */
-	protected $targetUid;
+    /**
+     * @var FilterSessionService
+     */
+    protected $filterSessionService;
 
-	/**
-	 * Filter Session Service
-	 *
-	 * @var \MageDeveloper\Dataviewer\Service\Session\FilterSessionService
-	 * @inject
-	 */
-	protected $filterSessionService;
+    /**
+     * @var LetterSessionService
+     */
+    protected $letterSessionService;
 
-	/**
-	 * Letter Session Service
-	 *
-	 * @var \MageDeveloper\Dataviewer\Service\Session\LetterSessionService
-	 * @inject
-	 */
-	protected $letterSessionService;
+    /**
+     * @var PagerSessionService
+     */
+    protected $pagerSessionService;
 
-	/**
-	 * Pager Session Service
-	 *
-	 * @var \MageDeveloper\Dataviewer\Service\Session\PagerSessionService
-	 * @inject
-	 */
-	protected $pagerSessionService;
+    /**
+     * @var SearchSessionService
+     */
+    protected $searchSessionService;
 
-	/**
-	 * Search Session Service
-	 *
-	 * @var \MageDeveloper\Dataviewer\Service\Session\SearchSessionService
-	 * @inject
-	 */
-	protected $searchSessionService;
+    /**
+     * @var SortSessionService
+     */
+    protected $sortSessionService;
 
-	/**
-	 * Sort Session Service
-	 *
-	 * @var \MageDeveloper\Dataviewer\Service\Session\SortSessionService
-	 * @inject
-	 */
-	protected $sortSessionService;
+    /**
+     * @var SelectSessionService
+     */
+    protected $selectSessionService;
 
-	/**
-	 * Select Session Service
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Service\Session\SelectSessionService
-	 * @inject
-	 */
-	protected $selectSessionService;
+    /**
+     * @var SessionService
+     */
+    protected $sessionService;
 
-	/**
-	 * Injector Session Service
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Service\Session\SessionService
-	 * @inject
-	 */
-	protected $injectorSessionService;
+    /**
+     * @param FilterSessionService $filterSessionService
+     */
+    public function injectFilterSessionService(FilterSessionService $filterSessionService)
+    {
+        $this->filterSessionService = $filterSessionService;
+    }
 
-	/**
-	 * Sets the target uid for all services
-	 * 
-	 * @param int $targetUid
-	 * @return SessionServiceContainer
-	 */
-	public function setTargetUid($targetUid)
-	{
-		$filterSessionKey	= FilterSessionService::SESSION_PREFIX_KEY;
-		$letterSessionKey	= LetterSessionService::SESSION_PREFIX_KEY;
-		$pagerSessionKey	= PagerSessionService::SESSION_PREFIX_KEY;
-		$searchSessionKey	= SearchSessionService::SESSION_PREFIX_KEY;
-		$sortSessionKey		= SortSessionService::SESSION_PREFIX_KEY;
-		$selectSessionKey	= SelectSessionService::SESSION_PREFIX_KEY;
-		
-		$injectorSessionKey = \MageDeveloper\Dataviewer\ViewHelpers\InjectViewHelper::SESSION_PREFIX_KEY;
-	
-		$this->filterSessionService->setPrefixKey("{$filterSessionKey}-{$targetUid}");
-		$this->letterSessionService->setPrefixKey("{$letterSessionKey}-{$targetUid}");
-		$this->pagerSessionService->setPrefixKey("{$pagerSessionKey}-{$targetUid}");
-		$this->searchSessionService->setPrefixKey("{$searchSessionKey}-{$targetUid}");
-		$this->sortSessionService->setPrefixKey("{$sortSessionKey}-{$targetUid}");
-		$this->selectSessionService->setPrefixKey("{$selectSessionKey}-{$targetUid}");
-		$this->injectorSessionService->setPrefixKey("{$injectorSessionKey}-{$targetUid}");
-	}
+    /**
+     * @param LetterSessionService $letterSessionService
+     */
+    public function injectLetterSessionService(LetterSessionService $letterSessionService)
+    {
+        $this->letterSessionService = $letterSessionService;
+    }
 
-	/**
-	 * Returns the filter session service
-	 * 
-	 * @return FilterSessionService
-	 */
-	public function getFilterSessionService()
-	{
-		return $this->filterSessionService;
-	}
+    /**
+     * @param PagerSessionService $pagerSessionService
+     */
+    public function injectPagerSessionService(PagerSessionService $pagerSessionService)
+    {
+        $this->pagerSessionService = $pagerSessionService;
+    }
 
-	/**
-	 * Returns the letter session service
-	 *
-	 * @return LetterSessionService
-	 */
-	public function getLetterSessionService()
-	{
-		return $this->letterSessionService;
-	}
+    /**
+     * @param SearchSessionService $searchSessionService
+     */
+    public function injectSearchSessionService(SearchSessionService $searchSessionService)
+    {
+        $this->searchSessionService = $searchSessionService;
+    }
 
-	/**
-	 * Returns the pager session service
-	 *
-	 * @return PagerSessionService
-	 */
-	public function getPagerSessionService()
-	{
-		return $this->pagerSessionService;
-	}
+    /**
+     * @param SortSessionService $sortSessionService
+     */
+    public function injectSortSessionService(SortSessionService $sortSessionService)
+    {
+        $this->sortSessionService = $sortSessionService;
+    }
 
-	/**
-	 * Returns the search session service
-	 * 
-	 * @return SearchSessionService
-	 */
-	public function getSearchSessionService()
-	{
-		return $this->searchSessionService;
-	}
+    /**
+     * @param SelectSessionService $selectSessionService
+     */
+    public function injectSelectSessionService(SelectSessionService $selectSessionService)
+    {
+        $this->selectSessionService = $selectSessionService;
+    }
 
-	/**
-	 * Returns the sort session service
-	 * 
-	 * @return SortSessionService
-	 */
-	public function getSortSessionService()
-	{
-		return $this->sortSessionService;
-	}
+    /**
+     * @param SessionService $sessionService
+     */
+    public function injectSessionService(SessionService $sessionService)
+    {
+        $this->sessionService = $sessionService;
+    }
 
-	/**
-	 * Returns the select session service
-	 * 
-	 * @return SelectSessionService
-	 */
-	public function getSelectSessionService()
-	{
-		return $this->selectSessionService;
-	}
 
-	/**
-	 * Returns the injector session service
-	 * 
-	 * @return SessionService
-	 */
-	public function getInjectorSessionService()
-	{
-		return $this->injectorSessionService;
-	}	
+    /**
+     * Sets the target uid for all services
+     *
+     * @param int $targetUid
+     * @return void
+     */
+    public function setTargetUid(int $targetUid): void
+    {
+        $this->targetUid = $targetUid;
+
+        $filterSessionKey = FilterSessionService::SESSION_PREFIX_KEY;
+        $letterSessionKey = LetterSessionService::SESSION_PREFIX_KEY;
+        $pagerSessionKey  = PagerSessionService::SESSION_PREFIX_KEY;
+        $searchSessionKey = SearchSessionService::SESSION_PREFIX_KEY;
+        $sortSessionKey   = SortSessionService::SESSION_PREFIX_KEY;
+        $selectSessionKey = SelectSessionService::SESSION_PREFIX_KEY;
+
+        $this->filterSessionService->setPrefixKey("{$filterSessionKey}-{$targetUid}");
+        $this->letterSessionService->setPrefixKey("{$letterSessionKey}-{$targetUid}");
+        $this->pagerSessionService->setPrefixKey("{$pagerSessionKey}-{$targetUid}");
+        $this->searchSessionService->setPrefixKey("{$searchSessionKey}-{$targetUid}");
+        $this->sortSessionService->setPrefixKey("{$sortSessionKey}-{$targetUid}");
+        $this->selectSessionService->setPrefixKey("{$selectSessionKey}-{$targetUid}");
+    }
+
+    /**
+     * Gets the target uid
+     *
+     * @return int
+     */
+    public function getTargetUid(): int
+    {
+        return $this->targetUid;
+    }
+
+    /**
+     * Returns the filter session service
+     *
+     * @return FilterSessionService
+     */
+    public function getFilterSessionService(): FilterSessionService
+    {
+        return $this->filterSessionService;
+    }
+
+    /**
+     * Returns the letter session service
+     *
+     * @return LetterSessionService
+     */
+    public function getLetterSessionService(): LetterSessionService
+    {
+        return $this->letterSessionService;
+    }
+
+    /**
+     * Returns the pager session service
+     *
+     * @return PagerSessionService
+     */
+    public function getPagerSessionService(): PagerSessionService
+    {
+        return $this->pagerSessionService;
+    }
+
+    /**
+     * Returns the search session service
+     *
+     * @return SearchSessionService
+     */
+    public function getSearchSessionService(): SearchSessionService
+    {
+        return $this->searchSessionService;
+    }
+
+    /**
+     * Returns the sort session service
+     *
+     * @return SortSessionService
+     */
+    public function getSortSessionService(): SortSessionService
+    {
+        return $this->sortSessionService;
+    }
+
+    /**
+     * Returns the select session service
+     *
+     * @return SelectSessionService
+     */
+    public function getSelectSessionService(): SelectSessionService
+    {
+        return $this->selectSessionService;
+    }
+
+    /**
+     * Returns the session service
+     *
+     * @return SessionService
+     */
+    public function getSessionService(): SessionService
+    {
+        return $this->sessionService;
+    }
 }

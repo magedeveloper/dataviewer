@@ -1,0 +1,42 @@
+{
+	"name": "aix/dataviewer",
+	"type": "typo3-cms-extension",
+	"description": "Build easy and intuitive TCA-records (e.g. News, Jobs, Events and more) on the fly without developing a new extension. Only templating is needed. Huge amount of time savings possible!",
+	"homepage": "https://www.aixdesign.net",
+	"license": ["GPL-2.0-or-later"],
+	"keywords": [
+		"TYPO3",
+		"CMS",
+		"recordbuilder",
+		"dataviewer",
+		"typo3",
+		"aix",
+		"records"
+	],
+	"support": {
+		"issues": "https://github.com/magedeveloper/dataviewer/issues"
+	},
+	"require": {
+		"typo3/cms-core": ">=12.4.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Aix\\Dataviewer\\": "Classes/"
+		}
+	},
+	"replace": {
+		"typo3-ter/dataviewer": "self.version"
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "dataviewer"
+		}
+	},
+	"authors": [
+		{
+			"name": "Bastian Zagar",
+			"email": "kontakt@aixdesign.net",
+			"homepage": "http://www.aixdesign.net"
+		}
+	]
+}

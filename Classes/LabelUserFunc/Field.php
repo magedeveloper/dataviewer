@@ -1,45 +1,19 @@
 <?php
-namespace MageDeveloper\Dataviewer\LabelUserFunc;
+namespace Aix\Dataviewer\LabelUserFunc;
 
-use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+use Aix\Dataviewer\Utility\LocalizationUtility as Locale;
+use Aix\Dataviewer\Configuration\ExtensionConfiguration as Config;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+
 class Field
 {
 	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
-
-	/**
 	 * Field Repository
 	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
-	 * @inject
+	 * @var \Aix\Dataviewer\Domain\Repository\FieldRepository
 	 */
 	protected $fieldRepository;
-
-	/**
-	 * Constructor
-	 *
-	 * @return Field
-	 */
-	public function __construct()
-	{
-		$this->objectManager 	= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->fieldRepository	 		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-	}
 
 	/**
 	 * UserFunc for Field Label
@@ -49,21 +23,12 @@ class Field
 	 */
 	public function displayLabel(&$pObj)
 	{
-		if (isset($pObj["row"]))
-		{
-			$row = $pObj["row"];
-			$field = $this->fieldRepository->findByUid($row["uid"], false);
-
-			if ($field instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
-			{
-				$pid = $field->getPid();
-				$code = $field->getCode();
-				$label = ($field->getFrontendLabel())?$field->getFrontendLabel():"[".Locale::translate("no_label")."]";
-				$pObj["title"] = "[{$pid}] " . strtoupper($field->getType()) . ": " . $label . " {".$code."}";
-			}
-
-		}
-
+	    $record = BackendUtility::getRecordWSOL($pObj['table'], $pObj['row']['uid']);
+        if(is_array($record)) {
+            $type = (is_array($record) && is_array($record['type'])) ? reset($record['type']) : $record['type'];
+            $label = ($record['frontend_label']) ? $record['frontend_label'] : "[" . Locale::translate("no_label") . "]";
+            $pObj['title'] = "[{$record['pid']}] " . strtoupper($type) . ": " . $label . " {" . $record['variable_name'] . "}";
+        }
 	}
 
 }

@@ -1,0 +1,48 @@
+mod.wizards {
+  newContentElement {
+    wizardItems {
+      dataviewer {
+        header = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer
+        elements {
+          tx_dataviewer_list {
+            iconIdentifier = dataviewer-icon-dataviewer-list
+            title = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.list
+            description = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.list.description
+            tt_content_defValues {
+              CType = list
+              list_type = dataviewer_list
+            }
+          }
+          tx_dataviewer_detail {
+            iconIdentifier = dataviewer-icon-dataviewer-detail
+            title = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.detail
+            description = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.detail.description
+            tt_content_defValues {
+              CType = list
+              list_type = dataviewer_detail
+            }
+          }
+          tx_dataviewer_dynamic {
+            iconIdentifier = dataviewer-icon-dataviewer-dynamic
+            title = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.dynamic
+            description = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.dynamic.description
+            tt_content_defValues {
+              CType = list
+              list_type = dataviewer_dynamic
+            }
+          }
+          tx_dataviewer_plain {
+            iconIdentifier = dataviewer-icon-dataviewer-plain
+            title = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.plain
+            description = LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.plain.description
+            tt_content_defValues {
+              CType = list
+              list_type = dataviewer_plain
+            }
+          }
+        }
+        show = *
+      }
+    }
+  }
+}

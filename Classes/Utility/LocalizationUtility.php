@@ -1,17 +1,9 @@
 <?php
-namespace MageDeveloper\Dataviewer\Utility;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-class LocalizationUtility 
+namespace Aix\Dataviewer\Utility;
+
+class LocalizationUtility
 {
 	/**
 	 * Translates
@@ -20,11 +12,12 @@ class LocalizationUtility
 	 * @param array $arguments
 	 * @return string
 	 */
-	public static function translate($key, $arguments = null)
+	public static function translate(string $key, array $arguments = null): string
 	{
-		if (!is_array($arguments))
+		if (!is_array($arguments)) {
 			$arguments = [$arguments];
-			
-		return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, \MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration::EXTENSION_KEY, $arguments);
+        }
+
+		return (string)\TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, \Aix\Dataviewer\Configuration\ExtensionConfiguration::EXTENSION_KEY, $arguments);
 	}
 }

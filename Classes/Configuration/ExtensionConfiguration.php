@@ -1,31 +1,53 @@
 <?php
-namespace MageDeveloper\Dataviewer\Configuration;
+declare(strict_types=1);
 
-use \MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+namespace Aix\Dataviewer\Configuration;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class ExtensionConfiguration
 {
 	/**
 	 * Extension Key
-     * 
+     *
 	 * @var string
 	 */
-	const EXTENSION_KEY = "dataviewer";
+	const EXTENSION_KEY = 'dataviewer';
 
     /**
      * Tables
-     * 
+     *
      * @var string
      */
-	const EXTENSION_RECORD_TABLE = "tx_dataviewer_domain_model_record";
+    const EXTENSION_FIELD_TABLE 			= 'tx_dataviewer_domain_model_field';
+    const EXTENSION_FIELD_VALUE_TABLE		= 'tx_dataviewer_domain_model_fieldvalue';
+    const EXTENSION_DATATYPE_TABLE 			= 'tx_dataviewer_domain_model_datatype';
+
+    /**
+     * Gets the language field for datatypes
+     *
+     * @return string
+     */
+    public static function getDatatypesLanguageField(): string
+    {
+        return $GLOBALS['TCA'][self::EXTENSION_DATATYPE_TABLE]['ctrl']['languageField'];
+    }
+
+    /**
+     * Gets the language field for fields
+     *
+     * @return string
+     */
+    public static function getFieldsLanguageField(): string
+    {
+        return $GLOBALS['TCA'][self::EXTENSION_FIELD_TABLE]['ctrl']['languageField'];
+    }
+
+    /**
+     * Gets the language field for fieldValues
+     *
+     * @return string
+     */
+    public static function getFieldValuesLanguageField(): string
+    {
+        return $GLOBALS['TCA'][self::EXTENSION_FIELD_VALUE_TABLE]['ctrl']['languageField'];
+    }
 }

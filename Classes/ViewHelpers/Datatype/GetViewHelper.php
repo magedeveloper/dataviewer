@@ -1,37 +1,50 @@
 <?php
-namespace MageDeveloper\Dataviewer\ViewHelpers\Datatype;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-class GetViewHelper extends \MageDeveloper\Dataviewer\ViewHelpers\AbstractViewHelper
+namespace Aix\Dataviewer\ViewHelpers\Datatype;
+
+use Aix\Dataviewer\Domain\Model\Datatype;
+use Aix\Dataviewer\Domain\Repository\DatatypeRepository;
+use Aix\Dataviewer\ViewHelpers\AbstractViewHelper;
+
+class GetViewHelper extends AbstractViewHelper
 {
-	/**
-	 * Datatype Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\DatatypeRepository
-	 * @inject
-	 */
-	protected $datatypeRepository;
+    /**
+     * @var DatatypeRepository
+     */
+    protected $datatypeRepository;
 
-	/**
-	 * Fetch a datatype by id
-	 * 
-	 * @param int $id Id of the record to fetch
-	 * @param bool $includeHidden Include hidden records
-	 * @return \MageDeveloper\Dataviewer\Domain\Model\Datatype
-	 */
-	public function render($id, $includeHidden = false)
-	{
-		$record = $this->datatypeRepository->findByUid($id, !$includeHidden);
-		return $record;
-	}
+    /**
+     * @param DatatypeRepository $datatypeRepository
+     */
+    public function injectDatatypeRepository(DatatypeRepository $datatypeRepository)
+    {
+        $this->datatypeRepository = $datatypeRepository;
+    }
 
+    /**
+     * Initialize arguments.
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments(): void
+    {
+        $this->registerArgument('uid', 'int', 'Datatype Uid', true, '');
+        $this->registerArgument('onlyEnabled', 'bool', 'Only enabled', false, true);
+        parent::initializeArguments();
+    }
+
+    /**
+     * @return Datatype|null
+     */
+    public function render(): ?Datatype
+    {
+        $datatype = $this->datatypeRepository->findByUid($this->arguments['uid'], $this->arguments['onlyEnabled']);
+        if ($datatype instanceof Datatype) {
+            return $datatype;
+        }
+
+        return null;
+    }
 }

@@ -1,0 +1,10 @@
+# Backend Preview Fix @see https://stackoverflow.com/questions/55691663/typo3-how-to-configure-plugin-preview-in-backend
+mod.web_layout.tt_content.preview.list = EXT:
+
+# Backend Preview
+mod.web_layout.tt_content.preview.list {
+  dataviewer_list = EXT:dataviewer/Resources/Private/Templates/Backend/Preview/dataviewer_list.html
+  dataviewer_detail = EXT:dataviewer/Resources/Private/Templates/Backend/Preview/dataviewer_detail.html
+  dataviewer_dynamic = EXT:dataviewer/Resources/Private/Templates/Backend/Preview/dataviewer_dynamic.html
+  dataviewer_plain = EXT:dataviewer/Resources/Private/Templates/Backend/Preview/dataviewer_plain.html
+}

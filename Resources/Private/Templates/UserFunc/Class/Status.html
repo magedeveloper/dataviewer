@@ -1,0 +1,23 @@
+<f:if condition="{isNew}">
+    <f:then>
+        <f:render partial="Class/New" arguments="{_all}" />
+    </f:then>
+    <f:else>
+        <f:if condition="{classValid}">
+            <f:then>
+                <f:if condition="{classActual}">
+                    <f:then>
+                        <f:render partial="Class/UpToDate" arguments="{_all}" />
+                    </f:then>
+                    <f:else>
+                        <f:render partial="Class/Update" arguments="{_all}" />
+                    </f:else>
+                </f:if>
+            </f:then>
+            <f:else>
+                <f:render partial="Class/Create" arguments="{_all}" />
+            </f:else>
+        </f:if>
+    </f:else>
+</f:if>
+

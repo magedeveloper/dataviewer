@@ -1,0 +1,37 @@
+<html
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+	<f:if condition="{markers}">
+		<span style="font-family: Courier, Courier new, monospace; font-size:12px; float:left; width:100%;" class="">
+			<table class="table table-hover table-striped table-bordered">
+				<thead class="thead-dark">
+				<tr>
+					<th scope="col"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers.name" /></th>
+					<th scope="col"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers.type" /></th>
+					<th scope="col"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers.description" /></th>
+				</tr>
+				</thead>
+				<tbody>
+					<f:for each="{markers}" as="marker" iteration="i">
+						<tr>
+							<td class="col-md-3">
+								<code><strong>&#123;{marker.name}&#125;</strong></code>
+							</td>
+							<td class="col-md-3">
+								{marker.type}
+							</td>
+							<td class="col-md-6">
+								{marker.description->f:format.raw()}
+							</td>
+						</tr>
+					</f:for>
+				</tbody>
+			</table>
+		</span>
+		<div style="clear:both;"></div>
+	</f:if>
+
+</html>

@@ -1,0 +1,179 @@
+ctrl:
+    title: '[{datatype.uid}] {datatype.name}'
+    label: title
+    tstamp: tstamp
+    crdate: crdate
+    cruser_id: cruser_id
+    dividers2tabs: true
+    sortby: sorting
+    versioningWS: true
+    origUid: t3_origuid
+    languageField: sys_language_uid
+    translationSource : l10n_source
+    transOrigPointerField: l10n_parent
+    transOrigDiffSourceField: l10n_diffsource
+    <f:if condition="{datatype.thumbnailField}">thumbnail: {datatype.thumbnailField.variableName}</f:if>
+    typeicon_column: icon
+    typeicon_classes:
+    <f:for each="{typeiconClasses}" as="icon" key="iconId">
+        {iconId}: {icon}
+    </f:for>
+    delete: deleted
+    <f:if condition="{datatype.hideRecords}">hideTable: 1</f:if>
+    enablecolumns:
+        disabled: hidden
+        starttime: starttime
+        endtime: endtime
+    searchFields: 'title<f:for each="{datatype.fields}" as="field"><f:if condition="{field.backendSearchable}">,{field.code}</f:if></f:for>'
+    iconfile: '{iconFile}'
+interface:
+    showRecordFieldList: 'logo, sys_language_uid, l10n_parent, l10n_diffsource, {f:if(condition:'!{datatype.hasTitleField}',then:'title, ')}hidden, path_segment<f:for each="{datatype.fields}" as="field">,{field.code}</f:for>'
+types:
+    1:
+        showitem: ' {datatype.tabConfiguration},
+                    <f:if condition="{datatype.enableSeo}">--div--;LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.tab.seo,
+                        path_segment,</f:if>
+                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
+                        --palette--;;language,
+                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
+                        hidden,--palette--;;timeRestriction,
+                   '
+palettes:
+    timeRestriction:
+        showitem: 'starttime, endtime'
+    language:
+        showitem: 'sys_language_uid, l10n_parent'
+    <f:for each="{datatype.palettes}" as="palette" key="paletteName">
+    {dv:string.codeFromString(string:paletteName)}:
+        showitem: '<f:for each="{palette}" as="field" iteration="f">{field}<f:if condition="!{f.isLast}">,</f:if></f:for>'
+    </f:for>
+columns:
+    sys_language_uid:
+        exclude: true
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language'
+        config:
+            type: language
+    l10n_parent:
+        displayCond: 'FIELD:sys_language_uid:>:0'
+        exclude: 1
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent'
+        config:
+            type: select
+            renderType: selectSingle
+            items:
+                -
+                    label: ''
+                    value: 0
+            foreign_table: {datatype.tableName}
+            foreign_table_where: 'AND {datatype.tableName}.pid=###CURRENT_PID### AND {datatype.tableName}.sys_language_uid IN (-1,0)'
+            default: 0
+    l10n_diffsource:
+        config:
+            type: passthrough
+            default: ''
+    t3ver_label:
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel'
+        config:
+            type: input
+            size: 30
+            max: 30
+    crdate:
+        exclude: 1
+        label: ''
+        config:
+            type: input
+            size: 30
+            eval: int
+    tstamp:
+        exclude: 1
+        label: ''
+        config:
+            type: input
+            size: 30
+            eval: int
+    deleted:
+        exclude: 1
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.deleted'
+        config:
+            type: check
+    hidden:
+        exclude: 1
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.enabled'
+        config:
+            type: check
+            renderType: checkboxToggle
+            items:
+                -
+                    label: ''
+                    invertStateDisplay: 1
+    sorting:
+        exclude: 1
+        label: ''
+        config:
+            type: input
+            size: 30
+            eval: int
+    starttime:
+        exclude: true
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime'
+        config:
+            type: datetime
+            default: 0
+            behaviour:
+                allowLanguageSynchronization: true
+    endtime:
+        exclude: 1
+        label: 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime'
+        config:
+            type: datetime
+            default: 0
+            behaviour:
+                allowLanguageSynchronization: true
+    logo:
+        exclude: 1
+        label: ''
+        config:
+            type: user
+            userFunc: 'Aix\Dataviewer\UserFunc\Logo->displayLogoText'
+    datatype:
+        exclude: 1
+        label: 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_record.datatype'
+        config:
+            type: none
+            size: 30
+            eval: ''
+            default: {datatype.uid}
+    title:
+        exclude: 1
+        label: 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_record.title'
+        config:
+            type: input
+            size: 30
+            eval: 'trim'
+            required: true
+    icon:
+        exclude: 1
+        label: 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_record.icon'
+        config:
+            type: none
+            size: 30
+            eval: ''
+            default: {datatype.icon}
+    path_segment:
+        exclude: 1
+        label: 'LLL:EXT:dataviewer/Resources/Private/Language/locallang_db.xlf:tx_dataviewer_domain_model_record.path_segment'
+        config:
+            type: slug
+            generatorOptions:
+                fields:
+                    - title
+                fieldSeparator: '/'
+                prefixParentPageSlug: false
+                prependSlash: true
+                replacements:
+                    '/': '-'
+            fallbackCharacter: '-'
+            eval: uniqueInPid
+    parent:
+        config:
+            type: passthrough

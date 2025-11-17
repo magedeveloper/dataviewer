@@ -1,85 +1,77 @@
 <?php
-namespace MageDeveloper\Dataviewer\Service\Session;
+declare(strict_types=1);
 
-use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+namespace Aix\Dataviewer\Service\Session;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class SelectSessionService extends SessionService
 {
-	/**
-	 * Session Prefix Key
-	 * @var string
-	 */
-	const SESSION_PREFIX_KEY = "tx-dataviewer-select";
+    /**
+     * Session Prefix Key
+     * @var string
+     */
+    const SESSION_PREFIX_KEY = "tx-dataviewer-select";
 
-	/**
-	 * Session Keys for Selection
-	 * @var string
-	 */
-	const SESSION_KEY_SELECT_RECORDS	= "tx-dataviewer-select-records";
+    /**
+     * Session Keys for Selection
+     * @var string
+     */
+    const SESSION_KEY_SELECT_RECORDS = "tx-dataviewer-select-records";
 
-	/**
-	 * Set selected records to the session
-	 * 
-	 * @param array $selectedRecordIds
-	 * @return SelectSessionService
-	 */
-	public function setSelectedRecords(array $selectedRecordIds)
-	{
-		return $this->writeToSession($selectedRecordIds, self::SESSION_KEY_SELECT_RECORDS);
-	}
+    /**
+     * Set selected records to the session
+     *
+     * @param array $selectedRecordIds
+     * @return SelectSessionService
+     */
+    public function setSelectedRecords(array $selectedRecordIds): SelectSessionService
+    {
+        return $this->writeToSession($selectedRecordIds, self::SESSION_KEY_SELECT_RECORDS);
+    }
 
-	/**
-	 * Gets the selected records from the session
-	 * 
-	 * @return array
-	 */
-	public function getSelectedRecords()
-	{
-		$selectedRecords = $this->restoreFromSession(self::SESSION_KEY_SELECT_RECORDS);
-		
-		if(!is_array($selectedRecords))
-			$selectedRecords = [];
-			
-		return $selectedRecords;	
-	}
+    /**
+     * Gets the selected records from the session
+     *
+     * @return array
+     */
+    public function getSelectedRecords(): array
+    {
+        $selectedRecords = $this->restoreFromSession(self::SESSION_KEY_SELECT_RECORDS);
 
-	/**
-	 * Returns the status of a previous set
-	 * record selection. If nothing was set,
-	 * we return false
-	 * 
-	 * @return bool
-	 */
-	public function isSetSelectedRecords()
-	{
-		$selectedRecords = $this->restoreFromSession(self::SESSION_KEY_SELECT_RECORDS);
-		
-		if(is_array($selectedRecords))
-			return true;
-			
-		return false;	
-	}
+        if (!is_array($selectedRecords)) {
+            $selectedRecords = [];
+        }
 
-	/**
-	 * Resets all selected records
-	 * 
-	 * @return SelectSessionService
-	 */
-	public function reset()
-	{
-		$this->setSelectedRecords([]);
-		return $this;
-	}
+        return $selectedRecords;
+    }
+
+    /**
+     * Returns the status of a previous set
+     * record selection. If nothing was set,
+     * we return false
+     *
+     * @return bool
+     */
+    public function isSetSelectedRecords(): bool
+    {
+        $selectedRecords = $this->restoreFromSession(self::SESSION_KEY_SELECT_RECORDS);
+
+        if (is_array($selectedRecords)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Resets all selected records
+     *
+     * @return SelectSessionService
+     */
+    public function reset(): SelectSessionService
+    {
+        $this->setSelectedRecords([]);
+
+        return $this;
+    }
 
 }

@@ -16,6 +16,7 @@
                         <title></title>
                         <el>
                             <field>
+                                <title></title>
                                 <type>array</type>
                                 <el>
                                     <input>

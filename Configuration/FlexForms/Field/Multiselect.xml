@@ -1,0 +1,233 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <renderType>
+                <TCEforms>
+                    <label>renderType</label>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <multiple>0</multiple>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">selectMultipleSideBySide</numIndex>
+                                <numIndex index="1">selectMultipleSideBySide</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">selectCheckBox</numIndex>
+                                <numIndex index="1">selectCheckBox</numIndex>
+                            </numIndex>
+                            <numIndex index="2" type="array">
+                                <numIndex index="0">selectSingleBox</numIndex>
+                                <numIndex index="1">selectSingleBox</numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </renderType>
+            <size>
+                <TCEforms>
+                    <label>size</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>5</default>
+                    </config>
+                </TCEforms>
+            </size>
+            <minitems>
+                <TCEforms>
+                    <label>minitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>0</default>
+                    </config>
+                </TCEforms>
+            </minitems>
+            <maxitems>
+                <TCEforms>
+                    <label>maxitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>999</default>
+                    </config>
+                </TCEforms>
+            </maxitems>
+            <multiple>
+                <TCEforms>
+                    <label>multiple</label>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </multiple>
+            <itemsProcFunc>
+                <TCEforms>
+                    <label>itemsProcFunc</label>
+                    <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder><![CDATA[VendorName\ExtensionName\Domain\Model\Class->itemsProcFuncMethod]]></placeholder>
+                        <eval>trim,nospace</eval>
+                    </config>
+                </TCEforms>
+            </itemsProcFunc>
+            <foreign>
+                <TCEforms>
+                    <label>foreign</label>
+                    <onChange>reload</onChange>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </foreign>
+            <foreign_table>
+                <TCEforms>
+                    <label>foreign_table</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <onChange>reload</onChange>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <multiple>1</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Database->populateTablesAction</itemsProcFunc>
+                        <autosizemax>2</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </foreign_table>
+            <info_markers>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayAvailableMarkers</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html</template>
+                            <includeRecord>1</includeRecord>
+                            <markers>
+                                <field>
+                                    <type>Aix\Dataviewer\Domain\Model\Field</type>
+                                    <name>field</name>
+                                </field>
+                                <fieldtype>
+                                    <type>Aix\Dataviewer\Form\Fieldtype\AbstractFieldtype</type>
+                                    <name>fieldtype</name>
+                                </fieldtype>
+                            </markers>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info_markers>
+            <foreign_table_where>
+                <TCEforms>
+                    <label>foreign_table_where</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>text</type>
+                        <rows>5</rows>
+                        <cols>50</cols>
+                        <eval>trim</eval>
+                        <placeholder>AND tablename.pid = X</placeholder>
+                        <renderType>t3editor</renderType>
+                        <format>php</format>
+                    </config>
+                </TCEforms>
+            </foreign_table_where>
+            <sort_field>
+                <TCEforms>
+                    <label>sort_field</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Field->populateFieldsFromTable</itemsProcFunc>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </sort_field>
+            <sort_order>
+                <TCEforms>
+                    <label>sort_order</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_ascending</numIndex>
+                                <numIndex index="1">ASC</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_descending</numIndex>
+                                <numIndex index="1">DESC</numIndex>
+                            </numIndex>
+                        </items>
+                        <default>ASC</default>
+                    </config>
+                </TCEforms>
+            </sort_order>
+            <suggest_wizard>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:add_suggest_wizard</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </suggest_wizard>
+            <include_field_values_as_options>
+                <TCEforms>
+                    <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:include_field_values_as_options</label>
+                    <displayCond>FIELD:foreign:=:1</displayCond>
+                    <config>
+                        <checkbox>1</checkbox>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </include_field_values_as_options>
+        </el>
+    </ROOT>
+</T3DataStructure>

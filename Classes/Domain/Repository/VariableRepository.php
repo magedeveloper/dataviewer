@@ -1,43 +1,52 @@
 <?php
-namespace MageDeveloper\Dataviewer\Domain\Repository;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+namespace Aix\Dataviewer\Domain\Repository;
+
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+
 class VariableRepository extends AbstractRepository
 {
-	/**
-	 * Find variables by type
-	 * 
-	 * @param string $type
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryInterface
-	 */
-	public function findByType($type)
-	{
-		$query = $this->createQueryWithSettings();
+    /**
+     * Find variables by type
+     *
+     * @param string $type
+     * @return QueryResultInterface
+     */
+    public function findByType(string $type): QueryResultInterface
+    {
+		$query = $this->createQueryWithSettings(true,false,false);
 
 		return $query->matching(
-			$query->equals("type", $type)
+			$query->equals('type', $type)
 		)->execute();
 	}
 
-	/**
-	 * Find Variables by given storage pids
-	 * 
-	 * @param array $storagePids
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findByStoragePids(array $storagePids)
-	{
+    /**
+     * Find Variables by given storage pids
+     *
+     * @param array $storagePids
+     * @return QueryResultInterface
+     */
+    public function findByStoragePids(array $storagePids): QueryResultInterface
+    {
 		$query = $this->createQueryWithSettings(false, false, true, $storagePids);
 		return $query->execute();
 	}
 
+    /**
+     * Find Variables by types
+     * @param array $types
+     * @return QueryResultInterface
+     * @throws InvalidQueryException
+     */
+    public function findByTypes(array $types): QueryResultInterface
+    {
+        $query = $this->createQueryWithSettings(true,false,false);
+
+        return $query->matching(
+            $query->in('type', $types)
+        )->execute();
+    }
 }

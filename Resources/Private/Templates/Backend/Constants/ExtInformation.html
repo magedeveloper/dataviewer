@@ -1,0 +1,28 @@
+<div style="padding:25px;">
+    <img src="{logoUrl}" height="100" width="350" />
+    <br />
+    <h1 style="margin-top:15px;">{emConf.title} Extension, Version {emConf.version}</h1>
+    <p>
+        {emConf.description}
+    </p>
+    <f:if condition="!{supportMessage}">
+        <a class="btn btn-warning" style="color:white; font-weight:bold; display:inline;" href="https://www.aixdesign.net" target="_blank"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:pro.upgrade_to_pro" /></a>
+    </f:if>
+    <f:if condition="{additionalInformation}">
+      {additionalInformation->f:format.raw()}
+    </f:if>
+    <br />
+    <h4>Icons:</h4>
+    <p>
+        Some icons used in this Extension are retrieved from the "Silk" icon set of
+        Mark James, which can be found at http://famfamfam.com/lab/icons/silk/.
+        <br />
+        Additional icons, included in this Extension are from the "Fugue" icon set of Yusuke Kamiyamane,
+        which can be found at http://p.yusukekamiyamane.com/.
+        <br />
+        We also use some of the free icons from Fatcow which can be found at
+        http://www.fatcow.com/free-icons.
+        <br /><br />
+        Special Thanks to mistic100 for the <a href="https://github.com/mistic100/jQuery-QueryBuilder" target="_blank">jQuery QueryBuilder</a>, that is implemented in this project.
+    </p>
+</div>

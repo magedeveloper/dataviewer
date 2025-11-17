@@ -1,52 +1,66 @@
 <?php
-namespace MageDeveloper\Dataviewer\ViewHelpers\Backend;
+declare(strict_types=1);
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+namespace Aix\Dataviewer\ViewHelpers\Backend;
+
+use Closure;
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
- * ViewHelper to create a link to edit a note
+ * ViewHelper to create a link to the list module
  * @internal
  */
-class EditLinkViewHelper extends AbstractViewHelper implements CompilableInterface
+class EditLinkViewHelper extends AbstractLinkViewHelper
 {
-	/**
-	 * @param int $id
-	 * @param string $table
-	 * @param string $returnUrl
-	 * @return string
-	 */
-	public function render($id, $table, $returnUrl = null)
-	{
-		return static::renderStatic(
-			[
-				'id' => $id,
-				'table' => $table,
-				'returnUrl' => $returnUrl,
-			],
-			$this->buildRenderChildrenClosure(),
-			$this->renderingContext
-		);
-	}
+    /**
+     * Arguments initialization
+     *
+     * @throws Exception
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('id', 'int', 'Id of the link', true);
+        $this->registerArgument('table', 'string', 'Tablename', true);
+        $this->registerArgument('returnUrl', 'string', 'The return url', false, null);
+    }
 
-	/**
-	 * @param array $arguments
-	 * @param \Closure $renderChildrenClosure
-	 * @param RenderingContextInterface $renderingContext
-	 *
-	 * @return string
-	 */
-	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
-	{
-		return BackendUtility::getModuleUrl(
-			'record_edit',
-			[
-				'edit['.$arguments['table'].'][' . $arguments['id'] . ']' => 'edit',
-				'returnUrl' => (isset($arguments["returnUrl"]))?$arguments["returnUrl"]:GeneralUtility::getIndpEnv('REQUEST_URI'),
-			]
-		);
-	}
+
+    /**
+     * @return string
+     * @throws RouteNotFoundException
+     */
+    public function render(): string
+    {
+        return static::renderStatic(
+            [
+                'id' => $this->arguments["id"],
+                'table' => $this->arguments["table"],
+                'returnUrl' => $this->arguments["returnUrl"],
+            ],
+            $this->buildRenderChildrenClosure(),
+            $this->renderingContext
+        );
+    }
+
+    /**
+     * @param array $arguments
+     * @param Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return string
+     * @throws RouteNotFoundException
+     */
+    public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
+    {
+        return self::getModuleUrl(
+            'record_edit',
+            [
+                'edit['.$arguments['table'].'][' . $arguments['id'] . ']' => 'edit',
+                'returnUrl' => (isset($arguments["returnUrl"]))?$arguments["returnUrl"]:GeneralUtility::getIndpEnv('REQUEST_URI'),
+            ]
+        );
+    }
 }

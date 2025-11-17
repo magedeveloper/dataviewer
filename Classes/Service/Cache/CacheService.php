@@ -1,24 +1,18 @@
 <?php
-namespace MageDeveloper\Dataviewer\Service\Cache;
+declare(strict_types=1);
 
-use TYPO3\CMS\Extbase\Object\Container\Exception\CannotInitializeCacheException;
+namespace Aix\Dataviewer\Service\Cache;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-class CacheService implements \TYPO3\CMS\Core\SingletonInterface
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class CacheService implements SingletonInterface
 {
 	/**
-	 * Cache Instance
-	 *
-	 * @var \TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend
+	 * @var PhpFrontend
 	 */
 	protected $cacheInstance;
 
@@ -31,20 +25,20 @@ class CacheService implements \TYPO3\CMS\Core\SingletonInterface
 	/**
 	 * TYPO3 Cache Manager
 	 *
-	 * @var \TYPO3\CMS\Core\Cache\CacheManager
-	 * @inject
+	 * @var CacheManager
 	 */
 	protected $cacheManager;
 
 	/**
 	 * Gets the cache manager
 	 *
-	 * @return object|\TYPO3\CMS\Core\Cache\CacheManager
+	 * @return object|CacheManager
 	 */
-	public function getCacheManager()
+	public function getCacheManager(): CacheManager
 	{
-		if (!$this->cacheManager instanceof \TYPO3\CMS\Core\Cache\CacheManager)
-			$this->cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+		if (!$this->cacheManager instanceof CacheManager) {
+            $this->cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+        }
 
 		return $this->cacheManager;
 	}
@@ -53,8 +47,9 @@ class CacheService implements \TYPO3\CMS\Core\SingletonInterface
 	 * Sets the cache name
 	 *
 	 * @param mixed $cacheName
+     * @return void
 	 */
-	public function setCacheName($cacheName)
+	public function setCacheName($cacheName): void
 	{
 		$this->cacheName = $cacheName;
 		$this->initializeCache();
@@ -63,108 +58,105 @@ class CacheService implements \TYPO3\CMS\Core\SingletonInterface
 	/**
 	 * Gets the cache name
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function getCacheName()
+	public function getCacheName(): string
 	{
-		return $this->cacheName;
+		return (string)$this->cacheName;
 	}
 
 	/**
 	 * Get entry from caching framework
 	 *
 	 * @param string $cacheIdentifier cache identifier
-	 * @return entry or NULL if not found
+	 * @return mixed
+     * @throws NoSuchCacheException
 	 */
-	public function get($cacheIdentifier)
+	public function get(string $cacheIdentifier)
 	{
 		$entry = $this->getCacheManager()->getCache( $this->getCacheName() )
 			->get($cacheIdentifier);
 		return $entry;
 	}
 
-	/**
-	 * Set an entry to the caching framework
-	 *
-	 * @param string $cacheIdentifier
-	 * @param string $entry
-	 * @param array $tags
-	 * @param integer $lifetime
-	 * @return void
-	 */
-	public function set($cacheIdentifier, $entry, array $tags = array(), $lifetime = NULL)
+    /**
+     * Set an entry to the caching framework
+     *
+     * @param string $cacheIdentifier
+     * @param mixed $entry
+     * @param array $tags
+     * @param int|null $lifetime
+     * @return self
+     * @throws NoSuchCacheException
+     */
+    public function set(string $cacheIdentifier, $entry, array $tags = array(), ?int $lifetime = null): CacheService
 	{
 		$this->getCacheManager()->getCache( $this->getCacheName() )
 			->set($cacheIdentifier, $entry, $tags, $lifetime);
+
+        return $this;
 	}
 
-	/**
-	 * Checks if the cache has an cache identifier
-	 *
-	 * @param string $cacheIdentifier
-	 * @return bool
-	 * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
-	 */
-	public function has($cacheIdentifier)
-	{
-		return $this->getCacheManager()->getCache( $this->getCacheName() )
-			->has($cacheIdentifier);
-	}
+    /**
+     * Checks if the cache has an cache identifier
+     *
+     * @param string $cacheIdentifier
+     * @return bool
+     * @throws NoSuchCacheException
+     */
+    public function has(string $cacheIdentifier): bool
+    {
+        return $this->getCacheManager()->getCache($this->getCacheName())
+            ->has($cacheIdentifier);
+    }
 
-	/**
-	 * Removes an cache identifier from the cache
-	 *
-	 * @param string $cacheIdentifier
-	 * @return bool
-	 * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
-	 */
-	public function remove($cacheIdentifier)
-	{
-		return $this->getCacheManager()->getCache( $this->getCacheName() )
-			->remove($cacheIdentifier);
-	}
-
-	/**
-	 * Flush cache
-	 *
-	 * @return void
-	 */
-	public function flush()
-	{
-		$this->getCacheManager()->getCache( $this->getCacheName() )
-			->flush();
-	}
-
-	/**
-	 * Initialize cache instance to be ready to use
-	 *
-	 * @throws \TYPO3\CMS\Extbase\Object\Container\Exception\CannotInitializeCacheException
-	 * @return void
-	 */
-	protected function initializeCache()
-	{
-		try
-		{
-			if (!$this->getCacheManager()->hasCache( $this->getCacheName() ))
-			{
-				$typo3CacheFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheFactory::class);
-
-				$this->cacheInstance = $typo3CacheFactory->create(
-					$this->getCacheName(),
-					$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->getCacheName()]['frontend'],
-					$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->getCacheName()]['backend'],
-					(array)$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->getCacheName()]['options']
-				);
+    /**
+     * Removes an cache identifier from the cache
+     *
+     * @param string $cacheIdentifier
+     * @return bool
+     * @throws NoSuchCacheException
+     */
+    public function remove(string $cacheIdentifier): bool
+    {
+        return $this->getCacheManager()->getCache($this->getCacheName())
+            ->remove($cacheIdentifier);
+    }
 
 
-			}
+    /**
+     * Flush cache
+     *
+     * @return void
+     * @throws NoSuchCacheException
+     */
+    public function flush()
+    {
+        $this->getCacheManager()->getCache($this->getCacheName())
+            ->flush();
+    }
 
-		}
-		catch (Exception $e)
-		{
-			throw new \TYPO3\CMS\Extbase\Object\Container\Exception\CannotInitializeCacheException($e->getMessage());
-		}
-	}
+    /**
+     * Initialize cache instance to be ready to use
+     *
+     * @return void
+     * @throws \TYPO3\CMS\Core\Cache\Exception
+     */
+    protected function initializeCache()
+    {
+        try {
+            if (!$this->getCacheManager()->hasCache($this->getCacheName())) {
+                $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+
+                if ($cacheManager->hasCache($this->getCacheName())) {
+                    $this->cacheInstance = $cacheManager->getCache($this->getCacheName());
+                }
+            }
+
+        } catch (Exception $e) {
+            throw new \TYPO3\CMS\Core\Cache\Exception($e->getMessage());
+        }
+    }
 
 	/**
 	 * Set/Get cache wrapper
@@ -173,10 +165,10 @@ class CacheService implements \TYPO3\CMS\Core\SingletonInterface
 	 * @throws \Exception
 	 * @return mixed
 	 */
-	public function __call($method, $args)
+    public function __call(string $method, array $args)
 	{
 		$key = $this->_underscore(substr($method,3));
-		switch( substr($method, 0, 3) )
+		switch ( substr($method, 0, 3) )
 		{
 			case "get":
 				return $this->get($key);
@@ -192,17 +184,16 @@ class CacheService implements \TYPO3\CMS\Core\SingletonInterface
 				return $this->has($key);
 		}
 
-		throw new \Exception("Invalid method " . get_class($this) . "::" . $method . "(" . print_r($args, 1) . ")");
+		throw new Exception("Invalid method " . get_class($this) . "::" . $method . "(" . print_r($args, true) . ")");
 	}
 
-	/**
-	 * Converts field names for Setters and Getters
-	 * @param string $name
-	 * @return string
-	 */
-	protected function _underscore($name)
-	{
-		$result = strtolower(preg_replace("/(.)([A-Z])/", "$1_$2", $name));
-		return $result;
-	}
+    /**
+     * Converts field names for Setters and Getters
+     * @param string $name
+     * @return string
+     */
+    protected function _underscore(string $name): string
+    {
+        return strtolower(preg_replace("/(.)([A-Z])/", "$1_$2", $name));
+    }
 }

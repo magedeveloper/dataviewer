@@ -1,0 +1,131 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:render section="Before" arguments="{_all}" optional="true"/>
+
+<f:section name="dataviewer">
+
+</f:section>
+
+<f:if condition="{dataviewerContext}">
+    <f:then>
+        <!-- DATAVIEWER CONTEXT RENDERING -->
+        <link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/dataviewer-backend.css',extensionName: 'dataviewer')}" media="all">
+        <div class="module {moduleClass}" data-module-id="{moduleId}" data-module-name="{moduleName}">
+
+            <div class="dataviewer-module-body">
+                <div class="dataviewer-backend-form">
+
+                    <f:if condition="{formTag}">
+                        <f:then>
+                            <f:format.raw>{formTag}</f:format.raw>
+                        </f:then>
+                    </f:if>
+                    <f:if condition="{docHeader.enabled}">
+                        <f:render partial="DocHeader" arguments="{docHeader:docHeader}"/>
+                    </f:if>
+                    <div class="module-body t3js-module-body">
+
+                        <div class="dataviewer-alerts">
+                            <f:flashMessages queueIdentifier="{flashMessageQueueIdentifier}"/>
+                            <f:if condition="{tableNeedsUpdate}">
+                                <div class="alert alert-danger">
+                                    <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:table.check.error.update_needed" arguments="{0:datatype.tablename}"/>
+                                </div>
+                            </f:if>
+                        </div>
+                        <div class="pre-module-body pre-t3js-module-body" style="{f:if(condition:datatype.color,then:'border-right:10px solid {datatype.color};')}">
+                            <div class="dataviewer-header row">
+                                <div class="col-md-9">
+                                    <div class="dataviewer-datatype-title">
+                                        <f:if condition="{language.uid}">
+                                            <core:icon identifier="flags-{language.flag}" size="small"/>
+                                        </f:if>
+                                        <core:icon identifier="extensions-dataviewer-{datatype.icon}" size="small"/>
+                                        <div class="h1">{datatype.name}&nbsp;<f:if condition="{record.title}">'{record.title}'&nbsp;</f:if>
+                                            <f:if condition="{record.uid}">[{record.uid}]</f:if>
+                                        </div>
+                                    </div>
+                                    <f:if condition="{datatype.description}">
+                                        <div class="callout callout-info">
+                                            {datatype.description}
+                                        </div>
+                                    </f:if>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="support text-right">
+                                        <div class="pull-right">
+                                            <div class="dv-logo">
+                                                <img src="{logoUrl}" width="180" class="dataviewer-logo" title="Dataviewer v{version}"/>
+                                            </div>
+                                            <strong class="">v{version}</strong> <br/>
+                                            <a class="" href="mailto:{supportEmail}">{supportEmail}</a> <br/>
+                                            <f:if condition="!{supportMessage}">
+                                                <a class="pull-right btn btn-warning btn-sm" style="color:white; font-weight:bold; display:inline-block; margin-top:5px; height:auto !important;" href="https://www.aixdesign.net" target="_blank">
+                                                    <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:pro.upgrade_to_pro"/>
+                                                </a>
+                                            </f:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <f:if condition="{uiBlock}">
+                                <div id="t3js-ui-block" class="ui-block">
+                                    <core:icon identifier="spinner-circle" size="large"/>
+                                </div>
+                            </f:if>
+                            <div class="dataviewer-module-content">
+                                <div class="dataviewer-backend-content">
+                                    <f:render section="Content" arguments="{_all}" optional="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <f:if condition="{formTag}">
+                <f:then>
+                    </form>
+                </f:then>
+            </f:if>
+        </div>
+    </f:then>
+    <f:else>
+        <!-- DEFAULT RENDERING -->
+        <div class="module {moduleClass}" data-module-id="{moduleId}" data-module-name="{moduleName}">
+            <f:if condition="{formTag}">
+                <f:then>
+                    <f:format.raw>{formTag}</f:format.raw>
+                </f:then>
+            </f:if>
+            <f:if condition="{docHeader.enabled}">
+                <f:render partial="DocHeader" arguments="{docHeader:docHeader}"/>
+            </f:if>
+            <div class="module-body t3js-module-body">
+                <f:if condition="{uiBlock}">
+                    <div id="t3js-ui-block" class="ui-block">
+                        <core:icon identifier="spinner-circle" size="large"/>
+                    </div>
+                </f:if>
+                <f:flashMessages queueIdentifier="{flashMessageQueueIdentifier}"/>
+
+                <f:render section="Content" arguments="{_all}" optional="true"/>
+
+            </div>
+            <f:if condition="{formTag}">
+                <f:then>
+                    </form>
+                </f:then>
+            </f:if>
+        </div>
+    </f:else>
+</f:if>
+
+<f:render section="After" arguments="{_all}" optional="true"/>
+
+
+
+</html>

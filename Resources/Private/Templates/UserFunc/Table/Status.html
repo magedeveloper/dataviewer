@@ -1,0 +1,28 @@
+<f:if condition="{tableExists}">
+    <f:then>
+        <f:if condition="{tableNeedsUpdate}">
+            <f:then>
+                <f:render partial="Table/Update" arguments="{_all}" />
+            </f:then>
+            <f:else>
+                <f:render partial="Table/UpToDate" arguments="{_all}" />
+            </f:else>
+        </f:if>
+    </f:then>
+    <f:else>
+        <f:if condition="{tableNameWrong}">
+            <f:then>
+
+            </f:then>
+            <f:else>
+              <f:render partial="Table/Create" arguments="{_all}" />
+            </f:else>
+        </f:if>
+    </f:else>
+</f:if>
+
+
+
+
+
+

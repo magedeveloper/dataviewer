@@ -1,0 +1,152 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <foreign_table>
+                <TCEforms>
+                    <label>foreign_table</label>
+                    <onChange>reload</onChange>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Database->populateTablesAction</itemsProcFunc>
+                        <autosizemax>2</autosizemax>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:please_select</numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </foreign_table>
+            <foreign_field>
+                <TCEforms>
+                    <label>foreign_field</label>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Field->populateFieldsFromTable</itemsProcFunc>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </foreign_field>
+            <foreign_record_defaults>
+                <title>foreign_record_defaults</title>
+                <section>1</section>
+                <type>array</type>
+                <el>
+                    <defaults>
+                        <type>array</type>
+                        <title></title>
+                        <el>
+                            <field>
+                                <TCEforms>
+                                    <label>LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:show_item.php.field</label>
+                                    <config>
+                                        <type>input</type>
+                                        <size>15</size>
+                                    </config>
+                                </TCEforms>
+                            </field>
+                            <default>
+                                <TCEforms>
+                                    <label>LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.default_value</label>
+                                    <config>
+                                        <type>input</type>
+                                        <size>15</size>
+                                    </config>
+                                </TCEforms>
+                            </default>
+                        </el>
+                    </defaults>
+                </el>
+            </foreign_record_defaults>
+            <foreign_sortby>
+                <TCEforms>
+                    <label>foreign_sortby</label>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1"></numIndex>
+                            </numIndex>
+                        </items>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Field->populateFieldsFromTable</itemsProcFunc>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                    </config>
+                </TCEforms>
+            </foreign_sortby>
+            <sort_order>
+                <TCEforms>
+                    <label>sort_order</label>
+                    <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_ascending</numIndex>
+                                <numIndex index="1">ASC</numIndex>
+                            </numIndex>
+                            <numIndex index="1" type="array">
+                                <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_descending</numIndex>
+                                <numIndex index="1">DESC</numIndex>
+                            </numIndex>
+                        </items>
+                        <default>ASC</default>
+                    </config>
+                </TCEforms>
+            </sort_order>
+            <minitems>
+                <TCEforms>
+                    <label>minitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>0</default>
+                    </config>
+                </TCEforms>
+            </minitems>
+            <maxitems>
+                <TCEforms>
+                    <label>maxitems</label>
+                    <config>
+                        <type>input</type>
+                        <size>3</size>
+                        <eval>int</eval>
+                        <default>999</default>
+                    </config>
+                </TCEforms>
+            </maxitems>
+        </el>
+    </ROOT>
+</T3DataStructure>

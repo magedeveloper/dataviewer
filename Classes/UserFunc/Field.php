@@ -1,73 +1,69 @@
 <?php
-namespace MageDeveloper\Dataviewer\UserFunc;
+namespace Aix\Dataviewer\UserFunc;
 
-use MageDeveloper\Dataviewer\Utility\LocalizationUtility;
-use MageDeveloper\Dataviewer\Utility\StringUtility;
+use Aix\Dataviewer\Domain\Repository\DatatypeRepository;
+use Aix\Dataviewer\Domain\Repository\FieldRepository;
+use Aix\Dataviewer\Factory\TableFactory;
+use Aix\Dataviewer\Fluid\View\StandaloneView;
+use Aix\Dataviewer\Form\Element\UserElement;
+use Aix\Dataviewer\Service\FlexForm\FlexFormService;
+use Aix\Dataviewer\Service\Settings\FieldSettingsService;
+use Aix\Dataviewer\Service\Settings\Plugin\PluginSettingsService;
+use Aix\Dataviewer\Utility\LocalizationUtility;
+use Aix\Dataviewer\Utility\StringUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class Field
 {
 	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
-
-	/**
 	 * Field Repository
 	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
-	 * @inject
+	 * @var FieldRepository
 	 */
 	protected $fieldRepository;
 
-	/**
-	 * Record Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordRepository
-	 * @inject
-	 */
-	protected $recordRepository;
+    /**
+     * Record Repository
+     *
+     * @var DatatypeRepository
+     */
+    protected $datatypeRepository;
 
 	/**
 	 * FlexForm Service
 	 *
-	 * @var \MageDeveloper\Dataviewer\Service\FlexFormService
-	 * @inject
+	 * @var FlexFormService
 	 */
 	protected $flexFormService;
 
-	/**
-	 * Plugin Settings Service
-	 *
-	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
-	 * @inject
-	 */
-	protected $pluginSettingsService;
+    /**
+     * Plugin Settings Service
+     *
+     * @var PluginSettingsService
+     */
+    protected $pluginSettingsService;
+
+    /**
+     * Field Settings Service
+     *
+     * @var FieldSettingsService
+     */
+    protected $fieldSettingsService;
 
 	/**
 	 * Constructor
-	 *
-	 * @return Field
 	 */
 	public function __construct()
 	{
-		$this->objectManager 			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->fieldRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-		$this->recordRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
-		$this->flexFormService			= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\FlexFormService::class);
-		$this->pluginSettingsService	= $this->objectManager->get(\MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService::class);
+		$this->fieldRepository = GeneralUtility::makeInstance(FieldRepository::class);
+        $this->datatypeRepository = GeneralUtility::makeInstance(DatatypeRepository::class);
+		$this->flexFormService = GeneralUtility::makeInstance(FlexFormService::class);
+		$this->pluginSettingsService = GeneralUtility::makeInstance(PluginSettingsService::class);
+        $this->fieldSettingsService = GeneralUtility::makeInstance(FieldSettingsService::class);
 	}
 
 	/**
@@ -79,21 +75,40 @@ class Field
 	 */
 	public function displayGeneratedFieldIdentifier(array &$config, &$parentObject)
 	{
-		$row = $config["row"];
-		$text = ($row["variable_name"] != "")?$row["variable_name"]:$row["frontend_label"];
+		$row = $config['row'];
+		$text = ($row['variable_name'] != '')?$row['variable_name']:$row['frontend_label'];
 		$code = StringUtility::createCodeFromString($text);
-		$title = LocalizationUtility::translate("formvalue_access_to_hidden_field");
+		$title = LocalizationUtility::translate('formvalue_access_to_hidden_field');
 		$recordName = $this->pluginSettingsService->getRecordVarName();
 
-		if (!$code) $code = "<em>generated on save</em>";
+		if (!$code) {
+            $code = '<em>generated on save</em>';
+        }
 
-		$html = "";
-		$html .= "<strong>{$title}</strong>";
-		$html .= "<span style=\"font-family: Courier, Courier new, monospace; font-size:16px; float:left; width:100%;\" class='callout callout-info'>";
-		$html .= '{'.$recordName.'.<strong>'.$code.'</strong>}';
-		$html .= "</span><br />";
+        $table = $config['table'];
+        $uid = $row['uid'];
 
-		return $html;
+        /* @var StandaloneView $view */
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
+        $view->assignMultiple([
+            'row' => $row,
+            'text' => $text,
+            'table' => $table,
+            'uid' => $uid,
+            'frontendLabelFieldName' => "input[data-formengine-input-name=\"data[{$table}][{$uid}][frontend_label]\"]",
+            'variableNameFieldName' => "input[data-formengine-input-name=\"data[{$table}][{$uid}][variable_name]\"]",
+            'frontendLabelValueFieldName' => "input[name=\"data[{$table}][{$uid}][frontend_label]\"]",
+            'variableValueFieldName' => "input[name=\"data[{$table}][{$uid}][variable_name]\"]",
+            'title' => $title,
+            'recordName' => $recordName,
+            'code' => $code,
+        ]);
+
+        $template = 'EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/GeneratedFieldIdentifier.html';
+        $template = GeneralUtility::getFileAbsFileName($template);
+        $view->setTemplatePathAndFilename($template);
+
+		return $view->render();
 	}
 
 	/**
@@ -106,40 +121,18 @@ class Field
 	 */
 	public function displayAvailableFieldIds(array &$config, &$parentObject)
 	{
-		$row = $config["row"];
-		$pid = $row["pid"];
-		$title = LocalizationUtility::translate("available_field_ids");
-		$fields = $this->fieldRepository->findAllOnPid($pid);
+	    /* @var Template $templateUserFunc */
+        $templateUserFunc = GeneralUtility::makeInstance(Template::class);
+        $row = $config['row'];
+        $pid = $row['pid'];
+        $fields = $this->fieldRepository->findAllOnPid($pid);
+        if(count($fields) > 0) {
+            $config['parameters']['fields'] = $fields;
+        } else {
+            return '<br />'.LocalizationUtility::translate('flexform.available_field_ids.no_fields_found');
+        }
 
-
-		$html = "";
-		$html .= "<strong>{$title}</strong>";
-		$html .= "<span style=\"font-family: Courier, Courier new, monospace; font-size:12px; float:left; width:100%;\" class='callout callout-info'>";
-
-		if(count($fields))
-		{
-			foreach($fields as $_field)
-			{
-				/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
-				$html .= "[ID: {$_field->getUid()}]\t\t";
-				$html .= "{$_field->getFrontendLabel()}";
-				$html .= "<br />";
-
-			}
-
-			$html .= "<br />";
-			$html .= "Example: FIELD:2:=:Selected Value";
-
-		}
-		else
-		{
-			$html .= "---<br />";
-		}
-
-
-		$html .= "</span><br />";
-
-		return $html;
+        return $templateUserFunc->displayTemplate($config, $parentObject);
 	}
 
 	/**
@@ -156,7 +149,7 @@ class Field
 		$fields = $this->fieldRepository->findAll(false);
 
 		$sorted = [];
-		foreach($fields as $_field)
+		foreach ($fields as $_field)
 		{
 			$pid = $_field->getPid();
 			$sorted[$pid][] = $_field;
@@ -164,17 +157,89 @@ class Field
 
 		ksort($sorted);
 
-		foreach($sorted as $pid)
-		{
-			foreach($pid as $_field)
-			{
+		foreach ($sorted as $pid=>$fields) {
+		    $page = BackendUtility::getRecord('pages',$pid);
+		    $title = "[PID:{$pid}]"." ".$page['title'];
+		    $options[] = [
+                'label' => $title,
+                'value' => '--div--'
+            ];
+			foreach ($fields as $_field) {
+			    /* @var \Aix\Dataviewer\Domain\Model\Field $_field */
 				$label = $this->_getFieldLabel($_field);
-				$options[] = [$label, $_field->getUid()];
+				$options[] = [
+                    'label' => $label,
+                    'value' => $_field->getVariableName()
+                ];
 			}
 		}
 
-		$config["items"] = array_merge($config["items"], $options);
+		$config['items'] = array_merge($config['items'], $options);
 	}
+
+    /**
+     * Populate fields
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function populateFieldIds(array &$config, &$parentObject)
+    {
+        $options = [];
+
+        $fields = $this->fieldRepository->findAll(false);
+
+        $sorted = [];
+        foreach ($fields as $_field)
+        {
+            $pid = $_field->getPid();
+            $sorted[$pid][] = $_field;
+        }
+
+        ksort($sorted);
+
+        foreach ($sorted as $pid=>$fields) {
+            $page = BackendUtility::getRecord('pages',$pid);
+            $title = "[PID:{$pid}]"." ".$page['title'];
+            $options[] = [$title, '--div--'];
+            foreach ($fields as $_field) {
+                /* @var \Aix\Dataviewer\Domain\Model\Field $_field */
+                $label = $this->_getFieldLabel($_field);
+                $options[] = [$label, $_field->getUid()];
+            }
+        }
+
+        $config['items'] = array_merge($config['items'], $options);
+    }
+
+    /**
+     * Populate fields
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function populateFieldsAndPalettesOnCurrentPid(array &$config, &$parentObject)
+    {
+        $this->populateFieldsOnCurrentPid($config, $parentObject);
+
+        // Retrieve possible palettes
+        $datatypeId = $config['row']['uid'];
+        /* @var \Aix\Dataviewer\Domain\Model\Datatype $datatype */
+        $datatype = $this->datatypeRepository->findByUid($datatypeId,false);
+
+        if ($datatype instanceof \Aix\Dataviewer\Domain\Model\Datatype) {
+            $palettes = $datatype->getPalettes();
+
+            $options = [];
+            foreach ($palettes as $_paletteName=>$_fields) {
+                $paletteString = implode(', ', $_fields);
+                $options[] = ["PALETTE: {$paletteString}", $_paletteName];
+            }
+            $config['items'] = array_merge($config['items'], $options);
+        }
+    }
 
 	/**
 	 * Populate fields
@@ -185,14 +250,14 @@ class Field
 	 */
 	public function populateFieldsOnCurrentPid(array &$config, &$parentObject)
 	{
-		$pid = $config["flexParentDatabaseRow"]["pid"];
+		$pid = $config['flexParentDatabaseRow']['pid'];
 
 		$options = [];
 		$fields = $this->fieldRepository->findAllOnPids([$pid], true);
 
 		$sortedFields = [];
 
-		foreach($fields as $_field)
+		foreach ($fields as $_field)
 		{
 			$type = $_field->getType();
 			$sortedFields[$type][] = $_field;
@@ -200,16 +265,16 @@ class Field
 
 		ksort($sortedFields);
 
-		foreach($sortedFields as $_type=>$_fields)
+		foreach ($sortedFields as $_type=>$_fields)
 		{
-			foreach($_fields as $_field)
+			foreach ($_fields as $_field)
 			{
 				$label = $this->_getFieldLabel($_field);
 				$options[] = [$label, $_field->getUid()];
 			}
 		}
 
-		$config["items"] = $options;
+        $config['items'] = array_merge($config['items'], $options);
 	}
 
 	/**
@@ -221,102 +286,233 @@ class Field
 	 */
 	public function populateFieldsOnStoragePages(array &$config, &$parentObject)
 	{
-		$pages = $config["flexParentDatabaseRow"]["pages"];
-		
-		if(!is_array($pages))
-			$pages = GeneralUtility::trimExplode(",", $pages);
-			
+		$pages = $config['flexParentDatabaseRow']['pages'];
+
+		if (!is_array($pages))
+			$pages = GeneralUtility::intExplode(',', $pages);
+
 		$pids = [];
-		foreach($pages as $_page)
+		foreach ($pages as $_page)
 		{
-			if(is_array($_page)) {
-				$pids[] = $_page["uid"];
+			if (is_array($_page)) {
+				$pids[] = $_page['uid'];
 			}
 			else {
 				preg_match('/(?<table>.*)_(?<uid>[0-9]{0,11})|.*/', $_page, $match);
-				
-				if(is_array($match))
+
+				if (is_array($match))
 				{
-					if(isset($match["uid"]))
-						$pids[] = $match["uid"];
+					if (isset($match['uid']))
+						$pids[] = $match['uid'];
 					else
 						$pids[] = $match[0];
 				}
 			}
-		
+
 		}
 
 		$options = [];
 		$fields = $this->fieldRepository->findAllOnPids($pids);
 
-		foreach($fields as $_field)
+		foreach ($fields as $_field)
 		{
 			$label = $this->_getFieldLabel($_field);
 			$options[] = [$label, $_field->getUid()];
 		}
 
-		$config["items"] = array_merge($config["items"], $options);
+		$config['items'] = array_merge($config['items'], $options);
 	}
 
-	/**
-	 * Populate fields field by record id
-	 *
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function populateFieldsByRecord(array &$config, &$parentObject)
-	{
-		$options = [];
+    /**
+     * Populate fields by a table name setting
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return void
+     */
+    public function populateFieldsFromDatatype(array &$config, &$parentObject)
+    {
+        $datatypeId = null;
+        if (array_key_exists('datatype', $config['row'])) {
+            if(is_array($config['row']['datatype'])) {
+                $datatypeId = reset($config['row']['datatype']);
+            } else {
+                $datatypeId = $config['row']['datatype'];
+            }
+        }
+        if(!null === $datatypeId && $datatypeId > 0) {
+            $datatype = $this->datatypeRepository->findByUid($datatypeId);
 
-		// Plugin Settings Check
-		if (is_array($config["row"]) && isset($config["row"]["settings.single_record_selection"])) {
-			if (is_array($config["row"]["settings.single_record_selection"])) {
-				$singleRecordId = (int)reset($config["row"]["settings.single_record_selection"]);
-			} else {
-				$singleRecordId = (int)$config["row"]["settings.single_record_selection"];
-			}
-		}
-		else {
-			// Variable Configuration
-			$singleRecordId = (int)reset($config["row"]["record"]);
-		}
+            if ($datatype instanceof \Aix\Dataviewer\Domain\Model\Datatype) {
+                $config['row']['foreign_table'] = $datatype->getTablename();
+            }
 
-		$record = $this->recordRepository->findByUid($singleRecordId, false);
-		if ($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
-		{
-			$types = $record->getDatatype()->getSortedFields();
+            $this->populateFieldsFromTable($config, $parentObject);
+        }
 
-			foreach($types as $_type=>$_fields)
-			{
-				$options[] = [strtoupper($_type), "--div--"];
+    }
 
-				if(count($_fields)>0)
-				{
-					foreach($_fields as $_field)
-					{
-						/* @var \MageDeveloper\Dataviewer\Domain\Model\Field $_field */
-						$label	 	= $this->_getFieldLabel($_field);
-						$options[] 	= [$label, $_field->getUid()];
-					}
+    /**
+     * Populate fields by a table name setting
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return void
+     */
+    public function populateFieldsFromTtContent(array &$config, &$parentObject)
+    {
+        $config['row']['foreign_table'] = 'tt_content';
+        $this->populateFieldsFromTable($config, $parentObject);
+    }
 
+    /**
+     * Populate fields by a table name setting
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return void
+     */
+    public function populateFieldsFromTable(array &$config, &$parentObject)
+    {
+        $row = $config['row'];
+        $table = (is_array($row['foreign_table'])) ? reset($row['foreign_table']) : $row['foreign_table'];
+        $options = [];
 
-				}
-			}
+        if ($table == '' || !$table) return;
 
-		}
+        // Retrieve all fields of the selected table
+        /* @var Connection $query */
+        $query = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable($table);
 
-		$config["items"] = array_merge($config["items"], $options);
+        $columns = $query->fetchAllAssociative("SHOW COLUMNS FROM {$table}");
 
-	}
+        if (is_array($columns) && count($columns) > 0) {
+            foreach ($columns as $_column) {
+                $field = $_column['Field'];
+                $options[] = [
+                    'label' => $field,
+                    'value' => $field
+                ];
+            }
+        }
+
+        $config['items'] = array_merge($config['items'], $options);
+    }
+
+    /**
+     * Populate fieldtypes
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     * @throws \Exception
+     */
+    public function populateFieldtypes(array &$config, &$parentObject)
+    {
+        $fieldConfiguration = $this->fieldSettingsService->getFieldConfiguration();
+
+        $options = [];
+        foreach ($fieldConfiguration as $_id=>$_config) {
+            $options[] = [
+                'label' => $_config['label'],
+                'value' => $_id,
+                'icon' => $_config['icon'],
+            ];
+        }
+
+        if (count($options) <= 0) {
+            $exceptionMessage = LocalizationUtility::translate('message.no_fieldtypes_found_please_check_ts');
+            throw new \Exception($exceptionMessage);
+        }
+
+        if (is_array($config['items']))
+            $config['items'] = array_merge($config['items'], $options);
+        else
+            $config['items'] = $options;
+    }
+
+    /**
+     * Populates a list of subfields when
+     * selected field is a model
+     *
+     * @param array $config
+     * @param UserElement $parentObject
+     * @return string
+     */
+    public function displayFlexFormSubFields(array &$config, UserElement &$parentObject)
+    {
+        $html = '';
+        $flexFormRowData = $parentObject->getData('flexFormRowData');
+        $fieldUid = (int)$flexFormRowData['field']['vDEF'][0];
+        /** @var \Aix\Dataviewer\Domain\Model\Field $field */
+        $field = $this->fieldRepository->findOneByUid($fieldUid);
+
+        if($field instanceof \Aix\Dataviewer\Domain\Model\Field) {
+
+            $frontendType = $field->getFrontendType();
+
+            if(class_exists($frontendType)) {
+                // Selected field is a domain/model or object storage field
+                // We get the related information
+                if($datatypeUid = $field->getConfig('datatype')) {
+                    $datatype = $this->datatypeRepository->findOneByUid($datatypeUid);
+                    if($datatype instanceof \Aix\Dataviewer\Domain\Model\Datatype) {
+                        $tableName = $datatype->getTablename();
+                    }
+                } else {
+                    /** @var DataMapFactory $dataMapFactory */
+                    $dataMapFactory = GeneralUtility::makeInstance(DataMapFactory::class);
+                    $dataMap = $dataMapFactory->buildDataMap($frontendType);
+                    $tableName = $dataMap->getTableName();
+                }
+
+                if($tableName != '') {
+                    /** @var TableFactory $tableFactory */
+                    $tableFactory = GeneralUtility::makeInstance(TableFactory::class);
+                    if($tableFactory->tableExists($tableName)) {
+                        $configFt = $config;
+                        $configFt['row']['foreign_table'] = $tableName;
+                        $configFt['items'] = [
+                            ['',LocalizationUtility::translate('LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.default_sort')],
+                        ];
+                        $this->populateFieldsFromTable($configFt, $parentObject);
+
+                        if(!empty($configFt['items'])) {
+                            $options = '';
+                            foreach($configFt['items'] as $_item) {
+                                $selected = ($_item[0] == $config['itemFormElValue'])?'selected':'';
+                                $options.="<option value=\"{$_item[0]}\" {$selected}>{$_item[1]}</option>";
+                            }
+
+                            $label = LocalizationUtility::translate('LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sub_field');
+                            $description = LocalizationUtility::translate('LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sub_field.description');
+                            $html .= "
+                                <label class=\"t3js-formengine-label\">{$label}</label>
+                                <br />
+                                <div class=\"alert alert-info\">{$description}</div>
+                                <div class=\"formengine-field-item t3js-formengine-field-item\">
+                                    <div class=\"form-control-wrap\">
+                                        <select id=\"{$config['itemFormElID']}\" name=\"{$config['itemFormElName']}\" class=\"form-control form-control-adapt\">".$options."</select>
+                                    </div>
+                                </div>
+                            ";
+                        }
+                    }
+                }
+            }
+        }
+
+        return $html;
+    }
 
 	/**
 	 * Transforms a label for a field
 	 *
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
+	 * @param \Aix\Dataviewer\Domain\Model\Field $field
 	 * @return string
 	 */
-	protected function _getFieldLabel(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
+	protected function _getFieldLabel(\Aix\Dataviewer\Domain\Model\Field $field)
 	{
 		return "[{$field->getPid()}] " . strtoupper($field->getType()) . ": " . $field->getFrontendLabel() . " {".$field->getCode()."}";
 	}

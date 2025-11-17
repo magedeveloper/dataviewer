@@ -1,0 +1,77 @@
+<html
+  xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+  xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+  xmlns:dv="http://typo3.org/ns/Aix/Dataviewer/ViewHelpers"
+  data-namespace-typo3-fluid="true"
+>
+
+<f:if condition="{paginator.numberOfPages} == 1">
+  <div class="w-100 mb-2"></div>
+</f:if>
+
+<f:if condition="{paginator.numberOfPages} > 1">
+  <nav>
+    <div class="record-list-pagination">
+      <ul class="f3-widget-paginator pagination">
+        <f:if condition="{paging.previousPageNumber}">
+          <li class="previous page-item">
+            <f:if condition="{paginator.currentPageNumber} > 1">
+              <f:then>
+                <f:link.page class="page-link" rel="prev" additionalParams="{dv:array.keyValuePair(value: paging.previousPageNumber, key: pageNumberVariableName)}" addQueryString="{addQueryString}">&lt;</f:link.page>
+              </f:then>
+              <f:else>
+                <a class="page-link" rel="prev" addQueryString="{addQueryString}">&lt;</a>
+              </f:else>
+            </f:if>
+          </li>
+        </f:if>
+        <f:if condition="{paging.displayRangeStart} > 1">
+          <li class="first page-item">
+            <f:link.page class="page-link" addQueryString="{addQueryString}">1</f:link.page>
+          </li>
+        </f:if>
+        <f:if condition="{paging.hasLessPages}">
+          <li class="page-item disabled"><a href="#" class="page-link">…</a></li>
+        </f:if>
+        <f:for each="{pages}" as="page">
+          <f:if condition="{page} == {paginator.currentPageNumber} ">
+            <f:then>
+              <li class="page-item active">
+                <a class="active page-link" href="#">
+                  {page}
+                </a>
+              </li>
+            </f:then>
+            <f:else>
+              <li class="page-item">
+                <f:if condition="{page} > 1">
+                  <f:then>
+                    <f:link.page class="page-link" additionalParams="{dv:array.keyValuePair(value: page, key: pageNumberVariableName)}" addQueryString="{addQueryString}">{page}</f:link.page>
+                  </f:then>
+                  <f:else>
+                    <f:link.page class="page-link" addQueryString="{addQueryString}">{page}</f:link.page>
+                  </f:else>
+                </f:if>
+              </li>
+            </f:else>
+          </f:if>
+        </f:for>
+        <f:if condition="{paging.hasMorePages}">
+          <li class="page-item disabled"><a href="#" class="page-link">…</a></li>
+        </f:if>
+        <f:if condition="{paging.displayRangeEnd} < {paginator.numberOfPages}">
+          <li class="last page-item">
+            <f:link.page class="page-link" additionalParams="{dv:array.keyValuePair(value: paging.lastPageNumber, key: pageNumberVariableName)}" addQueryString="{addQueryString}">{paging.lastPageNumber}</f:link.page>
+          </li>
+        </f:if>
+        <f:if condition="{paging.nextPageNumber}">
+          <li class="next page-item">
+            <f:link.page class="page-link" rel="next" additionalParams="{dv:array.keyValuePair(value: paging.nextPageNumber, key: pageNumberVariableName)}" addQueryString="{addQueryString}">&gt;</f:link.page>
+          </li>
+        </f:if>
+      </ul>
+    </div>
+  </nav>
+</f:if>
+
+</html>

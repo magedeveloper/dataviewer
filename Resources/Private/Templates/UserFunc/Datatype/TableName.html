@@ -1,0 +1,56 @@
+<html
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:be.pageRenderer
+  includeJavaScriptModules="{
+     0: '@aix/dataviewer/DatatypeTableField.js'
+  }"
+/>
+
+<strong>
+    <label class="t3js-formengine-label"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_datatype.tablename" /></label>
+</strong>
+
+<br/>
+
+<div class="formengine-field-item t3js-formengine-field-item">
+    <div class="form-control-wrap" style="max-width: 636px">
+        <div class="form-wizards-wrap">
+            <div class="form-wizards-element">
+                <input readonly="readonly" type="text" id="{config.itemFormElID}" name="{config.itemFormElName}" value="{config.itemFormElValue}" class="form-control t3js-clearable hasDefaultValue">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default" id="dataviewer_table_status_refresh">
+        <core:icon identifier="actions-refresh" size="default" />
+    </button>
+</div>
+
+<div id="dataviewer_table_status_loader" style="padding:15px;">
+    <core:icon identifier="spinner-circle" size="large"/>
+</div>
+
+<div id="dataviewer_table_status"
+     style="margin-top:20px;"
+     data-change-allowed="{canChangeTableName}"
+     data-field-name="{config.itemFormElName}"
+     data-field-id="{config.itemFormElID}"
+     data-datatype-id="{config.row.uid}"
+     data-datatype-name-field-id="data[tx_dataviewer_domain_model_datatype][{config.row.uid}][name]"
+     data-tablename-field-id="data[tx_dataviewer_domain_model_datatype][{config.row.uid}][tablename]"
+     data-messages-error="{f:translate(key:'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:table.check.error.unknown')}"
+     data-messages-delete-table="{f:translate(key:'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:table.check.button.delete_table')}"
+     data-messages-really="{f:translate(key:'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:backend.confirm_delete_record')}"
+     data-messages-yes="{f:translate(key:'LLL:EXT:dashboard/Resources/Private/Language/locallang.xlf:dashboard.delete.ok')}"
+     data-messages-no="{f:translate(key:'LLL:EXT:beuser/Resources/Private/Language/locallang_mod_permission.xlf:Abort')}"
+>
+    <!-- OUTPUT -->
+</div>
+
+</html>

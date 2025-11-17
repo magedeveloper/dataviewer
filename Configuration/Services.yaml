@@ -1,0 +1,85 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Aix\Dataviewer\:
+        resource: '../Classes/*'
+
+    Aix\Dataviewer\Configuration\ConfigurationRegistry:
+        public: true
+
+    Aix\Dataviewer\Icon\DataviewerIconRegistry:
+        public : true
+
+    Aix\Dataviewer\Controller\Backend\AbstractBackendController:
+        public : true
+
+    Aix\Dataviewer\Controller\Backend\ClassController:
+        public: true
+
+    Aix\Dataviewer\Controller\Backend\TableController:
+        public: true
+
+    Aix\Dataviewer\Controller\Backend\EditDocumentController:
+        public: true
+
+    Aix\Dataviewer\Controller\Backend\QueryBuilderController:
+        public: true
+
+    Aix\Dataviewer\Controller\RecordController:
+        public: true
+
+    Aix\Dataviewer\Form\Element\QueryBuilderElement:
+        public: true
+        autowire: false
+
+    Aix\Dataviewer\Form\Element\UserElement:
+        public: true
+        autowire: false
+
+    Aix\Dataviewer\Hooks\Constants:
+        public: true
+
+    Aix\Dataviewer\LabelUserFunc\Field:
+        public: true
+
+    Aix\Dataviewer\LabelUserFunc\Record:
+        public: true
+
+    Aix\Dataviewer\LabelUserFunc\Variable:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Database:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Datatype:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Extension:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Field:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Icon:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Logo:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Record:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Rte:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Template:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Text:
+        public: true
+
+    Aix\Dataviewer\UserFunc\Variable:
+        public: true

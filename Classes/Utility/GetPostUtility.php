@@ -1,18 +1,10 @@
 <?php
-namespace MageDeveloper\Dataviewer\Utility;
+declare(strict_types=1);
 
+namespace Aix\Dataviewer\Utility;
+
+use Aix\Dataviewer\Domain\Model\Variable;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 
 class GetPostUtility
 {
@@ -22,7 +14,7 @@ class GetPostUtility
 	 * @param string $variable
 	 * @return string
 	 */
-	public static function secureVariableGet($variable)
+	public static function secureVariableGet(string $variable): string
 	{
 		$variable = htmlspecialchars($variable);
 		$variable = strip_tags($variable);
@@ -36,11 +28,33 @@ class GetPostUtility
 	 * @param string $variable
 	 * @return string
 	 */
-	public static function secureVariablePost($variable)
+	public static function secureVariablePost(string $variable): string
 	{
 		$variable = htmlspecialchars($variable);
 		$variable = strip_tags($variable);
 
 		return $variable;
 	}
+
+    /**
+     * @param string $parameterName
+     * @param string $type
+     * @return mixed
+     */
+    public static function getEnvironmentalParameterValue(string $parameterName, string $type = 'GET')
+    {
+        switch ($type) {
+            case 'GET':
+            case (string)Variable::VARIABLE_TYPE_GET:
+                return GeneralUtility::_GET($parameterName);
+            case (string)Variable::VARIABLE_TYPE_POST:
+            case 'POST':
+                return GeneralUtility::_POST($parameterName);
+            case (string)Variable::VARIABLE_TYPE_GET_POST:
+            case 'GET/POST':
+            case 'GETPOST':
+            default:
+                return GeneralUtility::_GP($parameterName);
+        }
+    }
 }

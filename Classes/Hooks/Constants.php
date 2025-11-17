@@ -1,87 +1,109 @@
 <?php
-namespace MageDeveloper\Dataviewer\Hooks;
+declare(strict_types=1);
 
+namespace Aix\Dataviewer\Hooks;
+
+use Aix\Dataviewer\Fluid\View\StandaloneView;
+use Aix\Dataviewer\Icon\DataviewerIconRegistry;
+use Aix\Dataviewer\Service\Backend\BackendAccessService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class Constants
 {
-	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * @var StandaloneView
+     */
+    protected $standaloneView;
 
+    /**
+     * @var DataviewerIconRegistry
+     */
+    protected $dataviewerIconRegistry;
 
-	/**
-	 * Standalone View
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Fluid\View\StandaloneView
-	 * @inject
-	 */
-	protected $standaloneView;
+    /**
+     * @var BackendAccessService
+     */
+    protected $backendAccessService;
 
+    /**
+     * @param StandaloneView $standaloneView
+     */
+    public function injectStandaloneView(StandaloneView $standaloneView)
+    {
+        $this->standaloneView = $standaloneView;
+    }
 
-	/**
-	 * Constructor
-	 * 
-	 * @return Constants
-	 */
-	public function __construct()
-	{
-		$this->objectManager 	= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->standaloneView	= $this->objectManager->get(\MageDeveloper\Dataviewer\Fluid\View\StandaloneView::class);
-	}
+    /**
+     * @param DataviewerIconRegistry $dataviewerIconRegistry
+     */
+    public function injectDataviewerIconRegistry(DataviewerIconRegistry $dataviewerIconRegistry)
+    {
+        $this->dataviewerIconRegistry = $dataviewerIconRegistry;
+    }
 
-	/**
-	 * Displays the information field in the constants editor
-	 *
-	 * @param array $config
-	 * @param \TYPO3\CMS\Core\TypoScript\ExtendedTemplateService $pObj
-	 * @return string
-	 */
-	public function displayExtensionInformation($config, $pObj)
-	{
-		$config["fieldName"] 	= "";
-		$config["fieldValue"]	= "";
+    /**
+     * @param BackendAccessService $backendAccessService
+     */
+    public function injectBackendAccessService(BackendAccessService $backendAccessService)
+    {
+        $this->backendAccessService = $backendAccessService;
+    }
 
-		$_EXTKEY = "dataviewer";
-		$EM_CONF = null;
-		$emConf = "EXT:dataviewer/ext_emconf.php";
-		$emConf = GeneralUtility::getFileAbsFileName($emConf);
-		require_once($emConf);
-		
-		if(!is_array($EM_CONF[$_EXTKEY]))
-			die("Error loading extension information");
-			
-		$icons = \MageDeveloper\Dataviewer\Utility\IconUtility::getIcons();	
-		// Prepare icon path
-		foreach($icons as $_iconId=>$_iconPath)
-		{
-			$pos = strpos($_iconPath, "ext/dataviewer/");
-			$correctedIconPath = substr($_iconPath, $pos);
-			$correctedIconPath = str_replace("ext/dataviewer/", "EXT:dataviewer/", $correctedIconPath);
-			$icons[$_iconId] = $correctedIconPath;
-		}
-		
-		$templateFile = "EXT:dataviewer/Resources/Private/Templates/Constants/ExtInformation.html";
-		$templateFile = GeneralUtility::getFileAbsFileName($templateFile);
-		$this->standaloneView->setTemplatePathAndFilename($templateFile);
-		
-		$this->standaloneView->assign("config", $config);
-		$this->standaloneView->assign("emConf", $EM_CONF[$_EXTKEY]);
-		$this->standaloneView->assign("icons", $icons);
-		return $this->standaloneView->render();
-	}
+    /**
+     * Displays the information field in the constants editor
+     * @param array $config
+     * @param ExtendedTemplateService $extTs
+     * @return string
+     */
+    public function displayExtensionInformation(array $config): string
+    {
+        $config['fieldName']  = '';
+        $config['fieldValue'] = '';
+
+        $_EXTKEY = 'dataviewer';
+        $EM_CONF = null;
+        $emConf  = 'EXT:dataviewer/ext_emconf.php';
+        $emConfPro = 'EXT:dataviewer_pro/ext_emconf.php';
+        $emConf = GeneralUtility::getFileAbsFileName($emConf);
+        $emConfPro = GeneralUtility::getFileAbsFileName($emConfPro);
+
+        // Check for pro extension existence and use that instead
+        if(file_exists($emConfPro)) {
+            $emConf = $emConfPro;
+        }
+
+        require_once($emConf);
+
+        if (!is_array($EM_CONF[$_EXTKEY])) {
+            return '<div class="alert alert-danger" style="padding:10px;">Error loading extension information!</div>';
+        }
+
+        $icons = $this->dataviewerIconRegistry->getIcons();
+
+        // Prepare icon path
+        foreach ($icons as $_iconId => $_iconPath) {
+            $pos               = strpos($_iconPath, 'ext/dataviewer/');
+            if($pos !== false) {
+                $correctedIconPath = substr($_iconPath, $pos);
+                $correctedIconPath = str_replace('ext/dataviewer/', 'EXT:dataviewer/', $correctedIconPath);
+                $icons[$_iconId]   = $correctedIconPath;
+            }
+        }
+
+        $templateFile = 'EXT:dataviewer/Resources/Private/Templates/Backend/Constants/ExtInformation.html';
+        $templateFile = GeneralUtility::getFileAbsFileName($templateFile);
+        $this->standaloneView->setTemplatePathAndFilename($templateFile);
+
+        $additionalInformation = $GLOBALS['TYPO3_CONF_VARS']['BE']['dataviewer']['additionalInformation'] ?? $GLOBALS['TYPO3_CONF_VARS']['BE']['dataviewer']['additionalInformation'];
+
+        $this->standaloneView->assign('additionalInformation', $additionalInformation);
+        $this->standaloneView->assign('config', $config);
+        $this->standaloneView->assign('emConf', $EM_CONF[$_EXTKEY]);
+        $this->standaloneView->assign('icons', $icons);
+        $this->standaloneView->assign('logoUrl', $this->backendAccessService->getLogoUrl());
+        $this->standaloneView->assign('supportMessage', $this->backendAccessService->disableSupportMessage());
+
+        return $this->standaloneView->render();
+    }
 
 }

@@ -1,23 +1,25 @@
 <?php
-namespace MageDeveloper\Dataviewer\ViewHelpers;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
-abstract class AbstractViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+namespace Aix\Dataviewer\ViewHelpers;
+
+use Aix\Dataviewer\Service\Settings\Plugin\PluginSettingsService;
+
+
+abstract class AbstractViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 	/**
 	 * Plugin Settings Service
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Service\Settings\Plugin\PluginSettingsService
-	 * @inject
+	 *
+	 * @var PluginSettingsService
 	 */
 	protected $pluginSettingsService;
+
+    /**
+     * @param PluginSettingsService $pluginSettingsService
+     */
+	public function injectPluginSettingsService(PluginSettingsService $pluginSettingsService)
+    {
+        $this->pluginSettingsService = $pluginSettingsService;
+    }
 }

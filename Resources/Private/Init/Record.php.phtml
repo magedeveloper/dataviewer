@@ -1,0 +1,424 @@
+<f:section name="class"><?php
+namespace {datatype.modelNamespace};
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use Aix\Dataviewer\Domain\Model\Datatype;
+
+class {className} extends \Aix\Dataviewer\Domain\Model\AbstractRecordModel
+<f:format.raw>{</f:format.raw>
+
+    /**
+     * Datatype
+     * @var Datatype
+     */
+     protected $datatype;
+
+    /**
+     * Datatype Uid
+     * @var int
+     */
+     protected $datatypeUid = {datatype.uid};
+
+    /**
+     * Default Storage Pid
+     * @var int
+     */
+     protected $defaultPid = {datatype.pid};
+
+    /**
+	 * @var {className}|null
+	 */
+	protected $l10nParent = null;
+
+<f:for each="{datatype.fields}" as="field" iteration="i">
+    <f:switch expression="{field.frontendType}">
+        <f:case value="string"><f:render section="string_var" arguments="{field:field}" /></f:case>
+        <f:case value="bool"><f:render section="bool_var" arguments="{field:field}" /></f:case>
+        <f:case value="boolean"><f:render section="bool_var" arguments="{field:field}" /></f:case>
+        <f:case value="int"><f:render section="int_var" arguments="{field:field}" /></f:case>
+        <f:case value="integer"><f:render section="int_var" arguments="{field:field}" /></f:case>
+        <f:case value="float"><f:render section="float_var" arguments="{field:field}" /></f:case>
+        <f:defaultCase>
+            <f:if condition="{field.isObjectStorage}">
+                <f:then><f:render section="object_storage_var" arguments="{field:field}" /></f:then>
+                <f:else><f:render section="class_var" arguments="{field:field}" /></f:else>
+            </f:if>
+        </f:defaultCase>
+    </f:switch>
+</f:for>
+   /**
+    * Constructor
+    */
+    public function __construct()
+    <f:format.raw>{</f:format.raw>
+        parent::__construct();
+<f:for each="{datatype.fields}" as="field" iteration="i"><f:if condition="{field.isObjectStorage}"><f:render section="object_storage_init" arguments="{field:field}" /></f:if></f:for>
+    <f:format.raw>}</f:format.raw>
+
+    /**
+    * Initializes Object
+    * @return void
+    */
+    protected function initializeObject(): void
+    <f:format.raw>{</f:format.raw>
+<f:for each="{datatype.fields}" as="field" iteration="i"><f:if condition="{field.isObjectStorage}"><f:render section="initialize_object_init" arguments="{field:field}" /></f:if></f:for>
+    <f:format.raw>}</f:format.raw>
+
+    /**
+     * Set the according datatype
+     * @param Datatype $datatype
+     * @return void
+     */
+     public function setDatatype(Datatype $datatype): void
+     {
+        $this->datatype = $datatype;
+     }
+
+    /**
+     * Gets the according datatype
+     * @return Datatype
+     */
+     public function getDatatype(): Datatype
+     {
+        return $this->datatype;
+     }
+
+    /**
+     * Gets the according datatype uid
+     * @return int
+     */
+     public function getDatatypeUid(): int
+     {
+        return $this->datatypeUid;
+     }
+
+     /**
+      * @return int
+      */
+     public function getDefaultPid(): int
+     {
+         return (int)$this->defaultPid;
+     }
+
+    /**
+	 * Set l10n parent
+	 * @param {className} $l10nParent
+     * @return void
+	 */
+	public function setL10nParent({className} $l10nParent): void
+	{
+		$this->l10nParent = $l10nParent;
+	}
+
+	/**
+	 * Get l10n parent
+	 * @return {className}|null
+	 */
+	public function getL10nParent(): ?{className}
+	{
+		return $this->l10nParent;
+	}
+
+<f:for each="{datatype.fields}" as="field" iteration="i">
+    <f:switch expression="{field.frontendType}">
+        <f:case value="string"><f:render section="string_getter" arguments="{field:field}" /></f:case>
+        <f:case value="bool"><f:render section="bool_getter" arguments="{field:field}" /></f:case>
+        <f:case value="boolean"><f:render section="bool_getter" arguments="{field:field}" /></f:case>
+        <f:case value="int"><f:render section="int_getter" arguments="{field:field}" /></f:case>
+        <f:case value="integer"><f:render section="int_getter" arguments="{field:field}" /></f:case>
+        <f:case value="float"><f:render section="float_getter" arguments="{field:field}" /></f:case>
+        <f:defaultCase>
+            <f:if condition="{field.isObjectStorage}">
+                <f:then>
+                    <f:render section="object_storage_getter" arguments="{field:field}" />
+                </f:then>
+                <f:else>
+                    <f:render section="class_getter" arguments="{field:field}" />
+                </f:else>
+            </f:if>
+        </f:defaultCase>
+    </f:switch>
+</f:for>
+
+<f:for each="{datatype.fields}" as="field" iteration="i">
+    <f:switch expression="{field.frontendType}">
+        <f:case value="string"><f:render section="string_setter" arguments="{field:field}" /></f:case>
+        <f:case value="bool"><f:render section="bool_setter" arguments="{field:field}" /></f:case>
+        <f:case value="boolean"><f:render section="bool_setter" arguments="{field:field}" /></f:case>
+        <f:case value="int"><f:render section="int_setter" arguments="{field:field}" /></f:case>
+        <f:case value="integer"><f:render section="int_setter" arguments="{field:field}" /></f:case>
+        <f:case value="float"><f:render section="float_setter" arguments="{field:field}" /></f:case>
+        <f:defaultCase>
+            <f:if condition="{field.isObjectStorage}">
+                <f:then>
+                    <f:render section="object_storage_setter" arguments="{field:field}" />
+                </f:then>
+                <f:else>
+                    <f:render section="class_setter" arguments="{field:field}" />
+                </f:else>
+            </f:if>
+        </f:defaultCase>
+    </f:switch>
+</f:for>
+
+<f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:comment>
+    ************************ STRING ************************
+</f:comment>
+
+<f:section name="string_var">
+    /**
+    * {field.frontendLabel}
+    * @var {field.tca.variableType}
+    */
+    protected ${field.code} = '{field.tca.defaultValue}';
+</f:section>
+
+<f:section name="string_getter">
+   /**
+    * Getter for '{field.frontendLabel}'
+    * @return {field.tca.variableType}
+    */
+    public function get{field.ucCode}(): {field.tca.variableType}
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="string_setter">
+   /**
+    * Setter for '{field.frontendLabel}'
+    * @param {field.tca.variableType} ${field.code} {field.frontendLabel}
+    * @return void
+    */
+    public function set{field.ucCode}({field.frontendType} ${field.code}): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code} = ${field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:comment>
+    ************************ CLASS ************************
+</f:comment>
+
+<f:section name="class_var">
+    /**
+    * {field.frontendLabel}
+    * @var {field.tca.variableType}
+    */
+    protected ${field.code};
+</f:section>
+
+<f:section name="class_getter">
+   /**
+    * Getter for '{field.frontendLabel}'
+    * @return null|{field.tca.variableType}
+    */
+    public function get{field.ucCode}(): ?{field.tca.variableType}
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="class_setter">
+   /**
+    * Setter for '{field.frontendLabel}'
+    * @param {field.tca.variableType} ${field.code} {field.frontendLabel}
+    * @return void
+    */
+    public function set{field.ucCode}({field.tca.variableType} ${field.code}): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code} = ${field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:comment>
+    ************************ BOOL ************************
+</f:comment>
+
+<f:section name="bool_var">
+    /**
+    * {field.frontendLabel}
+    * @var {field.frontendType}
+    */
+    protected ${field.code} = {f:if(condition:'{field.tca.defaultValue} != \'\'',then:'true',else:'false')};
+</f:section>
+
+<f:section name="bool_getter">
+   /**
+    * Getter for '{field.frontendLabel}'
+    * @return {field.frontendType}
+    */
+    public function get{field.ucCode}(): {field.frontendType}
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="bool_setter">
+   /**
+    * Setter for '{field.frontendLabel}'
+    * @param {field.frontendType} ${field.code} {field.frontendLabel}
+    * @return void
+    */
+    public function set{field.ucCode}({field.frontendType} ${field.code}): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code} = ${field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:comment>
+    ************************ INTEGER ************************
+</f:comment>
+
+<f:section name="int_var">
+    /**
+    * {field.frontendLabel}
+    * @var {field.frontendType}
+    */
+    protected ${field.code} = {f:if(condition:'{field.tca.defaultValue} > 0',then:field.tca.defaultValue,else:0)};
+</f:section>
+
+<f:section name="int_getter">
+   /**
+    * Getter for '{field.frontendLabel}'
+    * @return {field.frontendType}
+    */
+    public function get{field.ucCode}(): {field.frontendType}
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="int_setter">
+   /**
+    * Setter for '{field.frontendLabel}'
+    * @param {field.frontendType} ${field.code} {field.frontendLabel}
+    * @return void
+    */
+    public function set{field.ucCode}({field.frontendType} ${field.code}): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code} = ${field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:comment>
+    ************************ FLOAT ************************
+</f:comment>
+
+<f:section name="float_var">
+    /**
+    * {field.frontendLabel}
+    * @var {field.frontendType}
+    */
+    protected ${field.code} = {f:if(condition:'{field.tca.defaultValue} > 0',then:field.tca.defaultValue,else:0)};
+</f:section>
+
+<f:section name="float_getter">
+   /**
+    * Getter for '{field.frontendLabel}'
+    * @return {field.frontendType}
+    */
+    public function get{field.ucCode}(): {field.frontendType}
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="float_setter">
+   /**
+    * Setter for '{field.frontendLabel}'
+    * @param {field.frontendType} ${field.code} {field.frontendLabel}
+    * @return void
+    */
+    public function set{field.ucCode}({field.frontendType} ${field.code}): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code} = ${field.code};
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:comment>
+    ************************ OBJECT STORAGE ************************
+</f:comment>
+
+<f:section name="object_storage_var">
+    /**
+    * {field.frontendLabel}
+    * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<{field.frontendType}>
+    */
+    protected ${field.code} = null;
+</f:section>
+
+<f:section name="object_storage_getter">
+   /**
+    * Get all '{field.frontendLabel}'
+    * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<{field.frontendType}>
+    */
+    public function get{field.ucCode}(): ?ObjectStorage
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code};
+    <f:format.raw>}</f:format.raw>
+
+   /**
+    * Get all '{field.frontendLabel}' sorted like the original setting
+    * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<{field.frontendType}>
+    */
+    public function get{field.ucCode}Sorted(): ObjectStorage
+    <f:format.raw>{</f:format.raw>
+        return $this->getFieldSorted('{field.code}');
+    <f:format.raw>}</f:format.raw>
+
+   /**
+    * Check if '{field.frontendLabel}' has assigned objects
+    * @return int
+    */
+    public function has{field.ucCode}(): int
+    <f:format.raw>{</f:format.raw>
+        return $this->{field.code} != null ? (count($this->{field.code})) : 0;
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="object_storage_setter">
+   /**
+    * Set all '{field.frontendLabel}'
+    * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<{field.frontendType}> ${field.code} {field.frontendLabel}
+    * @return void
+    */
+    public function set{field.ucCode}(ObjectStorage ${field.code}): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code} = ${field.code};
+    <f:format.raw>}</f:format.raw>
+
+   /**
+    * Adds an single item of '{field.frontendType}' to
+    * the object storage
+    * @param {field.frontendType} $item
+    * @return void
+    */
+    public function add{field.ucCode}Item({field.frontendType} $item): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code}->attach($item);
+    <f:format.raw>}</f:format.raw>
+
+   /**
+    * Removes a single item of '{field.frontendType}' from
+    * the object storage
+    * @param {field.frontendType} $item
+    * @return void
+    */
+    public function remove{field.ucCode}Item({field.frontendType} $item): void
+    <f:format.raw>{</f:format.raw>
+        $this->{field.code}->detach($item);
+    <f:format.raw>}</f:format.raw>
+</f:section>
+
+<f:section name="object_storage_init">
+        $this->{field.code} = new ObjectStorage();
+</f:section>
+
+<f:section name="initialize_object_init">
+        $this->{field.code} =  $this->{field.code} ?? new ObjectStorage();
+</f:section>

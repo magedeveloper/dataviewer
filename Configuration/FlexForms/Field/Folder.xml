@@ -1,0 +1,29 @@
+<T3DataStructure>
+    <ROOT>
+        <type>array</type>
+        <el>
+            <info>
+                <TCEforms>
+                    <label></label>
+                    <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayTemplate</userFunc>
+                        <parameters>
+                            <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/Notice.html</template>
+                        </parameters>
+                    </config>
+                </TCEforms>
+            </info>
+            <default>
+                <TCEforms>
+                    <label>default</label>
+                    <config>
+                        <type>input</type>
+                        <size>15</size>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </default>
+        </el>
+    </ROOT>
+</T3DataStructure>

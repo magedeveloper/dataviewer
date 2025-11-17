@@ -1,29 +1,26 @@
 <?php
-namespace MageDeveloper\Dataviewer\Domain\Repository;
+declare(strict_types=1);
 
+namespace Aix\Dataviewer\Domain\Repository;
+
+use Aix\Dataviewer\Domain\Model\Datatype;
+use Aix\Dataviewer\Domain\Model\Field;
+use Aix\Dataviewer\Domain\Model\FieldValue;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class FieldRepository extends AbstractRepository
 {
-	/**
-	 * Finds entries for an field value
-	 * Executes an simple select query
-	 *
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\FieldValue $fieldValue
-	 * @return array
-	 */
-	public function findEntriesForFieldValue(\MageDeveloper\Dataviewer\Domain\Model\FieldValue $fieldValue)
-	{
+    /**
+     * Finds entries for an field value
+     * Executes an simple select query
+     *
+     * @param FieldValue $fieldValue
+     * @return array
+     */
+    public function findEntriesForFieldValue(FieldValue $fieldValue): array
+    {
 		$tablename 		= $fieldValue->getTableContent();
 		$columnname 	= $fieldValue->getColumnName();
 		$whereClause	= $fieldValue->getWhereClause();
@@ -35,34 +32,32 @@ class FieldRepository extends AbstractRepository
 		return $result;
 	}
 
-	/**
-	 * Executes an raw query
-	 *
-	 * @param array $fields
-	 * @param string $table
-	 * @param string $where
-	 * @return array
-	 */
-	public function rawQuery($fields, $table, $where)
-	{
+    /**
+     * Executes an raw query
+     *
+     * @param array $fields
+     * @param string $table
+     * @param string $where
+     * @return array
+     */
+    public function rawQuery(array $fields, string $table, string $where = ''): array
+    {
 		$query = $this->createQuery();
 		$fields = implode(",", $fields);
 		$statement = "SELECT {$fields} FROM {$table} {$where}";
 
 		$query->statement($statement);
-		$result = $query->execute(true);
-
-		return $result;
+		return $query->execute(true);
 	}
 
-	/**
-	 * FindAll Override
-	 *
-	 * @param bool $respectStoragePage
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAll($respectStoragePage = true)
-	{
+    /**
+     * FindAll Override
+     *
+     * @param bool $respectStoragePage
+     * @return QueryResultInterface
+     */
+    public function findAll(bool $respectStoragePage = true): QueryResultInterface
+    {
 		$query = $this->createQueryWithSettings(true, false, $respectStoragePage);
 		$querySettings = $query->getQuerySettings();
 
@@ -71,41 +66,25 @@ class FieldRepository extends AbstractRepository
 		return parent::findAll();
 	}
 
-	/**
-	 * Finds all records on a given storage page id
-	 *
-	 * @param int $storagePid
-	 * @param bool $includeHidden
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAllOnPid($storagePid, $includeHidden = false)
-	{
-		return $this->findAllOnPids([$storagePid]);
-	}
+    /**
+     * Finds all records on a given storage page id
+     *
+     * @param int $storagePid
+     * @param bool $includeHidden
+     * @return QueryResultInterface
+     */
+    public function findAllOnPid(int $storagePid, bool $includeHidden = false): QueryResultInterface
+    {
+        return $this->findAllOnPids([$storagePid], !$includeHidden);
+    }
 
-	/**
-	 * Finds all records on given storage page ids
-	 *
-	 * @param array $storagePids
-	 * @param bool $includeHidden
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAllOnPids(array $storagePids, $includeHidden = false)
-	{
-		$query = $this->createQueryWithSettings(true, $includeHidden, true, $storagePids);
-		$querySettings = $query->getQuerySettings();
-
-		$this->setDefaultQuerySettings($querySettings);
-
-		return parent::findAll();
-	}
-
-	/**
-	 * Finds all fields by certain types
-	 *
-	 * @param array $types
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
+    /**
+     * Finds all fields by certain types
+     *
+     * @param array $types
+     * @return QueryResultInterface|array
+     * @throws InvalidQueryException
+     */
 	public function findByTypes(array $types)
 	{
 		$query = $this->createQueryWithSettings(true, false, false);
@@ -114,34 +93,35 @@ class FieldRepository extends AbstractRepository
 		)->execute();
 	}
 
-	/**
-	 * Finds a field by given variable name
-	 *
-	 * @param string $variableName
-	 * @return \MageDeveloper\Dataviewer\Domain\Model\Field|null
-	 */
-	public function findOneByVariableName($variableName)
-	{
+    /**
+     * Finds a field by given variable name
+     *
+     * @param string $variableName
+     * @return Field|null
+     */
+    public function findOneByVariableName(string $variableName): ?Field
+    {
 		$query = $this->createQueryWithSettings(true, true, false);
 		return $query->matching(
 			$query->equals("variable_name", $variableName)
 		)->execute()->getFirst();
 	}
 
-	/**
-	 * Finds fields by a given datatype
-	 *
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findByDatatype(\MageDeveloper\Dataviewer\Domain\Model\Datatype $datatype)
-	{
+    /**
+     * Finds fields by a given datatype
+     *
+     * @param Datatype $datatype
+     * @return QueryResultInterface
+     */
+    public function findByDatatype(Datatype $datatype): QueryResultInterface
+    {
 		$fields = $datatype->getFields();
+
 		$ids = [];
-		foreach($fields as $_field)
+		foreach ($fields as $_field)
 			$ids[] = $_field->getUid();
 
-		$query = $this->createQueryWithSettings(true, true, false);
+		$query = $this->createQueryWithSettings(false, true, false);
 		return $query->matching(
 			$query->in("uid", $ids)
 		)->execute();

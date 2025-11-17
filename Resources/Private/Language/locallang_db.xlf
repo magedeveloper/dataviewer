@@ -1,219 +1,307 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2013-05-17T16:06:12Z" product-name="dataviewer">
-        <header/>
-        <body>
+  <file source-language="en" datatype="plaintext" original="messages" date="1111-11-11T11:11:11Z" product-name="dataviewer">
+    <header/>
+    <body>
 
-            <!-- General Translations -->
-            <trans-unit id="tx_dataviewer">
-                <source>DataViewer Extension</source>
-            </trans-unit>
+      <!-- General Translations -->
+      <trans-unit id="tx_dataviewer">
+        <source>Dataviewer</source>
+      </trans-unit>
 
-            <!-- Constants -->
-			<trans-unit id="constants.developer" xml:space="preserve">
-				<source>Developer/Debug</source>
-			</trans-unit>
+      <!-- Constants -->
+      <trans-unit id="constants.developer" xml:space="preserve">
+        <source>Developer/Debug</source>
+      </trans-unit>
 
-            <!-- Domain/Model/Datatype -->
-            <trans-unit id="tx_dataviewer_domain_model_datatype">
-                <source>Datatype</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.name">
-                <source>Name</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.description">
-                <source>Description</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.icon">
-                <source>Icon</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.templatefile">
-                <source>Template File for Rendering (PartViewHelper)</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.fields">
-                <source>Fields</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.color">
-                <source>Color</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
-                <source>Hide Records of this type in lists</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.hide_add">
-                <source>Hide Button to Add new Record</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
-                <source>Title Divider Character</source>
-            </trans-unit>
+      <!-- Domain/Model/Datatype -->
+      <trans-unit id="tx_dataviewer_domain_model_datatype">
+        <source>Datatype</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.name">
+        <source>Name</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.description">
+        <source>Description</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.icon">
+        <source>Icon</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.templatefile">
+        <source>Template File for Rendering (PartViewHelper)</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.fields">
+        <source>Fields</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.color">
+        <source>Color</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.hide_records">
+        <source>Hide Records of this type in lists</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.hide_add">
+        <source>Hide Button to Add new Record</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
+        <source>Title Divider Character</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.disable_general_tab">
+        <source>Disable 'General' Tab</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.tablename">
+        <source>Tablename</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.class">
+        <source>According PHP Class</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.thumbnail_field">
+        <source>Thumbnail Field</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.enable_seo">
+        <source>Enable SEO Fields</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_datatype.cache_tca">
+        <source>Cache generated TCA</source>
+      </trans-unit>
 
-            <!-- Domain/Model/Field -->
-            <trans-unit id="tx_dataviewer_domain_model_field">
-                <source>Field</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.is_active">
-                <source>Show in Record</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.id">
-                <source>Id</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.type">
-                <source>Type</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.frontend_label">
-                <source>Frontend Label</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.variable_name">
-                <source>Custom Variable Name</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.description">
-                <source>Backend Description</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.css_class">
-                <source>Backend Css Class</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.unit">
-                <source>Unit / Additional Text</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.column_width">
-                <source>Backend Column Width</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.tab_name">
-                <source>Name of the Tab to add to (Leave blank for no tab)</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.show_title">
-                <source>Show Title</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.is_record_title">
-                <source>Use as record title</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.validation">
-                <source>Field Validation</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.display_cond">
-                <source>Display Conditions</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.request_update">
-                <source>Request Update (onChange)</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.field_values">
-                <source>Field Values</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.templatefile">
-                <source>Template File for Part-Rendering (PartViewHelper)</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.exclude">
-                <source>Exclude for non-admin users</source>
-            </trans-unit>
+      <!-- Domain/Model/Field -->
+      <trans-unit id="tx_dataviewer_domain_model_field">
+        <source>Field</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.is_active">
+        <source>Show in Record</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.id">
+        <source>Id</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.type">
+        <source>Type</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.frontend_label">
+        <source>Frontend Label</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.variable_name">
+        <source>Custom Variable Name</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.description">
+        <source>Backend Description</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.is_record_title">
+        <source>Use as record title</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.use_for_sorting">
+        <source>Use value for individual sorting</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.use_as_path_segment">
+        <source>Use value as path segment</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.validation">
+        <source>Field Validation</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.display_cond">
+        <source>Display Conditions</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.request_update">
+        <source>Request Update (onChange)</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.field_values">
+        <source>Field Values</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.templatefile">
+        <source>Template File for Part-Rendering (PartViewHelper)</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.exclude">
+        <source>Exclude for non-admin users</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.l10n_exclude">
+        <source>Exclude from translations</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.palette">
+        <source>Palette</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.is_index">
+        <source>Is Index Field</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.database_type">
+        <source>Database Type</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.database_type.default">
+        <source>Default</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.database_type.inherit">
+        <source>Inherit from Tca/Field Class</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.database_type.overrides">
+        <source>Overrides</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.frontend_type">
+        <source>Frontend Type Definition</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.is_object_storage">
+        <source><![CDATA[Is Object Storage (\TYPO3\CMS\Extbase\Persistence\ObjectStorage<Your Frontend Type Definition>)]]></source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.is_object_storage.description">
+        <source>Object Storage can only be used when Frontend Type is an existing class object</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.database_type">
+        <source>Database Type Definition</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.backend_searchable">
+        <source>Searchable in Backend</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_field.cache_tca">
+        <source>Cache generated TCA</source>
+      </trans-unit>
 
-            <!-- Domain/Model/Fieldvalue -->
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue">
-                <source>Field Value</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.type">
-                <source>Type</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.value_content">
-                <source>Value Content</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.field_content">
-                <source>Field Content</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.table_content">
-                <source>Table Content</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.column_name">
-                <source>Column Name</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.where_clause">
-                <source>Where Clause</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.pass_to_fe">
-                <source>Pass Value to Frontend</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.is_readonly">
-                <source>Is Readonly</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.is_default">
-                <source>Is Default</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_fieldvalue.pretends_empty">
-                <source>Pretends to be an empty value</source>
-            </trans-unit>
+      <!-- Domain/Model/Fieldvalue -->
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue">
+        <source>Field Value</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.type">
+        <source>Type</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.value_content">
+        <source>Value Content (Fluid-ready)</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.field_content">
+        <source>Field Content</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.table_content">
+        <source>Table Content</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.column_name">
+        <source>Column Name</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.where_clause">
+        <source>Where Clause</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.pass_to_fe">
+        <source>Pass Value to Frontend</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.is_readonly">
+        <source>Is Readonly</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.is_default">
+        <source>Is Default</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_fieldvalue.pretends_empty">
+        <source>Pretends to be an empty value</source>
+      </trans-unit>
 
-            <!-- Domain/Model/Record -->
-            <trans-unit id="tx_dataviewer_domain_model_record">
-                <source>Record</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_record.uid">
-                <source>Record Uid</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_record.datatype">
-                <source>Datatype</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_record.record_values">
-                <source>Record Values</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_record.title">
-                <source>Record Title</source>
-            </trans-unit>
+      <!-- Domain/Model/Record -->
+      <trans-unit id="tx_dataviewer_domain_model_record">
+        <source>Record</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_record.uid">
+        <source>Record Uid</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_record.datatype">
+        <source>Datatype</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_record.record_values">
+        <source>Record Values</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_record.title">
+        <source>Record Title</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_record.sorting_individual">
+        <source>Individual Sorting Value</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_record.path_segment">
+        <source>Path Segment</source>
+      </trans-unit>
 
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue">
-                <source>Record Value</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue.value_content">
-                <source>Value Content</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue.record">
-                <source>Record</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue.field">
-                <source>Field</source>
-            </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_recordvalue">
+        <source>Record Value</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_recordvalue.value_content">
+        <source>Value Content</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_recordvalue.search">
+        <source>Search Content</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_recordvalue.record">
+        <source>Record</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_recordvalue.field">
+        <source>Field</source>
+      </trans-unit>
 
-            <!-- Domain/Model/Variable -->
-            <trans-unit id="tx_dataviewer_domain_model_variable">
-                <source>Template Variable</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.type">
-                <source>Type</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.variable_name">
-                <source>Name</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
-                <source>Session Prefix Key</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
-                <source>Value</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.record">
-                <source>Record</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.field">
-                <source>Field</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.table_content">
-                <source>Table</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.column_name">
-                <source>Column</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.where_clause">
-                <source>Where Clause</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.server">
-                <source>SERVER Environment</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.page">
-                <source>Page</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
-                <source>UserFunc</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
-                <source>Type Definition</source>
-            </trans-unit>
+      <!-- Domain/Model/Variable -->
+      <trans-unit id="tx_dataviewer_domain_model_variable">
+        <source>Variable</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.type">
+        <source>Type</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.variable_name">
+        <source>Template Variable Name</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
+        <source>Session Prefix Key</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
+        <source>Value</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.record">
+        <source>Record</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.field">
+        <source>Field</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.table_content">
+        <source>Table</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.column_name">
+        <source>Column</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.where_clause">
+        <source>Where Clause</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.server">
+        <source>SERVER Environment</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.page">
+        <source>Page</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.user">
+        <source>User</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
+        <source>Type Definition</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.regex">
+        <source>Regular Expression</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.ext_conf">
+        <source>Select Extension</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.typoscript_path">
+        <source>TypoScript Path</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.typoscript_path.description">
+        <source>e.g. plugin.tx_dataviewer.settings</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.parameter_name">
+        <source>Parameter Name</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_variable.parameter_name.description">
+        <source>Please Name the Parameter that will be fetched. Leave blank to use the same as the Variable Name.</source>
+      </trans-unit>
 
-        </body>
-    </file>
+      <!-- Domain/Model/ImportConfiguration -->
+      <trans-unit id="tx_dataviewer_domain_model_importconfiguration">
+        <source>Import Configuration</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_importconfiguration.name">
+        <source>Name</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_importconfiguration.type">
+        <source>Import Type</source>
+      </trans-unit>
+      <trans-unit id="tx_dataviewer_domain_model_importconfiguration.config">
+        <source>Configuration</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

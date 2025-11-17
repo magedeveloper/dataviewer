@@ -1,0 +1,53 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <label></label>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <value_switch>
+                        <section>1</section>
+                        <type>array</type>
+                        <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_variable.variable_switch</title>
+                        <el>
+                            <values>
+                                <type>array</type>
+                                <title></title>
+                                <el>
+                                    <fluid_code>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid</label>
+                                            <config>
+                                                <type>text</type>
+                                                <renderType>t3editor</renderType>
+                                                <format>html</format>
+                                                <rows>4</rows>
+                                            </config>
+                                        </TCEforms>
+                                    </fluid_code>
+                                    <condition>
+                                        <TCEforms>
+                                            <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid_condition</label>
+                                            <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.empty_condition_is_active</description>
+                                            <config>
+                                                <type>input</type>
+                                                <size>150</size>
+                                                <placeholder><![CDATA[{yourVariable} == '1337']]></placeholder>
+                                            </config>
+                                        </TCEforms>
+                                    </condition>
+                                </el>
+                            </values>
+                        </el>
+                    </value_switch>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>
+

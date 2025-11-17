@@ -1,0 +1,133 @@
+<html
+        lang="en"
+        data-namespace-typo3-fluid="true"
+        xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+        xmlns:be="http://typo3.org/ns/TYPO3/CMS/Beuser/ViewHelpers"
+        xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers">
+
+  <f:image src="EXT:dataviewer/Resources/Public/Icons/Plugins/List.svg" style="float:left;margin-right: 5px;" height="32" title="Dataviewer Plugin"/>
+  <f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer.svg" style="float:right;" width="100" title="Dataviewer"/>
+  <strong>
+    <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:plugin.list"/>
+  </strong>
+  <br/>
+  <div style="font-size: smaller;">
+    <span data-toggle="tooltip" data-html="true" data-placement="right"
+          data-title="{f:translate(key:'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:message.use_this_id_to_link')}" style="cursor:help; color:#F29402; font-weight: bold;">[Uid <strong
+            style="color:white; background-color:#F29402; padding:4px;">{uid}</strong>]</span>
+    <hr size="1" style="color:#c0c0c0; background-color: #c0c0c0; height: 1px; padding:0; margin: 5px 0;"/>
+  </div>
+  <div style="margin:5px 0;">
+    <table class="table table-hover table-striped table-bordered" style="font-size: smaller;">
+      <tr>
+        <td>
+          <strong>
+            <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_datatype"/>
+          </strong>
+        </td>
+        <td>
+          <f:render section="datatype" arguments="{_all}"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>
+            <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:preview.data_source"/>
+          </strong>
+        </td>
+        <td>
+          <f:render section="pages" arguments="{_all}"/>
+        </td>
+      </tr>
+      <f:if condition="{pi_flexform_transformed.settings.variables} != ''">
+        <f:then>
+          <tr>
+            <td>
+              <strong>
+                <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:preview.variables"/>
+              </strong>
+            </td>
+            <td>
+              <f:render section="variables" arguments="{_all}"/>
+            </td>
+          </tr>
+        </f:then>
+      </f:if>
+      <tr>
+        <td>
+          <strong>
+            <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:preview.template"/>
+          </strong>
+        </td>
+        <td style="word-break: break-all;">
+          <f:render section="template" arguments="{_all}"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <f:section name="datatype">
+    <f:if condition="{pi_flexform_transformed.settings.datatype_selection} > 0">
+      <f:then>
+        <a href="{dv:backend.editLink(id:pi_flexform_transformed.settings.datatype_selection,table:'tx_dataviewer_domain_model_datatype')}" target="_self"
+           data-table="tx_dataviewer_domain_model_datatype" data-uid="{pi_flexform_transformed.settings.datatype_selection}" class="t3js-contextmenutrigger">
+          <dv:backend.render.record uid="{pi_flexform_transformed.settings.datatype_selection}" table="tx_dataviewer_domain_model_datatype"/>
+        </a>
+      </f:then>
+      <f:else>
+        <em>
+          <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:datatype_not_selected"/>
+        </em>
+      </f:else>
+    </f:if>
+  </f:section>
+
+  <f:section name="pages">
+    <f:if condition="{pages} != ''">
+      <f:then>
+        <f:alias map="{pageUids:'{dv:string.explode(string:pages)}'}">
+          <f:for each="{pageUids}" as="pageUid" iteration="i">
+            <a href="{dv:backend.webList(id:pageUid)}" target="_self">
+              <dv:backend.render.record uid="{pageUid}" table="pages"/>
+            </a>
+            <f:if condition="!{i.isLast}">&nbsp;</f:if>
+          </f:for>
+        </f:alias>
+      </f:then>
+      <f:else>
+        <em>
+          <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:message.no_record_storage_page_configured"/>
+        </em>
+      </f:else>
+    </f:if>
+  </f:section>
+
+  <f:section name="variables">
+    <f:alias map="{variableIds:'{dv:string.explode(string:pi_flexform_transformed.settings.variables)}'}">
+      <f:for each="{variableIds}" as="variableId" iteration="i">
+        <a href="{dv:backend.editLink(id:variableId,table:'tx_dataviewer_domain_model_variable')}" target="_self" data-table="tx_dataviewer_domain_model_variable" data-uid="{variableId}"
+           class="t3js-contextmenutrigger">
+          <dv:backend.render.record uid="{variableId}" table="tx_dataviewer_domain_model_variable"/>
+        </a>
+        <f:if condition="!{i.isLast}">&nbsp;</f:if>
+      </f:for>
+    </f:alias>
+  </f:section>
+
+  <f:section name="template">
+    <f:switch expression="{pi_flexform_transformed.settings.template_selection}">
+      <f:case value="CUSTOM">
+        <f:if condition="{pi_flexform_transformed.settings.template_override} > 0">
+          <dv:backend.render.file table="tt_content" field="template_override" uid="{uid}"/>
+        </f:if>
+      </f:case>
+      <f:case value="FLUID">
+        <core:icon identifier="mimetypes-text-html" size="small"/>&nbsp;<f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid"/>
+      </f:case>
+      <f:defaultCase>
+        <dv:backend.render.templateFile id="{pi_flexform_transformed.settings.template_selection}"/>
+      </f:defaultCase>
+    </f:switch>
+  </f:section>
+
+</html>

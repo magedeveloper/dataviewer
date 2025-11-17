@@ -1,69 +1,62 @@
 <?php
-namespace MageDeveloper\Dataviewer\Utility;
+declare(strict_types=1);
 
+namespace Aix\Dataviewer\Utility;
+
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
+use TYPO3\CMS\Core\Routing\PageArguments;
+use TYPO3\CMS\Core\Session\UserSessionManager;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\TypoScript\AST\AstBuilder;
+use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\IncludeNode\RootInclude;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\IncludeNode\StringInclude;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\IncludeNode\TsConfigInclude;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\StringTreeBuilder;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\Traverser\ConditionVerdictAwareIncludeTreeTraverser;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\TreeFromLineStreamBuilder;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\TsConfigTreeBuilder;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\Visitor\IncludeTreeAstBuilderVisitor;
+use TYPO3\CMS\Core\TypoScript\IncludeTree\Visitor\IncludeTreeConditionMatcherVisitor;
+use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
+use TYPO3\CMS\Core\TypoScript\Tokenizer\LosslessTokenizer;
+use TYPO3\CMS\Core\TypoScript\TypoScriptStringFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 
 class TypoScriptUtility
 {
-	/**
-	 * TypoScript Parser
-	 *
-	 * @var \TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser
-	 * @inject
-	 */
-	protected $typoScriptParser;
+    /**
+     * Gets a typoscript value from
+     * given typoscript
+     *
+     * @param string $typoScript
+     * @return mixed
+     */
+    public function getTypoScriptValue(string $typoScript)
+    {
+        try {
+            $hash = md5($typoScript);
+            /** @var TypoScriptStringFactory $typoScriptStringFactory */
+            $typoScriptStringFactory = GeneralUtility::makeInstance(TypoScriptStringFactory::class);
+            $rootNode = $typoScriptStringFactory->parseFromStringWithIncludes("dataviewer-typoscript-rendering-$hash", $typoScript);
 
-	/**
-	 * Content Object Renderer
-	 *
-	 * @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer
-	 * @inject
-	 */
-	protected $contentObjectRenderer;
+            /** @var ServerRequest $request */
+            $request = GeneralUtility::makeInstance(ServerRequest::class);
+            $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+            $contentObjectRenderer->setRequest($request);
+            $result = $contentObjectRenderer->cObjGet($rootNode->toArray());
+            return (string)$result;
+        } catch (\Exception $e) {
+            return '';
+        }
+    }
 
-	/**
-	 * Gets a typoscript value from
-	 * given typoscript
-	 * 
-	 * @param string $typoScript
-	 * @return mixed
-	 */
-	public function getTypoScriptValue($typoScript)
-	{
-		$this->typoScriptParser->parse($typoScript);
-		$parsed = $this->typoScriptParser->setup;
-
-		if (TYPO3_MODE === 'BE')
-			$this->_simulateFrontendEnvironment();
-
-		$final = $this->contentObjectRenderer->cObjGet($parsed);
-		
-		if (is_array($final))
-			return implode(PHP_EOL, $final);
-			
-		return (string)$final;					
-	}
-
-	/**
-	 * Sets the $TSFE->cObjectDepthCounter in Backend mode
-	 * This somewhat hacky work around is currently needed because the cObjGetSingle() function of \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer relies on this setting
-	 *
-	 * @return void
-	 */
-	protected function _simulateFrontendEnvironment()
-	{
-		$GLOBALS['TSFE'] = new \stdClass();
-		$GLOBALS['TSFE']->cObjectDepthCounter = 100;
-	}
 }

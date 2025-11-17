@@ -1,41 +1,42 @@
 <?php
-namespace MageDeveloper\Dataviewer\Domain\Model;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+namespace Aix\Dataviewer\Domain\Model;
+
+use Aix\Dataviewer\Factory\VariableFactory;
+use Aix\Dataviewer\Service\FlexForm\FlexFormService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class Variable extends AbstractModel
 {
 	/**
 	 * Variable Types
-	 * 
+	 *
 	 * @var int
 	 */
-	const VARIABLE_TYPE_FIXED 			= 0;
-	const VARIBALE_TYPE_TYPOSCRIPT 		= 1;
-	const VARIABLE_TYPE_TYPOSCRIPT_VAR	= 2;
-	const VARIABLE_TYPE_GET				= 3;
-	const VARIABLE_TYPE_POST			= 4;
-	const VARIABLE_TYPE_RECORD			= 5;
-	const VARIABLE_TYPE_RECORD_FIELD	= 6;
-	const VARIABLE_TYPE_DATABASE		= 7;
-	const VARIABLE_TYPE_FRONTEND_USER	= 8;
-	const VARIABLE_TYPE_SERVER			= 9;
-	const VARIABLE_TYPE_DYNAMIC_RECORD	= 10;
-	const VARIABLE_TYPE_USER_SESSION	= 11;
-	const VARIABLE_TYPE_PAGE			= 12;
-	const VARIABLE_TYPE_USERFUNC		= 13;
+	const VARIABLE_TYPE_FIXED 			    = 0;
+	const VARIBALE_TYPE_TYPOSCRIPT 		    = 1;
+	const VARIABLE_TYPE_TYPOSCRIPT_VAR      = 2;
+	const VARIABLE_TYPE_GET				    = 3;
+	const VARIABLE_TYPE_POST			    = 4;
+	const VARIABLE_TYPE_GET_POST			= 5;
+	//const VARIABLE_TYPE_RECORD_FIELD	    = 6;
+	const VARIABLE_TYPE_DATABASE		    = 7;
+	const VARIABLE_TYPE_FRONTEND_USER	    = 8;
+	const VARIABLE_TYPE_SERVER			    = 9;
+	const VARIABLE_TYPE_DYNAMIC_RECORD	    = 10;
+	const VARIABLE_TYPE_USER_SESSION	    = 11;
+	const VARIABLE_TYPE_PAGE			    = 12;
+    const VARIABLE_TYPE_USERFUNC		    = 13;
+    const VARIABLE_TYPE_BACKEND_USER	    = 14;
+    const VARIABLE_TYPE_LANGUAGE_UID	    = 15;
+    const VARIABLE_TYPE_SESSION_CONTAINER   = 16;
+    const VARIABLE_TYPE_EXTENSION_CONFIG    = 17;
+    const VARIABLE_TYPE_TYPOSCRIPT_SETTINGS = 18;
 
 	/**
 	 * Type Casting
-	 * 
+	 *
 	 * @var int
 	 */
 	const VARIABLE_TYPE_CAST_NONE		= 0;
@@ -49,28 +50,35 @@ class Variable extends AbstractModel
 
 	/**
 	 * Variable Type
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $type = 0;
 
 	/**
 	 * Variable Name
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $variableName;
 
+    /**
+     * Parameter Name
+     *
+     * @var string
+     */
+    protected $parameterName = '';
+
 	/**
 	 * Session Key
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $sessionKey;
 
 	/**
 	 * Variable Value
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $variableValue;
@@ -82,76 +90,103 @@ class Variable extends AbstractModel
 	 */
 	protected $typeCast = 0;
 
-	/**
-	 * Record
-	 * 
-	 * @var \MageDeveloper\Dataviewer\Domain\Model\Record
-	 */
-	protected $record = NULL;
+    /**
+     * Extension Name to load
+     * config from
+     * @var string
+     */
+	protected $extConf = '';
+
+    /**
+     * TypoScript Path
+     *
+     * @var string
+     */
+	protected $typoscriptPath = '';
 
 	/**
 	 * Field
 	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Model\Field
+	 * @var Field
 	 */
-	protected $field = NULL;
+	protected $field = null;
 
 	/**
 	 * Table Select Field
 	 *
 	 * @var string
 	 */
-	protected $tableContent = "";
+	protected $tableContent = '';
 
 	/**
 	 * Column Name Field
 	 *
 	 * @var string
 	 */
-	protected $columnName = "";
+	protected $columnName = '';
 
 	/**
 	 * Where Clause for selection
 	 *
 	 * @var string
 	 */
-	protected $whereClause ="";
+	protected $whereClause = '';
 
 	/**
 	 * SERVER Environment Value
 	 *
 	 * @var string
 	 */
-	protected $server ="";
+	protected $server = '';
 
 	/**
 	 * Page
-	 * 
+	 *
 	 * @var int
 	 */
-	protected $page;
+	protected $page = 0;
 
 	/**
 	 * User Func
-	 * 
+	 *
 	 * @var string
 	 */
-	protected $userFunc;
+	protected $userFunc = '';
+
+    /**
+     * @var string
+     */
+	protected $allowedValues = '';
+
+    /**
+     * @var string
+     */
+	protected $regex = '';
+
+    /**
+     * @var string
+     */
+	protected $valueSwitch = '';
+
+    /**
+     * @var null|Datatype
+     */
+    protected $datatype = null;
 
 	/**
 	 * Gets the type
-	 * 
+	 *
 	 * @return int
 	 */
-	public function getType()
+	public function getType(): int
 	{
 		return $this->type;
 	}
 
 	/**
 	 * Sets the type
-	 * 
-	 * @param int $type
+	 *
+	 * @param mixed $type Cast to int type
 	 * @return void
 	 */
 	public function setType($type)
@@ -161,94 +196,121 @@ class Variable extends AbstractModel
 
 	/**
 	 * Gets the variable name
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getVariableName()
+	public function getVariableName(): string
 	{
 		return $this->variableName;
 	}
 
 	/**
 	 * Sets the variable name
-	 * 
+	 *
 	 * @param string $variableName
 	 * @return void
 	 */
-	public function setVariableName($variableName)
+	public function setVariableName(string $variableName): void
 	{
 		$this->variableName = $variableName;
 	}
 
+    /**
+     * @return string
+     */
+    public function getParameterName(): string
+    {
+        return $this->parameterName;
+    }
+
+    /**
+     * @param string $parameterName
+     */
+    public function setParameterName(string $parameterName): void
+    {
+        $this->parameterName = $parameterName;
+    }
+
 	/**
 	 * Gets the session key
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getSessionKey()
+	public function getSessionKey(): string
 	{
 		return $this->sessionKey;
 	}
 
 	/**
 	 * Sets the session key
-	 * 
+	 *
 	 * @param string $sessionKey
 	 * @return void
 	 */
-	public function setSessionKey($sessionKey)
+	public function setSessionKey(string $sessionKey): void
 	{
 		$this->sessionKey = $sessionKey;
 	}
-	
+
 	/**
 	 * Gets the variable value
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getVariableValue()
+	public function getVariableValue(): string
 	{
 		return $this->variableValue;
 	}
 
 	/**
 	 * Sets the variable value
-	 * 
+	 *
 	 * @param string $variableValue
 	 * @return void
 	 */
-	public function setVariableValue($variableValue)
+	public function setVariableValue(string $variableValue): void
 	{
 		$this->variableValue = $variableValue;
 	}
 
-	/**
-	 * Returns the record
-	 *
-	 * @return \MageDeveloper\Dataviewer\Domain\Model\Record $record
-	 */
-	public function getRecord()
-	{
-		return $this->record;
-	}
+    /**
+     * @return string
+     */
+    public function getExtConf(): string
+    {
+        return $this->extConf;
+    }
 
-	/**
-	 * Sets the record
-	 *
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Record $record
-	 * @return void
-	 */
-	public function setRecord(\MageDeveloper\Dataviewer\Domain\Model\Record $record)
-	{
-		$this->record = $record;
-	}
+    /**
+     * @param string $extConf
+     */
+    public function setExtConf(string $extConf): void
+    {
+        $this->extConf = $extConf;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTyposcriptPath(): string
+    {
+        return $this->typoscriptPath;
+    }
+
+    /**
+     * @param string $typoscriptPath
+     */
+    public function setTyposcriptPath(string $typoscriptPath): void
+    {
+        $this->typoscriptPath = $typoscriptPath;
+    }
 
 	/**
 	 * Returns the field
 	 *
-	 * @return \MageDeveloper\Dataviewer\Domain\Model\Field $field
+	 * @return Field $field
 	 */
-	public function getField()
+	public function getField(): Field
 	{
 		return $this->field;
 	}
@@ -256,10 +318,10 @@ class Variable extends AbstractModel
 	/**
 	 * Sets the field
 	 *
-	 * @param \MageDeveloper\Dataviewer\Domain\Model\Field $field
+	 * @param Field $field
 	 * @return void
 	 */
-	public function setField(\MageDeveloper\Dataviewer\Domain\Model\Field $field)
+	public function setField(\Aix\Dataviewer\Domain\Model\Field $field): void
 	{
 		$this->field = $field;
 	}
@@ -269,7 +331,7 @@ class Variable extends AbstractModel
 	 *
 	 * @return string $tableContent
 	 */
-	public function getTableContent()
+	public function getTableContent(): string
 	{
 		return $this->tableContent;
 	}
@@ -280,7 +342,7 @@ class Variable extends AbstractModel
 	 * @param string $tableContent
 	 * @return void
 	 */
-	public function setTableContent($tableContent)
+	public function setTableContent(string $tableContent): void
 	{
 		$this->tableContent = $tableContent;
 	}
@@ -290,7 +352,7 @@ class Variable extends AbstractModel
 	 *
 	 * @return string $columnName
 	 */
-	public function getColumnName()
+	public function getColumnName(): string
 	{
 		return $this->columnName;
 	}
@@ -301,7 +363,7 @@ class Variable extends AbstractModel
 	 * @param string $columnName
 	 * @return void
 	 */
-	public function setColumnName($columnName)
+	public function setColumnName(string $columnName): void
 	{
 		$this->columnName = $columnName;
 	}
@@ -311,7 +373,7 @@ class Variable extends AbstractModel
 	 *
 	 * @return string $whereClause
 	 */
-	public function getWhereClause()
+	public function getWhereClause(): string
 	{
 		return $this->whereClause;
 	}
@@ -322,7 +384,7 @@ class Variable extends AbstractModel
 	 * @param string $whereClause
 	 * @return void
 	 */
-	public function setWhereClause($whereClause)
+	public function setWhereClause(string $whereClause): void
 	{
 		$this->whereClause = $whereClause;
 	}
@@ -330,99 +392,99 @@ class Variable extends AbstractModel
 	/**
 	 * Gets the name for the server
 	 * environment variable name
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getServer()
+	public function getServer(): string
 	{
 		return $this->server;
 	}
 
 	/**
 	 * Sets a server environment variable name
-	 * 
+	 *
 	 * @param string $server
 	 * @return void
 	 */
-	public function setServer($server)
+	public function setServer(string $server): void
 	{
 		$this->server = $server;
 	}
 
 	/**
 	 * Gets the page
-	 * 
+	 *
 	 * @return int
 	 */
-	public function getPage()
+	public function getPage(): int
 	{
 		return $this->page;
 	}
 
 	/**
 	 * Sets the page
-	 * 
+	 *
 	 * @param int $page
 	 * @return void
 	 */
-	public function setPage($page)
+	public function setPage(int $page): void
 	{
 		$this->page = $page;
 	}
 
 	/**
 	 * Gets the user func
-	 * 
+	 *
 	 * @return string
 	 */
-	public function getUserFunc()
+	public function getUserFunc(): string
 	{
 		return $this->userFunc;
 	}
 
 	/**
 	 * Sets a user func
-	 * 
+	 *
 	 * @param string $userFunc
 	 * @return void
 	 */
-	public function setUserFunc($userFunc)
+	public function setUserFunc(string $userFunc): void
 	{
 		$this->userFunc = $userFunc;
 	}
 
 	/**
 	 * Gets the type cast of the variable
-	 * 
+	 *
 	 * @return int
 	 */
-	public function getTypeCast()
+	public function getTypeCast(): int
 	{
 		return $this->typeCast;
 	}
 
 	/**
 	 * Sets the type cast of the variable
-	 * 
+	 *
 	 * @param int $typeCast
 	 * @return void
 	 */
-	public function setTypeCast($typeCast)
+	public function setTypeCast(int $typeCast): void
 	{
-		$this->typeCast = (int)$typeCast;
+		$this->typeCast = $typeCast;
 	}
 
 	/**
 	 * Casts a type for a value
-	 * 
+	 *
 	 * @param mixed $value
 	 * @return mixed
 	 */
 	public function castType($value)
 	{
 		$typeCast = $this->getTypeCast();
-		
-		switch($typeCast)
+
+		switch ($typeCast)
 		{
 			case self::VARIABLE_TYPE_CAST_BOOLEAN:
 				$success = settype($value, "boolean");
@@ -450,10 +512,138 @@ class Variable extends AbstractModel
 				$success = true;
 				break;
 		}
-		
-		if($success === false)
+
+		if ($success === false)
 			$value = NULL;
-		
+
 		return $value;
 	}
+
+    /**
+     * Retrieve the generated variable value
+     *
+     * @return mixed
+     */
+	public function getValue()
+    {
+        try {
+            $variableFactory = GeneralUtility::makeInstance(VariableFactory::class);
+            $value = $variableFactory->prepareVariableValue($this);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param string $allowedValues
+     */
+    public function setAllowedValues(string $allowedValues): void
+    {
+        $this->allowedValues = $allowedValues;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedValues(): array
+    {
+        $flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+        $flex = $flexformService->convertFlexFormContentToArray($this->allowedValues);
+        $allowedValues = [];
+
+        if(array_key_exists('allowed_values', $flex) && is_array($flex) && ($flex['allowed_values']) && !empty($flex['allowed_values'])) {
+            foreach($flex['allowed_values'] as $_allowedValue) {
+                $value = $_allowedValue['values']['value'];
+                switch ($this->getTypeCast())
+                {
+                    case self::VARIABLE_TYPE_CAST_BOOLEAN:
+                        $allowedValues[] = (bool)$value;
+                        break;
+                    case self::VARIABLE_TYPE_CAST_INTEGER:
+                        $allowedValues[] = (int)$value;
+                        break;
+                    case self::VARIABLE_TYPE_CAST_FLOAT:
+                        $allowedValues[] = (float)$value;
+                        break;
+                    case self::VARIABLE_TYPE_CAST_NONE:
+                    case self::VARIABLE_TYPE_CAST_NULL:
+                    case self::VARIABLE_TYPE_CAST_STRING:
+                    default:
+                        $allowedValues[] = (string)$value;
+                        break;
+                }
+            }
+        }
+
+        return $allowedValues;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegex(): string
+    {
+        return $this->regex;
+    }
+
+    /**
+     * @param string $regex
+     */
+    public function setRegex(string $regex): void
+    {
+        $this->regex = $regex;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValueSwitch(): array
+    {
+        $flexformService = GeneralUtility::makeInstance(FlexFormService::class);
+        $valueSwitch = $flexformService->convertFlexFormContentToArray($this->valueSwitch);
+
+        $switch = [];
+        if(is_array($valueSwitch) && array_key_exists('value_switch', $valueSwitch)) {
+            foreach($valueSwitch['value_switch'] as $_switchVal) {
+                $switch[] = $_switchVal['values'];
+            }
+        }
+
+        return $switch;
+    }
+
+    /**
+     * @param string $valueSwitch
+     */
+    public function setValueSwitch(string $valueSwitch): void
+    {
+        $this->valueSwitch = $valueSwitch;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasValueSwitch(): bool
+    {
+        return ($this->valueSwitch != '');
+    }
+
+    /**
+     * @return Datatype|null
+     */
+    public function getDatatype(): ?Datatype
+    {
+        return $this->datatype;
+    }
+
+    /**
+     * @param Datatype|null $datatype
+     */
+    public function setDatatype(?Datatype $datatype): void
+    {
+        $this->datatype = $datatype;
+    }
+
 }

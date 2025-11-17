@@ -1,141 +1,130 @@
 <?php
-namespace MageDeveloper\Dataviewer\Service\Settings\Plugin;
+declare(strict_types=1);
 
-use MageDeveloper\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
-use MageDeveloper\Dataviewer\Service\Settings\AbstractSettingsService;
+namespace Aix\Dataviewer\Service\Settings\Plugin;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+use Aix\Dataviewer\Configuration\ExtensionConfiguration as Configuration;
+use Aix\Dataviewer\Service\Settings\AbstractSettingsService;
+use Aix\Dataviewer\Utility\StringUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class PluginSettingsService extends AbstractSettingsService
 {
-	/**
-	 * Plugin Name
-	 * @var string
-	 */
-	protected $extensionName;
+    /**
+     * Template Selection
+     * @var string
+     */
+    const TEMPLATE_SELECTION_DEBUG          = 'DEBUG';
+    const TEMPLATE_SELECTION_CUSTOM			= 'CUSTOM';
+    const TEMPLATE_SELECTION_FLUID			= 'FLUID';
 
-	/**
-	 * Constructor
-	 * 
-	 * @return PluginSettingsService
-	 */
-	public function __construct()
-	{
-		$this->setExtensionName( "tx_" . Configuration::EXTENSION_KEY );
-	}
+    /**
+     * Plugin Name
+     * @var string
+     */
+    protected $extensionName = '';
 
-	/**
-	 * Sets the extension name
-	 * 
-	 * @param string $extensionName
-	 * @return void
-	 */
-	public function setExtensionName($extensionName)
-	{
-		$this->extensionName = $extensionName;
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setExtensionName( 'tx_' . Configuration::EXTENSION_KEY );
+    }
 
-	/**
-	 * Gets the extension name
-	 * 
-	 * @return string
-	 */
-	public function getExtensionName()
-	{
-		return $this->extensionName;
-	}
+    /**
+     * Sets the extension name
+     *
+     * @param string $extensionName
+     * @return void
+     */
+    public function setExtensionName(string $extensionName): void
+    {
+        $this->extensionName = $extensionName;
+    }
 
-	/**
-	 * Gets the extension configuration
-	 * by a given configuration pathj
-	 * 
-	 * @param string $path Path to the configuration
-	 * @return string|null
-	 */
-	public function getConfiguration($path)
-	{
-		$extensionName = $this->getExtensionName();
-		return $this->getExtensionConfiguration($extensionName, $path);
-	}
+    /**
+     * Gets the extension name
+     *
+     * @return string
+     */
+    public function getExtensionName(): string
+    {
+        return $this->extensionName;
+    }
 
-	/**
-	 * Gets the target content uid
-	 *
-	 * @return int
-	 */
-	public function getTargetContentUid()
-	{
-		return (int)$this->getSettingByCode("target_plugin");
-	}
+    /**
+     * Gets the configured variable name
+     * for records
+     *
+     * @return string
+     */
+    public function getRecordsVarName(): string
+    {
+        $name = (string)$this->getConfiguration('plugin.tx_dataviewer.settings.recordsVariableName');
+        if(!is_string($name)) {
+            return 'records';
+        }
+        return StringUtility::createCodeFromString($name);
+    }
 
-	/**
-	 * Gets the configured variable name
-	 * for records
-	 * 
-	 * @return string
-	 */
-	public function getRecordsVarName()
-	{
-		$name = $this->getConfiguration("settings.recordsVariableName");
-		return \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($name);
-	}
+    /**
+     * Gets the configured variable name for
+     * a single record
+     *
+     * @return string
+     */
+    public function getRecordVarName(): string
+    {
+        $name = (string)$this->getConfiguration('plugin.tx_dataviewer.settings.singleRecordVariableName');
+        if(!is_string($name)) {
+            return 'record';
+        }
+        return StringUtility::createCodeFromString($name);
+    }
 
-	/**
-	 * Gets the configured variable name for
-	 * a single record
-	 * 
-	 * @return string
-	 */
-	public function getRecordVarName()
-	{
-		$name = $this->getConfiguration("settings.singleRecordVariableName");
-		return \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($name);
-	}
+    /**
+     * Gets the configuration for the predefines
+     * templates
+     *
+     * @return array
+     */
+    public function getPredefinedTemplates(): array
+    {
+        $configuration = $this->getConfiguration('plugin.tx_dataviewer.templates');
+        if (is_array($configuration) && !empty($configuration)) {
+            $configuration = GeneralUtility::removeDotsFromTS($configuration);
+        }
 
-	/**
-	 * Gets the configured variable name for
-	 * a part of a record
-	 * 
-	 * @return string
-	 */
-	public function getPartVarName()
-	{
-		$name = $this->getConfiguration("settings.partVariableName");
-		return \MageDeveloper\Dataviewer\Utility\StringUtility::createCodeFromString($name);
-	}
+        return $configuration;
+    }
 
-	/**
-	 * Gets the configuration for the predefines
-	 * templates
-	 * 
-	 * @return array
-	 */
-	public function getPredefinedTemplates()
-	{
-		$path = "templates";
-		$configuration = $this->getConfiguration($path);
-		
-		return $configuration;		
-	}
-	
-	/**
-	 * Gets the predefined template by a given
-	 * id
-	 * 
-	 * @param string $templateId
-	 * @return string|null
-	 */
-	public function getPredefinedTemplateById($templateId)
-	{
-		$templates = $this->getPredefinedTemplates();
-		return (isset($templates[$templateId]))?$templates[$templateId]:null;
-	}
+    /**
+     * Gets the predefined template by a given
+     * id
+     *
+     * @param string $templateId
+     * @return string|null
+     */
+    public function getPredefinedTemplateById(string $templateId): ?string
+    {
+        $templates = $this->getPredefinedTemplates();
+        $info = (isset($templates[$templateId]))?$templates[$templateId]:null;
+
+        if (isset($info['file'])) {
+            return $info['file'];
+        }
+
+        return $info;
+    }
+
+    /**
+     * Gets the cache lifetime configuration
+     *
+     * @return int
+     */
+    public function getCacheLifetime()
+    {
+        return (int)$this->getConfiguration('plugin.tx_dataviewer.developer.cache_lifetime');
+    }
 }

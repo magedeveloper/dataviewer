@@ -1,0 +1,33 @@
+<html
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:be.pageRenderer
+  includeJavaScriptModules="{
+     0: '@aix/dataviewer/QueryBuilderElement.js',
+     1: 'jquery-extendext'
+  }"
+/>
+
+<f:for each="{cssFiles}" as="css" iteration="i">
+    <link rel="stylesheet" href="{css}" id="css_{i.index}">
+</f:for>
+
+<label for="{data.parameterArray.itemFormElName}"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_condition"/></label>
+<input type="hidden"
+       name="{data.parameterArray.itemFormElName}"
+       id="{data.parameterArray.itemFormElID}"
+       value="{data.parameterArray.itemFormElValue}" class="form-control"
+/>
+
+<div id="{id}" style="padding:15px 0;">
+    <core:icon identifier="spinner-circle" size="large" />
+</div>
+
+</html>
+
+
+
+

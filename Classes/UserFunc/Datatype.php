@@ -1,115 +1,170 @@
 <?php
-namespace MageDeveloper\Dataviewer\UserFunc;
+namespace Aix\Dataviewer\UserFunc;
 
-use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
-use MageDeveloper\Dataviewer\Utility\IconUtility;
+use Aix\Dataviewer\Domain\Repository\DatatypeRepository;
+use Aix\Dataviewer\Factory\TableFactory;
+use Aix\Dataviewer\Icon\DataviewerIconRegistry;
+use Aix\Dataviewer\Utility\LocalizationUtility as Locale;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class Datatype
 {
 	/**
 	 * Datatype Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\DatatypeRepository
-	 * @inject
+	 * @var DatatypeRepository
 	 */
 	protected $datatypeRepository;
 
-	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * Table Factory
+     * @var TableFactory
+     */
+	protected $tableFactory;
+
+    /**
+     * Dataviewer Icon Registry
+     * @var DataviewerIconRegistry
+     */
+	protected $dvIconRegistry;
 
 	/**
 	 * Constructor
-	 *
-	 * @return Datatype
 	 */
 	public function __construct()
 	{
-		$this->objectManager 				= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->datatypeRepository		= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\DatatypeRepository::class);
+		$this->datatypeRepository	= GeneralUtility::makeInstance(DatatypeRepository::class);
+	    $this->tableFactory         = GeneralUtility::makeInstance(TableFactory::class);
+	    $this->dvIconRegistry       = GeneralUtility::makeInstance(DataviewerIconRegistry::class);
 	}
 
 	/**
 	 * Populate datatypes
-	 *
 	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
+	 * @param mixed $parentObject Parent Object
+	 * @return void
 	 */
-	public function populateDatatypesAction(array &$config, &$parentObject)
+	public function populateDatatypesAction(array &$config, &$parentObject): void
 	{
-		$pageId = (int)$config["row"]["pid"];
+		$pageId = (int)$config['flexParentDatabaseRow']['pid'];
 
 		$options = [];
 		$usedIds = [];
-		
-		if(GeneralUtility::_GET("datatype"))
-		{
-			$dId = (int)GeneralUtility::_GET("datatype");
+
+        $request = $GLOBALS['TYPO3_REQUEST'];
+		if (GeneralUtility::_GET('datatype')) {
+			$dId = (int)GeneralUtility::_GET('datatype');
 			$datatype = $this->datatypeRepository->findByUid($dId, false);
 			$icon = IconUtility::getIconByHash($datatype->getIcon());
-			$options[] = [$datatype->getInfo(), $datatype->getUid(), $icon];
-		}
-		else
-		{
-			$options[] = ["", ""];
+			$options[] = [
+                'label' => $datatype->getInfo(),
+                'value' => $datatype->getUid(),
+                $icon
+            ];
+		} else {
+			$options[] = [
+                'label' => '',
+                'value' => '',
+            ];
 		}
 
 		$datatypesLocalPage = $this->datatypeRepository->findAllOnPid($pageId);
-		if ($datatypesLocalPage->count())
-		{
-			$options[] = [Locale::translate("on_this_page"), "--div--"];
+		if ($datatypesLocalPage->count()) {
+			$options[] = [
+                'label' => Locale::translate('on_this_page'),
+                'value' => '--div--'
+            ];
 
-			foreach($datatypesLocalPage as $_datatype)
-			{
-				/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
-				$icon = IconUtility::getIconByHash($_datatype->getIcon());
-				$options[] = [$_datatype->getInfo(), $_datatype->getUid(), $icon];
+			foreach ($datatypesLocalPage as $_datatype) {
+				/* @var \Aix\Dataviewer\Domain\Model\Datatype $_datatype */
+				$icon = $this->dvIconRegistry->getIconByHash($_datatype->getIcon());
+				$options[] = [
+                    'label' => $_datatype->getInfo(),
+                    'value' => $_datatype->getUid(),
+                    $icon
+                ];
 				$usedIds[] = $_datatype->getUid();
 			}
 		}
 
 		$datatypesOtherPages = $this->datatypeRepository->findAll(false);
 
-		if ($datatypesOtherPages->count())
-		{
+		if ($datatypesOtherPages->count()) {
 			$headerSet = false;
-			foreach($datatypesOtherPages as $_datatype)
-			{
-				if ($_datatype->getPid() !== $config["row"]["pid"] && !in_array($_datatype->getUid(), $usedIds))
-				{
-					if ($headerSet === false)
-					{
-						$options[] = [Locale::translate("on_other_pages"), "--div--"];
-						$headerSet = true;
-					}
+			foreach ($datatypesOtherPages as $_datatype) {
+                if ($_datatype->getPid() !== $pageId && !in_array($_datatype->getUid(), $usedIds)) {
+                    if ($headerSet === false) {
+                        $options[] = [
+                            'label' => Locale::translate('on_other_pages'),
+                            'value' => '--div--'
+                        ];
+                        $headerSet = true;
+                    }
 
-					/* @var \MageDeveloper\Dataviewer\Domain\Model\Datatype $_datatype */
-					$icon = IconUtility::getIconByHash($_datatype->getIcon());
-					$options[] = [$_datatype->getInfo(), $_datatype->getUid(), $icon];
-				}
-
+                    /* @var \Aix\Dataviewer\Domain\Model\Datatype $_datatype */
+                    $icon = $this->dvIconRegistry->getIconByHash($_datatype->getIcon());
+                    $options[] = [
+                        'label' => $_datatype->getInfo(),
+                        'value' => $_datatype->getUid(),
+                        $icon
+                    ];
+                }
 			}
 		}
 
-		//if (is_array($config["items"]))
-		//	$config["items"] = array_merge($config["items"], $options);
-		//else
-			$config["items"] = $options;
-
+		if (is_array($config['items'])) {
+            $config['items'] = array_merge($config['items'], $options);
+        } else {
+            $config['items'] = $options;
+        }
 	}
+
+    /**
+     * Assume tablename
+     * @param array $config Configuration Array
+     * @param mixed $parentObject Parent Object
+     * @return string
+     */
+    public function getTableNameField(array &$config, &$parentObject): string
+    {
+        $templateFile = 'EXT:dataviewer/Resources/Private/Templates/UserFunc/Datatype/TableName.html';
+        $templateFile = GeneralUtility::getFileAbsFileName($templateFile);
+
+        /* @var \Aix\Dataviewer\Fluid\View\StandaloneView $view */
+        $standaloneView = GeneralUtility::makeInstance(\Aix\Dataviewer\Fluid\View\StandaloneView::class);
+        $standaloneView->setTemplatePathAndFilename($templateFile);
+        $standaloneView->assign('config', $config);
+
+        $canChangeTableName = 'false';
+        $tableName = $config['row']['tablename'];
+        if ($tableName === '' || ($this->tableFactory->tableExists($tableName) === false)) {
+            $canChangeTableName = 'true';
+        }
+        $standaloneView->assign('canChangeTableName', $canChangeTableName);
+
+        // We check if the table exists
+        $tableExists = $this->tableFactory->tableExists($tableName);
+        $standaloneView->assign('tableExists', $tableExists);
+        $standaloneView->assign('tableName', $tableName);
+
+        return $standaloneView->render();
+    }
+
+    /**
+     * Get the class field to show on a datatype
+     * @param array $config Configuration Array
+     * @param mixed $parentObject Parent Object
+     * @return string
+     */
+    public function getClassField(array &$config, &$parentObject): string
+    {
+        $templateFile = 'EXT:dataviewer/Resources/Private/Templates/UserFunc/Datatype/Class.html';
+        $templateFile = GeneralUtility::getFileAbsFileName($templateFile);
+
+        /* @var \Aix\Dataviewer\Fluid\View\StandaloneView $view */
+        $standaloneView = GeneralUtility::makeInstance(\Aix\Dataviewer\Fluid\View\StandaloneView::class);
+        $standaloneView->setTemplatePathAndFilename($templateFile);
+        $standaloneView->assign('config', $config);
+
+        return $standaloneView->render();
+    }
 }

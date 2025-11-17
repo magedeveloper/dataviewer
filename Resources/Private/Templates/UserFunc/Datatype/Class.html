@@ -1,0 +1,41 @@
+<html
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:be.pageRenderer
+        includeJavaScriptModules="{
+     0: '@aix/dataviewer/DatatypeClassField.js'
+  }"
+/>
+
+<strong>
+    <label class="t3js-formengine-label"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_datatype.class" /></label>
+</strong>
+
+<br />
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default" id="dataviewer_class_status_refresh">
+        <core:icon identifier="actions-refresh" size="default" />
+    </button>
+</div>
+
+<div id="dataviewer_class_status_loader" style="padding:15px;">
+    <core:icon identifier="spinner-circle" size="large" />
+</div>
+
+<div id="dataviewer_class_status"
+     style="margin-top:20px;"
+     data-field-name="{config.itemFormElName}"
+     data-field-id="{config.itemFormElID}"
+     data-datatype-id="{config.row.uid}"
+     data-datatype-name-field-id="data[tx_dataviewer_domain_model_datatype][{config.row.uid}][name]"
+     data-messages-error="{f:translate(key:'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:class.check.error.unknown')}"
+     data-messages-delete-class="{f:translate(key:'LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:class.check.button.delete_class')}"
+>
+    <!-- OUTPUT -->
+</div>
+
+</html>

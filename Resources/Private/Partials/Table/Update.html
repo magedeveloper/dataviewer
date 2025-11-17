@@ -1,0 +1,31 @@
+<!-- UPDATE TABLE -->
+<div class="callout callout-info">
+    <h5>
+        <strong>
+            <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:table.check.error.update_needed" arguments="{0:tableName}" />
+        </strong>
+    </h5>
+    <p>
+      <f:if condition="{missingColumns->f:count()} > 0">
+        <f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:table.check.message.missing_columns" />
+        <ul>
+          <f:for each="{missingColumns}" as="missingColumn">
+            <li>{missingColumn.frontendLabel} ({missingColumn.code})</li>
+          </f:for>
+        </ul>
+      </f:if>
+      <f:if condition="{updateStatements.change->f:count()} > 0">
+        <ul>
+          <f:for each="{updateStatements.change}" as="updateStatement">
+            <li><code>{updateStatement}</code></li>
+          </f:for>
+        </ul>
+      </f:if>
+        <div class="btn-group form-group">
+            <button type="button" class="btn btn-default" id="dataviewer_table_status_migrate">
+                <core:icon identifier="actions-refresh" size="small" />&nbsp;<f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:table.check.button.update_table" />
+            </button>
+        </div>
+    </p>
+</div>
+<!-- /UPDATE TABLE -->

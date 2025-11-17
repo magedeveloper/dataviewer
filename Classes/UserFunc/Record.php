@@ -1,123 +1,88 @@
 <?php
-namespace MageDeveloper\Dataviewer\UserFunc;
+declare(strict_types=1);
 
-use MageDeveloper\Dataviewer\Utility\LocalizationUtility;
+namespace Aix\Dataviewer\UserFunc;
+
+use Aix\Dataviewer\Domain\Repository\DatatypeRepository;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Aix\Dataviewer\Domain\Model\Datatype;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
 class Record
 {
-	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * @var DatatypeRepository
+     */
+    protected $datatypeRepository;
 
-	/**
-	 * Record Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\RecordRepository
-	 * @inject
-	 */
-	protected $recordRepository;
+    /**
+     * @param DatatypeRepository $datatypeRepository
+     */
+    public function injectDatatypeRepository(DatatypeRepository $datatypeRepository)
+    {
+        $this->datatypeRepository = $datatypeRepository;
+    }
 
-	/**
-	 * Field Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\FieldRepository
-	 * @inject
-	 */
-	protected $fieldRepository;
+    /**
+     * Populate records on selected pages
+     * @param array $config Configuration Array
+     * @param mixed $parentObject Parent Object
+     * @return array
+     */
+    public function populateRecordsByDatatypeSelection(array &$config, &$parentObject): void
+    {
+        $pages = $config["flexParentDatabaseRow"]["pages"];
 
-	/**
-	 * Constructor
-	 *
-	 * @return Record
-	 */
-	public function __construct()
-	{
-		$this->objectManager 			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->recordRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\RecordRepository::class);
-		$this->fieldRepository          = $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\FieldRepository::class);
-	}
+        if (!is_array($pages)) {
+            $pages = GeneralUtility::intExplode(",", $pages);
+        }
 
-	/**
-	 * Populate records
-	 *
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function populateRecordsAction(array &$config, &$parentObject)
-	{
-		$options = [];
-		$records = $this->recordRepository->findAll([], false, true, ["pid" => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING]);
-		foreach($records as $_record)
-		{
-			$pid = $_record->getPid();
-			$label = "[{$pid}] " . $_record->getTitle() . " (Uid: {$_record->getUid()})";
-			$options[] = [$label, $_record->getUid()];
-		}
+        $datatypeUid = $config['row']['settings.datatype_selection'];
 
-		$config["items"] = array_merge($config["items"], $options);
-	}
+        if(is_array($datatypeUid)) {
+            $datatypeUid = (int)reset($datatypeUid);
+        }
 
-	/**
-	 * Gets a value from a dynamic record
-	 *
-	 * @param string $info
-	 * @param array $config
-	 * @return string|void
-	 */
-	public function getDynamicRecordValue($info, $config)
-	{
-		$parameters = $config["parameter."];
+        if($datatypeUid <= 0) {
+            return;
+        }
 
-		if(isset($parameters["uid"]))
-		{
-			$uid = (int)$parameters["uid"];
-		}
-		else
-		{
-			$recordInfo = GeneralUtility::_GP("tx_dataviewer_record");
-			$uid = $recordInfo["record"];
-		}
+        /* @var Datatype $datatype */
+        $datatype = $this->datatypeRepository->findByUid($datatypeUid, false);
 
-		$record = $this->recordRepository->findByUid($uid, false);
+        if($datatype instanceof Datatype) {
+            $table = $datatype->getTablename();
 
-		if($record instanceof \MageDeveloper\Dataviewer\Domain\Model\Record)
-		{
-			$fieldUidOrName = $parameters["field"];
-			$func = "get".ucwords($fieldUidOrName);
+            // Fetch all records of datatype on the selected pages
+            /* @var QueryBuilder $queryBuilder */
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+                ->getQueryBuilderForTable($table);
 
-			if(method_exists($record, $func))
-				return $record->{$func}();
+            $result = $queryBuilder->select('*')
+                ->from($table)
+                ->where(
+                    $queryBuilder->expr()->in('pid', $pages)
+                )
+                ->andWhere('deleted = 0')
+                ->andWhere('sys_language_uid = 0')
+                ->execute()
+                ->fetchAllAssociative();
 
-			$field = $this->fieldRepository->findOneByVariableName($fieldUidOrName);
-			if(!$field instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
-			{
-				$field = $this->fieldRepository->findByUid($fieldUidOrName, false);
-			}
+            $options = [];
+            if(!empty($result)) {
+                $options[] = ["[{$datatype->getUid()}] {$datatype->getName()}x", "--div--"];
+                foreach($result as $_row) {
+                    $label = $_row['title'];
+                    $value = $_row['uid'];
+                    $options[] = [
+                        'label' => $label,
+                        'value' => $value,
+                        'icon' => 'extensions-dataviewer-'.$_row['icon']];
+                }
+            }
 
-			// We finally check if we got a field now
-			if($field instanceof \MageDeveloper\Dataviewer\Domain\Model\Field)
-			{
-				$value = $record->getValueByField($field);
-				return $value->getValue();
-			}
-
-		}
-
-		return;
-	}
+            $config["items"] = array_merge($config["items"], $options);
+        }
+    }
 }

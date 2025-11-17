@@ -1,0 +1,57 @@
+<f:if condition="{fields}">
+	<f:then>
+		<span style="font-family: Courier, Courier new, monospace; font-size:12px; float:left; width:100%;" class="">
+		<table class="table table-hover table-striped table-bordered">
+			<thead class="thead-dark">
+			<tr>
+				<th scope="col"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_field_ids.variable_name" /></th>
+				<th scope="col"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_field_ids.frontend_label" /></th>
+				<th scope="col"><f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_field_ids.type" /></th>
+			</tr>
+			</thead>
+			<tbody>
+
+				<f:for each="{fields}" as="field" iteration="i">
+					<tr>
+						<td class="col-md-4">
+							<code><strong>{field.code}</strong></code>
+						</td>
+						<td class="col-md-4">
+							{field.frontendLabel}
+						</td>
+						<td class="col-md-4">
+							{field.type}
+						</td>
+					</tr>
+				</f:for>
+			</tbody>
+		</table>
+	</span>
+	<br />
+	<a target="_blank" class="btn btn-default" href="https://docs.typo3.org/m/typo3/reference-tca/master/en-us/Columns/Properties/DisplayCond.html#a-complex-example-in-a-flexform">Additional Information can be found here (External Link)</a>
+	<br />
+	<h3>Examples:</h3>
+	<code>
+		FIELD:{fields.0.code}:=:value
+		<br /><br />
+		&lt;and&gt;<br />
+		&nbsp;&nbsp;&lt;value1&gt;FIELD:sys_language_uid:=:0&lt;/value1&gt;<br />
+		&nbsp;&nbsp;&lt;or&gt;<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&lt;value1&gt;FIELD:CType:=:text&lt;/value1&gt;<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&lt;value2&gt;FIELD:header:=:Example&lt;/value2&gt;<br />
+		&nbsp;&nbsp;&lt;/or&gt;<br />
+		&lt;/and&gt;<br />
+	</code>
+	</f:then>
+	<br />
+	<code>Example:
+		FIELD:myvariablename:=:value
+	</code>
+	<div style="clear:both;"></div>
+	<f:else>
+		<br />
+		<em>
+			<f:translate key="LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_field_ids.no_fields_found" />
+		</em>
+	</f:else>
+</f:if>

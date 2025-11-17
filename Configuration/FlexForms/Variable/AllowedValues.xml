@@ -1,0 +1,38 @@
+<T3DataStructure>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <label></label>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <allowed_values>
+                        <section>1</section>
+                        <type>array</type>
+                        <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_variable.allowed_values</title>
+                        <el>
+                            <values>
+                                <type>array</type>
+                                <title></title>
+                                <el>
+                                    <value>
+                                        <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_variable.variable_value</label>
+                                        <config>
+                                            <type>input</type>
+                                            <size>255</size>
+                                        </config>
+                                    </value>
+                                </el>
+                            </values>
+                        </el>
+                    </allowed_values>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>
+

@@ -1,16 +1,7 @@
 <?php
-namespace MageDeveloper\Dataviewer\Utility;
+declare(strict_types=1);
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+namespace Aix\Dataviewer\Utility;
 
 class StringUtility
 {
@@ -36,18 +27,19 @@ class StringUtility
 	 * @param array $allowedSeparators List of allowed separators
 	 * @return array
 	 */
-	public static function explodeSeparatedString($string, $allowedSeparators = [])
+	public static function explodeSeparatedString(string $string, array $allowedSeparators = []): array
 	{
-		if (strlen($string))
-		{
+		if (strlen($string)) {
+
 			$dividers = self::$dividers;
-		
-			if (!empty($allowedSeparators))
+
+			if (!empty($allowedSeparators)) {
 				$dividers = $allowedSeparators;
-		
+            }
+
 			// Check that the divider of the ids is comma separation
 			foreach ($dividers as $divider) {
-					$string = str_replace($divider, ',', $string);
+                $string = str_replace($divider, ',', $string);
 			}
 
 			$exploded = array_map('trim',explode(",",$string));
@@ -64,7 +56,7 @@ class StringUtility
 	 * @param $string Entry string
 	 * @return string
 	 */
-	public static function createCodeFromString($string)
+	public static function createCodeFromString(string $string): string
 	{
 		$attrName = utf8_decode($string);
 		$attrCode = strtolower($attrName);
@@ -76,6 +68,7 @@ class StringUtility
 			"/" 	=> 	"",
 			"\\" 	=> 	"",
 			"\""	=>  "",
+            "/"     =>  "",
 			"'"		=>	"",
 			":"		=>  "",
 			"."		=>	"",
@@ -118,8 +111,7 @@ class StringUtility
 		//$attrCode = preg_replace('/[^a-zA-Z0-9_]/u', '_', $attrCode);
 		$attrCode = strtr($attrCode,$removable_values);
 
-		if (is_numeric(substr($attrCode, 0, 1)))
-		{
+		if (is_numeric(substr($attrCode, 0, 1))) {
 			$attrCode = 'i'.$attrCode;
 		}
 

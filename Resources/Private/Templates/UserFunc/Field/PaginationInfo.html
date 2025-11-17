@@ -1,0 +1,48 @@
+<html
+  xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+  xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+  data-namespace-typo3-fluid="true"
+>
+
+<div class="mt-2">
+
+  <h3>Use Dataviewer Paginator Html</h3>
+  <p>
+    You can use dataviewer paginator html as easy-to-use implementation for the pagination information, that is added to the template variables.
+    Use the following code snippet in your template to include a paginator.
+  </p>
+
+  <pre>
+<f:format.raw>
+  &lt;dv:template.render template="EXT:dataviewer/Resources/Private/Templates/Pagination/Paginator.html" arguments="{
+    paginator:p_paginator,
+    paging:p_paging,
+    pages:p_pages,
+    itemsPerPageVariableName:p_items_per_page_var_name,
+    pageNumberVariableName:p_page_number_var_name,
+    addQueryString:1
+  }"/&gt;
+</f:format.raw></pre>
+
+  <h3>Use Paginator Variables for your own pagination</h3>
+  <p>
+    You can also use the paginator variables for your own pagination. Use the following list, to see which variables are injected to your template.
+  </p>
+
+  <dv:template.render template="EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html" arguments="{
+    markers: {
+      0: {name:'p_paginator',type:'\TYPO3\CMS\Extbase\Pagination\QueryResultPaginator',description:'Paginator Instance for Result Query (Records)'},
+      1: {name:'p_paging',type:'\TYPO3\CMS\Core\Pagination\SlidingWindowPagination',description:'Pagination Instance according to the Paginator'},
+      2: {name:'p_pages',type:'array',description:'The pages \"around\" the current page, limited to 5'},
+      3: {name:'p_items_per_page_var_name',type:'string',description:'The name of the variable that control the items per page setting'},
+      4: {name:'p_page_number_var_name',type:'string',description:'The name of the variable that controls the current page number (mostly a get variable)'},
+      5: {name:'p_paginator.paginatedItems',type:'\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult',description:'An example on how to get the paginated items instead of using &#123;records&#125;'}
+    }
+  }"/>
+
+</div>
+
+
+
+
+</html>

@@ -1,45 +1,26 @@
 <?php
-namespace MageDeveloper\Dataviewer\LabelUserFunc;
+declare(strict_types=1);
 
-use MageDeveloper\Dataviewer\Utility\LocalizationUtility as Locale;
+namespace Aix\Dataviewer\LabelUserFunc;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+use Aix\Dataviewer\Domain\Model\Variable as VariableModel;
+use Aix\Dataviewer\Domain\Repository\VariableRepository;
+use Aix\Dataviewer\Utility\LocalizationUtility as Locale;
+
 class Variable
 {
-	/**
-	 * Object Manager
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * @var VariableRepository
+     */
+    protected $variableRepository;
 
-	/**
-	 * Variable Repository
-	 *
-	 * @var \MageDeveloper\Dataviewer\Domain\Repository\VariableRepository
-	 * @inject
-	 */
-	protected $variableRepository;
-
-	/**
-	 * Constructor
-	 *
-	 * @return Variable
-	 */
-	public function __construct()
-	{
-		$this->objectManager	 			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
-		$this->variableRepository			= $this->objectManager->get(\MageDeveloper\Dataviewer\Domain\Repository\VariableRepository::class);
-	}
+    /**
+     * @param VariableRepository $variableRepository
+     */
+    public function injectVariableRepository(VariableRepository $variableRepository)
+    {
+        $this->variableRepository = $variableRepository;
+    }
 
 	/**
 	 * UserFunc for FieldValue Label
@@ -47,27 +28,32 @@ class Variable
 	 * @param array $pObj Object Information
 	 * @return void
 	 */
-	public function displayLabel(&$pObj)
+	public function displayLabel(&$pObj): void
 	{
 		if (isset($pObj["row"]))
 		{
 			$row = $pObj["row"];
-			/* @var \MageDeveloper\Dataviewer\Domain\Model\Variable $variable */
+			/* @var Variable $variable */
 			$variable = $this->variableRepository->findByUid($row["uid"], false);
 
-			if ($variable instanceof \MageDeveloper\Dataviewer\Domain\Model\Variable)
-			{
+			if ($variable instanceof VariableModel) {
 				$type = $variable->getType();
 				$name = $variable->getVariableName();
+                if($type == \Aix\Dataviewer\Domain\Model\Variable::VARIABLE_TYPE_GET ||
+                   $type == \Aix\Dataviewer\Domain\Model\Variable::VARIABLE_TYPE_GET_POST ||
+                   $type == \Aix\Dataviewer\Domain\Model\Variable::VARIABLE_TYPE_POST
+                ) {
+                    if($variable->getParameterName() != '') {
+                        $name = $variable->getParameterName();
+                    }
+                }
 				$pid = $variable->getPid();
+                $uid = $variable->getUid();
 				$typeStr = Locale::translate("variable_type.{$type}");
-				if ($typeStr)
-					$pObj["title"] = "[{$pid}]" . " " . $typeStr . " '{$name}'";
-
+				if ($typeStr) {
+                    $pObj["title"] = "[u:{$uid}|p:{$pid}]" . " " . $typeStr . " '{$name}'";
+                }
 			}
-
 		}
-
 	}
-
 }

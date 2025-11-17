@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2013-05-17T16:06:12Z" product-name="dataviewer">
-        <header/>
+    <file source-language="en" datatype="plaintext" original="messages" date="1111-11-11T11:11:11Z" product-name="dataviewer">
+        <header />
         <body>
 
             <trans-unit id="tx_dataviewer">
-                <source>DataViewer</source>
+                <source>Dataviewer</source>
             </trans-unit>
 
-            <!-- Flexform -->
+            <trans-unit id="tx_dataviewer.plugins">
+                <source>Dataviewer Plugins</source>
+            </trans-unit>
+
+        <!-- Flexform -->
             <trans-unit id="flexform.please_select">
                 <source>-- Please select --</source>
             </trans-unit>
             <trans-unit id="flexform.general_settings">
-                <source>DataViewer Settings</source>
+                <source>Dataviewer Settings</source>
             </trans-unit>
             <trans-unit id="flexform.developer_settings">
                 <source>Developer Settings</source>
             </trans-unit>
             <trans-unit id="flexform.debug">
                 <source>Debug</source>
+            </trans-unit>
+            <trans-unit id="flexform.ignore_language">
+                <source>Ignore sys_language_uid</source>
             </trans-unit>
             <trans-unit id="flexform.pid_with_tsconfig">
                 <source>Page with the Page TSConfig</source>
@@ -33,6 +40,9 @@
             <trans-unit id="flexform.template_settings">
                 <source>Template Settings</source>
             </trans-unit>
+            <trans-unit id="flexform.overrides">
+                <source>Overrides</source>
+            </trans-unit>
             <trans-unit id="flexform.render_only_template">
                 <source>Render this Template without Sitetemplate</source>
             </trans-unit>
@@ -41,9 +51,6 @@
             </trans-unit>
             <trans-unit id="flexform.no_plugin_type_selected">
                 <source>No Plugin Type selected</source>
-            </trans-unit>
-            <trans-unit id="flexform.available_markers">
-                <source>Available Markers</source>
             </trans-unit>
             <trans-unit id="flexform.query_preview">
                 <source>Query Preview</source>
@@ -126,9 +133,6 @@
             <trans-unit id="flexform.inline_variable_injection">
                 <source>Direct inject Variables</source>
             </trans-unit>
-            <trans-unit id="flexform.generate_output">
-                <source>Generated Output as Record Value to the Database</source>
-            </trans-unit>
             <trans-unit id="flexform.selection_limit">
                 <source>Selection Limit</source>
             </trans-unit>
@@ -169,6 +173,9 @@
             <trans-unit id="flexform.filter_combination">
                 <source>Filter Combination</source>
             </trans-unit>
+            <trans-unit id="flexform.filter_condition">
+                <source>Filter Condition</source>
+            </trans-unit>
             <trans-unit id="flexform.filter_field">
                 <source>Filter Field (searches through the selected field in the database)</source>
             </trans-unit>
@@ -191,10 +198,10 @@
                 <source>Value</source>
             </trans-unit>
             <trans-unit id="flexform.condition">
-                <source>Cond.</source>
+                <source>Condition</source>
             </trans-unit>
             <trans-unit id="flexform.fluid_condition">
-                <source>Condition (written in Fluid)</source>
+                <source>Condition (Fluid-ready)</source>
             </trans-unit>
             <trans-unit id="flexform.allowed_actions">
                 <source>Allowed Actions on Controller</source>
@@ -223,6 +230,15 @@
             <trans-unit id="flexform.cache_lifetime">
                 <source>Cache Lifetime in Seconds</source>
             </trans-unit>
+            <trans-unit id="flexform.static_cache">
+                <source>Static Cache HTML Output</source>
+            </trans-unit>
+            <trans-unit id="flexform.activate_condition">
+                <source>Condition for activating the entry (Fluid)</source>
+            </trans-unit>
+            <trans-unit id="flexform.empty_condition_is_active">
+                <source>Leave empty to always activate condition.</source>
+            </trans-unit>
 
             <trans-unit id="flexform.filter_type">
                 <source>Filter Frontend Type</source>
@@ -247,6 +263,15 @@
             </trans-unit>
             <trans-unit id="flexform.filter_type_input">
                 <source>Input Field</source>
+            </trans-unit>
+            <trans-unit id="flexform.filter_activate_condition">
+                <source>Condition for activating the filter (Fluid)</source>
+            </trans-unit>
+            <trans-unit id="flexform.process_query_result">
+                <source>Process query result</source>
+            </trans-unit>
+            <trans-unit id="flexform.process_query_result.description">
+                <source>Post-processing of a separate query result. Result (if active) is processed with this setting if it is not set to default behavior.</source>
             </trans-unit>
             <trans-unit id="flexform.search_type">
                 <source>Search type configuration</source>
@@ -297,7 +322,7 @@
                 <source>Allowed record table</source>
             </trans-unit>
             <trans-unit id="model_class">
-                <source>Class Name of the according model (Leave Blank for Array-Return)</source>
+                <source>Class Name of the according model (Leave Blank for Integer-Return)</source>
             </trans-unit>
             <trans-unit id="include_field_values_as_options">
                 <source>Adopt Field Values as additional options</source>
@@ -326,7 +351,7 @@
                 <source>Fields for sorting</source>
             </trans-unit>
             <trans-unit id="flexform.per_page_entries">
-                <source>List of entries for 'Per Page'-Field. (Comma separated)</source>
+                <source>List of entries for 'Per Page'-Field / Allowed entries. (Comma separated)</source>
             </trans-unit>
             <trans-unit id="flexform.show_view_all">
                 <source>Show 'View All' selection</source>
@@ -345,6 +370,9 @@
 
             <trans-unit id="flexform.template_selection">
                 <source>Template Selection</source>
+            </trans-unit>
+            <trans-unit id="flexform.debug_template">
+                <source>Debug Template</source>
             </trans-unit>
             <trans-unit id="flexform.custom_template_path">
                 <source>Select custom template path</source>
@@ -394,6 +422,15 @@
             <trans-unit id="flexform.default_sort_field">
                 <source>Default sort field</source>
             </trans-unit>
+            <trans-unit id="flexform.default_sort">
+                <source>Default sort by genuine column value</source>
+            </trans-unit>
+            <trans-unit id="flexform.sub_field">
+                <source>Sub Field</source>
+            </trans-unit>
+            <trans-unit id="flexform.sub_field.description">
+                <source>The selected sort field is a connected Domain/Model with a separate table. Therefore it is possible to add a sub field to the sorting.</source>
+            </trans-unit>
             <trans-unit id="flexform.crdate">
                 <source>Creation Date</source>
             </trans-unit>
@@ -412,8 +449,35 @@
             <trans-unit id="flexform.file_upload_folder">
                 <source>File Upload Folder</source>
             </trans-unit>
+            <trans-unit id="flexform.tab.seo">
+                <source>SEO</source>
+            </trans-unit>
 
-            <!-- Plugin Types -->
+          <trans-unit id="flexform.pagination">
+            <source>Pagination</source>
+          </trans-unit>
+          <trans-unit id="flexform.pagination.description">
+            <source>If enabled, pagination for injected records is automatically provided. See information below when enabled on which variables are available for pagination. Dataviewer also delivers a default pagination template.</source>
+          </trans-unit>
+          <trans-unit id="flexform.pagination.enable_pagination">
+            <source>Enable Pagination</source>
+          </trans-unit>
+          <trans-unit id="flexform.pagination.items_per_page_variable">
+            <source>Variable for items per page number</source>
+          </trans-unit>
+          <trans-unit id="flexform.pagination.default_page_number">
+            <source>Default Page Number</source>
+          </trans-unit>
+          <trans-unit id="flexform.pagination.page_number_variable">
+            <source>Variable for current page number</source>
+          </trans-unit>
+          <trans-unit id="flexform.pagination.info">
+            <source>Pagination Information</source>
+          </trans-unit>
+
+
+
+        <!-- Plugin Types -->
             <trans-unit id="plugin_types.display">
                 <source>Display Record Plugins</source>
             </trans-unit>
@@ -422,6 +486,9 @@
             </trans-unit>
             <trans-unit id="plugin_type.list">
                 <source>List</source>
+            </trans-unit>
+            <trans-unit id="plugin_type.plain">
+                <source>Raw Fluid</source>
             </trans-unit>
             <trans-unit id="plugin_type.detail">
                 <source>Detail</source>
@@ -448,60 +515,42 @@
                 <source>-- Please select a plugin type --</source>
             </trans-unit>
 
-            <!-- Plugins -->
+        <!-- Plugin List -->
             <trans-unit id="plugin.wizard_tab">
-                <source>DataViewer Plugins</source>
+                <source>Dataviewer Plugins</source>
             </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi1">
-                <source>Display Records</source>
+            <trans-unit id="plugin.list">
+                <source>Record List</source>
             </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi2">
-                <source>Insert Searchform</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi3">
-                <source>Insert Letter Selection</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi4">
-                <source>Insert Sorting Form</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi5">
-                <source>Insert Filtering Form</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi6">
-                <source>Insert Record Selection</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi7">
-                <source>Record Save Form</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi8">
-                <source>Insert Pager</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi1_description">
-                <source>Add records to your site. This plugin offers different possibilities to integrate records.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi2_description">
-                <source>Adds a search form to your site to search record contents.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi3_description">
-                <source>Add a letter selection (A,B,C etc.) to your site to filter records by the selected letter.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi4_description">
-                <source>Add a form for sorting records to your site.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi5_description">
-                <source>Adds an filter form to your site to show only records that are valid for the selected filters.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi6_description">
-                <source>Adds an record selection form to your site where records can be selected and used in the record plugin.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi7_description">
-                <source>Adds an Form to the site for saving and validating form data which is passed from a template.</source>
-            </trans-unit>
-            <trans-unit id="plugin.wizarditem_pi8_description">
-                <source>Adds a pager that divides the shown records into pages for better visualization.</source>
+            <trans-unit id="plugin.list.description">
+                <source>Multiple records can be shown in a list.</source>
             </trans-unit>
 
-            <!-- Messages -->
+        <!-- Plugin Detail -->
+            <trans-unit id="plugin.detail">
+                <source>Record Detail</source>
+            </trans-unit>
+            <trans-unit id="plugin.detail.description">
+                <source>A single record can be shown in a detailed view.</source>
+            </trans-unit>
+
+        <!-- Plugin Dynamic -->
+            <trans-unit id="plugin.dynamic">
+                <source>Record Dynamic Detail</source>
+            </trans-unit>
+            <trans-unit id="plugin.dynamic.description">
+                <source>A single record can be shown in a detailed view by regarding dynamic parameters for showing different records with a single plugin.</source>
+            </trans-unit>
+
+        <!-- Plugin Plain -->
+            <trans-unit id="plugin.plain">
+                <source>Plain Fluid Template</source>
+            </trans-unit>
+            <trans-unit id="plugin.plain.description">
+                <source>Show plain fluid code within the dataviewer environment (e.g. Include Variables).</source>
+            </trans-unit>
+
+        <!-- Messages -->
             <trans-unit id="message.no_plugin_type_selected">
                 <source>No plugin type selected</source>
             </trans-unit>
@@ -512,13 +561,19 @@
                 <source>This field has no configuration.</source>
             </trans-unit>
             <trans-unit id="message.no_fieldtypes_found_please_check_ts">
-                <source>No fieldtypes found. Please add the DataViewer Static to your site-template or add at least one fieldtype (plugin.tx_dataviewer.fieldtypes)</source>
+                <source>No fieldtypes found. Please add the Dataviewer Static to your site-template or add at least one fieldtype (plugin.tx_dataviewer.fieldtypes)</source>
             </trans-unit>
             <trans-unit id="message.no_record_storage_page_configured">
-                <source>No Record Storage Page is configured. Please first add a Record Storage Page and press 'Save'.</source>
+                <source>No Storage Page is configured. Please select all Storage Pages of Records and Variables you want to use.</source>
             </trans-unit>
             <trans-unit id="message.use_this_id_to_link">
-                <source>Use this id in the 'Target record display plugin'-Setting for Linking other DataViewer plugins to this!</source>
+                <source>Use this id in the 'Target record display plugin'-Setting for Linking other Dataviewer plugins to this list!</source>
+            </trans-unit>
+            <trans-unit id="message.please_save_before_continue">
+                <source>Please save record in order to continue.</source>
+            </trans-unit>
+            <trans-unit id="message.path_segment_exists">
+                <source>Path Segment '%s' already exists. Unique segment was created.</source>
             </trans-unit>
 
             <trans-unit id="message.creating_not_allowed">
@@ -531,10 +586,13 @@
                 <source>Sorry, deleting records is not allowed by this plugin!</source>
             </trans-unit>
             <trans-unit id="message.caches_cleared">
-                <source>The DataViewer Extension had to clear the cache to reload all fieldtypes. If there are no fieldtypes available, please try to clear the caches manually.</source>
+                <source>The Dataviewer Extension had to clear the cache to reload all fieldtypes. If there are no fieldtypes available, please try to clear the caches manually.</source>
             </trans-unit>
             <trans-unit id="message.no_markers_found_on_storage_pids">
                 <source>No markers were found on the configured storage page(s).</source>
+            </trans-unit>
+            <trans-unit id="message.base_record_new_field">
+                <source>The base record has a new field and therefore that base record needs to be updated before.</source>
             </trans-unit>
 
             <trans-unit id="no_configuration">
@@ -550,7 +608,7 @@
                 <source>If you need additional support, you can contact us by the following email address.</source>
             </trans-unit>
 
-            <!-- Domain/Model/Datatype -->
+        <!-- Domain/Model/Datatype -->
             <trans-unit id="tx_dataviewer_domain_model_datatype">
                 <source>Datatype</source>
             </trans-unit>
@@ -584,8 +642,23 @@
             <trans-unit id="tx_dataviewer_domain_model_datatype.title_divider">
                 <source>Title Divider Character</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.disable_general_tab">
+                <source>Disable 'General' Tab</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.tablename">
+                <source>Tablename</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.class">
+                <source>According PHP Class</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.enable_seo">
+                <source>Enable SEO Features</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_datatype.cache_tca">
+                <source>Cache generated TCA</source>
+            </trans-unit>
 
-            <!-- Domain/Model/Field -->
+        <!-- Domain/Model/Field -->
             <trans-unit id="tx_dataviewer_domain_model_field">
                 <source>Field</source>
             </trans-unit>
@@ -607,29 +680,32 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.session_key">
                 <source>Session Prefix Key</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.allowed_values">
+                <source>Allowed Values</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.value_switch">
+                <source>Value Switch</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.regex">
+                <source>Regular Expression</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.parameter_name">
+                <source>Parameter Name</source>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.description">
                 <source>Backend Description</source>
             </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.css_class">
-                <source>Backend Css Class</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.unit">
-                <source>Unit / Additional Text</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.column_width">
-                <source>Backend Column Width</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.tab_name">
-                <source>Name of the Tab to add to</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_field.show_title">
-                <source>Show Title</source>
+            <trans-unit id="tx_dataviewer_domain_model_field.description.your_text_here">
+                <source>Your Text here!</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.is_record_title">
                 <source>Use as record title</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.use_for_sorting">
+                <source>Use value for individual sorting</source>
+            </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.field_configuration">
-                <source>Field Configuration</source>
+                <source>TCA Field Configuration</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_field.validation">
                 <source>Field Validation</source>
@@ -649,8 +725,23 @@
             <trans-unit id="tx_dataviewer_domain_model_field.exclude">
                 <source>Exclude for non-admin users</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.l10n_exclude">
+                <source>Exclude from translations</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.palette">
+                <source>Palette</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.is_index">
+                <source>Is Index Field</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.database_type">
+                <source>Database Type</source>
+            </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_field.cache_tca">
+                <source>Cache generated TCA</source>
+            </trans-unit>
 
-            <!-- Domain/Model/Fieldvalue -->
+        <!-- Domain/Model/Fieldvalue -->
             <trans-unit id="tx_dataviewer_domain_model_fieldvalue">
                 <source>Field Value</source>
             </trans-unit>
@@ -658,7 +749,7 @@
                 <source>Type</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_fieldvalue.value_content">
-                <source>Value Content</source>
+                <source>Value Content (Fluid-ready)</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_fieldvalue.field_content">
                 <source>Field Content</source>
@@ -685,7 +776,7 @@
                 <source>Pretends to be an empty value</source>
             </trans-unit>
 
-            <!-- Domain/Model/Record -->
+        <!-- Domain/Model/Record -->
             <trans-unit id="tx_dataviewer_domain_model_record">
                 <source>Record</source>
             </trans-unit>
@@ -701,29 +792,19 @@
             <trans-unit id="tx_dataviewer_domain_model_record.title">
                 <source>Record Title</source>
             </trans-unit>
-
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue">
-                <source>Record Value</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue.value_content">
-                <source>Value Content</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue.record">
-                <source>Record</source>
-            </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_recordvalue.field">
-                <source>Field</source>
+            <trans-unit id="tx_dataviewer_domain_model_record.sorting_individual">
+                <source>Individual Sorting Value</source>
             </trans-unit>
 
-            <!-- Domain/Model/Variable -->
+        <!-- Domain/Model/Variable -->
             <trans-unit id="tx_dataviewer_domain_model_variable">
-                <source>Template Variable</source>
+                <source>Variable</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.type">
                 <source>Type</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.variable_name">
-                <source>Name</source>
+                <source>Template Variable Name</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.variable_value">
                 <source>Value</source>
@@ -749,14 +830,17 @@
             <trans-unit id="tx_dataviewer_domain_model_variable.page">
                 <source>Page</source>
             </trans-unit>
-            <trans-unit id="tx_dataviewer_domain_model_variable.user_func">
-                <source>UserFunc</source>
+            <trans-unit id="tx_dataviewer_domain_model_variable.user">
+                <source>User</source>
             </trans-unit>
             <trans-unit id="tx_dataviewer_domain_model_variable.type_cast">
                 <source>Type Definition</source>
             </trans-unit>
+            <trans-unit id="tx_dataviewer_domain_model_variable.ext_conf">
+                <source>Select Extension</source>
+            </trans-unit>
 
-            <!-- Messages -->
+        <!-- Messages -->
             <trans-unit id="please_select_datatype">
                 <source>-- Please select a datatype --</source>
             </trans-unit>
@@ -811,6 +895,9 @@
             <trans-unit id="no_records_found">
                 <source>No records found.</source>
             </trans-unit>
+            <trans-unit id="no_title">
+                <source>No title</source>
+            </trans-unit>
             <trans-unit id="record_was_successfully_deleted">
                 <source>Record with Id '%s' was successfully deleted.</source>
             </trans-unit>
@@ -859,8 +946,11 @@
             <trans-unit id="record_invalid">
                 <source>Record is now hidden. Please fix the displayed errors first and then remove the 'Hide'-Check.</source>
             </trans-unit>
+            <trans-unit id="advanced_settings">
+                <source>Advanced Settings</source>
+            </trans-unit>
 
-            <!-- Stuff -->
+        <!-- Stuff -->
             <trans-unit id="items">
                 <source>Found Items (%s):</source>
             </trans-unit>
@@ -886,9 +976,6 @@
             <trans-unit id="formvalue_access_to_hidden_field">
                 <source>The Form-Value is accessible in frontend with the following fluid code:</source>
             </trans-unit>
-            <trans-unit id="available_field_ids">
-                <source>Available Field Ids:</source>
-            </trans-unit>
             <trans-unit id="back_to_record_list">
                 <source>Back to record list</source>
             </trans-unit>
@@ -899,7 +986,7 @@
                 <source>A field class '%s' does not exist!</source>
             </trans-unit>
 
-            <!-- Flexform Conditions -->
+        <!-- Flexform Conditions -->
             <trans-unit id="flexform.eq">
                 <source>Equal (eq)</source>
             </trans-unit>
@@ -961,11 +1048,17 @@
             <trans-unit id="backend_settings">
                 <source>Backend Settings</source>
             </trans-unit>
+            <trans-unit id="database_settings">
+                <source>Database Settings</source>
+            </trans-unit>
             <trans-unit id="frontend_settings">
                 <source>Frontend Settings</source>
             </trans-unit>
             <trans-unit id="selected_record">
                 <source>Selected Record</source>
+            </trans-unit>
+            <trans-unit id="nothing_selected">
+                <source>Nothing selected</source>
             </trans-unit>
             <trans-unit id="selected_datatype">
                 <source>Selected Datatype</source>
@@ -986,7 +1079,7 @@
                 <source>Please regard the selection limit of %s entries.</source>
             </trans-unit>
 
-            <!-- Sorting -->
+        <!-- Sorting -->
             <trans-unit id="sort.asc">
                 <source>Ascending</source>
             </trans-unit>
@@ -1010,6 +1103,9 @@
             </trans-unit>
             <trans-unit id="sort.per_page">
                 <source>Items per Page</source>
+            </trans-unit>
+            <trans-unit id="sort.disable">
+                <source>Sorting by Selection</source>
             </trans-unit>
             <trans-unit id="sort.record_title">
                 <source>Title</source>
@@ -1043,10 +1139,7 @@
                 <source>General</source>
             </trans-unit>
 
-
-
-
-            <!-- Field Types -->
+        <!-- Field Types -->
             <trans-unit id="type.datatype">
                 <source>Inline Relation Datatype</source>
             </trans-unit>
@@ -1059,6 +1152,9 @@
             <trans-unit id="type.group">
                 <source>Group Field</source>
             </trans-unit>
+            <trans-unit id="type.folder">
+                <source>Folder Field</source>
+            </trans-unit>
             <trans-unit id="type.radio">
                 <source>Radio Buttons</source>
             </trans-unit>
@@ -1070,6 +1166,9 @@
             </trans-unit>
             <trans-unit id="type.input">
                 <source>Input Field</source>
+            </trans-unit>
+            <trans-unit id="type.colorpicker">
+                <source>Color Picker</source>
             </trans-unit>
             <trans-unit id="type.database">
                 <source>Database Records</source>
@@ -1089,8 +1188,8 @@
             <trans-unit id="type.tca">
                 <source>TCA XML</source>
             </trans-unit>
-            <trans-unit id="type.userfunc">
-                <source>UserFunc</source>
+            <trans-unit id="type.user">
+                <source>User</source>
             </trans-unit>
             <trans-unit id="type.datetime">
                 <source>Date and Time Field</source>
@@ -1100,6 +1199,9 @@
             </trans-unit>
             <trans-unit id="type.inline">
                 <source>Inline Elements</source>
+            </trans-unit>
+            <trans-unit id="type.content">
+                <source>Content Elements</source>
             </trans-unit>
             <trans-unit id="type.file_relation">
                 <source>File Relations</source>
@@ -1113,23 +1215,26 @@
             <trans-unit id="type.link">
                 <source>Link</source>
             </trans-unit>
-            <trans-unit id="type.category">
-                <source>Category Selection</source>
+            <trans-unit id="type.tree">
+                <source>Tree Selection</source>
             </trans-unit>
             <trans-unit id="type.rte">
                 <source>Rich-Text Editor (RTE)</source>
             </trans-unit>
+            <trans-unit id="type.table">
+                <source>Table</source>
+            </trans-unit>
             <trans-unit id="type.editor">
                 <source>Code Editor</source>
-            </trans-unit>
-            <trans-unit id="type.fluid">
-                <source>Fluid Code</source>
             </trans-unit>
             <trans-unit id="type.hidden">
                 <source>Hidden, passed Frontend</source>
             </trans-unit>
+            <trans-unit id="type.passthrough">
+                <source>Passthrough</source>
+            </trans-unit>
 
-            <!-- Variable Types -->
+        <!-- Variable Types -->
             <trans-unit id="variable_type.0">
                 <source>Fixed Value</source>
             </trans-unit>
@@ -1146,7 +1251,7 @@
                 <source>POST Variable</source>
             </trans-unit>
             <trans-unit id="variable_type.5">
-                <source>Fixed Record</source>
+                <source>GET/POST Variable</source>
             </trans-unit>
             <trans-unit id="variable_type.6">
                 <source>Record Field Value</source>
@@ -1170,10 +1275,25 @@
                 <source>Page</source>
             </trans-unit>
             <trans-unit id="variable_type.13">
-                <source>UserFunc</source>
+                <source>User</source>
+            </trans-unit>
+            <trans-unit id="variable_type.14">
+                <source>Backend User</source>
+            </trans-unit>
+            <trans-unit id="variable_type.15">
+                <source>Language Id</source>
+            </trans-unit>
+            <trans-unit id="variable_type.16">
+                <source>Dataviewer Session Service Container</source>
+            </trans-unit>
+            <trans-unit id="variable_type.17">
+                <source>Extension Configuration</source>
+            </trans-unit>
+            <trans-unit id="variable_type.18">
+                <source>Extension Settings from TypoScript</source>
             </trans-unit>
 
-            <!-- Variable Type Cast -->
+        <!-- Variable Type Cast -->
             <trans-unit id="variable_type_cast.0">
                 <source>No type definition</source>
             </trans-unit>
@@ -1199,18 +1319,18 @@
                 <source>NULL (Set null for this variable)</source>
             </trans-unit>
 
-            <!-- FieldValue Types -->
-            <trans-unit id="type.0">
-                <source>Fixed Value</source>
+        <!-- FieldValue Types -->
+            <trans-unit id="type.10">
+                <source>Static Value</source>
             </trans-unit>
-            <trans-unit id="type.1">
+            <trans-unit id="type.20">
                 <source>Database Value</source>
             </trans-unit>
-            <trans-unit id="type.2">
+            <trans-unit id="type.30">
                 <source>TypoScript</source>
             </trans-unit>
-            <trans-unit id="type.3">
-                <source>All Values of a Field</source>
+            <trans-unit id="type.40">
+                <source>Values of all records</source>
             </trans-unit>
 
             <trans-unit id="value_content">
@@ -1261,6 +1381,10 @@
                 <source>Category Sources</source>
             </trans-unit>
 
+            <trans-unit id="flexform.pages_data_storage_folder">
+                <source>Storage Folder for Content Storage</source>
+            </trans-unit>
+
             <trans-unit id="per_page">
                 <source>%s per Page</source>
             </trans-unit>
@@ -1269,6 +1393,9 @@
             </trans-unit>
             <trans-unit id="records_of">
                 <source>%s - %s of %s</source>
+            </trans-unit>
+            <trans-unit id="show_all">
+                <source>Show all</source>
             </trans-unit>
 
             <trans-unit id="validator.alphanumeric">
@@ -1328,17 +1455,17 @@
             </trans-unit>
 
             <trans-unit id="mlang_tabs_tab">
-                <source>DataViewer</source>
+                <source>Dataviewer</source>
             </trans-unit>
             <trans-unit id="mlang_labels_tablabel">
-                <source>DataViewer Record management</source>
+                <source>Dataviewer Record management</source>
             </trans-unit>
             <trans-unit id="mlang_labels_tabdescr">
                 <source>This module manages records of different type. You can easily manage or add records to the selected page.</source>
             </trans-unit>
 
             <trans-unit id="module.name">
-                <source>DataViewer</source>
+                <source>Dataviewer</source>
             </trans-unit>
             <trans-unit id="module.records">
                 <source>Manage Records</source>
@@ -1352,8 +1479,8 @@
             <trans-unit id="module.records_information">
                 <source>Records Information</source>
             </trans-unit>
-            <trans-unit id="module.csv_import">
-                <source>CSV Import Assistant</source>
+            <trans-unit id="module.import_assistent">
+                <source>Import Assistant</source>
             </trans-unit>
             <trans-unit id="module.records_on_this_page">
                 <source>Records on this page</source>
@@ -1426,7 +1553,7 @@
                 <source>Please assign the columns from the CSV-File to the according field of the datatype. All data of this column will be imported to the selected field if the validation is passed.</source>
             </trans-unit>
             <trans-unit id="module.import_step5">
-                <source>Thank you for using the DataViewer CSV-Import. The final log is displayed in the following lines.</source>
+                <source>Thank you for using the Dataviewer CSV-Import. The final log is displayed in the following lines.</source>
             </trans-unit>
             <trans-unit id="module.imported">
                 <source>Imported</source>
@@ -1516,18 +1643,194 @@
             <trans-unit id="module.no_description_available">
                 <source>No description available</source>
             </trans-unit>
-            <trans-unit id="donate.if_you_like">
-                <source>If you like this extension,</source>
-            </trans-unit>
-            <trans-unit id="donate.please_donate">
-                <source>please donate</source>
+            <trans-unit id="pro.upgrade_to_pro">
+                <source>Upgrade to Dataviewer Professional</source>
             </trans-unit>
             <trans-unit id="ajax.loading">
                 <source>Loading ...</source>
             </trans-unit>
 
+        <!-- Repository Settings FlexForm -->
+            <trans-unit id="flexform.repository_settings">
+                <source>Repository Settings</source>
+            </trans-unit>
+            <trans-unit id="flexform.repository_settings.limit">
+                <source>Limit</source>
+            </trans-unit>
+            <trans-unit id="flexform.repository_settings.offset">
+                <source>Offset</source>
+            </trans-unit>
+            <trans-unit id="flexform.repository_settings.include_hidden">
+                <source>Include hidden</source>
+            </trans-unit>
+            <trans-unit id="flexform.repository_settings.include_recursive">
+                <source>Recursive Include Record Storage Pages of selected pages</source>
+            </trans-unit>
+
+        <!-- Table Check -->
+            <trans-unit id="table.check.error.unknown">
+                <source>Unknown Error. There was an error, requesting table data. Please try again or change the table name.</source>
+            </trans-unit>
+            <trans-unit id="table.check.error.does_not_exist">
+                <source>Table '%s' does not exist.</source>
+            </trans-unit>
+            <trans-unit id="table.check.error.update_needed">
+                <source>Table '%s' needs an update to sync all fields with columns.</source>
+            </trans-unit>
+            <trans-unit id="table.check.message.create_table">
+                <source>Do you want to create the table?</source>
+            </trans-unit>
+            <trans-unit id="table.check.message.table_created">
+                <source>Table '%s' was successfully created/updated.</source>
+            </trans-unit>
+            <trans-unit id="table.check.message.table_up_to_date">
+                <source>Table '%s' is up-to-date!</source>
+            </trans-unit>
+            <trans-unit id="table.check.description.table_up_to_date">
+                <source>The table '%s' has passed the integrity comparison. It is therefore up to date with the current status of the mapped fields that are assigned to the datatype. You can repeat the check as soon as you have added new fields or made changes to the datatype.</source>
+            </trans-unit>
+            <trans-unit id="table.check.message.missing_columns">
+                <source>Missing Columns</source>
+            </trans-unit>
+            <trans-unit id="table.check.button.create_table">
+                <source>Create Table</source>
+            </trans-unit>
+            <trans-unit id="table.check.button.update_table">
+                <source>Update Table</source>
+            </trans-unit>
+            <trans-unit id="table.check.button.delete_table">
+                <source>Delete Table</source>
+            </trans-unit>
+
+        <!-- Class Check -->
+            <trans-unit id="class.check.error.unknown">
+                <source>Unknown Error. There was an error getting available class data.</source>
+            </trans-unit>
+            <trans-unit id="class.check.error.does_not_exist">
+                <source>Class '%s' does not exist.</source>
+            </trans-unit>
+            <trans-unit id="class.check.error.update_needed">
+                <source>Class '%s' needs an update to sync all fields with variables.</source>
+            </trans-unit>
+            <trans-unit id="class.check.message.create_class">
+                <source>Do you want to create the class?</source>
+            </trans-unit>
+            <trans-unit id="class.check.message.class_created">
+                <source>Class '%s' was successfully created/updated.</source>
+            </trans-unit>
+            <trans-unit id="class.check.message.class_up_to_date">
+                <source>Class '%s' is up-to-date!</source>
+            </trans-unit>
+            <trans-unit id="class.check.description.class_up_to_date">
+                <source>The '%s'-class corresponds to the assigned fields and therefore does not require updating. If you make changes to the datatype or assigned fields, you can perform the check again.</source>
+            </trans-unit>
+            <trans-unit id="class.check.message.class_needs_refresh">
+                <source>Class '%s' needs to be updated!</source>
+            </trans-unit>
+            <trans-unit id="class.check.message.following_files_will_be_created">
+                <source>The files %s will be created.</source>
+            </trans-unit>
+            <trans-unit id="class.check.button.create_class">
+                <source>Create Class</source>
+            </trans-unit>
+            <trans-unit id="class.check.button.update_class">
+                <source>Update Class</source>
+            </trans-unit>
+            <trans-unit id="class.check.button.delete_class">
+                <source>Delete Class and dump autoload</source>
+            </trans-unit>
+
+        <!-- Variable Settings -->
+            <trans-unit id="flexform.section.variable_settings">
+                <source>Variable Settings</source>
+            </trans-unit>
+
+
+        <!-- Available Markers -->
+            <trans-unit id="flexform.available_markers">
+                <source>Available Markers</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_markers.type">
+                <source>Type</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_markers.name">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_markers.description">
+                <source>Description</source>
+            </trans-unit>
+
+        <!-- Available Field Ids -->
+            <trans-unit id="flexform.available_field_ids">
+                <source>Available Field Ids</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_field_ids.no_fields_found">
+                <source>No fields found</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_field_ids.variable_name">
+                <source>Variable Name</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_field_ids.frontend_label">
+                <source>Frontend Label</source>
+            </trans-unit>
+            <trans-unit id="flexform.available_field_ids.type">
+                <source>Type</source>
+            </trans-unit>
+
+        <!-- Records Plugin Frontend Messages -->
+            <trans-unit id="plugin.records.message.please_select_valid_datatype">
+                <source>Please select a valid datatype!</source>
+            </trans-unit>
+            <trans-unit id="plugin.records.message.please_select_valid_record">
+                <source>Please select a valid record!</source>
+            </trans-unit>
+            <trans-unit id="plugin.records.message.datatype_not_loaded">
+                <source>Datatype with uid '%s' could not be loaded!</source>
+            </trans-unit>
+            <trans-unit id="plugin.records.message.repository_not_loaded">
+                <source>Repository '%s' could not be loaded!</source>
+            </trans-unit>
+            <trans-unit id="plugin.records.message.record_not_allowed">
+                <source>Displaying Record with Uid '%s' is not allowed by this plugin!</source>
+            </trans-unit>
+            <trans-unit id="plugin.records.message.template_not_found">
+                <source>Template file not found!</source>
+            </trans-unit>
+
+
+        <!-- Query Builder Operators -->
+            <trans-unit id="querybuilder.operators.group.default">
+                <source>Default</source>
+            </trans-unit>
+            <trans-unit id="querybuilder.operators.group.multiple">
+                <source>Multiple</source>
+            </trans-unit>
+            <trans-unit id="querybuilder.operators.group.numbers">
+                <source>Numbers</source>
+            </trans-unit>
+            <trans-unit id="querybuilder.operators.group.strings">
+                <source>String</source>
+            </trans-unit>
+            <trans-unit id="querybuilder.operators.group.empty">
+                <source>Empty</source>
+            </trans-unit>
+
+        <!-- Backend Preview -->
+            <trans-unit id="preview.data_source">
+                <source>Data Source(s)</source>
+            </trans-unit>
+            <trans-unit id="preview.variables">
+                <source>Variable(s)</source>
+            </trans-unit>
+            <trans-unit id="preview.template">
+                <source>Template</source>
+            </trans-unit>
+
+        <!-- Components -->
+            <trans-unit id="components.title">
+                <source>Dataviewer Components</source>
+            </trans-unit>
 
         </body>
-
     </file>
 </xliff>

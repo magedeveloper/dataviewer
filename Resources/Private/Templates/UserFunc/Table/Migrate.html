@@ -1,0 +1,9 @@
+<f:if condition="!{error}">
+    <f:then>
+        <f:render partial="Table/Created" arguments="{_all}" />
+    </f:then>
+    <f:else>
+        <f:render partial="Table/Error" arguments="{_all}" />
+    </f:else>
+</f:if>
+

@@ -1,0 +1,40 @@
+<style type="text/css">
+    hr { color:#c0c0c0; background-color:#c0c0c0; height:1px; border:0; }
+    .extbase-debugger { margin:20px 0 !important; font-weight: normal !important; }
+    .extbase-debugger em { color:greenyellow; }
+    .extbase-debugger strong { font-weight:600 !important; }
+    .dataviewer-logo { margin-top:20px; }
+</style>
+
+<f:image src="EXT:dataviewer/Resources/Public/Images/logo_dataviewer.svg" alt="Dataviewer" height="70" width="200" class="dataviewer-logo" />
+
+<div class="extbase-debugger extbase-debugger-inline">
+    <div class="extbase-debugger-top">Template Settings</div>
+    <div class="extbase-debugger-center">
+
+        This template has the following variables:
+        <br />
+        <br />
+        <strong>General Variables:</strong>
+        <hr />
+        <span class="extbase-debug-type">&#123;records&#125;</span> to access the result with all records.<br />
+        <span class="extbase-debug-type">&#123;datatype&#125;</span> to access the selected datatype.<br />
+        <br />
+
+        <strong>Single Record Context Variables:</strong>
+        <hr />
+        <span class="extbase-debug-type">&#123;record&#125;</span> to get the record.<br />
+        <span class="extbase-debug-type">&#123;record.<em>fieldname</em>&#125;</span> to get the direct result of the field.<br />
+
+        <br />
+
+        <strong>Other Variables:</strong>
+        <hr />
+        <span class="extbase-debug-type">&#123;cObj&#125;</span> to get information about the current content object.<br />
+
+    </div>
+</div>
+
+<f:debug inline="1" title="Variable 'records'">{records}</f:debug>
+<f:debug inline="1" title="Variable 'record'">{record}</f:debug>
+<f:debug inline="1" title="All Variables">{_all}</f:debug>

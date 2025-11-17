@@ -1,0 +1,850 @@
+<T3DataStructure>
+  <meta>
+    <langDisable>1</langDisable>
+  </meta>
+  <sheets>
+    <general_settings>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.general_settings</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.logo>
+            <TCEforms>
+              <label></label>
+              <config>
+                <type>user</type>
+                <userFunc>Aix\Dataviewer\UserFunc\Logo->displayLogoAndMessageOnEmptyRecordStoragePage</userFunc>
+              </config>
+            </TCEforms>
+          </settings.logo>
+          <settings.datatype_selection>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.datatype_selection</label>
+              <onChange>reload</onChange>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array"></items>
+                <foreign_table>tx_dataviewer_domain_model_datatype</foreign_table>
+                <foreign_table_where><![CDATA[AND tx_dataviewer_domain_model_datatype.sys_language_uid IN (-1, 0)]]></foreign_table_where>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.datatype_selection>
+          <settings.detail_pid>
+            <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.detail_page_id</title>
+            <section>1</section>
+            <type>array</type>
+            <el>
+              <pageids>
+                <type>array</type>
+                <title></title>
+                <el>
+                  <info>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                      <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayAvailableMarkers</userFunc>
+                        <parameters>
+                          <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html</template>
+                          <envVariables>1</envVariables>
+                        </parameters>
+                      </config>
+                    </TCEforms>
+                  </info>
+                  <pageid>
+                    <TCEforms>
+                      <label>{detailPid}</label>
+                      <exclude>1</exclude>
+                      <config>
+                        <type>group</type>
+                        <internal_type>db</internal_type>
+                        <allowed>pages</allowed>
+                        <size>1</size>
+                        <maxitems>1</maxitems>
+                        <minitems>0</minitems>
+                        <show_thumbs>1</show_thumbs>
+                        <wizards>
+                          <suggest>
+                            <type>suggest</type>
+                          </suggest>
+                        </wizards>
+                      </config>
+                    </TCEforms>
+                  </pageid>
+                  <condition>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.activate_condition</label>
+                      <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.empty_condition_is_active</description>
+                      <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder>{variableFromGetParameter} = 'xyz'</placeholder>
+                      </config>
+                    </TCEforms>
+                  </condition>
+                </el>
+              </pageids>
+            </el>
+          </settings.detail_pid>
+        </el>
+      </ROOT>
+    </general_settings>
+    <field_value_filter_setting>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.field_value_filter_setting</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <info>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+              <config>
+                <type>user</type>
+                <userFunc>Aix\Dataviewer\UserFunc\Template->displayAvailableMarkers</userFunc>
+                <parameters>
+                  <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html</template>
+                  <envVariables>1</envVariables>
+                </parameters>
+              </config>
+            </TCEforms>
+          </info>
+          <settings.field_value_filter>
+            <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.selection_by_field_value_filter</title>
+            <section>1</section>
+            <type>array</type>
+            <el>
+              <filters>
+                <type>array</type>
+                <title></title>
+                <el>
+                  <querybuilder>
+                    <TCEforms>
+                      <label></label>
+                      <config>
+                        <type>user</type>
+                        <renderType>queryBuilder</renderType>
+                      </config>
+                    </TCEforms>
+                  </querybuilder>
+                  <activate_condition>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.filter_activate_condition</label>
+                      <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.empty_condition_is_active</description>
+                      <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder>{variableFromGetParameter} = 'includeFilter'</placeholder>
+                      </config>
+                    </TCEforms>
+                  </activate_condition>
+                  <post_process>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.process_query_result</label>
+                      <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.process_query_result.description</description>
+                      <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                          <numIndex index="0" type="array">
+                            <numIndex index="0">Default bahaviour</numIndex>
+                            <numIndex index="1"></numIndex>
+                          </numIndex>
+                          <numIndex index="1" type="array">
+                            <numIndex index="0">diff</numIndex>
+                            <numIndex index="1">diff</numIndex>
+                          </numIndex>
+                        </items>
+                        <default></default>
+                      </config>
+                    </TCEforms>
+                  </post_process>
+                </el>
+              </filters>
+            </el>
+          </settings.field_value_filter>
+        </el>
+      </ROOT>
+    </field_value_filter_setting>
+    <display_settings_list>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.repository_settings</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.include_hidden>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.repository_settings.include_hidden</label>
+              <config>
+                <checkbox>1</checkbox>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </settings.include_hidden>
+          <settings.include_recursive>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.repository_settings.include_recursive</label>
+              <config>
+                <checkbox>1</checkbox>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </settings.include_recursive>
+          <settings.limit>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.repository_settings.limit</label>
+              <config>
+                <type>input</type>
+                <size>4</size>
+                <placeholder>10</placeholder>
+                <default></default>
+                <eval>num</eval>
+              </config>
+            </TCEforms>
+          </settings.limit>
+          <settings.offset>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.repository_settings.offset</label>
+              <displayCond>FIELD:settings.limit:>:0</displayCond>
+              <config>
+                <type>input</type>
+                <size>4</size>
+                <placeholder>0</placeholder>
+                <default>0</default>
+                <eval>num</eval>
+              </config>
+            </TCEforms>
+          </settings.offset>
+          <settings.orderings>
+            <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sorting</title>
+            <section>1</section>
+            <type>array</type>
+            <el>
+              <ordering>
+                <type>array</type>
+                <title></title>
+                <el>
+                  <field>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.default_sort_field</label>
+                      <onChange>reload</onChange>
+                      <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                          <numIndex index="0" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:tx_dataviewer_domain_model_record.title</numIndex>
+                            <numIndex index="1">title</numIndex>
+                          </numIndex>
+                          <numIndex index="1" type="array">
+                            <numIndex index="0">ID (uid)</numIndex>
+                            <numIndex index="1">uid</numIndex>
+                          </numIndex>
+                          <numIndex index="2" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sorting</numIndex>
+                            <numIndex index="1">sorting</numIndex>
+                          </numIndex>
+                          <numIndex index="3" type="array">
+                            <numIndex index="0">LLL:EXT:filelist/Resources/Private/Language/locallang_mod_file_list.xlf:c_tstamp</numIndex>
+                            <numIndex index="1">tstamp</numIndex>
+                          </numIndex>
+                          <numIndex index="4" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.crdate</numIndex>
+                            <numIndex index="1">crdate</numIndex>
+                          </numIndex>
+                          <numIndex index="5" type="array">
+                            <numIndex index="0">LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime</numIndex>
+                            <numIndex index="1">starttime</numIndex>
+                          </numIndex>
+                          <numIndex index="6" type="array">
+                            <numIndex index="0">LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime</numIndex>
+                            <numIndex index="1">endtime</numIndex>
+                          </numIndex>
+                          <numIndex index="7" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:sort.random</numIndex>
+                            <numIndex index="1">RAND()</numIndex>
+                          </numIndex>
+                        </items>
+                        <default>title</default>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Field->populateFieldIds</itemsProcFunc>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                      </config>
+                    </TCEforms>
+                  </field>
+                  <subfield>
+                    <TCEforms>
+                      <label></label>
+                      <onChange>reload</onChange>
+                      <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Field->displayFlexFormSubFields</userFunc>
+                      </config>
+                    </TCEforms>
+                  </subfield>
+                  <order>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.default_sort_order</label>
+                      <config>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                          <numIndex index="0" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_ascending</numIndex>
+                            <numIndex index="1">ASC</numIndex>
+                          </numIndex>
+                          <numIndex index="1" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.sort_order_descending</numIndex>
+                            <numIndex index="1">DESC</numIndex>
+                          </numIndex>
+                        </items>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateGetPostVariables</itemsProcFunc>
+                        <default>ASC</default>
+                      </config>
+                    </TCEforms>
+                  </order>
+                  <info>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                      <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayAvailableMarkers</userFunc>
+                        <parameters>
+                          <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html</template>
+                          <datatype>0</datatype>
+                          <envVariables>1</envVariables>
+                        </parameters>
+                      </config>
+                    </TCEforms>
+                  </info>
+                  <condition>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid_condition</label>
+                      <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.empty_condition_is_active</description>
+                      <config>
+                        <type>input</type>
+                        <size>150</size>
+                        <placeholder><![CDATA[{yourVariable} == '1337']]></placeholder>
+                      </config>
+                    </TCEforms>
+                  </condition>
+                </el>
+              </ordering>
+            </el>
+          </settings.orderings>
+        </el>
+      </ROOT>
+    </display_settings_list>
+    <pagination_settings>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.enable_pagination>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination.enable_pagination</label>
+              <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination.description</description>
+              <onChange>reload</onChange>
+              <config>
+                <checkbox>1</checkbox>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </settings.enable_pagination>
+          <settings.items_per_page_variable>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination.items_per_page_variable</label>
+              <displayCond>FIELD:settings.enable_pagination:=:1</displayCond>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0"></numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                </items>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateOverrideVariables</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.items_per_page_variable>
+          <settings.page_number_variable>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination.page_number_variable</label>
+              <displayCond>FIELD:settings.enable_pagination:=:1</displayCond>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0"></numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                </items>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateOverrideVariables</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.page_number_variable>
+          <settings.default_page>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination.default_page_number</label>
+              <displayCond>FIELD:settings.enable_pagination:=:1</displayCond>
+              <config>
+                <type>number</type>
+                <size>10</size>
+                <required>1</required>
+                <default>1</default>
+              </config>
+            </TCEforms>
+          </settings.default_page>
+          <pagination_info>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.pagination.info</label>
+              <displayCond>FIELD:settings.enable_pagination:=:1</displayCond>
+              <config>
+                <type>user</type>
+                <userFunc>Aix\Dataviewer\UserFunc\Template->displayTemplate</userFunc>
+                <parameters>
+                  <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/PaginationInfo.html</template>
+                </parameters>
+              </config>
+            </TCEforms>
+          </pagination_info>
+        </el>
+      </ROOT>
+    </pagination_settings>
+    <template_settings>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_settings</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.template_selection>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_selection</label>
+              <onChange>reload</onChange>
+              <config type="array">
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.debug_template</numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                  <numIndex index="1" type="array">
+                    <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_template_path</numIndex>
+                    <numIndex index="1">CUSTOM</numIndex>
+                  </numIndex>
+                  <numIndex index="2" type="array">
+                    <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_fluid_code</numIndex>
+                    <numIndex index="1">FLUID</numIndex>
+                  </numIndex>
+                </items>
+                <multiple>0</multiple>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Template->populateTemplates</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>1</minitems>
+                <size>1</size>
+                <fieldWizard>
+                  <selectIcons>
+                    <disabled>0</disabled>
+                  </selectIcons>
+                </fieldWizard>
+              </config>
+            </TCEforms>
+          </settings.template_selection>
+          <settings.fluid_code>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid</label>
+              <displayCond>FIELD:settings.template_selection:=:FLUID</displayCond>
+              <config>
+                <type>text</type>
+                <renderType>t3editor</renderType>
+                <format>html</format>
+                <rows>15</rows>
+              </config>
+            </TCEforms>
+          </settings.fluid_code>
+          <settings.template_override>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_override</label>
+              <displayCond>FIELD:settings.template_selection:=:CUSTOM</displayCond>
+              <config type="array">
+                <type>inline</type>
+                <maxitems>1</maxitems>
+                <minitems>1</minitems>
+                <foreign_table>sys_file_reference</foreign_table>
+                <foreign_field>uid_foreign</foreign_field>
+                <foreign_sortby>sorting_foreign</foreign_sortby>
+                <foreign_table_field>tablenames</foreign_table_field>
+                <foreign_match_fields>
+                  <!-- this will be stored in sys_file_reference.fieldname -->
+                  <fieldname>template_override</fieldname>
+                </foreign_match_fields>
+                <foreign_label>uid_local</foreign_label>
+                <foreign_selector>uid_local</foreign_selector>
+                <overrideChildTca>
+                  <columns>
+                    <uid_local>
+                      <config>
+                        <appearance>
+                          <elementBrowserType>file</elementBrowserType>
+                          <elementBrowserAllowed>html</elementBrowserAllowed>
+                        </appearance>
+                      </config>
+                    </uid_local>
+                  </columns>
+                </overrideChildTca>
+                <filter>
+                  <userFunc>TYPO3\CMS\Core\Resource\Filter\FileExtensionFilter->filterInlineChildren</userFunc>
+                  <parameters>
+                    <allowedFileExtensions>html</allowedFileExtensions>
+                    <disallowedFileExtensions>*</disallowedFileExtensions>
+                  </parameters>
+                </filter>
+                <appearance>
+                  <useSortable>0</useSortable>
+                  <enabledControls>
+                    <info>1</info>
+                    <new>0</new>
+                    <dragdrop>1</dragdrop>
+                    <sort>0</sort>
+                    <hide>1</hide>
+                    <delete>1</delete>
+                  </enabledControls>
+                </appearance>
+              </config>
+            </TCEforms>
+          </settings.template_override>
+          <settings.render_only_template>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.render_only_template</label>
+              <config>
+                <checkbox>1</checkbox>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </settings.render_only_template>
+          <settings.template_switch>
+            <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_switch</title>
+            <section>1</section>
+            <type>array</type>
+            <el>
+              <switches>
+                <type>array</type>
+                <title></title>
+                <el>
+                  <info>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                      <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayAvailableMarkers</userFunc>
+                        <parameters>
+                          <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html</template>
+                          <envVariables>1</envVariables>
+                        </parameters>
+                      </config>
+                    </TCEforms>
+                  </info>
+                  <template_selection>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.template_selection</label>
+                      <onChange>reload</onChange>
+                      <config type="array">
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+                        <items type="array">
+                          <numIndex index="0" type="array">
+                            <numIndex index="0">LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_fluid_code</numIndex>
+                            <numIndex index="1">FLUID</numIndex>
+                          </numIndex>
+                        </items>
+                        <multiple>0</multiple>
+                        <itemsProcFunc>Aix\Dataviewer\UserFunc\Template->populateTemplates</itemsProcFunc>
+                        <maxitems>1</maxitems>
+                        <minitems>1</minitems>
+                        <size>1</size>
+                      </config>
+                    </TCEforms>
+                  </template_selection>
+                  <fluid_code>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid</label>
+                      <displayCond>FIELD:template_selection:=:FLUID</displayCond>
+                      <config>
+                        <type>text</type>
+                        <renderType>t3editor</renderType>
+                        <format>html</format>
+                        <rows>15</rows>
+                      </config>
+                    </TCEforms>
+                  </fluid_code>
+                  <condition>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid_condition</label>
+                      <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.empty_condition_is_active</description>
+                      <config>
+                        <type>input</type>
+                        <size>150</size>
+                        <placeholder><![CDATA[{yourVariable} == '1337']]></placeholder>
+                      </config>
+                    </TCEforms>
+                  </condition>
+                </el>
+              </switches>
+            </el>
+          </settings.template_switch>
+          <settings.variables>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.variable_injection</label>
+              <config>
+                <type>group</type>
+                <internal_type>db</internal_type>
+                <multiple>0</multiple>
+                <autosizemax>10</autosizemax>
+                <items type="array"></items>
+                <allowed>tx_dataviewer_domain_model_variable</allowed>
+                <maxitems>99999</maxitems>
+                <minitems>0</minitems>
+                <size>5</size>
+              </config>
+            </TCEforms>
+          </settings.variables>
+
+
+
+
+
+
+
+
+
+        </el>
+      </ROOT>
+    </template_settings>
+
+    <!--
+    @later!
+    <template_configuration>
+    <ROOT>
+    <TCEforms>
+      <sheetTitle>Template Configuration</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <templateConfigurator>
+        <TCEforms>
+          <label></label>
+          <config>
+            <type>user</type>
+            <renderType>templateConfigurator</renderType>
+          </config>
+        </TCEforms>
+      </templateConfigurator>
+    </el>
+    </ROOT>
+    </template_configuration>
+    -->
+
+    <overrides>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.overrides</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.limit_variable>
+            <TCEforms>
+              <label>LIMIT</label>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0"></numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                </items>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateOverrideVariables</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.limit_variable>
+          <settings.offset_variable>
+            <TCEforms>
+              <label>OFFSET</label>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0"></numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                </items>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateOverrideVariables</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.offset_variable>
+          <settings.sorting_variable>
+            <TCEforms>
+              <label>SORTING</label>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0"></numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                </items>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateOverrideVariables</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.sorting_variable>
+          <settings.order_variable>
+            <TCEforms>
+              <label>ORDER</label>
+              <config>
+                <type>select</type>
+                <renderType>selectSingle</renderType>
+                <multiple>0</multiple>
+                <items type="array">
+                  <numIndex index="0" type="array">
+                    <numIndex index="0"></numIndex>
+                    <numIndex index="1"></numIndex>
+                  </numIndex>
+                </items>
+                <itemsProcFunc>Aix\Dataviewer\UserFunc\Variable->populateOverrideVariables</itemsProcFunc>
+                <maxitems>1</maxitems>
+                <minitems>0</minitems>
+                <size>1</size>
+              </config>
+            </TCEforms>
+          </settings.order_variable>
+        </el>
+      </ROOT>
+    </overrides>
+    <developer_settings>
+      <ROOT>
+        <TCEforms>
+          <sheetTitle>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.developer_settings</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+          <settings.debug>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.debug</label>
+              <config>
+                <checkbox>1</checkbox>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </settings.debug>
+          <settings.static_cache>
+            <TCEforms>
+              <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.static_cache</label>
+              <config>
+                <checkbox>1</checkbox>
+                <type>check</type>
+              </config>
+            </TCEforms>
+          </settings.static_cache>
+          <settings.custom_headers>
+            <title>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.custom_headers</title>
+            <section>1</section>
+            <type>array</type>
+            <el>
+              <headers>
+                <type>array</type>
+                <title></title>
+                <el>
+                  <info>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.available_markers</label>
+                      <config>
+                        <type>user</type>
+                        <userFunc>Aix\Dataviewer\UserFunc\Template->displayAvailableMarkers</userFunc>
+                        <parameters>
+                          <template>EXT:dataviewer/Resources/Private/Templates/UserFunc/Field/AvailableMarkers.html</template>
+                          <envVariables>1</envVariables>
+                        </parameters>
+                      </config>
+                    </TCEforms>
+                  </info>
+                  <name>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.header_name</label>
+                      <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder>Content-Type</placeholder>
+                      </config>
+                    </TCEforms>
+                  </name>
+                  <value>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.header_value</label>
+                      <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <placeholder>text/html; charset=utf-8</placeholder>
+                      </config>
+                    </TCEforms>
+                  </value>
+                  <condition>
+                    <TCEforms>
+                      <label>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.fluid_condition</label>
+                      <description>LLL:EXT:dataviewer/Resources/Private/Language/locallang.xlf:flexform.empty_condition_is_active</description>
+                      <config>
+                        <type>input</type>
+                        <size>150</size>
+                        <placeholder><![CDATA[{yourVariable} == '1337']]></placeholder>
+                      </config>
+                    </TCEforms>
+                  </condition>
+                </el>
+              </headers>
+            </el>
+          </settings.custom_headers>
+        </el>
+      </ROOT>
+    </developer_settings>
+  </sheets>
+</T3DataStructure>
+
+
+

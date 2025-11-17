@@ -1,100 +1,71 @@
 <?php
-namespace MageDeveloper\Dataviewer\Domain\Repository;
+namespace Aix\Dataviewer\Domain\Repository;
 
-/**
- * MageDeveloper Dataviewer Extension
- * -----------------------------------
- *
- * @category    TYPO3 Extension
- * @package     MageDeveloper\Dataviewer
- * @author		Bastian Zagar
- * @copyright   Magento Developers / magedeveloper.de <kontakt@magedeveloper.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- */
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+
 class DatatypeRepository extends AbstractRepository
 {
-	/**
-	 * FindAll Override
-	 * 
-	 * @param bool $respectStoragePage
-	 * @param array $orderings
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAll($respectStoragePage = true, array $orderings = [])
-	{
+    /**
+     * FindAll Override
+     *
+     * @param bool $respectStoragePage
+     * @param array $orderings
+     * @return array|QueryResultInterface
+     */
+    public function findAll(bool $respectStoragePage = true, array $orderings = [])
+    {
 		$query = $this->createQueryWithSettings(true, false, $respectStoragePage);
 		$querySettings = $query->getQuerySettings();
-		
-		if(!empty($orderings))
+
+		if (!empty($orderings))
 			$query->setOrderings($orderings);
 
 		$this->setDefaultQuerySettings($querySettings);
 		return $query->execute();
 	}
 
-	/**
-	 * Finds all records on a given storage page id
-	 *
-	 * @param array $storagePids
-	 * @param array $orderings
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAllOnPids(array $storagePids, array $orderings = [])
-	{
-		$query 			= $this->createQuery();
-		$querySettings 	= $query->getQuerySettings();
-
-		$querySettings->setStoragePageIds($storagePids);
-		$querySettings->setRespectStoragePage(true);
-		
-		if(!empty($orderings))
-			$query->setOrderings($orderings);
-
-		$this->setDefaultQuerySettings($querySettings);
-
-		return $query->execute();
-	}
-	
-	/**
-	 * Finds all records on a given storage page id
-	 * 
-	 * @param int $storagePid
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAllOnPid($storagePid, array $orderings = [])
-	{
+    /**
+     * Finds all records on a given storage page id
+     *
+     * @param int $storagePid
+     * @param array $orderings
+     * @return QueryResultInterface
+     */
+    public function findAllOnPid(int $storagePid, array $orderings = []): QueryResultInterface
+    {
 		return $this->findAllOnPids([$storagePid], $orderings);
 	}
-	
 
-	/**
-	 * Gets the ids of all datatypes, where records of these
-	 * types must be hidden in listings
-	 * 
-	 * @return array
-	 */
-	public function getRecordHiddenIds()
-	{
+    /**
+     * Gets the ids of all datatypes, where records of these
+     * types must be hidden in listings
+     *
+     * @return array
+     */
+    public function getRecordHiddenIds(): array
+    {
 		$query = $this->createQueryWithSettings(true,true,false);
 		$datatypes =  $query->matching(	$query->equals("hide_records", 1) )->execute();
-		
+
 		$ids = [];
-		if($datatypes && $datatypes->count() > 0)
-			foreach($datatypes as $_datatype)
+		if ($datatypes && $datatypes->count() > 0)
+			foreach ($datatypes as $_datatype)
 				$ids[] = $_datatype->getUid();
-		
+
 		return $ids;
 	}
 
-	/**
-	 * Finds datatype by the hidden setting
-	 * 
-	 * @param bool $hiddenInLists
-	 * @param bool $hiddenAdd
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findByHiddenSetting($hiddenInLists = true, $hiddenAdd = true)
-	{
+    /**
+     * Finds datatype by the hidden setting
+     *
+     * @param bool $hiddenInLists
+     * @param bool $hiddenAdd
+     * @return QueryResultInterface
+     * @throws InvalidQueryException
+     */
+    public function findByHiddenSetting(bool $hiddenInLists = true, bool $hiddenAdd = true): QueryResultInterface
+    {
 		$query = $this->createQueryWithSettings(true,true,false);
 		return $query->matching(
 			$query->logicalAnd(
@@ -104,53 +75,29 @@ class DatatypeRepository extends AbstractRepository
 		)->execute();
 	}
 
-	/**
-	 * Find records by given uids
-	 *
-	 * @param array $uids
-	 * @param array $storagePids
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findByUids(array $uids, array $storagePids = [])
-	{
-		$query 			= $this->createQuery();
-		$querySettings 	= $query->getQuerySettings();
-		$querySettings->setRespectSysLanguage(true);
-
-		if(!empty($storagePids))
-		{
-			$querySettings->setStoragePageIds($storagePids);
-			$querySettings->setRespectStoragePage(true);
-		}
-
-		return $query->matching(
-			$query->in("uid", $uids)
-		)->execute();
-	}
-
-	/**
-	 * Find all datatypes of records that exists on 
-	 * given pids
-	 * 
-	 * @param array $storagePids
-	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function findAllOfRecordsOnPid(array $storagePids)
-	{
+    /**
+     * Find all datatypes of records that exists on
+     * given pids
+     *
+     * @param array $storagePids
+     * @return array
+     */
+    public function findAllOfRecordsOnPid(array $storagePids): array
+    {
 		$pids = implode(",", $storagePids);
 		$statement = "SELECT datatype FROM tx_dataviewer_domain_model_record WHERE pid IN ({$pids}) GROUP BY datatype";
 		$query = $this->createQuery();
 
 		$query->statement($statement);
 		$datatypes = $query->execute(true);
-		
+
 		$datatypeIds = [];
 		if (is_array($datatypes))
 		{
-			foreach($datatypes as $_datatype)
-				$datatypeIds[] = $_datatype["datatype"];	
+			foreach ($datatypes as $_datatype)
+				$datatypeIds[] = $_datatype["datatype"];
 		}
-		
+
 		return $this->findByUids($datatypeIds);
 	}
 
